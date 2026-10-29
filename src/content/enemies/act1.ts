@@ -3,7 +3,7 @@ import type { EnemyAiCtx, EnemyDef, StatusDef, EncounterDef } from '../../engine
 
 const SHRILL = { exposed: 2 };
 const SICKLE = { hits: 2, extra_hits: 1 };
-const BOND = { damage_per_status: 1 };
+const BOND = { damage_per_status: 1, lash_per_status: 0.5 };
 const UNDERBELLY = { damage: 3 };
 const POLLEN = { might: 1, heal: 8 };
 const RALLY = { might: 1 };
@@ -191,14 +191,14 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_gnasher_alpha',
   },
   {
-    id: 'dreadcap', name: 'Dreadcap', hp: [100, 106], spawnStatuses: { mycelial_bond: 1 },
+    id: 'dreadcap', name: 'Dreadcap', hp: [90, 96], spawnStatuses: { mycelial_bond: 1 },
     moves: {
       sporefall: { name: 'Sporefall', intent: 'debuff', text: 'Shuffle {add_card} Tangle into your draw pile.',
-        effects: [{ type: 'add_card', card: 'status_tangle', to: 'draw', n: 3 }] },
+        effects: [{ type: 'add_card', card: 'status_tangle', to: 'draw', n: 2 }] },
       cap_crush: { name: 'Cap Crush', intent: 'attack', text: 'Deal {damage} damage (+{damage_per} per Status card in your hand, draw and discard piles).',
         effects: [{ type: 'damage', amount: { base: 8, per: BOND.damage_per_status, scale: 'player_status_cards' }, target: 'target' }] },
-      gill_lash: { name: 'Gill Lash', intent: 'attack', text: 'Deal {damage} damage × {times} (+{damage_per} per Status card in your hand, draw and discard piles).',
-        effects: [{ type: 'damage', amount: { base: 3, per: BOND.damage_per_status, scale: 'player_status_cards' }, times: 3, target: 'target' }] },
+      gill_lash: { name: 'Gill Lash', intent: 'attack', text: 'Deal {damage} damage × {times}. Each hit grows with the Status cards in your hand, draw and discard piles.',
+        effects: [{ type: 'damage', amount: { base: 3, per: BOND.lash_per_status, scale: 'player_status_cards' }, times: 3, target: 'target' }] },
       hunker: { name: 'Hunker', intent: 'defend', text: 'Gain {block} Block. Shuffle {add_card} Tangle into your discard pile.',
         effects: [{ type: 'block', amount: 14 }, { type: 'add_card', card: 'status_tangle', to: 'discard', n: 1 }] },
     },

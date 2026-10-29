@@ -586,9 +586,13 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
       openChoice(env, { kind: 'cards', prompt: `Scry ${k}: choose cards to discard.`, from: 'draw', choices: top, labels: [], offers: [], min: 0, max: k, resume: { op: 'scry' } });
       return;
     }
-    case 'gold':
-      gainGold(env, amt(effect.amount));
+    case 'gold': {
+      // "Lose N gold" effects (curses, enemy thefts) take what you have: a loss clamps at 0 gold.
+      // Costs the player chooses (shop prices, event options) are gated by legality/`available` and use gainGold directly.
+      const n = amt(effect.amount);
+      gainGold(env, n < 0 ? -Math.min(-n, env.state.player.gold) : n);
       return;
+    }
     case 'remove_card':
       return execRemove(env, effect, frame, amt(effect.n ?? 1));
     case 'transform_card': {

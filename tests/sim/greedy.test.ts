@@ -67,6 +67,18 @@ describe('greedy policy', () => {
   }, 180_000);
 });
 
+describe('stalemate guard', () => {
+  it('records a combat over the turn limit as a loss and returns normally', () => {
+    const r = runOne('stale-1', CLS, greedyPolicy, { maxCombatTurns: 1 });
+    expect(r.endCause).toBe('stalemate');
+    expect(r.won).toBe(false);
+    expect(r.deathEncounter).toBeTruthy();
+    expect(r.combats[r.combats.length - 1]?.won).toBe(false);
+    const m = aggregate([r], 1).metrics[CLS];
+    expect(m?.stalemates).toBe(1);
+  });
+});
+
 describe('balance overrides', () => {
   it('sets TUNING leaves by path and restores them', () => {
     const before = TUNING.enemyDamagePct[1];

@@ -40,7 +40,7 @@ function quantile(sorted: readonly number[], q: number): number {
 
 export interface Suspect {
   cls: string;
-  kind: 'card' | 'relic' | 'encounter' | 'milestone' | 'stalemate';
+  kind: 'card' | 'relic' | 'encounter' | 'milestone' | 'stalemate' | 'cap';
   id: string;
   why: string;
   /** For ranking: bigger = more suspicious. */
@@ -70,6 +70,10 @@ export function findSuspects(cls: string, m: BalanceMetrics): Suspect[] {
     if (e.avgDamage > x.lost * 1.3) out.push({ cls, kind: 'encounter', id, why: `HP lost ${num(e.avgDamage)} vs expected ${x.lost} (×${num(e.avgDamage / x.lost, 2)}; ${e.fights} fights, ${e.deaths} deaths)`, weight: 1 + e.avgDamage / x.lost + e.deaths / Math.max(1, e.fights) * 5 });
   }
   for (const [id, n] of Object.entries(m.stalematesByEncounter)) out.push({ cls, kind: 'stalemate', id, why: `${n} run(s) ended in a stalemate (combat over the turn limit; counted as losses)`, weight: 6 + n });
+  if (m.capHitsPerTurn > BOT_TARGETS.capHitsPerTurn) {
+    const top = Object.entries(m.capHits).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${v}`).join(', ');
+    out.push({ cls, kind: 'cap', id: 'cap_hits', why: `caps hit in ${pct(m.capHitsPerTurn, 2)} of turns (target < 1%): ${top}`, weight: 4 + m.capHitsPerTurn * 50 });
+  }
   const ms = m.milestones;
   if (ms.reachA1Boss < BOT_TARGETS.reachA1Boss) out.push({ cls, kind: 'milestone', id: 'reach_a1_boss', why: `${pct(ms.reachA1Boss)} reach the act 1 boss (target ≥ ${pct(BOT_TARGETS.reachA1Boss, 0)})`, weight: 5 });
   if (ms.reachA1Boss > 0 && ms.beatA1Boss < BOT_TARGETS.beatA1Boss) out.push({ cls, kind: 'milestone', id: 'beat_a1_boss', why: `${pct(ms.beatA1Boss)} beat the act 1 boss (target ≥ ${pct(BOT_TARGETS.beatA1Boss, 0)})`, weight: 4 });
@@ -252,7 +256,7 @@ export function renderReport(label: string, inputs: readonly ReportInput[], note
   );
   if (byClass.size > 1) out.push(`Win-rate spread between classes: ${pct(spread)} (target ≤ ${pct(BOT_TARGETS.classSpread, 0)}).\n`);
   out.push('## Suspects\n');
-  out.push('Cards with a pick rate in the bottom or top 5% of their class (offered ≥ max(10, 1% of screens)), relics with |win Δ| > 10 points (held in ≥ 5% of runs), encounters whose HP lost exceeds ENEMIES §4.1 by > 30% (≥ 10 fights), missed GDD §8.4 milestones, and stalemates (a combat over the turn limit, counted as a loss). Ranked by severity.\n\n');
+  out.push('Cards with a pick rate in the bottom or top 5% of their class (offered ≥ max(10, 1% of screens)), relics with |win Δ| > 10 points (held in ≥ 5% of runs), encounters whose HP lost exceeds ENEMIES §4.1 by > 30% (≥ 10 fights), missed GDD §8.4 milestones, and stalemates (a combat over the turn limit, counted as a loss), and cap-hit rates over 1% of turns. Ranked by severity. Relic and card win deltas carry survivorship bias: runs that live longer collect more relics and cards, so with a low win rate most positive deltas mean \"held by runs that got far\". Compare them with each other, not with zero.\n\n');
   const suspects = [...byClass].flatMap(([cls, { m }]) => findSuspects(cls, m)).sort((a, b) => b.weight - a.weight);
   out.push(table(['class', 'kind', 'id', 'why'], suspects.map((x) => [x.cls, x.kind, `\`${x.id}\``, x.why])));
   for (const [cls, { m }] of byClass) out.push(classSection(cls, m));

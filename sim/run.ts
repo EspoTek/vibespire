@@ -64,6 +64,8 @@ export function runOne(seed: string, classId: string, policy: Policy, opts: RunO
     shardsSpentByAct[f.act - 1] = (shardsSpentByAct[f.act - 1] ?? 0) + f.shardsSpent;
     for (const [k, v] of Object.entries(f.capHits)) capHits[k] = (capHits[k] ?? 0) + v;
   }
+  // finish() closes an unfinished combat (stalemate), so per-combat telemetry exists for every combat.
+  const telemetry = tele.finish(s);
   const result: RunResult = {
     seed,
     classId,
@@ -107,7 +109,7 @@ export function runOne(seed: string, classId: string, policy: Policy, opts: RunO
     upgradesByAct,
     goldEarnedByAct,
     goldSpentByAct,
-    telemetry: tele.finish(s),
+    telemetry,
   };
   if (stalemate !== null) result.deathEncounter = stalemate;
   else if (s.phase === 'defeat' && s.combat && last.encounterId !== null) result.deathEncounter = last.encounterId;

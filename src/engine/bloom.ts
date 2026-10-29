@@ -162,6 +162,13 @@ export function resolvePruneScrap(env: Env, spec: PruneSpec, uids: readonly numb
     for (const c of combat.hand.filter((x) => isBloomEligible(s, x))) addBloom(env, c, amount);
     return;
   }
+  // Standard Prune: you choose a Bloom card in hand; with none in hand, the Bloom goes to a random Bloom card
+  // in your draw or discard pile instead, so a Prune is never wasted (RULINGS 43).
+  if (!combat.hand.some((x) => isBloomEligible(s, x))) {
+    const pool = [...combat.draw, ...combat.discard].filter((x) => isBloomEligible(s, x));
+    if (pool.length) addBloom(env, pickFrom(s.rng.misc, pool), amount);
+    return;
+  }
   chooseBloomInHand(env, amount, { op: 'prune_bloom', amount });
 }
 

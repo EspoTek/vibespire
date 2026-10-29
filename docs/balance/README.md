@@ -45,6 +45,7 @@ The report opens with a **Summary** and a ranked **Suspects** list, followed by 
 - **Economy per act.** Shards earned and spent (GDD §4.5 target: 3–5 earned per act), deck size, gold, removals by source, and upgrades.
 - **Turns and damage per encounter vs ENEMIES §4.1.** The ratio column is the HP lost divided by the roster's expectation. ⚠ marks a ratio above 1.3.
 - **Mechanic telemetry** (GDD §8.6 item 5). Onslaught when Attacks are played, Riposte triggers / fizzles / cancels, Guard's share of the damage prevented, Bloom at the end of the run, Prunes per combat, Rot's share of damage dealt, beats per turn, Timeline resolutions, Exposed bonus damage, and Stagger prevented (an upper bound: stacks on the attacker summed per enemy hit).
+- **Stalemates.** A run whose combat lasts more than 100 player turns ends as a loss with cause `stalemate` (`RunResult.endCause`) and the batch continues. The report counts them per class and lists them as suspects: each one is a policy or content bug (an unkillable enemy, or a bot that never finishes).
 - **Cap hits** (GDD §3). These should happen in under 1% of turns. A spike means a loop exists.
 
 The **Suspects** list contains:

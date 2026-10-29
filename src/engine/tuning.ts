@@ -44,7 +44,9 @@ export const TUNING = {
   /** GDD §2.14 backlash_primed: +4 per stack on the next enemy hit. */
   backlashPerStack: 4,
   /** Pipeline step 3 multiplier on enemy-sourced hits, per act (simulator lever). */
-  enemyDamagePct: { 1: 100, 2: 100, 3: 100 } as Record<Act, number>,
+  enemyDamagePct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
+  /** Balance lever: % applied to every rolled enemy HP, per act. */
+  enemyHpPct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
 
   map: {
     rows: 15,

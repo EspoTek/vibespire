@@ -245,13 +245,13 @@ describe('Prune and Bloom rules', () => {
     expect(combat(g).pendingChoice).toBeNull();
   });
 
-  it('Prune without a hand Bloom card still Scraps; Wild Prune can grow a draw-pile copy', () => {
+  it('Prune without a hand Bloom card still Scraps and grows a pile copy (RULINGS 43); Wild Prune too', () => {
     for (const id of ['graft_hide', 'windblown_seed']) {
       const g = sandbox();
       const prune = addCard(g, id), scrap = addCard(g, 'lash'), seed = addCard(g, 'seed_bite', 'draw');
       play(g, prune); choose(g, scrap.uid);
       expect(combat(g).counters.prunes).toBe(1);
-      expect(combat(g).draw.find((x) => x.uid === seed.uid)?.vars?.bloom).toBe(id === 'windblown_seed' ? 1 : 0);
+      expect(combat(g).draw.find((x) => x.uid === seed.uid)?.vars?.bloom).toBe(1);
     }
   });
 

@@ -211,8 +211,12 @@ function paradoxReturn(c: EffectCtx): void {
     c.emit({ t: 'text', text: 'Timeline full' });
     return;
   }
-  const pile = combat.discard.some((x) => x.uid === uid) ? combat.discard : combat.exhaust.some((x) => x.uid === uid) ? combat.exhaust : null;
-  if (!pile) throw new Error(`paradox_coil: card ${uid} is not in the discard pile or Scrapheap`);
+  const pile = [combat.discard, combat.exhaust, combat.draw].find((p) => p.some((x) => x.uid === uid)) ?? null;
+  // Expected outcome, not a bug: an effect of the resolving card (or a reshuffle) already moved it to hand or into play.
+  if (!pile) {
+    c.emit({ t: 'text', text: 'Paradox Coil: the card moved on' });
+    return;
+  }
   const i = pile.findIndex((x) => x.uid === uid);
   const [card] = pile.splice(i, 1);
   if (!card) throw new Error('paradox_coil: splice');

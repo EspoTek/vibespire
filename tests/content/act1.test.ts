@@ -46,7 +46,7 @@ const ROSTER = [
   ['enc_a1_spore_cluster', 'hard', ['sporepuff', 'sporepuff', 'sporepuff'], [30, 39], 12],
   ['enc_a1_thornback_drone', 'hard', ['scrap_drone', 'thornback'], [57, 65], 15],
   ['enc_a1_alpha', 'elite', ['gnasher_alpha', 'gnasher', 'gnasher'], [88, 100], 1],
-  ['enc_a1_dreadcap', 'elite', ['dreadcap'], [100, 106], 1],
+  ['enc_a1_dreadcap', 'elite', ['dreadcap'], [90, 96], 1],
   ['enc_a1_titan', 'elite', ['shellback_titan'], [80, 86], 1],
 ] as const;
 
@@ -460,21 +460,21 @@ describe('Act 1 mechanics and custom effects', () => {
     const { state, combat, env } = sandbox('enc_a1_dreadcap');
     const cap = firstEnemy(combat);
     resolveMove(env, cap, 'sporefall');
-    expect(combat.draw.map((c) => c.id)).toEqual(['status_tangle', 'status_tangle', 'status_tangle']);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(11);
-    expect(computeIntent(state, cap, 'gill_lash')).toMatchObject({ damage: 6, hits: 3 });
+    expect(combat.draw.map((c) => c.id)).toEqual(['status_tangle', 'status_tangle']);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
+    expect(computeIntent(state, cap, 'gill_lash')).toMatchObject({ damage: 4, hits: 3 });
     combat.hand.push(combat.draw.pop()!);
     combat.discard.push(combat.draw.pop()!);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(11);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
     combat.exhaust.push(combat.hand.pop()!);
     cap.intent = computeIntent(state, cap, 'cap_crush');
     refreshIntents(env);
-    expect(cap.intent.damage).toBe(10);
-    expect(hits(resolveMove(env, cap, 'gill_lash'), cap.uid)).toEqual(Array.from({ length: 3 }, () => expect.objectContaining({ amount: 5 })));
+    expect(cap.intent.damage).toBe(9);
+    expect(hits(resolveMove(env, cap, 'gill_lash'), cap.uid)).toEqual(Array.from({ length: 3 }, () => expect.objectContaining({ amount: 3 })));
     resolveMove(env, cap, 'hunker');
     expect(cap.block).toBe(14);
     expect(combat.discard).toHaveLength(2);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(11);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
   });
 
   it('Titan escalates Clamp Block, exposes its underbelly mid-volley, and Rot ignores its shell', () => {

@@ -163,11 +163,16 @@ export interface SpawnOpts {
   withLeader: 'die' | 'flee' | null;
 }
 
+/** Balance lever: TUNING.enemyHpPct[act] (default 100) scales every rolled enemy HP, minimum 1. */
+function scaledEnemyHp(s: RunState, hp: number): number {
+  return Math.max(1, Math.round((hp * TUNING.enemyHpPct[s.act]) / 100));
+}
+
 /** Create an enemy (hp from the 'enemy' stream, own AI stream derived from it) and apply spawnStatuses. */
 export function spawnEnemy(env: Env, combat: CombatState, id: EnemyId, o: SpawnOpts): EnemyState {
   const s = env.state;
   const def = getEnemyDef(id);
-  const hp = nextInt(s.rng.enemy, def.hp[0], def.hp[1]);
+  const hp = scaledEnemyHp(s, nextInt(s.rng.enemy, def.hp[0], def.hp[1]));
   const e: EnemyState = {
     uid: combat.nextEnemyUid,
     id,
@@ -227,7 +232,7 @@ export function transformEnemy(env: Env, uid: number, into: EnemyId): void {
   const def = getEnemyDef(into);
   const from = e.id;
   e.id = into;
-  e.hp = e.maxHp = nextInt(e.rng, def.hp[0], def.hp[1]);
+  e.hp = e.maxHp = scaledEnemyHp(env.state, nextInt(e.rng, def.hp[0], def.hp[1]));
   e.moveHistory = [];
   e.aiState = {};
   emit(env, { t: 'enemy_transformed', uid, from, to: into });

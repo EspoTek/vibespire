@@ -18,7 +18,7 @@ export const CLASSES: ClassDef[] = [
   {
     id: 'graft',
     name: 'The Graft',
-    maxHp: 70,
+    maxHp: 78,
     startingGold: 99,
     maxEnergy: 3,
     potionSlots: 3,
