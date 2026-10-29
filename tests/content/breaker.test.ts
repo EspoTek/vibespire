@@ -94,7 +94,7 @@ describe('Breaker pool: ids', () => {
     const t = (id: string, up: boolean) => renderCardText({ id, upgraded: up }, null);
     expect([t('hew', false), t('hew', true)]).toEqual(['Deal 6 damage.', 'Deal 9 damage.']);
     expect([t('bulwark', false), t('bulwark', true)]).toEqual(['Gain 5 Block.', 'Gain 8 Block.']);
-    expect([t('brace', false), t('brace', true)]).toEqual(['Gain 6 Guard.', 'Gain 9 Guard.']);
+    expect([t('brace', false), t('brace', true)]).toEqual(['Gain 5 Guard.', 'Gain 8 Guard.']);
     expect(t('shoulder_check', false)).toBe('Deal 6 damage, +2 per Onslaught. Riposte: deal 6 damage to the attacker.');
     expect(t('shoulder_check', true)).toBe('Deal 8 damage, +2 per Onslaught. Riposte: deal 9 damage to the attacker.');
     for (const id of IDS.starter) expect(getCardDef(id).cost).toBe(1);
@@ -310,17 +310,17 @@ describe('Breaker pool: Guard', () => {
     const g = arena('guard-carry');
     combatOf(g).hand = [];
     playCard(g, put(g, 'brace'));
-    expect(combatOf(g).player.guard).toBe(6);
+    expect(combatOf(g).player.guard).toBe(5);
     setIntent(g, 0, 'lick');
     g.apply({ type: 'end_turn' });
-    expect(combatOf(g).player.guard).toBe(3);
+    expect(combatOf(g).player.guard).toBe(2);
 
     playCard(g, put(g, 'anneal', true));
-    expect(combatOf(g).player.guard).toBe(9);
+    expect(combatOf(g).player.guard).toBe(8);
     expect(combatOf(g).player.statuses.guard_hold).toBe(1);
     setIntent(g, 0, 'lick');
     g.apply({ type: 'end_turn' });
-    expect(combatOf(g).player.guard).toBe(9);
+    expect(combatOf(g).player.guard).toBe(8);
     expect(combatOf(g).player.statuses.guard_hold).toBeUndefined();
     setIntent(g, 0, 'lick');
     g.apply({ type: 'end_turn' });

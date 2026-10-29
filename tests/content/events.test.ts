@@ -51,7 +51,7 @@ function eventRoom(id: string, cls = 'graft', page: string | null = null, seed =
   const s: RunState = {
     version: ENGINE_VERSION, seed, classId: cls, rng: createStreams(seed), act, ascent: 0, floor: 1, phase: 'event',
     player: { hp: 150, maxHp: 200, gold: 1000, deck: [], relics: [], potions: [], potionSlots: 10, counters: { shards: 5 } },
-    map: { act, rows: [], bossEncounter: 'unused_by_event_sandbox' }, mapPos: null, room: 'event',
+    map: { act, rows: [], bossEncounter: 'unused_by_event_sandbox' }, mapPos: null, mapPath: [], room: 'event',
     combat: null, reward: null, shop: null, event: { id, page, chosen: null, done: false }, rest: null, treasure: null,
     startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null, history: { floors: [] },
     counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 }, nextUid: 1,

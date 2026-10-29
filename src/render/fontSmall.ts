@@ -124,7 +124,11 @@ export const EXTRA_SMALL: Readonly<Record<string, string>> = {
   '\u25cb': '075700', // ○
   '\u273f': '252000', // ✿
   '\u25c6': '027200', // ◆
-  '\u2192': '047400', // →
+  '\u2192': '04f400', // → (uses the 4th column: always followed by a space)
   '\u00d7': '052500', // ×
   '\u2026': '000050', // …
+  '\u2265': '121700', // ≥ (">" over a bar)
+  '\u2264': '424700', // ≤
+  '\u2014': '00f000', // — em dash (4 columns)
+  '\u2013': '007000', // – en dash
 };

@@ -6,6 +6,8 @@
 export interface SummaryFloor {
   floor: number; act: number; room: string; encounterId: string | null; enemies: readonly string[];
   turns: number; damageTaken: number; shardsGained: number; shardsSpent: number;
+  /** null: not recorded for this floor (a save migrated from engine v1). */
+  damageDealt: number | null;
 }
 
 export interface SummaryInput {
@@ -27,8 +29,6 @@ export interface SummaryNames {
   cardName(id: string, upgraded: boolean): string;
   relicName(id: string): string;
   encounterName(id: string): string;
-  /** Damage dealt is not in RunHistory; the renderer passes what it saw this session, or null. */
-  damageDealt: number | null;
 }
 
 export interface RunSummary {
@@ -36,7 +36,19 @@ export interface RunSummary {
   rows: [string, string][];
   /** Deck lines "Seed Bite ✿4", grouped with counts: "3× Hew". */
   deck: string[];
+  /** The same groups for the card-art strip, in the same order. */
+  deckCards: SummaryCard[];
   relics: string[];
+}
+
+export interface SummaryCard { id: string; upgraded: boolean; bloom: number; count: number }
+
+/** "412", or "412+" when some floors predate damage tracking (migrated save), or "n/a" if none were tracked. */
+export function formatDamageDealt(floors: readonly SummaryFloor[]): string {
+  const known = floors.filter((f): f is SummaryFloor & { damageDealt: number } => f.damageDealt !== null);
+  if (known.length === 0) return 'n/a';
+  const sum = known.reduce((a, f) => a + f.damageDealt, 0);
+  return known.length === floors.length ? String(sum) : `${sum}+`;
 }
 
 export function summarizeRun(s: SummaryInput, n: SummaryNames): RunSummary {
@@ -53,16 +65,19 @@ export function summarizeRun(s: SummaryInput, n: SummaryNames): RunSummary {
     [s.phase === 'victory' ? 'HP LEFT' : 'FELL TO', s.phase === 'victory' ? `${s.hp}/${s.maxHp}` : cause],
     ['TURNS', String(turns)],
     ['DAMAGE TAKEN', String(taken)],
-    ['DAMAGE DEALT', n.damageDealt === null ? 'n/a' : String(n.damageDealt)],
+    ['DAMAGE DEALT', formatDamageDealt(s.floors)],
     ['SHARDS', `+${gained} / -${spent}`],
     ['GOLD', String(s.gold)],
   ];
-  const groups = new Map<string, number>();
+  const groups = new Map<string, SummaryCard>();
   for (const c of s.deck) {
-    const bloom = c.vars?.['bloom']; // absent = not a Bloom card / never grown
-    const label = `${n.cardName(c.id, c.upgraded)}${bloom !== undefined && bloom > 0 ? ` ✿${bloom}` : ''}`;
-    groups.set(label, (groups.get(label) ?? 0) + 1);
+    const bloom = c.vars?.['bloom'] ?? 0; // absent = not a Bloom card / never grown
+    const label = `${n.cardName(c.id, c.upgraded)}${bloom > 0 ? ` ✿${bloom}` : ''}`;
+    const g = groups.get(label);
+    if (g) g.count++;
+    else groups.set(label, { id: c.id, upgraded: c.upgraded, bloom, count: 1 });
   }
-  const deck = [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([label, k]) => (k > 1 ? `${k}× ${label}` : label));
-  return { title: s.phase === 'victory' ? 'VICTORY' : 'DEFEAT', rows, deck, relics: s.relics.map((r) => n.relicName(r.id)) };
+  const sorted = [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const deck = sorted.map(([label, g]) => (g.count > 1 ? `${g.count}× ${label}` : label));
+  return { title: s.phase === 'victory' ? 'VICTORY' : 'DEFEAT', rows, deck, deckCards: sorted.map(([, g]) => g), relics: s.relics.map((r) => n.relicName(r.id)) };
 }

@@ -9,6 +9,9 @@ import { Label } from '../ui/Label.ts';
 import { Panel } from '../ui/Panel.ts';
 import { Widget } from '../ui/Widget.ts';
 import type { Atlas } from '../gfx.ts';
+import { PixelBuffer } from '../pixels.ts';
+import { CARD_COLORS, type CardKind } from '../ui/art.ts';
+import { Picture } from '../ui/Picture.ts';
 
 export interface ChoiceRowOptions {
   /** Body text (markup). */
@@ -64,5 +67,35 @@ export class ChoiceRow extends Widget {
 
   protected override renderFocus(on: boolean): void {
     this.panel.setColors(C.boxBg, on ? C.textHi : C.border);
+  }
+}
+
+/**
+ * A deck-strip tile for the run summary: the card's 32x24 art (or its type-hatched placeholder),
+ * border in the card type's trim colour, and its marks along the bottom: "+" upgraded, "✿N" Bloom,
+ * "×N" copies. Focusable so the name can be read (label / tooltip).
+ */
+export class DeckTile extends Widget {
+  static readonly W = 36;
+  static readonly H = 36;
+  private readonly frame: Panel;
+  private readonly trim: number;
+
+  constructor(x: number, y: number, art: { atlas: Atlas; frame: string } | PixelBuffer, kind: CardKind, marks: { upgraded: boolean; bloom: number; count: number }, name: string) {
+    super(rect(x, y, DeckTile.W, DeckTile.H), 'decktile');
+    this.focusable = true;
+    this.activateSound = false;
+    this.trim = CARD_COLORS[kind].trim;
+    this.frame = this.addChild(new Panel(rect(x, y, DeckTile.W, DeckTile.H), { fill: C.black, border: this.trim, thickness: 1 }), 0);
+    if (art instanceof PixelBuffer) this.addChild(new Picture(x + 2, y + 2, art), 1);
+    else this.addChild(new Icon(x + 2, y + 2, art.atlas, art.frame), 1);
+    const text = `${marks.upgraded ? '[lime]+[/]' : ''}${marks.bloom > 0 ? `[lime]✿${marks.bloom}[/]` : ''}`;
+    if (text) this.addChild(new Label(x + 3, y + 28, text, { font: fonts.small, markup: true }), 2);
+    if (marks.count > 1) this.addChild(new Label(x + DeckTile.W - 3, y + 28, `×${marks.count}`, { font: fonts.small, align: 'right', color: C.textHi }), 2);
+    this.label = `${name}${marks.upgraded ? ' (upgraded)' : ''}${marks.bloom > 0 ? `, Bloom ${marks.bloom}` : ''}${marks.count > 1 ? `, ${marks.count} copies` : ''}`;
+  }
+
+  protected override renderFocus(on: boolean): void {
+    this.frame.setColors(C.black, on ? C.textHi : this.trim);
   }
 }

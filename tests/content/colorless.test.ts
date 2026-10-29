@@ -49,7 +49,7 @@ function sandbox(enemyCount = 1): Game {
   const state: RunState = {
     version: 1, seed: 'colorless', classId: SANDBOX_CLASS.id, rng, act: 1, ascent: 0, floor: 1, phase: 'combat',
     player: { hp: 5000, maxHp: 5000, gold: 99, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 5 } },
-    map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, room: 'monster', reward: null, shop: null, event: null,
+    map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, mapPath: [], room: 'monster', reward: null, shop: null, event: null,
     rest: null, treasure: null, startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null,
     history: { floors: [] }, counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 }, nextUid: 1,
     combat: { encounterId: '__colorless_encounter', kind: 'monster', isElite: false, isBoss: false, eventId: null, onWin: [],

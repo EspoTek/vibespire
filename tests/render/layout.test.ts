@@ -48,6 +48,13 @@ describe('placeTooltip', () => {
       expect(p.x + 150).toBeLessThanOrEqual(W - 2);
     }
   });
+  it('skips a side that would cover a neighbour, and ignores neighbours when every side does', () => {
+    const anchor = rect(200, 150, 60, 60);
+    const neighbour = rect(270, 140, 60, 80); // just right of the anchor
+    expect(placeTooltip(anchor, { w: 60, h: 30 }, 'right', SCREEN, 2, 2, [neighbour]).side).toBe('left');
+    const boxedIn = [rect(0, 0, W, 148), rect(0, 212, W, 148), rect(0, 0, 198, H), rect(262, 0, 378, H)];
+    expect(placeTooltip(anchor, { w: 60, h: 30 }, 'right', SCREEN, 2, 2, boxedIn).side).toBe('right');
+  });
   it('falls back to clamping when nothing fits', () => {
     const p = placeTooltip(rect(0, 0, W, H), { w: 200, h: 100 }, 'above');
     expect(p.y).toBeGreaterThanOrEqual(2);

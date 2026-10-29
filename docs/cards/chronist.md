@@ -143,26 +143,26 @@ note: "GDD §4.1 (final). 3 + 5 ÷ 1.5 = 6.3 b (127% of starter 5 b). It teaches
 
 | id | Name | Type | Cost | Text (base → upgraded) | Arch |
 |---|---|---|---|---|---|
-| `pinion_jab` | Pinion Jab | attack | 0 | Deal 2 damage. On beat: apply 1 Exposed. → 3 damage | M G |
+| `pinion_jab` | Pinion Jab | attack | 0 | Deal 3 damage. On beat: apply 1 Exposed. → 4 damage | M G |
 | `gear_train` | Gear Train | attack | 1 | Deal 3 damage 2 times. On beat: deal 3 more. → 4 ×2, +4 | M G |
-| `downbeat` | Downbeat | attack | 2 | Deal 11 damage. On beat: deal 6 more. → 14, +8 | M |
-| `slack_water` | Slack Water | attack | 1 | Deal 6 damage, or 8 if its intent after next isn't an attack. → 8 / 11 | O G |
+| `downbeat` | Downbeat | attack | 2 | Deal 13 damage. On beat: deal 6 more. → 16, +8 | M |
+| `slack_water` | Slack Water | attack | 1 | Deal 7 damage, or 9 if its intent after next isn't an attack. → 9 / 12 | O G |
 | `parallax` | Parallax | attack | 0 | Deal 2 damage 2 times. → 3 times | M G |
 | `noon_gun` | Noon Gun | attack | 1 | Delay 2: deal 14 damage. → Opening, 16 | T |
 | `afterpeal` | Afterpeal | attack | 1 | Deal 3 damage. Delay 1: deal 4 damage; On beat: 4 more. → 4 / 5 / 5 | T M |
-| `spring_tide` | Spring Tide | attack | 1 | Delay 3: deal 14 damage to ALL enemies. → 18 | T |
-| `carillon` | Carillon | attack | 0 | Deal 2 damage to ALL enemies. On beat: deal 2 more to ALL enemies. → 3, +2 | M G |
-| `storm_glass` | Storm Glass | skill | 1 | Delay 1: gain 7 Block, +4 if any enemy intends to attack. → 9, +5 | O T |
+| `spring_tide` | Spring Tide | attack | 1 | Delay 3: deal 16 damage to ALL enemies. → 20 | T |
+| `carillon` | Carillon | attack | 0 | Deal 3 damage to ALL enemies. On beat: deal 2 more to ALL enemies. → 4, +2 | M G |
+| `storm_glass` | Storm Glass | skill | 1 | Delay 1: gain 8 Block, +4 if any enemy intends to attack. → 10, +5 | O T |
 | `almanac` | Almanac | skill | 0 | Delay 1: draw 2 cards. → On beat: draw 1 more | T G |
 | `ephemeris` | Ephemeris | skill | 1 | Draw 2 cards. On beat: draw 1 more. → On beat: 2 more | G M |
 | `upbeat` | Upbeat | skill | 0 | Gain 4 Block. Can't be played on the beat. → 6 | M G |
-| `weather_eye` | Weather Eye | skill | 1 | Gain 5 Guard. If any enemy's intent after next is an attack, gain 4 more. → 7, +5 | O G |
-| `balance_wheel` | Balance Wheel | skill | 1 | Gain 5 Block. On beat: apply 1 Stagger to ALL enemies. → 7 Block | M O |
+| `weather_eye` | Weather Eye | skill | 1 | Gain 6 Guard. If any enemy's intent after next is an attack, gain 4 more. → 8, +5 | O G |
+| `balance_wheel` | Balance Wheel | skill | 1 | Gain 6 Block. On beat: apply 1 Stagger to ALL enemies. → 8 Block | M O |
 | `detent` | Detent | skill | 0 | Apply 1 Stagger. On beat: apply 1 more. → On beat: 2 more | O M |
-| `dead_reckoning` | Dead Reckoning | skill | 0 | Gain 1 Block per card played this turn (this one included). → 1 + 1 per card | M G |
-| `logbook` | Logbook | skill | 1 | Gain 4 Block, +1 per Shard you hold. → 6 + 1 per Shard | G |
-| `reef_the_sails` | Reef the Sails | skill | 1 | Gain 4 Block. If its intent after next is an attack, apply 2 Stagger to it. → 6 Block | O |
-| `wind_forward` | Wind Forward | skill | 0 | Advance 1. If your Timeline is empty, gain 3 Block instead. → Advance 1 and 2 Block / 5 Block | T G |
+| `dead_reckoning` | Dead Reckoning | skill | 0 | Gain 1 Block, +1 per card played this turn (this one included). → 2 + 1 per card | M G |
+| `logbook` | Logbook | skill | 1 | Gain 5 Block, +1 per Shard you hold. → 7 + 1 per Shard | G |
+| `reef_the_sails` | Reef the Sails | skill | 1 | Gain 5 Block. If its intent after next is an attack, apply 2 Stagger to it. → 7 Block | O |
+| `wind_forward` | Wind Forward | skill | 0 | Advance 1. If your Timeline is empty, gain 4 Block instead. → Advance 1 and 2 Block / 6 Block | T G |
 
 ```card
 id: pinion_jab
@@ -175,14 +175,15 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage. On beat: apply {beat_exposed} Exposed."
 effects:
-  - damage: { amount: 2, target: target }
+  - damage: { amount: 3, target: target }
   - on_beat: { effects: [ { status: { target: target, id: exposed, amount: 1, key: beat_exposed } } ] }
 upgrade:
   effects:
-    - damage: { amount: 3, target: target }
+    - damage: { amount: 4, target: target }
     - on_beat: { effects: [ { status: { target: target, id: exposed, amount: 1, key: beat_exposed } } ] }
 tags: [metronome, glue, cheap, on_beat, exposed]
 note: "0-cost common budget 3.5 d. 2 + 0.6 × 3 (Exposed 1) = 3.8 d (109%). Upgraded 3 + 1.8 = 4.8 d (+26%). The Exposed lands after the jab and lasts the rest of your turn (GDD §2.10), so play your multi-hits after it on beat turns. M: a free count-advancer that wants slot 3. G: the generic Exposed poke. No draw, energy or return: loop-inert."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 2/3 → 3/4 damage (bottom-5% pick rate)."
 ```
 
 ```card
@@ -217,14 +218,15 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage. On beat: deal {beat_damage} more."
 effects:
-  - damage: { amount: 11, target: target }
+  - damage: { amount: 13, target: target }
   - on_beat: { effects: [ { damage: { amount: 6, target: target, key: beat_damage } } ] }
 upgrade:
   effects:
-    - damage: { amount: 14, target: target }
+    - damage: { amount: 16, target: target }
     - on_beat: { effects: [ { damage: { amount: 8, target: target, key: beat_damage } } ] }
 tags: [metronome, on_beat]
 note: "Common 2 × 7 = 14 d. 11 + 0.6 × 6 = 14.6 d (104%). The on-beat payout of 17 is under the 1.6 × 14 = 22.4 cap. Upgraded 14 + 4.8 = 18.8 (+29%). The pool's 'big card on 3' puzzle: play two 0-costs, then this with 2 of your 3 energy. Upbeat is its natural setup. The bonus is a second hit, so Exposed counts twice."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 11/14 → 13/16 (bottom-5% pick rate, 0.5%)."
 ```
 
 ```card
@@ -240,16 +242,17 @@ text: "Deal {damage} damage, or {lull_damage} if its intent after next isn't an 
 effects:
   - conditional:
       if: { forecast_is_attack: { who: target, depth: 1 } }
-      then: [ { damage: { amount: 6, target: target } } ]
-      else: [ { damage: { amount: 8, target: target, key: lull_damage } } ]
+      then: [ { damage: { amount: 7, target: target } } ]
+      else: [ { damage: { amount: 9, target: target, key: lull_damage } } ]
 upgrade:
   effects:
     - conditional:
         if: { forecast_is_attack: { who: target, depth: 1 } }
-        then: [ { damage: { amount: 8, target: target } } ]
-        else: [ { damage: { amount: 11, target: target, key: lull_damage } } ]
+        then: [ { damage: { amount: 9, target: target } } ]
+        else: [ { damage: { amount: 12, target: target, key: lull_damage } } ]
 tags: [oracle, glue, forecast]
 note: "Common 7 d. 6 + (8 − 6) ÷ 1.4 = 7.4 d (106%). Upgraded 8 + 3 ÷ 1.4 = 10.1 (+36%). A Strike-equivalent that teaches reading the second intent: you hit hardest when the enemy will spend its after-next turn buffing or defending. Never worse than a common Strike. A hidden ('?') forecast counts as not an attack (§11.7). O, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 6/8 → 7/9, upgraded 8/11 → 9/12 (bottom-5% pick rate)."
 ```
 
 ```card
@@ -340,14 +343,15 @@ effects: []
 delay:
   turns: 3
   effects:
-    - damage: { amount: 14, target: all_enemies, key: delay_damage }
+    - damage: { amount: 16, target: all_enemies, key: delay_damage }
 upgrade:
   delay:
     turns: 3
     effects:
-      - damage: { amount: 18, target: all_enemies, key: delay_damage }
+      - damage: { amount: 20, target: all_enemies, key: delay_damage }
 tags: [timeline, delay, aoe]
 note: "Common 7 d. 14 × 1.25 (AoE) ÷ 2.5 = 7 d (100%). Upgraded 18: 9 d (+29%). Delay 3 is the class's slow AoE, for packs whose HP will still be there in Act 2 width fights. Played on turn 1 of a 4-turn hallway fight it lands on turn 4; Wind Forward or Hasten pull it in. T."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 14/18 → 16/20 (Act 2 width: the Chronist died to multi-enemy hallways)."
 ```
 
 ```card
@@ -361,14 +365,15 @@ target: all_enemies
 keywords: []
 text: "Deal {damage} damage to ALL enemies. On beat: deal {beat_damage} more to each."
 effects:
-  - damage: { amount: 2, target: all_enemies }
+  - damage: { amount: 3, target: all_enemies }
   - on_beat: { effects: [ { damage: { amount: 2, target: all_enemies, key: beat_damage } } ] }
 upgrade:
   effects:
-    - damage: { amount: 3, target: all_enemies }
+    - damage: { amount: 4, target: all_enemies }
     - on_beat: { effects: [ { damage: { amount: 2, target: all_enemies, key: beat_damage } } ] }
 tags: [metronome, glue, cheap, aoe, on_beat]
 note: "0-cost common 3.5 d. 2 × 1.25 + 0.6 × 2 × 1.25 = 2.5 + 1.5 = 4.0 d (114%). Upgraded 3 / 2: 3.75 + 1.5 = 5.25 (+31%). On the beat it deals 4 to each enemy, which clears Orchid Buds and Gnasher packs. M, G (cheap AoE poke)."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 2/3 → 3/4 (Act 2 width)."
 ```
 
 ```card
@@ -385,7 +390,7 @@ effects: []
 delay:
   turns: 1
   effects:
-    - block: { amount: 7, key: delay_block }
+    - block: { amount: 8, key: delay_block }
     - conditional:
         if: { forecast_is_attack: { who: any, depth: 0 } }
         then: [ { block: { amount: 4, key: storm_block } } ]
@@ -393,12 +398,13 @@ upgrade:
   delay:
     turns: 1
     effects:
-      - block: { amount: 9, key: delay_block }
+      - block: { amount: 10, key: delay_block }
       - conditional:
           if: { forecast_is_attack: { who: any, depth: 0 } }
           then: [ { block: { amount: 5, key: storm_block } } ]
 tags: [oracle, timeline, block, delay, forecast]
 note: "Common 6 b. 7 ÷ 1.5 + 4 ÷ 1.5 ÷ 1.4 = 4.67 + 1.9 = 6.57 b (109%). Upgraded 6 + 2.38 = 8.4 b (+28%). The condition is checked at resolution (GDD §2.8), so 'intends to attack' is the move you saw as 'after next' when you played it (the ÷1.4 forecast price, §0.3.3). Delayed Block arrives before your draw and lasts through the coming enemy phase. This is the 'Delay 1 wall arrives with the big hit' of GDD §1.4, at common. O, T."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): delayed Block 7/9 → 8/10 (Act 2 defence)."
 ```
 
 ```card
@@ -480,18 +486,19 @@ target: self
 keywords: []
 text: "Gain {guard} Guard. If any enemy's intent after next is an attack, gain {storm_guard} more."
 effects:
-  - guard: { amount: 5 }
+  - guard: { amount: 6 }
   - conditional:
       if: { forecast_is_attack: { who: any, depth: 1 } }
       then: [ { guard: { amount: 4, key: storm_guard } } ]
 upgrade:
   effects:
-    - guard: { amount: 7 }
+    - guard: { amount: 8 }
     - conditional:
         if: { forecast_is_attack: { who: any, depth: 1 } }
         then: [ { guard: { amount: 5, key: storm_guard } } ]
 tags: [oracle, glue, guard, forecast]
 note: "Common Guard rate 7 per energy (§0.3.5). 5 + 4 ÷ 1.4 = 7.86 (112%). Upgraded 7 + 3.57 = 10.6 (+35%). Guard gained now covers the next enemy phase, then halves into the after-next one (GDD §2.3). So the forecast condition is aimed exactly where the leftover lands. 1 of 3 Guard cards. O, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 5/7 → 6/8 Guard (Act 2 defence)."
 ```
 
 ```card
@@ -505,14 +512,15 @@ target: self
 keywords: []
 text: "Gain {block} Block. On beat: apply {beat_stagger} Stagger to ALL enemies."
 effects:
-  - block: { amount: 5 }
+  - block: { amount: 6 }
   - on_beat: { effects: [ { status: { target: all_enemies, id: stagger, amount: 1, key: beat_stagger } } ] }
 upgrade:
   effects:
-    - block: { amount: 7 }
+    - block: { amount: 8 }
     - on_beat: { effects: [ { status: { target: all_enemies, id: stagger, amount: 1, key: beat_stagger } } ] }
 tags: [metronome, oracle, block, on_beat, stagger]
 note: "Common 6 b. 5 + 0.6 × (2 b × 1.25 AoE) = 5 + 1.5 = 6.5 b (108%); against a multi-hit pack 7.25. Upgraded 8.5 b (+31%). On the beat the Stagger is on every enemy for the coming enemy phase (−1 per hit). M: a defensive beat card. O: Stagger timed to the multi-hits you can see."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 5/7 → 6/8 Block (bottom-5% pick rate)."
 ```
 
 ```card
@@ -547,12 +555,13 @@ target: self
 keywords: []
 text: "Gain {block} Block (+{block_per} per card played this turn)."
 effects:
-  - block: { amount: { base: 0, per: 1, scale: cards_played_this_turn } }
+  - block: { amount: { base: 1, per: 1, scale: cards_played_this_turn } }
 upgrade:
   effects:
-    - block: { amount: { base: 1, per: 1, scale: cards_played_this_turn } }
+    - block: { amount: { base: 2, per: 1, scale: cards_played_this_turn } }
 tags: [metronome, glue, cheap, block, scaling]
 note: "0-cost common 3 b. Played at the typical filler slot 3–4: 3.5 b (117%). In slot 6 it is 6, and in slot 2 it is 2. Upgraded +1 (+29%). It rewards ending a long chain with it. The count includes itself (GDD §2.7 appends at pay time). No STS counterpart counts every card for Block. M, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 0/1 → 1/2 (bottom-5% pick rate)."
 ```
 
 ```card
@@ -566,12 +575,13 @@ target: self
 keywords: []
 text: "Gain {block} Block (+{block_per} per Shard you hold)."
 effects:
-  - block: { amount: { base: 4, per: 1, scale: shards } }
+  - block: { amount: { base: 5, per: 1, scale: shards } }
 upgrade:
   effects:
-    - block: { amount: { base: 6, per: 1, scale: shards } }
+    - block: { amount: { base: 7, per: 1, scale: shards } }
 tags: [glue, block, shards]
 note: "Common 6 b. Priced at 2 Shards held: 4 + 2 = 6 b (100%). At the Shard cap of 10 it is 14 b. Upgraded +2 (+33%). Run-interacting: holding Shards rather than spending them on Purge becomes a small defensive plan, alongside Geode Heart. 1 of 2 Shard cards. G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4/6 → 5/7 (bottom-5% pick rate)."
 ```
 
 ```card
@@ -585,18 +595,19 @@ target: enemy
 keywords: []
 text: "Gain {block} Block. If its intent after next is an attack, apply {stagger} Stagger to it."
 effects:
-  - block: { amount: 4 }
+  - block: { amount: 5 }
   - conditional:
       if: { forecast_is_attack: { who: target, depth: 1 } }
       then: [ { status: { target: target, id: stagger, amount: 2, key: stagger } } ]
 upgrade:
   effects:
-    - block: { amount: 6 }
+    - block: { amount: 7 }
     - conditional:
         if: { forecast_is_attack: { who: target, depth: 1 } }
         then: [ { status: { target: target, id: stagger, amount: 2, key: stagger } } ]
 tags: [oracle, block, stagger, forecast]
 note: "Common 6 b. 4 + (2 × 2 b) ÷ 1.4 = 6.86 b (114%). Upgraded 8.86 (+29%). Stagger 2 applied now gives −2 on its next move and −1 on the after-next attack you saw (GDD §2.11). Block now plus Stagger later: the Oracle's common two-turn defence. O."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 4/6 → 5/7 Block (bottom-5% pick rate)."
 ```
 
 ```card
@@ -613,16 +624,17 @@ effects:
   - conditional:
       if: { timeline_nonempty: {} }
       then: [ { advance: { n: 1, key: advance } } ]
-      else: [ { block: { amount: 3 } } ]
+      else: [ { block: { amount: 4 } } ]
 upgrade:
   text: "Advance {advance} and gain {adv_block} Block. If your Timeline is empty, gain {block} Block instead."
   effects:
     - conditional:
         if: { timeline_nonempty: {} }
         then: [ { advance: { n: 1, key: advance } }, { block: { amount: 2, key: adv_block } } ]
-        else: [ { block: { amount: 5 } } ]
+        else: [ { block: { amount: 6 } } ]
 tags: [timeline, glue, cheap, advance]
 note: "0-cost common 3.5 d. Advance 1 ≈ 3 d (a Delay 1 payload, priced ÷1.5, arrives now: its 'extra half' is about 3 d on a common), and the fallback of 3 Block is 3 b (100%). It is never dead. Upgraded +2 Block, or 5 Block (+40%). Storm Glass + Wind Forward = 11 Block now for 1 energy. Advance is capped at 2 per turn (cap_advance). It draws no cards and gains no energy, so it is safe at common. T, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): fallback Block 3/5 → 4/6 (bottom-5% pick rate)."
 ```
 
 ---
@@ -632,25 +644,25 @@ note: "0-cost common 3.5 d. Advance 1 ≈ 3 d (a Delay 1 payload, priced ÷1.5, 
 
 | id | Name | Type | Cost | Text (base → upgraded) | Arch |
 |---|---|---|---|---|---|
-| `sweep_hand` | Sweep Hand | attack | 1 | Deal 8 damage. On beat: deal it to ALL enemies instead. → 11 | M |
+| `sweep_hand` | Sweep Hand | attack | 1 | Deal 9 damage. On beat: deal it to ALL enemies instead. → 12 | M |
 | `fermata` | Fermata | attack | 1 | Keep. Deal 3 damage. On beat: deal 9 more. → 4, +12 | M |
 | `appointed_hour` | Appointed Hour | attack | 2 | Delay 2: deal 34 damage. → 42 | T O |
-| `knell` | Knell | attack | 1 | Deal 3 damage to ALL enemies. Delay 2: deal 9 damage to ALL enemies. → 4 / 12 | T |
-| `turn_the_tide` | Turn the Tide | attack | 1 | Deal 3 damage, +half the damage of its intent after next. → base 6 | O |
+| `knell` | Knell | attack | 1 | Deal 4 damage to ALL enemies. Delay 2: deal 9 damage to ALL enemies. → 5 / 12 | T |
+| `turn_the_tide` | Turn the Tide | attack | 1 | Deal 4 damage, +half the damage of its intent after next. → base 7 | O |
 | `confluence` | Confluence | attack | 0 | Deal 1 damage, +2 per card on your Timeline. → +3 per card | T |
 | `second_hand` | Second Hand | attack | 0 | Delay 1: deal 4 damage. On beat: 5 more. → 5, +6 | M T |
 | `mainspring` | Mainspring | skill | 0 | On beat: gain 1 energy. → also gain 2 Block | M |
 | `quarter_chime` | Quarter Chime | skill | 0 | On beat: draw 2 cards. → also gain 2 Block | M G |
 | `hasten` | Hasten | skill | 0 | Advance 1. On beat: Advance 1 more. → also gain 3 Block | T M |
 | `banked_hours` | Banked Hours | skill | 1 | Delay 1: gain 1 energy and draw 2 cards. → draw 3 | T G |
-| `breakwater` | Breakwater | skill | 2 | Gain 7 Block. Delay 1: gain 10 Block. → 9 / 13 | T O |
-| `heave_to` | Heave To | skill | 1 | Gain 2 Guard, +half the damage of its intent after next. → base 5 | O G |
+| `breakwater` | Breakwater | skill | 2 | Gain 8 Block. Delay 1: gain 11 Block. → 10 / 14 | T O |
+| `heave_to` | Heave To | skill | 1 | Gain 4 Guard, +half the damage of its intent after next. → base 7 | O G |
 | `batten_down` | Batten Down | skill | 0 | Delay 1: if it intends to attack, apply 3 Stagger to it. → 4 | O T |
 | `mark_the_lull` | Mark the Lull | skill | 0 | Apply 1 Exposed. If its intent after next isn't an attack, apply 1 more. → 2 more | O |
 | `glance_ahead` | Glance Ahead | skill | 0 | Draw 1 card. If your Timeline is not empty, draw 1 more. Scrap. → 2 more | T G |
-| `striking_train` | Striking Train | power | 1 | Whenever you play a card on the beat, deal 2 damage to ALL enemies. → 3 | M |
+| `striking_train` | Striking Train | power | 1 | Whenever you play a card on the beat, deal 3 damage to ALL enemies. → 4 | M |
 | `tide_table` | Tide Table | power | 1 | Whenever a card on your Timeline resolves, draw 1 card. → cost 0 | T G |
-| `storm_warning` | Storm Warning | power | 1 | At the start of your turn, if any enemy intends to attack, apply 1 Stagger to ALL enemies. → cost 0 | O |
+| `storm_warning` | Storm Warning | power | 1 | At the start of your turn, if any enemy intends to attack, apply 2 Stagger to ALL enemies. → cost 0 | O |
 | `escapement` | Escapement | power | 1 | Whenever you put a card on your Timeline on the beat, Advance 1. → Opening | T M |
 
 ```card
@@ -666,16 +678,17 @@ text: "Deal {damage} damage. On beat: deal it to ALL enemies instead."
 effects:
   - conditional:
       if: { on_beat: {} }
-      then: [ { damage: { amount: 8, target: all_enemies } } ]
-      else: [ { damage: { amount: 8, target: target } } ]
+      then: [ { damage: { amount: 9, target: all_enemies } } ]
+      else: [ { damage: { amount: 9, target: target } } ]
 upgrade:
   effects:
     - conditional:
         if: { on_beat: {} }
-        then: [ { damage: { amount: 11, target: all_enemies } } ]
-        else: [ { damage: { amount: 11, target: target } } ]
+        then: [ { damage: { amount: 12, target: all_enemies } } ]
+        else: [ { damage: { amount: 12, target: target } } ]
 tags: [metronome, aoe, on_beat]
 note: "Uncommon 8.5 d. The beat adds the AoE share: 8 × 0.25 = 2, and 8 + 0.6 × 2 = 9.2 d (108%). In a 3-enemy fight the beat is worth +16. Upgraded 11 (+38%). It is a branch, not an `on_beat` wrapper, so Drum and Polyrhythm don't repeat it. It is the Metronome's AoE answer to Act 2 width. M."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 8/11 → 9/12 (Act 2 width; low pick rate)."
 ```
 
 ```card
@@ -734,20 +747,21 @@ target: all_enemies
 keywords: [delay]
 text: "Deal {damage} damage to ALL enemies. Delay 2: deal {delay_damage} damage to ALL enemies."
 effects:
-  - damage: { amount: 3, target: all_enemies }
+  - damage: { amount: 4, target: all_enemies }
 delay:
   turns: 2
   effects:
     - damage: { amount: 9, target: all_enemies, key: delay_damage }
 upgrade:
   effects:
-    - damage: { amount: 4, target: all_enemies }
+    - damage: { amount: 5, target: all_enemies }
   delay:
     turns: 2
     effects:
       - damage: { amount: 12, target: all_enemies, key: delay_damage }
 tags: [timeline, delay, aoe]
 note: "Uncommon 8.5 d. AoE ×1.25: 3.75 + 9 × 1.25 ÷ 2 = 3.75 + 5.63 = 9.4 d (110%). Upgraded 5 + 7.5 = 12.5 (+33%). It is a split card: the chip now kills summons, and the toll later hits the pack. T."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): immediate 3/4 → 4/5 (Act 2 width)."
 ```
 
 ```card
@@ -761,12 +775,13 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage, +half the damage of its intent after next."
 effects:
-  - damage: { amount: { base: 3, per: 0.5, scale: forecast_damage }, target: target }
+  - damage: { amount: { base: 4, per: 0.5, scale: forecast_damage }, target: target }
 upgrade:
   effects:
-    - damage: { amount: { base: 6, per: 0.5, scale: forecast_damage }, target: target }
+    - damage: { amount: { base: 7, per: 0.5, scale: forecast_damage }, target: target }
 tags: [oracle, forecast, scaling]
 note: "Uncommon 8.5 d. Priced at an Act 2 forecast attack of 18: 3 + 9 ÷ 1.4 = 9.4 d (110%). Act 1 (11): 3 + 3.9 = 6.9 (81%). Act 3 (27): 3 + 9.6 = 12.6 (148%). The class gets spikier as enemies hit harder, which is its brief. If the forecast isn't an attack it is 3, so hold it for a windup. With Prophet Glass, forecast_damage sums both forecast moves. Upgraded base 6 (+32% at Act 2). O."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 3/6 → 4/7 (bottom-5% pick rate)."
 ```
 
 ```card
@@ -916,20 +931,21 @@ target: self
 keywords: [delay]
 text: "Gain {block} Block. Delay 1: gain {delay_block} Block."
 effects:
-  - block: { amount: 7 }
+  - block: { amount: 8 }
 delay:
   turns: 1
   effects:
-    - block: { amount: 10, key: delay_block }
+    - block: { amount: 11, key: delay_block }
 upgrade:
   effects:
-    - block: { amount: 9 }
+    - block: { amount: 10 }
   delay:
     turns: 1
     effects:
-      - block: { amount: 13, key: delay_block }
+      - block: { amount: 14, key: delay_block }
 tags: [timeline, oracle, block, delay]
 note: "Uncommon 2 × 7 = 14 b. 7 + 10 ÷ 1.5 = 13.67 (98%). Upgraded 9 + 8.67 = 17.67 (+29%). One card gives this turn's Block for the visible intent and next turn's Block for the after-next one. It is the Oracle's two-turn wall, and its Timeline entry feeds Watch Bell and Tide Table. T, O."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 7+10 → 8+11, upgraded 9+13 → 10+14 (Act 2 defence)."
 ```
 
 ```card
@@ -943,12 +959,13 @@ target: enemy
 keywords: []
 text: "Gain {guard} Guard, +half the damage of its intent after next."
 effects:
-  - guard: { amount: { base: 2, per: 0.5, scale: forecast_damage } }
+  - guard: { amount: { base: 4, per: 0.5, scale: forecast_damage } }
 upgrade:
   effects:
-    - guard: { amount: { base: 5, per: 0.5, scale: forecast_damage } }
+    - guard: { amount: { base: 7, per: 0.5, scale: forecast_damage } }
 tags: [oracle, glue, guard, forecast, scaling]
 note: "Uncommon Guard 8 per energy. At Act 2 (18): 2 + 9 ÷ 1.4 = 8.4 (105%). Act 1 (11): 2 + 3.9 = 5.9 (74%). Act 3 (27): 2 + 9.6 = 11.6 (145%). The target is only the enemy it reads; the Guard is yours. Guard covers the next phase and keeps half for the after-next phase, so it bridges 'now' and 'forecast'. Upgraded base 5 (+36% at Act 2). 1 of 3 Guard cards. O, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 2/5 → 4/7 Guard (Act 2 defence; two +1 steps)."
 ```
 
 ```card
@@ -1040,7 +1057,7 @@ target: none
 keywords: []
 text: "Whenever you play a card on the beat, deal {status} damage to ALL enemies."
 effects:
-  - status: { target: self, id: striking_train, amount: 2 }
+  - status: { target: self, id: striking_train, amount: 3 }
 status_def:
   id: striking_train
   stacks: amount
@@ -1055,9 +1072,10 @@ status_def:
           then: [ { damage: { amount: { scale: stacks }, target: all_enemies } } ]
 upgrade:
   effects:
-    - status: { target: self, id: striking_train, amount: 3 }
+    - status: { target: self, id: striking_train, amount: 4 }
 tags: [metronome, power, aoe, on_beat]
 note: "Power line: 8.5 ÷ 3 = 2.8 d per turn. 1.2 beats × 2 × 1.25 = 3.0 d per turn (106%). At 1.8 beats it is 4.5. Upgraded 3 (+50%). The trigger is not a play and doesn't advance the count. Delay cards played on the beat trigger it at play. C19: Kunai/Shuriken fire every 3 Attacks; this fires on beat positions, whatever the card type. M."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 2/3 → 3/4 (Act 2 width)."
 ```
 
 ```card
@@ -1099,7 +1117,7 @@ target: none
 keywords: []
 text: "At the start of your turn, if any enemy intends to attack, apply {status} Stagger to ALL enemies."
 effects:
-  - status: { target: self, id: storm_warning, amount: 1 }
+  - status: { target: self, id: storm_warning, amount: 2 }
 status_def:
   id: storm_warning
   stacks: amount
@@ -1116,6 +1134,7 @@ upgrade:
   cost: 0
 tags: [oracle, power, stagger]
 note: "Power line 7 b ÷ 3 = 2.33 b per turn. P(some enemy attacks) ≈ 0.85 × 2 b × 1.25 = 2.1 b per turn (91%); against multi-hit packs 3.2. Upgraded cost 0. Stagger 1 applied at your turn start is on them for the enemy phase that follows, then decays at the end of each enemy's turn. O."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 1 → 2 Stagger. The Chronist died in Act 2 multi-hit hallways (Rivet Gnashers, Riveter, Loom Oracle); measured +3.6 to +6 points of Act 2 boss kills on two seed sets."
 ```
 
 ```card
@@ -1162,10 +1181,10 @@ note: "Power line 2.8 d per turn. A Timeline deck puts about 0.8 Delay cards a t
 | `seen_it_coming` | Seen It Coming | skill | 1 | Delay 1: gain Block equal to the damage it intends. Scrap. → cost 0 | O T |
 | `star_tithe` | Star Tithe | skill | 1 | Delay 3: gain 1 Shard and draw 2 cards. Scrap. → cost 0 | T |
 | `tourbillon` | Tourbillon | skill | 0 | Keep. On beat: gain 2 energy, then Scrap this. → also draw 1 card | M |
-| `lighthouse` | Lighthouse | skill | 2 | Gain 10 Block. If any enemy's intent after next is an attack, gain 10 Guard. → 13 / 13 | O G |
+| `lighthouse` | Lighthouse | skill | 2 | Gain 11 Block. If any enemy's intent after next is an attack, gain 11 Guard. → 14 / 14 | O G |
 | `polyrhythm` | Polyrhythm | power | 2 | Your On beat effects trigger twice. → cost 1 | M |
 | `portents` | Portents | power | 2 | At the start of your turn, apply 1 Exposed to ALL enemies. If any enemy's intent after next isn't an attack, apply 1 more. → cost 1 | O G |
-| `watch_bell` | Watch Bell | power | 2 | Whenever a card on your Timeline resolves, gain 2 Block, +3 if any enemy intends to attack. → cost 1 | T O |
+| `watch_bell` | Watch Bell | power | 2 | Whenever a card on your Timeline resolves, gain 3 Block, +3 if any enemy intends to attack. → cost 1 | T O |
 | `perpetual_motion` | Perpetual Motion | power | 3 | The first card you play on the beat each turn costs 1 less. → cost 2 | M |
 
 ```card
@@ -1338,18 +1357,19 @@ target: self
 keywords: []
 text: "Gain {block} Block. If any enemy's intent after next is an attack, gain {guard} Guard."
 effects:
-  - block: { amount: 10 }
+  - block: { amount: 11 }
   - conditional:
       if: { forecast_is_attack: { who: any, depth: 1 } }
-      then: [ { guard: { amount: 10 } } ]
+      then: [ { guard: { amount: 11 } } ]
 upgrade:
   effects:
-    - block: { amount: 13 }
+    - block: { amount: 14 }
     - conditional:
         if: { forecast_is_attack: { who: any, depth: 1 } }
-        then: [ { guard: { amount: 13 } } ]
+        then: [ { guard: { amount: 14 } } ]
 tags: [oracle, glue, block, guard, forecast]
 note: "Rare 2 × 8 = 16 b; at rare rates 10 Guard = 8 b. 10 + (10 × 0.8) ÷ 1.4 = 15.7 b (98%). Upgraded 13 + 7.4 = 20.4 (+30%). Block for the visible hit, and Guard (halving to 5) for the one you saw coming. It is the Oracle's late answer to two-turn pressure (Act 3 elites). 1 of 3 Guard cards. O, G."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 10/10 → 11/11, upgraded 13/13 → 14/14 (Act 2 defence)."
 ```
 
 ```card
@@ -1420,7 +1440,7 @@ cost: 2
 target: none
 keywords: []
 text: "Whenever a card on your Timeline resolves, gain {bell} Block, +{alarm} if any enemy intends to attack."
-values: { bell: 2, alarm: 3 }
+values: { bell: 3, alarm: 3 }
 effects:
   - status: { target: self, id: watch_bell, amount: 1 }
 status_def:
@@ -1430,10 +1450,10 @@ status_def:
   tick: never
   isDebuff: false
   text: "Whenever a card on your Timeline resolves, gain {bell} Block (×{stacks}), +{alarm} (×{stacks}) if any enemy intends to attack."
-  values: { bell: 2, alarm: 3 }
+  values: { bell: 3, alarm: 3 }
   triggers:
     onDelayResolved:
-      - block: { amount: { per: 2, scale: stacks } }
+      - block: { amount: { per: 3, scale: stacks } }
       - conditional:
           if: { forecast_is_attack: { who: any, depth: 0 } }
           then: [ { block: { amount: { per: 3, scale: stacks } } } ]
@@ -1441,6 +1461,7 @@ upgrade:
   cost: 1
 tags: [timeline, oracle, power, block]
 note: "Rare 2 × 8 = 16 b → 5.3 b per turn. Per resolution 2 + 3 ÷ 1.4 = 4.1 b. A floor-30 Timeline deck resolves ~1.3 entries a turn: 5.4 b per turn (101%). At turn-start resolution, 'intends to attack' is the move about to hit you, so the Block mostly arrives on time. Mid-turn (Advance) resolutions also count. Upgraded cost 1. C19: Timeline Spool (relic) deals damage per resolution; this is the defensive card version. T, O."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): bell 2 → 3 (high deck Δ, low pick rate)."
 ```
 
 ```card

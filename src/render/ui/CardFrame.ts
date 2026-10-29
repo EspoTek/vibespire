@@ -64,7 +64,11 @@ export class CardFrame extends Widget {
   private readonly typeText: Text;
   private readonly bodyText: Text;
   private readonly leafText: Text;
-  private readonly beatBorder = new THREE.Object3D();
+  private readonly beatBorder: THREE.Object3D;
+  /** White border: the card being aimed while a target is chosen. */
+  private readonly aimBorder: THREE.Object3D;
+  private readonly tagText: Text;
+  private aimed = false;
   private artPart: THREE.Object3D | null = null;
   private artTex: THREE.DataTexture | null = null;
   private lift = 0;
@@ -93,14 +97,12 @@ export class CardFrame extends Widget {
       color: C.text, maxWidth: CARD.body.w, align: 'center', markup: true, maxLines: CARD.body.lines, lineHeight: CARD.body.lineHeight, overflow: 'ellipsis',
     }), 2);
     this.leafText = this.addPart(new Text(fonts.small, '', { color: C.lime, outline: C.black }), 4);
-    for (const [x0, y0, w, h] of [[0, 0, CARD.W, 1], [0, CARD.H - 1, CARD.W, 1], [0, 0, 1, CARD.H], [CARD.W - 1, 0, 1, CARD.H],
-      [1, 1, CARD.W - 2, 1], [1, CARD.H - 2, CARD.W - 2, 1], [1, 1, 1, CARD.H - 2], [CARD.W - 2, 1, 1, CARD.H - 2]] as const) {
-      const m = solidRect(w, h, C.yellow);
-      m.position.set(x0, y0, 0);
-      this.beatBorder.add(m);
-    }
-    this.addPart(this.beatBorder, 5);
+    this.beatBorder = this.addPart(border2px(C.yellow), 5);
     this.beatBorder.visible = false;
+    this.aimBorder = this.addPart(border2px(C.textHi), 6);
+    this.aimBorder.visible = false;
+    this.tagText = this.addPart(new Text(fonts.small, '', { color: C.amber, outline: C.black }), 7);
+    this.tagText.visible = false;
     this.setFace(face, seed);
   }
 
@@ -148,6 +150,22 @@ export class CardFrame extends Widget {
     }
   }
 
+  /** Held raised with a white border while its target is chosen (focus is on the enemies then). */
+  setAimed(on: boolean): void {
+    if (on === this.aimed) return;
+    this.aimed = on;
+    this.aimBorder.visible = on;
+    this.renderFocus(this.focused);
+  }
+
+  /** Small tag above the card ("WILL PRIME"); null hides it. */
+  setTag(text: string | null, color: number = C.amber): void {
+    this.tagText.visible = text !== null;
+    if (text === null) return;
+    this.tagText.setText(text).setColor(color);
+    this.tagText.place(Math.floor((CARD.W - this.tagText.width) / 2), -9);
+  }
+
   /** Gold border: this card would be on the beat if played next (GDD §2.7). */
   setBeat(on: boolean): void { this.beatBorder.visible = on; }
 
@@ -169,9 +187,10 @@ export class CardFrame extends Widget {
   }
 
   protected override renderFocus(on: boolean): void {
-    this.liftTarget = on && this.liftOnFocus ? LIFT : 0;
+    const up = (on && this.liftOnFocus) || this.aimed;
+    this.liftTarget = up ? LIFT : 0;
     if (this.restZ === null) this.restZ = this.z;
-    this.setZ(on ? this.restZ + RAISE : this.restZ);
+    this.setZ(on || this.aimed ? this.restZ + RAISE : this.restZ);
   }
 
   /** Whole-pixel lift animation: 2 px per 16 ms (8-bit "chunky" motion, no tween needed). */
@@ -195,4 +214,16 @@ export class CardFrame extends Widget {
     super.dispose();
     this.artTex?.dispose();
   }
+}
+
+/** A 2 px rectangle outline the size of a card. */
+function border2px(color: number): THREE.Object3D {
+  const g = new THREE.Object3D();
+  for (const [x0, y0, w, h] of [[0, 0, CARD.W, 1], [0, CARD.H - 1, CARD.W, 1], [0, 0, 1, CARD.H], [CARD.W - 1, 0, 1, CARD.H],
+    [1, 1, CARD.W - 2, 1], [1, CARD.H - 2, CARD.W - 2, 1], [1, 1, 1, CARD.H - 2], [CARD.W - 2, 1, 1, CARD.H - 2]] as const) {
+    const m = solidRect(w, h, color);
+    m.position.set(x0, y0, 0);
+    g.add(m);
+  }
+  return g;
 }

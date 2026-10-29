@@ -738,7 +738,10 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
     case 'ai_state': {
       const e = getEnemy(requireCombat(s, 'ai_state'), selfEnemy(frame, 'ai_state'));
       // An aiState key that was never set is 0.
-      e.aiState[effect.key] = effect.set !== undefined ? effect.set : (e.aiState[effect.key] ?? 0) + (effect.delta ?? 1);
+      const was = e.aiState[effect.key] ?? 0;
+      e.aiState[effect.key] = effect.set !== undefined ? effect.set : was + (effect.delta ?? 1);
+      // 'phase' is the boss-phase convention (content/enemies/bosses.ts): tell the renderer
+      if (effect.key === 'phase' && e.aiState[effect.key] !== was) emit(env, { t: 'enemy_phase', uid: e.uid, phase: e.aiState[effect.key] as number });
       return;
     }
     case 'halt_enemy':

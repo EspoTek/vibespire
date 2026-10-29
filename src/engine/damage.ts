@@ -27,6 +27,7 @@ import {
   sumDamageDealtFlat,
   sumDamageTakenFlat,
 } from './statuses';
+import { currentFloor } from './history';
 import { TUNING } from './tuning';
 import type { BlockInfo, CardInstance, DamageInfo, DamageResult, EntityRef, RunState } from './types';
 
@@ -82,6 +83,13 @@ export interface DealDamageArgs {
 }
 
 /** Runs the full pipeline. Skips (no event) if the target is already dead. */
+/** Enemy HP lost counts toward the current floor's damageDealt (run summary). */
+function addDamageDealt(state: RunState, hpLost: number): void {
+  const rec = currentFloor(state);
+  // null = this floor was entered under engine v1 (migrated save): its total is unknown and stays so
+  if (rec.damageDealt !== null) rec.damageDealt += hpLost;
+}
+
 export function dealDamage(env: Env, a: DealDamageArgs): void {
   const state = env.state;
   const combat = requireCombat(state, 'dealDamage');
@@ -101,6 +109,7 @@ export function dealDamage(env: Env, a: DealDamageArgs): void {
   const hpLost = hp - newHp;
   setHp(state, a.target, newHp);
   if (a.target === 'player') combat.damageTaken += hpLost;
+  else addDamageDealt(state, hpLost);
   if (a.source === 'player' && a.card && !a.tags.includes('riposte') && combat.counters.curCardUid === a.card.uid) {
     combat.counters.curCardDmg = (combat.counters.curCardDmg ?? 0) + hpLost;
     combat.counters.bestCardDamage = Math.max(combat.counters.bestCardDamage ?? 0, combat.counters.curCardDmg);
@@ -125,6 +134,7 @@ export function loseHp(env: Env, target: EntityRef, amount: number, source: Enti
   const hpLost = hp - newHp;
   setHp(state, target, newHp);
   if (target === 'player' && state.combat && state.phase === 'combat') state.combat.damageTaken += hpLost;
+  if (target !== 'player') addDamageDealt(state, hpLost);
   emit(env, { t: 'damage', kind: 'hp_loss', source, target, amount, blocked: 0, guarded: 0, hpLost });
   if (hpLost > 0 && state.phase === 'combat') dispatch(env, 'onHpLost', target, { amount: hpLost, source, fromHit: false }, source);
   if (state.phase === 'combat') checkEnemyDeath(env, target);

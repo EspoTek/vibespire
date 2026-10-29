@@ -32,14 +32,14 @@ export class Tooltip extends Widget {
     this.visible = false;
   }
 
-  /** Show `text` (markup allowed) beside `anchor`, preferring `side`. */
-  show(anchor: Rect, text: string, side: Side = 'above'): void {
+  /** Show `text` (markup allowed) beside `anchor`, preferring `side`, keeping clear of `avoid` rects when it can. */
+  show(anchor: Rect, text: string, side: Side = 'above', avoid: readonly Rect[] = []): void {
     this.body.setText(text);
     const w = Math.min(this.maxWidth, this.body.width) + PAD * 2;
     const h = this.body.height + PAD * 2;
     this.panel.resize(w, h);
     this.rect = { ...this.rect, w, h };
-    const p = placeTooltip(anchor, { w, h }, side);
+    const p = placeTooltip(anchor, { w, h }, side, undefined, undefined, undefined, avoid);
     this.moveTo(p.x, p.y);
     this.label = text;
     this.visible = true;

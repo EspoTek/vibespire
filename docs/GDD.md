@@ -323,7 +323,7 @@ Content rule for the card designers: **no common may gain energy, return a card 
 
 | | Breaker | Graft | Chronist |
 |---|---|---|---|
-| Max HP | 80 | 70 | 66 |
+| Max HP | 80 | 78 | 66 |
 | Energy / draw / hand limit | 3 / 5 / 10 | 3 / 5 / 10 | 3 / 5 / 10 |
 | Gold / potion slots / Shards | 99 / 3 / 0 | 99 / 3 / 0 | 99 / 3 / 0 |
 | Starter relic | `riven_gauntlet` | `heartseed` | `chrono_lens` |
@@ -337,9 +337,9 @@ Content rule for the card designers: **no common may gain energy, return a card 
 | `hew` | breaker | attack | 1 | Deal 6 damage. → 9 |
 | `bulwark` | breaker | skill | 1 | Gain 5 Block. → 8 |
 | `shoulder_check` | breaker | attack | 1 | Deal 6 damage, +2 per Onslaught. Riposte: deal 6 damage to the attacker. → 8 (+2) / Riposte 9 |
-| `brace` | breaker | skill | 1 | Gain 6 Guard. → 9 |
+| `brace` | breaker | skill | 1 | Gain 5 Guard. → 8 |
 | `lash` | graft | attack | 1 | Deal 6 damage. → 9 |
-| `husk` | graft | skill | 1 | Gain 5 Block. → 8 |
+| `husk` | graft | skill | 1 | Gain 6 Block. → 9 |
 | `seed_bite` | graft | attack | 1 | Bloom. Deal 4 (+2 per Bloom) damage. → (+3 per Bloom) |
 | `graft_hide` | graft | skill | 1 | Gain 5 Block. Prune. → 7 Block |
 | `pulse_shot` | chronist | attack | 1 | Deal 6 damage. → 9 |
@@ -491,7 +491,7 @@ Distribution: starter 3 · common 18 · uncommon 18 · rare 12 · boss 12 · sho
 
 | id | Name | Class | Text | Hook sketch | Tags | Designer note |
 |---|---|---|---|---|---|---|
-| `riven_gauntlet` | Riven Gauntlet | breaker | Whenever one of your Riposte effects triggers, gain 1 Onslaught and 3 Guard. | *onRiposteTriggered* → `status onslaught +1`; `guard 3` | riposte, onslaught, guard | Holding Shoulder Check now also starts your next turn at Onslaught 1, and the Guard soaks the hit it parried. All three Breaker mechanics in one line. |
+| `riven_gauntlet` | Riven Gauntlet | breaker | Whenever one of your Riposte effects triggers, gain 1 Onslaught and 2 Guard. | *onRiposteTriggered* → `status onslaught +1`; `guard 2` | riposte, onslaught, guard | Holding Shoulder Check now also starts your next turn at Onslaught 1, and the Guard soaks the hit it parried. All three Breaker mechanics in one line. |
 | `heartseed` | Heartseed | graft | At the start of each combat, put the Bloom card in your draw pile with the most Bloom into your hand (it counts toward your opening 5; ties: random). | onCombatStart → *fetch_card {from: draw, select: max_bloom, countsAsDraw: true}* | bloom, consistency | Your best-grown copy is always there to receive Prune, so "which copy do I invest in" becomes a run plan. |
 | `chrono_lens` | Chrono Lens | chronist | The first card you play on the beat each turn also draws 1 card. | onCardPlayed: if *on_beat* and `counters.lens == 0` → `draw 1`; set flag | cadence, draw | Makes beat 6 reachable with a starter deck; rewards cheap cards. |
 
@@ -525,7 +525,7 @@ Common pool: any 10 · breaker 2 · graft 3 · chronist 3 = 18.
 | id | Name | Class | Text | Hook sketch | Tags | Designer note |
 |---|---|---|---|---|---|---|
 | `parry_charm` | Parry Charm | breaker | You can prime 1 additional Riposte card. | onCombatStart → `status riposte_capacity 1` | riposte | Picking a second Riposte card becomes correct. |
-| `kept_fury` | Kept Fury | breaker | At the end of your turn, keep up to 2 Onslaught. | onCombatStart → `status onslaught_keep 2` | onslaught | Lets you weave a Skill turn without losing the swing. |
+| `kept_fury` | Kept Fury | breaker | At the end of your turn, keep up to 1 Onslaught. | onCombatStart → `status onslaught_keep 1` | onslaught | Lets you weave a Skill turn without losing the swing. |
 | `crowd_breaker` | Crowd Breaker | breaker | Whenever one of your Attacks hits 2 or more enemies, gain 1 Onslaught. | afterCardPlayed: distinct targets hit ≥ 2 → `status onslaught 1` | onslaught, aoe | AoE Attacks join the Onslaught plan. |
 | `concussion_rig` | Concussion Rig | any | Whenever an enemy with Stagger hits you, gain 1 Guard. | onDamageTaken: source has stagger → `guard 1` | stagger, guard | Stagger against multi-hit becomes defence twice over. |
 | `slow_temper` | Slow-Temper Alloy | any | At the start of your turn, your Guard loses a third (round down) instead of half. | *guardDecay* modifier → `floor(g / 3)` lost | guard | The Guard-bank plan doubles its horizon. |
@@ -564,7 +564,7 @@ Common pool: any 10 · breaker 2 · graft 3 · chronist 3 = 18.
 
 | id | Name | Class | Text | Hook sketch | Tags | Designer note |
 |---|---|---|---|---|---|---|
-| `binding_contract` | Binding Contract | any | +1 energy each turn. You must take a card from every card reward (no skipping, no Shards from skipping). | maxEnergy +1; reward `skip` not legal | energy, shards | Ends lean-deck play; every reward becomes "least bad card". |
+| `binding_contract` | Binding Contract | any | +1 energy each turn. Card rewards offer one card fewer, and you must take a card from every one (no skipping, no Shards from skipping). | maxEnergy +1; onPickup `run_flag lean_rewards +999`; reward `skip` not legal | energy, shards | Ends lean-deck play; every reward becomes "least bad card". |
 | `cracked_hourglass` | Cracked Hourglass | any | +1 energy each turn. In every combat, enemies take a full turn before your first turn. | maxEnergy +1; combat start enqueues an enemy phase first | energy | Your opening is always on the back foot; Guard and Riposte from a prior turn don't exist yet. |
 | `exposed_core` | Exposed Core | any | +1 energy each turn. Start each combat with 4 Exposed. | onCombatStart → `status self exposed 4` | energy, exposed | Punishes multi-hit early turns; wants turn-1 defence. |
 | `stasis_engine` | Stasis Engine | any | +1 energy each turn. Draw 1 fewer card each turn. | maxEnergy +1; drawPerTurn −1 | energy, draw | Wants expensive, dense cards. |

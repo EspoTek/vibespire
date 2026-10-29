@@ -8,6 +8,7 @@
  * `unlock()` must run inside such a handler (the gate screen does it). Before that, `play()` is a
  * documented no-op: gamepad-only players get silence until they press a key or click once.
  */
+import { compileSong, type SongName } from './music.ts';
 import { CHANNELS, compileSfx, FRAME_S, lfsrBits, noiseShiftHz, SFX, volumeGain, type Channel, type Segment, type SfxName } from './psg.ts';
 
 interface ToneVoice { osc: OscillatorNode; gain: GainNode }
@@ -34,6 +35,9 @@ export class Sfx {
   }
 
   get unlocked(): boolean { return this.ac !== null && this.ac.state === 'running'; }
+
+  /** The running AudioContext, or null before the first user gesture (Music shares it). */
+  get contextOrNull(): AudioContext | null { return this.unlocked ? this.ac : null; }
 
   get volume(): number { return this._volume; }
   set volume(v: number) {
@@ -134,5 +138,133 @@ export class Sfx {
       s.volumes.forEach((v, i) => tv.gain.gain.setValueAtTime(volumeGain(v) * g, st + i * FRAME_S));
     }
     tv.gain.gain.setValueAtTime(0, end(last));
+  }
+}
+
+/**
+ * Music: the act / title loops (music.ts) on their own 3 squares + noise, under their own volume
+ * (Options), sharing the SFX AudioContext. Loops are scheduled ~2 s ahead by `update()` (call per
+ * frame). Silent until the SFX context is unlocked; the wanted song starts then.
+ */
+export class Music {
+  private readonly sfx: Sfx;
+  private voices: { master: GainNode; tones: Record<'t0' | 't1' | 't2', ToneVoice>; noise: NoiseVoice } | null = null;
+  private _volume: number;
+  private wanted: SongName | null = null;
+  private playing: { name: SongName; nextLoopAt: number; loopS: number; channels: Record<Channel, Segment[]> } | null = null;
+  private static readonly CHANNEL_GAIN = 0.16;
+  private static readonly AHEAD_S = 2;
+
+  constructor(sfx: Sfx, volume: number) {
+    this.sfx = sfx;
+    this._volume = volume;
+  }
+
+  get volume(): number { return this._volume; }
+  set volume(v: number) {
+    if (!(v >= 0 && v <= 1)) throw new Error(`Music.volume must be in 0..1, got ${v}`);
+    this._volume = v;
+    const ac = this.sfx.contextOrNull;
+    if (this.voices && ac) this.voices.master.gain.setValueAtTime(v, ac.currentTime);
+  }
+
+  get current(): SongName | null { return this.playing?.name ?? null; }
+
+  /** Ask for a song (null = silence). Switching restarts from the top; the same song keeps playing. */
+  want(name: SongName | null): void { this.wanted = name; }
+
+  update(): void {
+    const ac = this.sfx.contextOrNull;
+    if (!ac) return; // documented: silent until the first user gesture unlocks audio
+    if (!this.voices) this.voices = this.build(ac);
+    if ((this.playing?.name ?? null) !== this.wanted) {
+      this.silence(ac);
+      this.playing = null;
+      if (this.wanted !== null) {
+        const song = compileSong(this.wanted);
+        this.playing = { name: this.wanted, nextLoopAt: ac.currentTime + 0.1, loopS: song.frames * FRAME_S, channels: song.channels };
+      }
+    }
+    const p = this.playing;
+    if (!p) return;
+    while (p.nextLoopAt < ac.currentTime + Music.AHEAD_S) {
+      for (const ch of CHANNELS) this.schedule(ch, p.channels[ch], p.nextLoopAt);
+      p.nextLoopAt += p.loopS;
+    }
+  }
+
+  private build(ac: AudioContext): NonNullable<Music['voices']> {
+    const master = ac.createGain();
+    master.gain.value = this._volume;
+    master.connect(ac.destination);
+    const tone = (): ToneVoice => {
+      const osc = ac.createOscillator();
+      osc.type = 'square';
+      const gain = ac.createGain();
+      gain.gain.value = 0;
+      osc.connect(gain).connect(master);
+      osc.start();
+      return { osc, gain };
+    };
+    const shiftHz = noiseShiftHz(0);
+    const makeNoise = (mode: 'white' | 'periodic'): [AudioBufferSourceNode, GainNode] => {
+      const buf = ac.createBuffer(1, Math.round(ac.sampleRate * 2), ac.sampleRate);
+      const d = buf.getChannelData(0);
+      const bits = lfsrBits(Math.ceil(shiftHz * 2) + 1, mode);
+      for (let i = 0; i < d.length; i++) d[i] = bits[Math.floor((i * shiftHz) / ac.sampleRate)] ? 1 : -1;
+      const src = ac.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      const gain = ac.createGain();
+      gain.gain.value = 0;
+      src.connect(gain).connect(master);
+      src.start();
+      return [src, gain];
+    };
+    const [white, whiteGain] = makeNoise('white');
+    const [periodic, periodicGain] = makeNoise('periodic');
+    return { master, tones: { t0: tone(), t1: tone(), t2: tone() }, noise: { white, periodic, whiteGain, periodicGain } };
+  }
+
+  /** Cut every scheduled value from now (song change / stop). */
+  private silence(ac: AudioContext): void {
+    const v = this.voices;
+    if (!v) return;
+    const now = ac.currentTime;
+    for (const g of [v.tones.t0.gain, v.tones.t1.gain, v.tones.t2.gain, v.noise.whiteGain, v.noise.periodicGain]) {
+      g.gain.cancelScheduledValues(now);
+      g.gain.setValueAtTime(0, now);
+    }
+    for (const t of [v.tones.t0, v.tones.t1, v.tones.t2]) t.osc.frequency.cancelScheduledValues(now);
+  }
+
+  /** Schedule one loop of one channel starting at t0 (no cancel: loops are appended back to back). */
+  private schedule(ch: Channel, segs: readonly Segment[], t0: number): void {
+    const v = this.voices;
+    if (!v) throw new Error('Music.schedule before build');
+    const g = Music.CHANNEL_GAIN;
+    const end = (s: Segment) => t0 + (s.startFrame + s.frames) * FRAME_S;
+    if (ch === 'n') {
+      for (const s of segs) {
+        if (!s.sound || s.sound.kind !== 'noise') continue;
+        const st = t0 + s.startFrame * FRAME_S;
+        const node = s.sound.mode === 'white' ? v.noise.white : v.noise.periodic;
+        const gn = s.sound.mode === 'white' ? v.noise.whiteGain : v.noise.periodicGain;
+        node.playbackRate.setValueAtTime(1 / 2 ** s.sound.rate, st);
+        s.volumes.forEach((vol, i) => gn.gain.setValueAtTime(volumeGain(vol) * g, st + i * FRAME_S));
+        gn.gain.setValueAtTime(0, end(s));
+      }
+      return;
+    }
+    const tv = v.tones[ch];
+    for (const s of segs) {
+      const st = t0 + s.startFrame * FRAME_S;
+      if (!s.sound) { tv.gain.gain.setValueAtTime(0, st); continue; }
+      if (s.sound.kind !== 'tone') throw new Error(`music: noise segment on tone channel ${ch}`);
+      tv.osc.frequency.setValueAtTime(s.sound.from, st);
+      s.volumes.forEach((vol, i) => tv.gain.gain.setValueAtTime(volumeGain(vol) * g, st + i * FRAME_S));
+      // a 1-frame gap between notes so repeated pitches re-articulate
+      tv.gain.gain.setValueAtTime(0, end(s) - FRAME_S / 2);
+    }
   }
 }

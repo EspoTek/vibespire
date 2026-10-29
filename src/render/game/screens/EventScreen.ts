@@ -1,5 +1,5 @@
 /**
- * Event (GDD §6) on event_generic.png: the event name, a PS text box with the flavour text typed
+ * Event (GDD §6) on its def's backdrop (else event_generic in Act 1, the dimmed act backdrop later): the event name, a PS text box with the flavour text typed
  * out at 1 char / 15 ms (confirm or click skips), the options with disabled reasons (gamble odds
  * are part of the engine's option labels), outcome text from the engine's `text` events, then
  * PROCEED. An option that starts a combat moves the run to the combat phase and the router follows.
@@ -7,6 +7,7 @@
 import { getEventDef } from '../../../content/index.ts';
 import { getEventOptions, renderEventText, type GameEvent } from '../../../engine/index.ts';
 import type { App } from '../../app.ts';
+import { eventBackdrop } from '../../assets.ts';
 import { rect, W } from '../../layout.ts';
 import { C } from '../../palette.ts';
 import { Button } from '../../ui/Button.ts';
@@ -27,7 +28,13 @@ export class EventScreen extends RunScreen {
   private typeClock = 0;
   private outcome: string[] = [];
 
-  constructor(app: App, session: RunSession) { super(app, session, 'event', 'event_generic'); }
+  constructor(app: App, session: RunSession) {
+    const st = session.state;
+    if (!st.event) throw new Error('EventScreen: no event state');
+    const bd = eventBackdrop(getEventDef(st.event.id).backdrop, st.act);
+    super(app, session, 'event', bd.key);
+    this.bg.setDim(bd.dim);
+  }
 
   /** Main text, or the current page's text. */
   private pageText(): string {

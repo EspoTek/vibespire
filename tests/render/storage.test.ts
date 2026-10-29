@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { KeyValueStorage, settingsCodec, Stored, type StorageLike } from '../../src/render/storage.ts';
+import { DEFAULT_MUSIC_VOLUME, KeyValueStorage, settingsCodec, Stored, type StorageLike } from '../../src/render/storage.ts';
 
 class FakeStorage implements StorageLike {
   readonly map = new Map<string, string>();
@@ -14,8 +14,17 @@ describe('KeyValueStorage / Stored', () => {
     const kv = new KeyValueStorage(new FakeStorage());
     const s = new Stored(kv, 'k', settingsCodec);
     expect(s.getOrNull()).toBeNull();
-    expect(s.set({ version: 1, volume: 0.5, animSpeed: 2 })).toBe(true);
-    expect(s.getOrNull()).toEqual({ version: 1, volume: 0.5, animSpeed: 2 });
+    expect(s.set({ version: 2, volume: 0.5, musicVolume: 0.3, animSpeed: 2 })).toBe(true);
+    expect(s.getOrNull()).toEqual({ version: 2, volume: 0.5, musicVolume: 0.3, animSpeed: 2 });
+  });
+
+  it('v1 settings (before music) migrate to the default music volume; v2 without it is invalid', () => {
+    const fake = new FakeStorage();
+    const s = new Stored(new KeyValueStorage(fake), 'k', settingsCodec);
+    fake.map.set('k', JSON.stringify({ version: 1, volume: 0.7, animSpeed: 1 }));
+    expect(s.getOrNull()).toEqual({ version: 2, volume: 0.7, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1 });
+    fake.map.set('k', JSON.stringify({ version: 2, volume: 0.7, animSpeed: 1 }));
+    expect(() => s.getOrNull()).toThrow(/musicVolume/);
   });
 
   it('quota errors refuse the write and are reported once', () => {
@@ -55,7 +64,7 @@ describe('KeyValueStorage / Stored', () => {
     const s = new Stored(kv, 'k', settingsCodec);
     fake.map.set('k', '{nope');
     expect(() => s.getOrNull()).toThrow(/invalid JSON/);
-    fake.map.set('k', JSON.stringify({ version: 2, volume: 1, animSpeed: 1 }));
+    fake.map.set('k', JSON.stringify({ version: 3, volume: 1, animSpeed: 1 }));
     expect(() => s.getOrNull()).toThrow(/unsupported version/);
     fake.map.set('k', JSON.stringify({ version: 1, volume: 3, animSpeed: 1 }));
     expect(() => s.getOrNull()).toThrow(/volume/);

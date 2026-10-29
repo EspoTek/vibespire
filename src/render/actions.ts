@@ -11,7 +11,7 @@ export const ACTIONS = [
   'up', 'down', 'left', 'right',
   'confirm', 'cancel', 'endTurn', 'menu',
   'nextTarget', 'prevTarget', 'info',
-  'help', 'deck',
+  'help', 'deck', 'copy',
   ...CARD_SLOTS,
 ] as const;
 
@@ -34,6 +34,7 @@ export const KEY_BINDINGS: Readonly<Record<string, Action>> = {
   KeyM: 'menu',
   Slash: 'help', F1: 'help',
   KeyV: 'deck',
+  KeyC: 'copy', // run summary: copy the seed
   Digit1: 'cardSlot1', Digit2: 'cardSlot2', Digit3: 'cardSlot3', Digit4: 'cardSlot4', Digit5: 'cardSlot5',
   Digit6: 'cardSlot6', Digit7: 'cardSlot7', Digit8: 'cardSlot8', Digit9: 'cardSlot9', Digit0: 'cardSlot10',
   Numpad1: 'cardSlot1', Numpad2: 'cardSlot2', Numpad3: 'cardSlot3', Numpad4: 'cardSlot4', Numpad5: 'cardSlot5',
@@ -50,6 +51,7 @@ export const PAD_BINDINGS: Readonly<Record<number, Action>> = {
   5: 'nextTarget', // RB
   8: 'help', // Back / Select
   9: 'menu', // Start
+  10: 'deck', // left-stick press (L3)
   12: 'up', 13: 'down', 14: 'left', 15: 'right', // D-pad
 };
 
@@ -59,8 +61,21 @@ export type PromptAction = 'confirm' | 'cancel' | 'endTurn' | 'menu' | 'nextTarg
 export const PROMPTS: Readonly<Record<Device, Readonly<Record<PromptAction, string>>>> = {
   keyboard: { confirm: 'ENTER', cancel: 'ESC', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V' },
   mouse: { confirm: 'CLICK', cancel: 'R-CLICK', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V' },
-  gamepad: { confirm: 'A', cancel: 'B', endTurn: 'X', menu: 'START', nextTarget: 'RB', prevTarget: 'LB', info: 'Y', help: 'BACK', deck: 'START' },
+  gamepad: { confirm: 'A', cancel: 'B', endTurn: 'X', menu: 'START', nextTarget: 'RB', prevTarget: 'LB', info: 'Y', help: 'BACK', deck: 'L3' },
 };
+
+/** Face-button colours (the standard-mapping layout's A/B/X/Y), as palette names for markup. */
+const PAD_FACE_COLORS: Readonly<Record<string, string>> = { A: 'lime', B: 'pink', X: 'skyBlue', Y: 'yellow' };
+
+/**
+ * A prompt as colour markup: pad face buttons in their button colours ("[lime]A[/]"), everything
+ * else (keys, shoulder/menu buttons) in `base`. For labels created with `markup: true`.
+ */
+export function promptMarkup(device: Device, action: PromptAction, base = 'yellow'): string {
+  const t = PROMPTS[device][action];
+  const color = device === 'gamepad' ? (PAD_FACE_COLORS[t] ?? base) : base;
+  return `[${color}]${t}[/]`;
+}
 
 export const STICK_DEAD_ZONE = 0.35;
 export const REPEAT_DELAY_MS = 350;

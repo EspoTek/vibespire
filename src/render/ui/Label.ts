@@ -33,6 +33,9 @@ export class Label extends Widget {
   }
 
   setColor(c: number): this { this.text.setColor(c); return this; }
+
+  /** Move so the anchor (left / centre / right per `align`) lands on (x, y). */
+  moveAnchorTo(x: number, y: number): this { return this.moveTo(x - this.anchorDx, y); }
   setStyle(st: TextStyle): this { this.text.setStyle(st); this.fit(); return this; }
 
   private fit(): void {

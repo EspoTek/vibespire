@@ -47,6 +47,20 @@ export function actBackdrop(act: 1 | 2 | 3): BackdropKey {
   return act === 1 ? 'act1_verdant' : act === 2 ? 'act2_foundry' : 'act3_crown';
 }
 
+export function isBackdropKey(k: string): k is BackdropKey { return (BACKDROP_KEYS as readonly string[]).includes(k); }
+
+/**
+ * Backdrop for an event: its own `backdrop` key when the def has one (must name a loaded backdrop),
+ * else event_generic in Act 1 and the act's backdrop (dimmed by the caller) in Acts 2-3.
+ */
+export function eventBackdrop(defBackdrop: string | undefined, act: 1 | 2 | 3): { key: BackdropKey; dim: number } {
+  if (defBackdrop !== undefined) {
+    if (!isBackdropKey(defBackdrop)) throw new Error(`event backdrop "${defBackdrop}" is not a backdrop (have: ${BACKDROP_KEYS.join(', ')})`);
+    return { key: defBackdrop, dim: 0 };
+  }
+  return act === 1 ? { key: 'event_generic', dim: 0 } : { key: actBackdrop(act), dim: 1 };
+}
+
 export interface GameAssets {
   backdrops: Readonly<Record<BackdropKey, THREE.Texture>>;
   /** key = portrait file name ('breaker', 'breaker@32', ...). */

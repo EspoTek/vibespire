@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { ACTIONS, ActionTracker, KEY_BINDINGS, PAD_BINDINGS, stickDirectionOrNull, WheelAccumulator } from '../../src/render/actions.ts';
+import { ACTIONS, ActionTracker, KEY_BINDINGS, PAD_BINDINGS, PROMPTS, promptMarkup, stickDirectionOrNull, WheelAccumulator, type PromptAction } from '../../src/render/actions.ts';
 
 describe('bindings', () => {
   it('cover every spec action', () => {
-    expect(ACTIONS).toHaveLength(23);
+    expect(ACTIONS).toHaveLength(24);
     const bound = new Set([...Object.values(KEY_BINDINGS), ...Object.values(PAD_BINDINGS)]);
     for (const a of ACTIONS) expect(bound.has(a), a).toBe(true);
     expect(KEY_BINDINGS['Digit0']).toBe('cardSlot10');
@@ -62,5 +62,18 @@ describe('stick and wheel', () => {
     w.add(70, 0); expect(w.take()).toBe(1);
     w.add(-3, 1); expect(w.take()).toBe(0); // 10 carried - 48 = -38
     w.add(-80, 0); expect(w.take()).toBe(-1);
+  });
+});
+
+describe('gamepad prompts', () => {
+  it('every prompted action has a pad button bound to it', () => {
+    const padActions = new Set(Object.values(PAD_BINDINGS));
+    for (const a of Object.keys(PROMPTS.gamepad) as PromptAction[]) expect(padActions.has(a), a).toBe(true);
+  });
+  it('face buttons are coloured, other prompts use the base colour', () => {
+    expect(promptMarkup('gamepad', 'confirm')).toBe('[lime]A[/]');
+    expect(promptMarkup('gamepad', 'cancel')).toBe('[pink]B[/]');
+    expect(promptMarkup('gamepad', 'nextTarget', 'textHi')).toBe('[textHi]RB[/]');
+    expect(promptMarkup('keyboard', 'confirm')).toBe('[yellow]ENTER[/]');
   });
 });

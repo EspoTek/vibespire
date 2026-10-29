@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import { announce } from './a11y.ts';
 import { ENEMY_SPRITES, loadGameAssets, type GameAssets, type SpriteEntry } from './assets.ts';
-import { Sfx } from './audio.ts';
+import { Music, Sfx } from './audio.ts';
 import { BACKDROP_IDS, drawBackdrop, type BackdropId } from './backdrops.ts';
 import { Display } from './display.ts';
 import { initFonts } from './fonts.ts';
@@ -26,6 +26,7 @@ export class App {
   readonly display: Display;
   readonly input: InputManager;
   readonly sfx: Sfx;
+  readonly music: Music;
   readonly tweens = new Tweener();
   readonly scheduler: Scheduler;
   readonly screens: ScreenManager;
@@ -58,10 +59,13 @@ export class App {
     this.settings = this.settingsStore.getOrNull() ?? { ...DEFAULT_SETTINGS }; // null = first run
     this.input = new InputManager(this.display.canvas, (x, y) => this.display.toLogical(x, y));
     this.sfx = new Sfx(this.settings.volume);
+    this.music = new Music(this.sfx, this.settings.musicVolume);
     this.tweens.speed = this.settings.animSpeed;
     this.scheduler = new Scheduler(this.tweens, (e) => {
+      // an animation step failing is a bug: surface it on the crash screen (main.ts's window handlers),
+      // never as a toast that lets the run carry on with the screen half-updated
       console.error('[scheduler] animation step failed', e);
-      this.toasts.show(`ERROR: ${e instanceof Error ? e.message : String(e)}`.slice(0, 80).toUpperCase(), 4000);
+      setTimeout(() => { throw e; }, 0);
     });
     this.screens = new ScreenManager(this);
 
@@ -108,6 +112,7 @@ export class App {
   saveSettings(patch: Partial<Omit<Settings, 'version'>>): void {
     this.settings = { ...this.settings, ...patch };
     if (patch.volume !== undefined) this.sfx.volume = patch.volume;
+    if (patch.musicVolume !== undefined) this.music.volume = patch.musicVolume;
     if (patch.animSpeed !== undefined) this.tweens.speed = patch.animSpeed;
     this.settingsStore.set(this.settings);
   }
@@ -123,6 +128,9 @@ export class App {
       this.input.update(dt);
       this.tweens.update(dt);
       this.screens.update(dt);
+      const song = this.screens.top?.music;
+      if (song !== undefined) this.music.want(song);
+      this.music.update();
       this.toasts.update(dt);
       this.display.render();
       this.frames++;

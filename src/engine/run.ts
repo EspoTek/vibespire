@@ -100,6 +100,7 @@ export function createRun(seed: string, classId: string): { state: RunState; eve
     },
     map,
     mapPos: null,
+    mapPath: [],
     room: 'start',
     combat: null,
     reward: null,
@@ -181,6 +182,7 @@ function travel(env: Env, to: MapPos): void {
   const s = env.state;
   const node = getNode(s.map, to);
   s.mapPos = { row: to.row, col: to.col };
+  s.mapPath.push({ row: to.row, col: to.col });
   s.floor += 1;
   const room: RoomType = node.type === 'event' ? resolveUnknown(s) : node.type;
   s.room = room;
@@ -400,6 +402,7 @@ function nextAct(env: Env): void {
   for (const k of Object.keys(s.player.counters)) if (k.endsWith('_rest_of_act')) delete s.player.counters[k];
   s.map = newActMap(s.rng.map, act);
   s.mapPos = null;
+  s.mapPath = [];
   s.room = null;
   s.bossRelicChoices = null;
   s.counters.monstersThisAct = 0;

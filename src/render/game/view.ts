@@ -12,7 +12,7 @@
  *    buff/debuff icon (logged once).
  */
 import {
-  canPlayCard, getCardCost, hasKeyword, renderCardTextParts, TUNING,
+  canPlayCard, getCardCost, hasKeyword, isRiposteCard, primeCapacity, renderCardTextParts, TUNING,
   type CardInstance, type CardOffer, type RunState, type TextPart,
 } from '../../engine/index.ts';
 import { allClasses, getCardDef, getEnemyDef, getStatusDef } from '../../content/index.ts';
@@ -197,4 +197,20 @@ export function statusIcon(id: string): string {
 
 export function statusVisible(id: string): boolean {
   return !getStatusDef(id).hidden;
+}
+
+/**
+ * Which Riposte cards in hand the end-of-turn prime step would prime (GDD §2.2), mirroring the
+ * engine's room rule: capacity minus cards already primed by capacity, bounded by the rack cap.
+ * `choose`: more candidates than room, so ending the turn asks which ones.
+ */
+export function primeForecast(state: RunState): { uids: number[]; choose: boolean } {
+  const c = state.combat;
+  if (!c || c.turnPhase !== 'player') return { uids: [], choose: false };
+  const ripostes = c.hand.filter(isRiposteCard).map((x) => x.uid);
+  const { capacity } = primeCapacity(state);
+  const byEffect = c.counters['primedByEffect'] ?? 0; // absent: nothing primed by an effect this turn
+  const room = Math.max(0, Math.min(capacity - (c.primed.length - byEffect), TUNING.caps.primeCapacity - c.primed.length));
+  if (room === 0) return { uids: [], choose: false };
+  return { uids: ripostes, choose: ripostes.length > room };
 }

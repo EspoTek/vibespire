@@ -37,7 +37,7 @@ The starter has one Bloom card (Seed Bite) and one Prune (Graft Hide). Standard 
 | id | Name | Type | Cost | Text (base → upgraded) | Arch |
 |---|---|---|---|---|---|
 | `lash` | Lash | attack | 1 | Deal 6 damage. → 9 | — |
-| `husk` | Husk | skill | 1 | Gain 5 Block. → 8 | — |
+| `husk` | Husk | skill | 1 | Gain 6 Block. → 9 | — |
 | `seed_bite` | Seed Bite | attack | 1 | Bloom. Deal 4 (+2 per Bloom) damage. → (+3 per Bloom) | G |
 | `graft_hide` | Graft Hide | skill | 1 | Gain 5 Block. Prune. → 7 Block | G C |
 
@@ -71,12 +71,13 @@ target: self
 keywords: []
 text: "Gain {block} Block."
 effects:
-  - block: { amount: 5 }
+  - block: { amount: 6 }
 upgrade:
   effects:
-    - block: { amount: 8 }
+    - block: { amount: 9 }
 tags: [starter, block]
 note: "GDD §4.1. Starter rate 5 b. The other natural Prune target, kept only when the fight needs Block."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 5/8 → 6/9 Block. The Graft lost the most HP per fight (10.9 vs Breaker 7.2); its Defend is the one card in every deck."
 ```
 
 ```card
@@ -126,24 +127,24 @@ Commons are efficient and simple (commandment 15). None of them gains energy, re
 
 | id | Name | Type | Cost | Text (base → upgraded) | Arch |
 |---|---|---|---|---|---|
-| `thornwhirl` | Thornwhirl | attack | 2 | Bloom. Deal 7 (+2 per Bloom) damage to ALL enemies. → (+3 per Bloom) | G |
-| `barb_flick` | Barb Flick | attack | 0 | Bloom. Deal 2 (+1 per Bloom) damage. → (+2 per Bloom) | G M |
+| `thornwhirl` | Thornwhirl | attack | 2 | Bloom. Deal 9 (+2 per Bloom) damage to ALL enemies. → (+3 per Bloom) | G |
+| `barb_flick` | Barb Flick | attack | 0 | Bloom. Deal 3 (+1 per Bloom) damage. → (+2 per Bloom) | G M |
 | `grafting_cut` | Grafting Cut | attack | 1 | Bloom. Deal 2 (+1 per Bloom) damage. Prune. → (+2 per Bloom) | G C |
-| `chitin_ram` | Chitin Ram | attack | 1 | Bloom. Deal 2 (+1 per Bloom) damage. Gain 3 Block. → (+2 per Bloom) | G B |
-| `hivestrike` | Hivestrike | attack | 1 | Deal 3 damage, +1 per Bloom card in your deck. → 6 | M G |
+| `chitin_ram` | Chitin Ram | attack | 1 | Bloom. Deal 2 (+1 per Bloom) damage. Gain 4 Block. → (+2 per Bloom) | G B |
+| `hivestrike` | Hivestrike | attack | 1 | Deal 4 damage, +1 per Bloom card in your deck. → 7 | M G |
 | `shear` | Shear | attack | 1 | Deal 3 damage. Prune. If you Scrapped an Attack, +1 Bloom. → 6 | C G |
-| `spore_lash` | Spore Lash | attack | 1 | Deal 3 damage. Apply 1 Rot. → Apply 2 Rot | B |
-| `canker_bite` | Canker Bite | attack | 1 | Deal 3 damage, +1 per Rot on the enemy. → 6 | B |
-| `mulch_maul` | Mulch Maul | attack | 1 | Deal 4 damage, +1 per card in your Scrapheap. → 7 | C |
-| `sap_shell` | Sap Shell | skill | 1 | Bloom. Gain 4 (+1 per Bloom) Block. → (+2 per Bloom) | G B |
+| `spore_lash` | Spore Lash | attack | 1 | Deal 4 damage. Apply 1 Rot. → Apply 2 Rot | B |
+| `canker_bite` | Canker Bite | attack | 1 | Deal 5 damage, +1 per Rot on the enemy. → 8 | B |
+| `mulch_maul` | Mulch Maul | attack | 1 | Deal 5 damage, +1 per card in your Scrapheap. → 8 | C |
+| `sap_shell` | Sap Shell | skill | 1 | Bloom. Gain 6 (+1 per Bloom) Block. → (+2 per Bloom) | G B |
 | `blightcap` | Blightcap | skill | 2 | Bloom. Apply 2 (+1 per Bloom) Rot. → (+2 per Bloom) | G B |
-| `tendril_reach` | Tendril Reach | skill | 1 | Bloom. Gain 2 (+1 per Bloom) Block. Draw 1 card. → (+2 per Bloom) | G M |
-| `root_mesh` | Root Mesh | skill | 1 | Gain 2 Block, +1 per Bloom card in your deck. → 5 | M B |
-| `deep_graft` | Deep Graft | skill | 1 | Gain 2 Block. Prune 2. → 5 Block | G C |
-| `windblown_seed` | Windblown Seed | skill | 1 | Gain 3 Block. Wild Prune. → 6 Block | G M |
+| `tendril_reach` | Tendril Reach | skill | 1 | Bloom. Gain 4 (+1 per Bloom) Block. Draw 1 card. → (+2 per Bloom) | G M |
+| `root_mesh` | Root Mesh | skill | 1 | Gain 4 Block, +1 per Bloom card in your deck. → 7 | M B |
+| `deep_graft` | Deep Graft | skill | 1 | Gain 3 Block. Prune 2. → 6 Block | G C |
+| `windblown_seed` | Windblown Seed | skill | 1 | Gain 4 Block. Wild Prune. → 7 Block | G M |
 | `spore_haze` | Spore Haze | skill | 1 | Apply 2 Rot to ALL enemies. Scrap. → 3 Rot | B C |
-| `mire_carapace` | Mire Carapace | skill | 1 | Gain 4 Block. If the enemy has Rot, gain 4 more. → 6, 4 more | B |
-| `shed_husk` | Shed Husk | skill | 1 | Gain 3 Block. Prune. If you Scrapped a Status or Curse, draw 2 cards. → 6 Block | C G |
+| `mire_carapace` | Mire Carapace | skill | 1 | Gain 6 Block. If the enemy has Rot, gain 4 more. → 8, 4 more | B |
+| `shed_husk` | Shed Husk | skill | 1 | Gain 5 Block. Prune. If you Scrapped a Status or Curse, draw 2 cards. → 8 Block | C G |
 | `sap_drip` | Sap Drip | skill | 0 | Choose a Bloom card in your hand; it gains 1 Bloom. Draw 1 card. Scrap. → 2 Bloom | G |
 | `leaf_litter` | Leaf Litter | skill | 1 | Prune. Apply 1 Rot to ALL enemies. → 2 Rot | B C |
 
@@ -158,12 +159,13 @@ target: all_enemies
 keywords: [bloom]
 text: "Bloom. Deal {damage} ({damage_per} per Bloom) damage to ALL enemies."
 effects:
-  - damage: { amount: { base: 7, per: 2, scale: { cardVar: bloom } }, target: all_enemies }
+  - damage: { amount: { base: 9, per: 2, scale: { cardVar: bloom } }, target: all_enemies }
 upgrade:
   effects:
-    - damage: { amount: { base: 7, per: 3, scale: { cardVar: bloom } }, target: all_enemies }
+    - damage: { amount: { base: 9, per: 3, scale: { cardVar: bloom } }, target: all_enemies }
 tags: [gardener, bloom, aoe, scaling]
 note: "AoE face 0.8 × 7 × 2 = 11.2 per target. Bloom 2: 7 + 4 = 11 ✓. Base 7 = 63% of face (≥60%). Cap 27 (37 upgraded). It is the Gardener's pack answer and competes with Seed Bite for every Prune: grow single-target or AoE?"
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 7 → 9 (two +1 steps; Act 2 width, 8% pick rate)."
 ```
 
 ```card
@@ -177,12 +179,13 @@ target: enemy
 keywords: [bloom]
 text: "Bloom. Deal {damage} ({damage_per} per Bloom) damage."
 effects:
-  - damage: { amount: { base: 2, per: 1, scale: { cardVar: bloom } }, target: target }
+  - damage: { amount: { base: 3, per: 1, scale: { cardVar: bloom } }, target: target }
 upgrade:
   effects:
-    - damage: { amount: { base: 2, per: 2, scale: { cardVar: bloom } }, target: target }
+    - damage: { amount: { base: 3, per: 2, scale: { cardVar: bloom } }, target: target }
 tags: [gardener, mass, bloom, cheap]
 note: "0-cost = 3.5 d. Bloom 2: 2 + 2 = 4 (+0.5, rounding). Base 57%. Cap 12 (22 upgraded) for 0 energy. Mass takes it for the Bloom-card count at no energy cost. Gardener grows it as a free finisher. Low face value early, so it is never a trap pick for a deck that won't grow it: it costs nothing to play."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 2 → 3 (bottom-5% pick rate, 1.4%)."
 ```
 
 ```card
@@ -218,13 +221,14 @@ keywords: [bloom]
 text: "Bloom. Deal {damage} ({damage_per} per Bloom) damage. Gain {block} Block."
 effects:
   - damage: { amount: { base: 2, per: 1, scale: { cardVar: bloom } }, target: target }
-  - block: { amount: 3 }
+  - block: { amount: 4 }
 upgrade:
   effects:
     - damage: { amount: { base: 2, per: 2, scale: { cardVar: bloom } }, target: target }
-    - block: { amount: 3 }
+    - block: { amount: 4 }
 tags: [gardener, blight, bloom, block]
 note: "Bloom 2: 4 d + 3 b (3.5 d) = 7.5 (+0.5). Base 2 d + 3 b = 5.5 (79%). Blight's stall wants the fixed Block, and Gardener grows the damage. Feeding it over Seed Bite trades peak damage for a card that defends too."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Block 3 → 4 (defence; low pick rate)."
 ```
 
 ```card
@@ -238,12 +242,13 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage, {damage_per} per Bloom card in your deck."
 effects:
-  - damage: { amount: { base: 3, per: 1, scale: bloom_cards_in_deck }, target: target }
+  - damage: { amount: { base: 4, per: 1, scale: bloom_cards_in_deck }, target: target }
 upgrade:
   effects:
-    - damage: { amount: { base: 6, per: 1, scale: bloom_cards_in_deck }, target: target }
+    - damage: { amount: { base: 7, per: 1, scale: bloom_cards_in_deck }, target: target }
 tags: [mass, gardener, scaling]
 note: "Deck-count pricing at 2 / 4 / 6 Bloom cards by act: 5 / 7 / 9, mean 7 ✓. Upgrade +3 (+43%). It counts copies at any Bloom (including 0) and Scrapped copies still count (GDD §0.1), so Compost's in-fight Scrapping never lowers it. Prune away does, which is the Mass/Compost tension. C19: nearest is Perfected Strike (+2 per 'Strike' card). Ours counts the class's growth investments, so every Bloom-card pick raises it, and it is half the rate per card."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 3/6 → 4/7 (bottom-5% pick rate)."
 ```
 
 ```card
@@ -278,14 +283,15 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage. Apply {rot} Rot."
 effects:
-  - damage: { amount: 3, target: target }
+  - damage: { amount: 4, target: target }
   - status: { target: target, id: rot, amount: 1, key: rot }
 upgrade:
   effects:
-    - damage: { amount: 3, target: target }
+    - damage: { amount: 4, target: target }
     - status: { target: target, id: rot, amount: 2, key: rot }
 tags: [blight, cheap]
 note: "3 d + Rot 1 (first 6 / stacked 3, mean 4.5) = 7.5 ✓. Upgrade Rot 2 (mean 7.5) → 10.5 (+40%). Played on turn 1 against a boss, Rot 1 is worth 1·9 + 36 = 45 HP over 9 turns (GDD §2.6). It is the 'start the clock' common."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): damage 3 → 4 (bottom-5% pick rate, 1.0%)."
 ```
 
 ```card
@@ -299,12 +305,13 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage, {damage_per} per Rot on the enemy."
 effects:
-  - damage: { amount: { base: 3, per: 1, scale: { status: rot, of: target } }, target: target }
+  - damage: { amount: { base: 5, per: 1, scale: { status: rot, of: target } }, target: target }
 upgrade:
   effects:
-    - damage: { amount: { base: 6, per: 1, scale: { status: rot, of: target } }, target: target }
+    - damage: { amount: { base: 8, per: 1, scale: { status: rot, of: target } }, target: target }
 tags: [blight, scaling]
 note: "Priced at Rot 4 at play (a Blight deck on turn 3): 3 + 4 = 7 ✓. Upgrade +3 (+43%). At the Rot cap it is 18 (21 upgraded) for 1 energy, but only from about turn 6 of a long fight. That is the 'inevitable by turn 6' promise, paid at common in a deck that spent its early turns on Rot. It is a hit (Exposed applies, Block absorbs), unlike Sporeburst. C19: Bane hits twice if Poisoned. Ours scales linearly with the clock."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 3/6 → 5/8 (two +1 steps; bottom-5% pick rate, 0.6%)."
 ```
 
 ```card
@@ -318,12 +325,13 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage, {damage_per} per card in your Scrapheap."
 effects:
-  - damage: { amount: { base: 4, per: 1, scale: cards_in_exhaust }, target: target }
+  - damage: { amount: { base: 5, per: 1, scale: cards_in_exhaust }, target: target }
 upgrade:
   effects:
-    - damage: { amount: { base: 7, per: 1, scale: cards_in_exhaust }, target: target }
+    - damage: { amount: { base: 8, per: 1, scale: cards_in_exhaust }, target: target }
 tags: [compost, scaling]
 note: "Priced at Scrapheap 3 (a Prune deck by turn 3): 4 + 3 = 7 ✓. Upgrade +3 (+43%). Every Prune, Scrap card and Spore Haze feeds it, so it is the Compost common payoff. It reads the Scrapheap, not the deck, so Prune and Prune away both help it."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4/7 → 5/8 (bottom-5% pick rate, 0.8%)."
 ```
 
 ```card
@@ -337,12 +345,13 @@ target: self
 keywords: [bloom]
 text: "Bloom. Gain {block} ({block_per} per Bloom) Block."
 effects:
-  - block: { amount: { base: 4, per: 1, scale: { cardVar: bloom } } }
+  - block: { amount: { base: 6, per: 1, scale: { cardVar: bloom } } }
 upgrade:
   effects:
-    - block: { amount: { base: 4, per: 2, scale: { cardVar: bloom } } }
+    - block: { amount: { base: 6, per: 2, scale: { cardVar: bloom } } }
 tags: [gardener, blight, bloom, block]
 note: "Bloom 2: 4 + 2 = 6 b ✓. Base 67%. Cap 14 (24 upgraded). Blight's stall card. In a Gardener hand it is the 'grow my defence or my damage?' alternative to Seed Bite."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4 → 6 (two +1 steps; the common Bloom wall, 8.7% pick rate)."
 ```
 
 ```card
@@ -375,14 +384,15 @@ target: self
 keywords: [bloom]
 text: "Bloom. Gain {block} ({block_per} per Bloom) Block. Draw {draw} card."
 effects:
-  - block: { amount: { base: 2, per: 1, scale: { cardVar: bloom } } }
+  - block: { amount: { base: 4, per: 1, scale: { cardVar: bloom } } }
   - draw: { n: 1 }
 upgrade:
   effects:
-    - block: { amount: { base: 2, per: 2, scale: { cardVar: bloom } } }
+    - block: { amount: { base: 4, per: 2, scale: { cardVar: bloom } } }
     - draw: { n: 1 }
 tags: [gardener, mass, bloom, draw, block]
 note: "Bloom 2: 4 b + draw (3 d ≈ 2.6 b) = 6.6 b ✓ (+0.6). Base 2 + 2.6 = 4.6 (77%). Mass takes it because it replaces itself, which offsets a wide deck's dilution. Gardener uses it as a cheap Prune target that digs for the real one."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 2 → 4 Block (two +1 steps; defence plus draw, deck Δ +21)."
 ```
 
 ```card
@@ -396,12 +406,13 @@ target: self
 keywords: []
 text: "Gain {block} Block, {block_per} per Bloom card in your deck."
 effects:
-  - block: { amount: { base: 2, per: 1, scale: bloom_cards_in_deck } }
+  - block: { amount: { base: 4, per: 1, scale: bloom_cards_in_deck } }
 upgrade:
   effects:
-    - block: { amount: { base: 5, per: 1, scale: bloom_cards_in_deck } }
+    - block: { amount: { base: 7, per: 1, scale: bloom_cards_in_deck } }
 tags: [mass, blight, block, scaling]
 note: "This is GDD §1.3's 'Block equal to the number of Bloom cards in your deck'. At 2 / 4 / 6 by act: 4 / 6 / 8 b, mean 6 ✓. Upgrade +3 (+50%). Blight's stall in a deck that also took Bloom cards."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 2/5 → 4/7 (bottom-5% pick rate, 3.6%; 3 Block on floor 1 was a trap)."
 ```
 
 ```card
@@ -415,14 +426,15 @@ target: self
 keywords: []
 text: "Gain {block} Block. Prune 2."
 effects:
-  - block: { amount: 2 }
+  - block: { amount: 3 }
   - prune: { bloom: 2, variant: standard }
 upgrade:
   effects:
-    - block: { amount: 5 }
+    - block: { amount: 6 }
     - prune: { bloom: 2, variant: standard }
 tags: [gardener, compost, prune, block]
 note: "2 b + Prune 2 (5 d ≈ 4.3 b) = 6.3 b ✓. Upgrade +3 b (+48%). The Gardener's growth common. Whether it lands depends on holding a Bloom card, so it rewards Keep (Patient Thorn) and Heartseed."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Block 2/5 → 3/6 (defence: Prune Scraps Husks, so Prune cards carry the Block)."
 ```
 
 ```card
@@ -436,14 +448,15 @@ target: self
 keywords: []
 text: "Gain {block} Block. Wild Prune."
 effects:
-  - block: { amount: 3 }
+  - block: { amount: 4 }
   - prune: { bloom: 1, variant: wild }
 upgrade:
   effects:
-    - block: { amount: 6 }
+    - block: { amount: 7 }
     - prune: { bloom: 1, variant: wild }
 tags: [gardener, mass, prune, block]
 note: "3 b + Wild Prune (4 d ≈ 3.4 b) = 6.4 b ✓. Upgrade +3 b (+47%). It never loses its Bloom while any eligible Bloom card is in hand, draw or discard. It is random, though, so it is the Mass Prune (it spreads growth across many copies) and the Gardener's insurance. 'misc' rng stream."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Block 3/6 → 4/7 (defence; 6.6% pick rate)."
 ```
 
 ```card
@@ -476,20 +489,21 @@ target: enemy
 keywords: []
 text: "Gain {block} Block. If the enemy has Rot, gain {block2} more."
 effects:
-  - block: { amount: 4 }
+  - block: { amount: 6 }
   - conditional:
       if: { has_status: { who: target, id: rot, min: 1 } }
       then:
         - block: { amount: 4 }
 upgrade:
   effects:
-    - block: { amount: 6 }
+    - block: { amount: 8 }
     - conditional:
         if: { has_status: { who: target, id: rot, min: 1 } }
         then:
           - block: { amount: 4 }
 tags: [blight, block]
 note: "4 b + 4 b × P(Rot) ≈ 0.6 → 6.4 b ✓. 8 b in Blight, inside the +50% conditional allowance (9 b). Upgrade +2 b (+25%; +33% outside Blight). Targets an enemy so it reads that enemy's Rot: the Blight player defends against the enemy she has been rotting."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base Block 4/6 → 6/8 (two +1 steps; bottom-5% pick rate, 1.1%)."
 ```
 
 ```card
@@ -503,7 +517,7 @@ target: self
 keywords: []
 text: "Gain {block} Block. Prune. If you Scrapped a Status or Curse, draw {draw} cards."
 effects:
-  - block: { amount: 3 }
+  - block: { amount: 5 }
   - prune: { bloom: 1, variant: standard }
   - conditional:
       if: { any: [ { pruned_type: { type: status } }, { pruned_type: { type: curse } } ] }
@@ -511,7 +525,7 @@ effects:
         - draw: { n: 2 }
 upgrade:
   effects:
-    - block: { amount: 6 }
+    - block: { amount: 8 }
     - prune: { bloom: 1, variant: standard }
     - conditional:
         if: { any: [ { pruned_type: { type: status } }, { pruned_type: { type: curse } } ] }
@@ -519,6 +533,7 @@ upgrade:
           - draw: { n: 2 }
 tags: [compost, gardener, prune, block, draw]
 note: "3 b + Prune 2.6 b + draw 2 (5.2 b) × P(Status/Curse in hand) ≈ 0.25 → 1.3 = 6.9 b ✓. Upgrade +3 b (+43%). ENEMIES.md §0.5 makes Tangle, Jitter and Backlash the intended Prune fodder. This card turns them into a cantrip, and it stacks with Grafting Knife."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Block 3/6 → 5/8 (two +1 steps). The most-picked Graft common (84%); each step measured about +3 to +6 win points with the other defence changes."
 ```
 
 ```card
@@ -572,23 +587,23 @@ Archetype definers (commandment 15): the Prune away surgery cards, the `onPrune`
 |---|---|---|---|---|---|
 | `twin_thorn` | Twin Thorn | attack | 2 | Bloom. Deal 5 (+2 per Bloom) damage twice. → (+3 per Bloom) | G |
 | `canopy_crush` | Canopy Crush | attack | 2 | Deal 4 damage, +1 per Bloom in your deck. → 9 | M G |
-| `miasma_sweep` | Miasma Sweep | attack | 2 | Bloom. Deal 4 (+1 per Bloom) damage to ALL enemies. Apply 2 Rot to ALL enemies. → (+2 per Bloom) | B G |
+| `miasma_sweep` | Miasma Sweep | attack | 2 | Bloom. Deal 5 (+1 per Bloom) damage to ALL enemies. Apply 2 Rot to ALL enemies. → (+2 per Bloom) | B G |
 | `uproot` | Uproot | attack | 2 | Deal 12 damage. Prune away. Scrap. → 16 | C G |
 | `prism_thorn` | Prism Thorn | attack | 1 | Deal 5 damage, +2 per Shard you have. → +3 per Shard | C |
 | `pollen_sting` | Pollen Sting | attack | 1 | Bloom. Deal 3 (+1 per Bloom) damage. Choose a Bloom card in your hand; it gains 1 Bloom. → (+2 per Bloom) | G |
 | `thicket_crash` | Thicket Crash | attack | 3 | Deal damage to ALL enemies equal to the number of cards in your deck. → cost 2 | M |
 | `patient_thorn` | Patient Thorn | attack | 1 | Bloom. Keep. Deal 4 (+2 per Bloom) damage. → (+3 per Bloom) | G |
-| `burl_wall` | Burl Wall | skill | 2 | Bloom. Gain 8 (+3 per Bloom) Block. → (+4 per Bloom) | G B |
-| `choking_spores` | Choking Spores | skill | 1 | Apply 1 Stagger and 1 Rot to ALL enemies. → 2 Stagger | B |
+| `burl_wall` | Burl Wall | skill | 2 | Bloom. Gain 10 (+3 per Bloom) Block. → (+4 per Bloom) | G B |
+| `choking_spores` | Choking Spores | skill | 1 | Apply 2 Stagger and 1 Rot to ALL enemies. → 3 Stagger | B |
 | `excise` | Excise | skill | 1 | Prune away. Scrap. → Draw 1 card. | C |
 | `propagate` | Propagate | skill | 1 | Choose a Bloom card in your hand. Add a copy of it to your deck. Scrap. → the copy is upgraded | M G |
-| `seed_rain` | Seed Rain | skill | 1 | Gain 3 Block. Spread Prune. → 6 Block | G M |
+| `seed_rain` | Seed Rain | skill | 1 | Gain 4 Block. Spread Prune. → 7 Block | G M |
 | `puffball` | Puffball | skill | 1 | Bloom. Apply 1 (+1 per Bloom) Rot to ALL enemies. Scrap. → (+2 per Bloom) | G B |
 | `sporeburst` | Sporeburst | skill | 1 | The enemy loses HP equal to its Rot. Then it gains 1 Rot. → gains 2 Rot | B |
-| `decomposer` | Decomposer | power | 1 | Whenever you Prune, apply 1 Rot to a random enemy. → cost 0 | C B |
+| `decomposer` | Decomposer | power | 1 | Whenever you Prune, apply 2 Rot to a random enemy. → cost 0 | C B |
 | `dusk_pruning` | Dusk Pruning | power | 1 | At the end of your turn, Prune. → cost 0 | G C |
-| `living_hedge` | Living Hedge | power | 2 | At the start of your turn, gain 1 Block per Bloom card in your deck. → cost 1 | M B |
-| `thorn_halo` | Thorn Halo | power | 2 | Bloom. At the start of your turn, deal 3 (+1 per Bloom) damage to a random enemy. → (+2 per Bloom) | G |
+| `living_hedge` | Living Hedge | power | 1 | At the start of your turn, gain 1 Block per Bloom card in your deck. → cost 0 | M B |
+| `thorn_halo` | Thorn Halo | power | 2 | Bloom. At the start of your turn, deal 4 (+1 per Bloom) damage to a random enemy. → (+2 per Bloom) | G |
 | `ripening_rot` | Ripening Rot | power | 1 | At the start of your turn, each enemy with Rot gains 1 Rot. → cost 0 | B |
 
 ```card
@@ -640,14 +655,15 @@ target: all_enemies
 keywords: [bloom]
 text: "Bloom. Deal {damage} ({damage_per} per Bloom) damage to ALL enemies. Apply {rot} Rot to ALL enemies."
 effects:
-  - damage: { amount: { base: 4, per: 1, scale: { cardVar: bloom } }, target: all_enemies }
+  - damage: { amount: { base: 5, per: 1, scale: { cardVar: bloom } }, target: all_enemies }
   - status: { target: all_enemies, id: rot, amount: 2, key: rot }
 upgrade:
   effects:
-    - damage: { amount: { base: 4, per: 2, scale: { cardVar: bloom } }, target: all_enemies }
+    - damage: { amount: { base: 5, per: 2, scale: { cardVar: bloom } }, target: all_enemies }
     - status: { target: all_enemies, id: rot, amount: 2, key: rot }
 tags: [blight, gardener, bloom, aoe]
 note: "AoE face 0.8 × 8.5 × 2 = 13.6 per target. Bloom 2: 6 + Rot 2 mean 7.5 = 13.5 ✓. Base 11.5 (85%; the Rot is fixed). Unlike Thornwhirl it trades raw AoE for starting every clock, so a Blight deck picks this one and a Gardener deck picks Thornwhirl."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4 → 5 (Act 2 width)."
 ```
 
 ```card
@@ -759,12 +775,13 @@ target: self
 keywords: [bloom]
 text: "Bloom. Gain {block} ({block_per} per Bloom) Block."
 effects:
-  - block: { amount: { base: 8, per: 3, scale: { cardVar: bloom } } }
+  - block: { amount: { base: 10, per: 3, scale: { cardVar: bloom } } }
 upgrade:
   effects:
-    - block: { amount: { base: 8, per: 4, scale: { cardVar: bloom } } }
+    - block: { amount: { base: 10, per: 4, scale: { cardVar: bloom } } }
 tags: [gardener, blight, bloom, block]
 note: "Rate 14 b. Bloom 2: 8 + 6 = 14 ✓. Base 57%. Cap 38 (48 upgraded) for 2. It is the answer to an Act 3 single 30+ hit (GDD §8.1). Blight's turtle grows it to outlast the clock boss's spikes."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 8 → 10 (defence)."
 ```
 
 ```card
@@ -778,14 +795,15 @@ target: all_enemies
 keywords: []
 text: "Apply {stagger} Stagger and {rot} Rot to ALL enemies."
 effects:
-  - status: { target: all_enemies, id: stagger, amount: 1, key: stagger }
+  - status: { target: all_enemies, id: stagger, amount: 2, key: stagger }
   - status: { target: all_enemies, id: rot, amount: 1, key: rot }
 upgrade:
   effects:
-    - status: { target: all_enemies, id: stagger, amount: 2, key: stagger }
+    - status: { target: all_enemies, id: stagger, amount: 3, key: stagger }
     - status: { target: all_enemies, id: rot, amount: 1, key: rot }
 tags: [blight, aoe, debuff, block]
 note: "Per target: Stagger 1 (2 b ≈ 2.3 d; 3 vs multi-hit) + Rot 1 mean 4.5 = 6.8 = AoE face 0.8 × 8.5 ✓. Upgrade +1 Stagger (+34%; much more against Act 2 multi-hit packs). Blight's defensive debuff. It stalls by shrinking hits, not by gaining Block."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Stagger 1/2 → 2/3. The Graft's only Stagger; Act 2 deaths are multi-hit packs (Rivet Gnashers, Riveter)."
 ```
 
 ```card
@@ -840,14 +858,15 @@ target: self
 keywords: []
 text: "Gain {block} Block. Spread Prune."
 effects:
-  - block: { amount: 3 }
+  - block: { amount: 4 }
   - prune: { bloom: 1, variant: spread }
 upgrade:
   effects:
-    - block: { amount: 6 }
+    - block: { amount: 7 }
     - prune: { bloom: 1, variant: spread }
 tags: [gardener, mass, prune, block]
 note: "3 b + Spread Prune (5 d ≈ 4.3 b, §0.3 call 3) = 7.3 b ✓. Upgrade +3 b (+41%). Every eligible Bloom card in hand gains 1. Width pays, so Mass prefers it over Prune 2 and the tall Gardener prefers Deep Graft. That split is deliberate."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): Block 3/6 → 4/7 (defence)."
 ```
 
 ```card
@@ -901,7 +920,7 @@ target: self
 keywords: []
 text: "Whenever you Prune, apply {status} Rot to a random enemy."
 effects:
-  - status: { target: self, id: decomposer, amount: 1 }
+  - status: { target: self, id: decomposer, amount: 2 }
 status_def:
   id: decomposer
   stacks: amount
@@ -916,6 +935,7 @@ upgrade:
   cost: 0
 tags: [compost, blight, prune, power]
 note: "Power setup: about 2.8 d per turn. A Prune deck averages about 1 Prune per turn → Rot 1 per Prune (stacked 3, first 6) ≈ 3–4 d per turn ✓. Upgrade cost 0 (+1 energy on the setup turn). 'Random enemy' uses the misc stream. This is the Compost→Blight bridge. C19: Feel No Pain/Dark Embrace pay on exhaust with Block or draw. Ours pays only on Prune, and in Rot."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 1 → 2 Rot per Prune (84% pick rate but about 1.3 Prunes a combat: it was a near-blank)."
 ```
 
 ```card
@@ -952,7 +972,7 @@ name: Living Hedge
 cls: graft
 type: power
 rarity: uncommon
-cost: 2
+cost: 1
 target: self
 keywords: []
 text: "At the start of your turn, gain 1 Block per Bloom card in your deck."
@@ -969,9 +989,10 @@ status_def:
     onTurnStart:
       - repeat: { times: { scale: stacks }, effects: [ { block: { amount: { base: 0, per: 1, scale: bloom_cards_in_deck } } } ] }
 upgrade:
-  cost: 1
+  cost: 0
 tags: [mass, blight, block, power, scaling]
 note: "2-cost setup: 17 / 3 ≈ 5.7 d ≈ 4.9 b per turn. At 4–6 Bloom cards (acts 2–3) it gives 4–6 b per turn ✓. Mass decks with 8+ get more (the build-around). Upgrade cost 1 (+50%). Block arrives at turn start step 4, after the reset, so it lasts through the enemy phase. C19: Metallicize gives flat Block each turn. Ours scales with deck composition and is priced at 2."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): cost 2/1 → 1/0. The Graft's scaling defence; picked 20% at cost 2, 73% at cost 1 with deck Δ +16; measured about +5 win points together with Shed Husk and Choking Spores."
 ```
 
 ```card
@@ -985,7 +1006,7 @@ target: self
 keywords: [bloom]
 text: "Bloom. At the start of your turn, deal {status} ({status_per} per Bloom) damage to a random enemy."
 effects:
-  - status: { target: self, id: thorn_halo, amount: { base: 3, per: 1, scale: { cardVar: bloom } } }
+  - status: { target: self, id: thorn_halo, amount: { base: 4, per: 1, scale: { cardVar: bloom } } }
 status_def:
   id: thorn_halo
   stacks: amount
@@ -998,9 +1019,10 @@ status_def:
       - damage: { amount: { scale: stacks }, target: random_enemy }
 upgrade:
   effects:
-    - status: { target: self, id: thorn_halo, amount: { base: 3, per: 2, scale: { cardVar: bloom } } }
+    - status: { target: self, id: thorn_halo, amount: { base: 4, per: 2, scale: { cardVar: bloom } } }
 tags: [gardener, bloom, power, scaling]
 note: "2-cost setup: 5.7 d per turn. Bloom 2: 3 + 2 = 5 per turn ✓. Base 53%. Cap 13 (23 upgraded) per turn. The status snapshots the card's Bloom when played. It is a Bloom Power, so the copy must be fed **before** it is played: hold it a turn to Prune into it, or play it now? It is a hit (Exposed applies)."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 3 → 4."
 ```
 
 ```card
@@ -1041,15 +1063,15 @@ Payoffs and rule-breakers (commandment 15). Rule-breakers here: a Prune that pay
 | `heartwood_spear` | Heartwood Spear | attack | 2 | Bloom. Deal 10 (+5 per Bloom) damage. → (+6 per Bloom) | G |
 | `death_cap` | Death Cap | attack | 2 | Deal 8 damage. If the enemy has Rot, apply 15 Rot. Scrap. → 12 | B |
 | `reaping_vine` | Reaping Vine | attack | 2 | Prune. Deal 4 damage for each time you Pruned this combat. → 5 | C |
-| `verdant_tide` | Verdant Tide | attack | 2 | Deal 3 damage once for each Bloom card in your deck. → 4 | M |
+| `verdant_tide` | Verdant Tide | attack | 2 | Deal 4 damage once for each Bloom card in your deck. → 5 | M |
 | `humus_rite` | Humus Rite | skill | 1 | Choose a Bloom card in your hand; it gains Bloom equal to the cards in your Scrapheap. Scrap. → cost 0 | C G |
 | `crystal_graft` | Crystal Graft | skill | 0 | Keep. Playable only if you have a Shard. Lose 1 Shard: choose a Bloom card in your hand; it gains 3 Bloom. Scrap. → 4 Bloom | G C |
 | `transplant` | Transplant | skill | 0 | Choose two Bloom cards in your hand. Move all Bloom from the first to the second, plus 2. Scrap. → plus 3 | G |
-| `chitin_cocoon` | Chitin Cocoon | skill | 1 | Bloom. Gain 4 (+2 per Bloom) Block. → (+3 per Bloom) | B G |
+| `chitin_cocoon` | Chitin Cocoon | skill | 1 | Bloom. Gain 5 (+2 per Bloom) Block. → (+3 per Bloom) | B G |
 | `quickening_sap` | Quickening Sap | power | 2 | Whenever a card in your hand gains Bloom, it costs 0 this turn. → cost 1 | G |
 | `fungal_aegis` | Fungal Aegis | power | 2 | At the start of your turn, gain Block equal to the highest Rot among enemies. → cost 1 | B |
-| `thresher` | Thresher | power | 2 | Bloom. Whenever you Prune, deal 3 (+1 per Bloom) damage to ALL enemies. → (+2 per Bloom) | C G |
-| `hyphal_web` | Hyphal Web | power | 1 | At the start of your turn, draw 1 card (2 if you have 8+ Bloom cards in your deck). → Opening | M |
+| `thresher` | Thresher | power | 2 | Bloom. Whenever you Prune, deal 5 (+1 per Bloom) damage to ALL enemies. → (+2 per Bloom) | C G |
+| `hyphal_web` | Hyphal Web | power | 1 | At the start of your turn, draw 1 card (2 if you have 6+ Bloom cards in your deck). → Opening | M |
 
 ```card
 id: heartwood_spear
@@ -1129,12 +1151,13 @@ target: enemy
 keywords: []
 text: "Deal {damage} damage once for each Bloom card in your deck ({times})."
 effects:
-  - damage: { amount: 3, times: { base: 0, per: 1, scale: bloom_cards_in_deck }, target: target }
+  - damage: { amount: 4, times: { base: 0, per: 1, scale: bloom_cards_in_deck }, target: target }
 upgrade:
   effects:
-    - damage: { amount: 4, times: { base: 0, per: 1, scale: bloom_cards_in_deck }, target: target }
+    - damage: { amount: 5, times: { base: 0, per: 1, scale: bloom_cards_in_deck }, target: target }
 tags: [mass, scaling, multihit]
 note: "Rate 20. Rares arrive in acts 2–3 (4–6 Bloom cards): 12–18. A Mass deck (8–13) gets 24–39, and Exposed adds that many again. Upgrade +1 per hit (+33%). Mass's finisher. Each Propagate is +3 here. C19: Flechettes counts Skills in hand. Ours counts permanent deck composition, so it is planned at the reward screen, not in the hand."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 3/4 → 4/5 per hit (0% pick rate)."
 ```
 
 ```card
@@ -1210,12 +1233,13 @@ target: self
 keywords: [bloom, retain]
 text: "Bloom. Keep. Gain {block} ({block_per} per Bloom) Block."
 effects:
-  - block: { amount: { base: 4, per: 2, scale: { cardVar: bloom } } }
+  - block: { amount: { base: 5, per: 2, scale: { cardVar: bloom } } }
 upgrade:
   effects:
-    - block: { amount: { base: 4, per: 3, scale: { cardVar: bloom } } }
+    - block: { amount: { base: 5, per: 3, scale: { cardVar: bloom } } }
 tags: [blight, gardener, bloom, block]
 note: "Rare 8 b, Keep −10% → 7.2. Bloom 2: 8 b (+11%, rare allowance). Base 55%. Cap 24 (34 upgraded) for 1 energy. Keep (budget 3 of 3) is what makes it rare: hold it for the turn the intent shows the big hit, and it sits in hand for Prunes meanwhile. Blight's turtle card."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4 → 5 (defence)."
 ```
 
 ```card
@@ -1285,7 +1309,7 @@ target: self
 keywords: [bloom]
 text: "Bloom. Whenever you Prune, deal {status} ({status_per} per Bloom) damage to ALL enemies."
 effects:
-  - status: { target: self, id: thresher, amount: { base: 3, per: 1, scale: { cardVar: bloom } } }
+  - status: { target: self, id: thresher, amount: { base: 5, per: 1, scale: { cardVar: bloom } } }
 status_def:
   id: thresher
   stacks: amount
@@ -1298,9 +1322,10 @@ status_def:
       - damage: { amount: { scale: stacks }, target: all_enemies }
 upgrade:
   effects:
-    - status: { target: self, id: thresher, amount: { base: 3, per: 2, scale: { cardVar: bloom } } }
+    - status: { target: self, id: thresher, amount: { base: 5, per: 2, scale: { cardVar: bloom } } }
 tags: [compost, gardener, bloom, prune, power, aoe]
 note: "2-cost setup: 6.7 d per turn. Bloom 2 → 5 AoE per Prune; at about 1.2 Prunes per turn = 6 hits of AoE ≈ 7.5 d (AoE ×1.25) ✓. Base 60%. Cap 13 (23 upgraded) per Prune. It snapshots Bloom on play, so feed it before playing (the same 'hold or play' question as Thorn Halo). This is Compost's pack answer. C19: Juggernaut deals damage on Block gain. Ours is on Prune, hits all enemies and grows with Bloom."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 3 → 5 (two +1 steps; Act 2 and Act 3 width, 85% pick rate)."
 ```
 
 ```card
@@ -1325,13 +1350,14 @@ status_def:
   triggers:
     onTurnStart:
       - conditional:
-          if: { compare: { left: { base: 0, per: 1, scale: bloom_cards_in_deck }, op: '>=', right: 8 } }
+          if: { compare: { left: { base: 0, per: 1, scale: bloom_cards_in_deck }, op: '>=', right: 6 } }
           then: [ { draw: { n: { base: 0, per: 2, scale: stacks } } } ]
           else: [ { draw: { n: { scale: stacks } } } ]
 upgrade:
   keywords: [innate]
 tags: [mass, draw, power]
 note: "1-cost setup: 3.3 d per turn. Draw 1 = 3 d ✓. With 8+ Bloom cards, 6 d per turn (the Mass payoff). Upgrade: Opening (budget 1 of 2), so turn 1 has it. Mass's answer to its own dilution. The draw happens at turn start step 4, before the 5-card draw, and counts toward `cap_draw`."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): threshold 8 → 6 Bloom cards (the bot's Graft decks end with about 6)."
 ```
 
 ---

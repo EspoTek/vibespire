@@ -14,11 +14,13 @@ import { Panel } from '../../ui/Panel.ts';
 import { Z } from '../../ui/Widget.ts';
 import { screenFor } from '../router.ts';
 import type { RunSession } from '../session.ts';
+import { actSong, type SongName } from '../../music.ts';
 
 export const ACT_NAMES: Readonly<Record<1 | 2 | 3, string>> = { 1: 'THE VERDANT DECKS', 2: 'THE FOUNDRY', 3: 'THE CROWN' };
 
 export class ActTransitionScreen extends Screen {
   private readonly session: RunSession;
+  override get music(): SongName { return actSong(this.session.state.act); }
   constructor(app: App, session: RunSession, healed: number) {
     super(app, 'act-transition');
     this.session = session;

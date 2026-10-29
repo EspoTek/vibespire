@@ -27,8 +27,10 @@ import { confirmDialog, openHelp, openPause } from './overlays.ts';
 import { routeAfter, screenKind } from './router.ts';
 import type { RunSession } from './session.ts';
 import { cardFace } from './view.ts';
+import { actSong, type SongName } from '../music.ts';
 
 export abstract class RunScreen extends Screen {
+  override get music(): SongName { return actSong(this.session.state.act); }
   protected readonly session: RunSession;
   protected readonly scope: FocusScope;
   protected readonly bg: Backdrop<BackdropKey>;

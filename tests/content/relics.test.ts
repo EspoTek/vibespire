@@ -274,7 +274,7 @@ describe('relic roster', () => {
     }
     for (const s of RELIC_STATUSES) for (const n of [1, 2]) expect(renderStatusText(s.id, n)).not.toMatch(/[{}]/);
     expect(renderRelicText('bulwark_rivets')).toBe('Whenever you gain Guard, gain 1 more.');
-    expect(renderRelicText('riven_gauntlet')).toBe('Whenever one of your Riposte effects triggers, gain 1 Onslaught and 3 Guard.');
+    expect(renderRelicText('riven_gauntlet')).toBe('Whenever one of your Riposte effects triggers, gain 1 Onslaught and 2 Guard.');
     expect(renderRelicText('metronome_heart')).toBe('The 12th card you play each turn is also on the beat.');
     expect(renderRelicText('fixed_star')).toBe('+1 energy each turn. Only the 3rd card you play each turn is on the beat.');
     expect(renderRelicText('geode_heart')).toBe('At the start of each combat, gain 1 Block per Shard you hold (max 10).');
@@ -427,14 +427,14 @@ describe('every relic hook fires in a sandbox tour', () => {
 // Precise behaviour
 
 describe('starter relics', () => {
-  it('riven_gauntlet: a Riposte trigger gains 1 Onslaught (kept into your turn) and 3 Guard', () => {
+  it('riven_gauntlet: a Riposte trigger gains 1 Onslaught (kept into your turn) and 2 Guard', () => {
     const { g } = arena({ relics: ['riven_gauntlet'], encounter: 'test_enc_jaw' });
     pacify(g);
     setHand(g, ['test_parry']);
     combatOf(g).player.block = 100;
     const ev = endTurn(g);
     expect(eventsOf(ev, 'riposte_triggered')).toHaveLength(1);
-    expect(guardGains(ev, 3)).toBe(1);
+    expect(guardGains(ev, 2)).toBe(1);
     expect(combatOf(g).turn).toBe(2);
     expect(combatOf(g).player.statuses.onslaught).toBe(1);
   });
@@ -661,7 +661,7 @@ describe('uncommon relics', () => {
     expect(eventsOf(endTurn(g), 'card_primed')).toHaveLength(2);
   });
 
-  it('kept_fury: up to 2 Onslaught is kept at turn end', () => {
+  it('kept_fury: up to 1 Onslaught is kept at turn end', () => {
     const { g } = arena({ relics: ['kept_fury'] });
     pacify(g);
     setHand(g, ['test_strike', 'test_strike', 'test_strike']);
@@ -669,7 +669,7 @@ describe('uncommon relics', () => {
     for (let i = 0; i < 3; i++) play(g, uidOf(g, 'test_strike'), firstEnemy(g));
     combatOf(g).player.block = 100;
     endTurn(g);
-    expect(combatOf(g).player.statuses.onslaught).toBe(2);
+    expect(combatOf(g).player.statuses.onslaught).toBe(1);
   });
 
   it('crowd_breaker: an Attack hitting 2+ enemies gains 1 more Onslaught', () => {

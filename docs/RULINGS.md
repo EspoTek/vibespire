@@ -64,3 +64,4 @@ These resolve questions raised by the card/enemy designers. They override `docs/
 43. **Standard Prune never wastes its Bloom.** If no eligible Bloom card is in your hand, a random eligible Bloom card in your draw or discard pile gains it (reverses GDD override 2; the simulator showed Bloom engines starving: average max Bloom 3.8 at run end). Choosing the copy in hand stays the skill expression.
 44. **Global balance levers (simulator-tuned, 2026-10-29):** `TUNING.enemyDamagePct` and `TUNING.enemyHpPct` are 85 in every act. Tests run them at 100 (`tests/setup-neutral-tuning.ts`), so content tests check the designers' raw numbers.
 45. **Graft starting HP 78** (was 70; simulator: 5.5% → 10% win with greedy).
+46. **Binding Contract** also makes every later card reward offer one card fewer (simulator: win delta +45 with the old drawback, the largest of any relic).

@@ -55,7 +55,7 @@ The Breaker's turn question is "swing now or hold?" — every card below is writ
 | `hew` | Hew | Attack | 1 | Deal 6 damage. (→ 9) | S | 6 d, starter rate |
 | `bulwark` | Bulwark | Skill | 1 | Gain 5 Block. (→ 8) | B | 6 d, starter rate |
 | `shoulder_check` | Shoulder Check | Attack | 1 | Deal 6 damage, +2 per Onslaught. Riposte: deal 6 damage to the attacker. (→ 8 (+2) / Riposte 9) | S D | 6 + 3 = 9 d; Riposte 6 |
-| `brace` | Brace | Skill | 1 | Gain 6 Guard. (→ 9) | B | 6 d, starter rate |
+| `brace` | Brace | Skill | 1 | Gain 5 Guard. (→ 8) | B | 5 d (sim-tuned from 6) |
 
 ```card
 id: hew
@@ -129,12 +129,13 @@ target: self
 keywords: []
 text: "Gain {guard} Guard."
 effects:
-  - guard: { amount: 6 }
+  - guard: { amount: 5 }
 upgrade:
   effects:
-    - guard: { amount: 9 }
+    - guard: { amount: 8 }
 tags: [starter, guard]
 note: "GDD §4.1, final. 6 Guard = starter Guard rate; the tail (6 → 3 → 1) is why it is not just a Defend."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): 6/9 → 5/8 Guard. With Riven Gauntlet's Guard 3 → 2 and Kept Fury 2 → 1, it brings the Breaker from 38% to about 30% bot win rate; Guard was 59% of the Breaker's damage prevented."
 ```
 
 ---
@@ -149,7 +150,7 @@ Commons are simple and at rate. None gains energy, returns a card or reduces a c
 | `chain_driver` | Chain Driver | Attack | 1 | Deal 6 damage. If Onslaught ≥ 2: draw 1 card. (→ 9) | S G | 6 + 3×0.55 = 7.7 vs 7 |
 | `overhand_drive` | Overhand Drive | Attack | 2 | Deal 5 damage, +3 per Onslaught. (→ 5, +4) | S | 5 + 9 = 14 vs 14 |
 | `breach_hammer` | Breach Hammer | Attack | 1 | Deal 6 damage. Spend 2 Onslaught: deal 12 instead. (→ 8 / 15) | S | 6; spent 12 − 4 = 8 vs 7 |
-| `thresher_arc` | Thresher Arc | Attack | 1 | Deal 4 damage to ALL enemies, +1 per Onslaught. (→ 6, +1) | S | 5.5 per target vs 0.8 × 7 = 5.6 |
+| `thresher_arc` | Thresher Arc | Attack | 1 | Deal 5 damage to ALL enemies, +1 per Onslaught. (→ 7, +1) | S | 6.5 per target vs 0.8 × 7 = 5.6 (sim-tuned from 4) |
 | `fault_line` | Fault Line | Attack | 1 | Apply 1 Exposed. Deal 4 damage. (→ 2 Exposed) | G D | 3 + 4 = 7 vs 7 |
 | `rivet_flurry` | Rivet Flurry | Attack | 1 | Deal 2 damage 4 times. (→ 3×4) | G | 8 vs 7 (Stagger tax) |
 | `counterweight` | Counterweight | Attack | 1 | Deal 7 damage. Riposte: apply 3 Stagger to the attacker. (→ 9 / 4) | D | 7; Riposte 7.2 (1.03×) |
@@ -273,12 +274,13 @@ target: all_enemies
 keywords: []
 text: "Deal {damage} damage to ALL enemies, +{damage_per} per Onslaught."
 effects:
-  - damage: { amount: { base: 4, per: 1, scale: { status: onslaught } }, target: all_enemies }
+  - damage: { amount: { base: 5, per: 1, scale: { status: onslaught } }, target: all_enemies }
 upgrade:
   effects:
-    - damage: { amount: { base: 6, per: 1, scale: { status: onslaught } }, target: all_enemies }
+    - damage: { amount: { base: 7, per: 1, scale: { status: onslaught } }, target: all_enemies }
 tags: [swing, aoe]
 note: "The Swing deck's pack answer (Act 2 width; Mother of Buds' 9-HP Buds). Per target 4 + 1×1.5 = 5.5 vs the AoE cap 0.8 × 7 = 5.6 (RULINGS 29). With Crowd Breaker it also feeds +1 Onslaught. Upgrade +2 base (7.5 per target)."
+tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): base 4/6 → 5/7 (bottom-5% pick rate, 5.5%; the Breaker dies in Act 2 multi-enemy hallways)."
 ```
 
 ```card
@@ -862,7 +864,7 @@ upgrade:
   riposte:
     - damage: { amount: 7, target: attacker, key: rdamage }
 tags: [riposte, cheap]
-note: "A free rack-filler: hold this so your bigger Riposte cards can be played now, or play it for free Block. Every primed card also fires Riven Gauntlet (+1 Onslaught, +3 Guard). Played 4 Block = 4.8 d vs 4.25 (+13%, 0-cost rounding); Riposte 5 d (1.04×). Upgrade +2/+2."
+note: "A free rack-filler: hold this so your bigger Riposte cards can be played now, or play it for free Block. Every primed card also fires Riven Gauntlet (+1 Onslaught, +2 Guard; sim-tuned from 3). Played 4 Block = 4.8 d vs 4.25 (+13%, 0-cost rounding); Riposte 5 d (1.04×). Upgrade +2/+2."
 ```
 
 ```card
@@ -1376,7 +1378,7 @@ effects:
 upgrade:
   cost: 1
 tags: [swing, scaling]
-note: "The banking rare GDD §2.1 names: uses onslaught_keep (max of sources; supersedes Kept Fury's 2). Swing turns end at 4–6, so ≈ 3.5 Onslaught starts each later turn: 3.5 × 2 = 7 d/turn × 3 = 21 d vs 20. Not Demon Form: the kept amount is capped at 4 and is lost the turn you don't refill it. With Heavy Heart (halves instead) the larger result wins (§F.9). Upgrade cost 1."
+note: "The banking rare GDD §2.1 names: uses onslaught_keep (max of sources; supersedes Kept Fury's 1, sim-tuned from 2). Swing turns end at 4–6, so ≈ 3.5 Onslaught starts each later turn: 3.5 × 2 = 7 d/turn × 3 = 21 d vs 20. Not Demon Form: the kept amount is capped at 4 and is lost the turn you don't refill it. With Heavy Heart (halves instead) the larger result wins (§F.9). Upgrade cost 1."
 ```
 
 ```card

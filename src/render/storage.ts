@@ -138,23 +138,31 @@ export class Stored<T> {
 // ------------------------------------------------------------------ renderer-owned keys
 
 export interface Settings {
-  version: 1;
+  version: 2;
   /** Master SFX volume 0..1. */
   volume: number;
+  /** Music volume 0..1 (separate from SFX). */
+  musicVolume: number;
   /** Animation speed multiplier (1 = normal). */
   animSpeed: number;
 }
 
-export const DEFAULT_SETTINGS: Settings = { version: 1, volume: 0.6, animSpeed: 1 };
+/** Music default for new players and for v1 settings (saved before music existed). */
+export const DEFAULT_MUSIC_VOLUME = 0.4;
+
+export const DEFAULT_SETTINGS: Settings = { version: 2, volume: 0.6, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1 };
 
 export const settingsCodec: Codec<Settings> = (raw, key) => {
   if (typeof raw !== 'object' || raw === null) throw new Error(`storage: "${key}" is not an object`);
   const r = raw as Record<string, unknown>;
-  if (r['version'] !== 1) throw new Error(`storage: "${key}" has unsupported version ${String(r['version'])}`);
+  if (r['version'] !== 1 && r['version'] !== 2) throw new Error(`storage: "${key}" has unsupported version ${String(r['version'])}`);
   const volume = r['volume'], animSpeed = r['animSpeed'];
+  // v1 had no music setting: migrate to the default; v2 must carry it
+  const musicVolume = r['version'] === 1 ? DEFAULT_MUSIC_VOLUME : r['musicVolume'];
   if (typeof volume !== 'number' || volume < 0 || volume > 1) throw new Error(`storage: "${key}".volume invalid: ${String(volume)}`);
+  if (typeof musicVolume !== 'number' || musicVolume < 0 || musicVolume > 1) throw new Error(`storage: "${key}".musicVolume invalid: ${String(musicVolume)}`);
   if (typeof animSpeed !== 'number' || !(animSpeed > 0)) throw new Error(`storage: "${key}".animSpeed invalid: ${String(animSpeed)}`);
-  return { version: 1, volume, animSpeed };
+  return { version: 2, volume, musicVolume, animSpeed };
 };
 
 export const SETTINGS_KEY = 'vibespire.settings.v1';

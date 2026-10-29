@@ -63,3 +63,17 @@ export function formatIntent(intent: IntentLike, baseDamage: number | null): Int
   };
   return { icon: icons[k], icon2: second[k] ?? null, label: k === 'unknown' ? '?' : '', total: 0, isAttack: false, adjusted: false };
 }
+
+/**
+ * HP left after `hits` land on a target with `block` and `guard` (Block soaks first, then Guard,
+ * across hits, as the engine's damage pipeline does). Hits are the per-hit numbers the card shows.
+ */
+export function hpAfterHits(hp: number, block: number, guard: number, hits: readonly number[]): number {
+  let b = block, g = guard, h = hp;
+  for (const dmg of hits) {
+    const toBlock = Math.min(b, dmg); b -= toBlock;
+    const toGuard = Math.min(g, dmg - toBlock); g -= toGuard;
+    h = Math.max(0, h - (dmg - toBlock - toGuard));
+  }
+  return h;
+}

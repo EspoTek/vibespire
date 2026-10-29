@@ -231,8 +231,8 @@ const STARTERS: CardDef[] = [
   {
     id: 'brace', name: 'Brace', cls: 'breaker', type: 'skill', rarity: 'starter', cost: 1, target: 'self',
     text: 'Gain {guard} Guard.',
-    effects: [{ type: 'guard', amount: 6 }],
-    upgrade: { effects: [{ type: 'guard', amount: 9 }] },
+    effects: [{ type: 'guard', amount: 5 }],
+    upgrade: { effects: [{ type: 'guard', amount: 8 }] },
     icon: 'card_brace', tags: ['starter', 'guard'],
   },
 ];
@@ -284,8 +284,8 @@ const COMMONS: CardDef[] = [
   {
     id: 'thresher_arc', name: 'Thresher Arc', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'all_enemies',
     text: 'Deal {damage} damage to ALL enemies, +{damage_per} per Onslaught.',
-    effects: [{ type: 'damage', amount: perOnslaught(4, 1), target: 'all_enemies' }],
-    upgrade: { effects: [{ type: 'damage', amount: perOnslaught(6, 1), target: 'all_enemies' }] },
+    effects: [{ type: 'damage', amount: perOnslaught(5, 1), target: 'all_enemies' }],
+    upgrade: { effects: [{ type: 'damage', amount: perOnslaught(7, 1), target: 'all_enemies' }] },
     icon: 'card_thresher_arc', tags: ['swing', 'aoe'],
   },
   {

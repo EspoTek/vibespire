@@ -16,6 +16,7 @@ export function newFloorRecord(state: RunState, room: RoomType): FloorRecord {
     enemies: [],
     turns: 0,
     damageTaken: 0,
+    damageDealt: 0,
     cardsOffered: [],
     cardPicked: null,
     cardSkipped: false,

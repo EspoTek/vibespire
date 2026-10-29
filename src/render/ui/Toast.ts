@@ -30,6 +30,8 @@ export class ToastManager {
   private readonly queue: { text: string; ms: number }[] = [];
   private current: { toast: Toast; left: number } | null = null;
   private readonly announce: (s: string) => void;
+  /** Top edge of the toast box; main.ts moves it down below the dev TEST CONTENT watermark. */
+  topY = 6;
 
   constructor(announce: (s: string) => void) {
     this.announce = announce;
@@ -49,7 +51,7 @@ export class ToastManager {
     }
     const next = this.queue.shift();
     if (!next) return;
-    const toast = new Toast(next.text);
+    const toast = new Toast(next.text, this.topY);
     this.root.add(toast.node);
     this.current = { toast, left: next.ms };
     this.announce(next.text);

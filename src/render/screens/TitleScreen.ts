@@ -6,7 +6,7 @@
  *  - OPTIONS: volume + animation speed.
  */
 import type { App } from '../app.ts';
-import { PROMPTS } from '../actions.ts';
+import { promptMarkup } from '../actions.ts';
 import { fonts } from '../fonts.ts';
 import { H, W } from '../layout.ts';
 import { C } from '../palette.ts';
@@ -20,8 +20,10 @@ import { ClassSelectScreen } from '../game/screens/ClassSelectScreen.ts';
 import { RunSession } from '../game/session.ts';
 import { GalleryScreen } from './GalleryScreen.ts';
 import { Screen } from './Screen.ts';
+import type { SongName } from '../music.ts';
 
 export class TitleScreen extends Screen {
+  override get music(): SongName { return 'title'; }
   private readonly menu: ListMenu;
   private readonly prompt: Label;
   private shownDevice = '';
@@ -46,7 +48,7 @@ export class TitleScreen extends Screen {
     this.menu.setZ(Z.PANEL);
     this.focus.pushScope('title').add(this.menu);
     this.add(new Label(6, H - 10, 'V0.2', { font: fonts.small, color: C.textMuted, outline: C.black }));
-    this.prompt = this.add(new Label(W - 6, H - 10, '', { font: fonts.small, align: 'right', color: C.textMuted, outline: C.black }));
+    this.prompt = this.add(new Label(W - 6, H - 10, '', { font: fonts.small, align: 'right', color: C.textMuted, outline: C.black, markup: true }));
   }
 
   override enter(): void { this.focus.ensureFocus(); }
@@ -68,8 +70,7 @@ export class TitleScreen extends Screen {
     const dev = this.app.input.lastDevice;
     if (dev !== this.shownDevice) {
       this.shownDevice = dev;
-      const p = PROMPTS[dev];
-      this.prompt.setText(`${p.confirm} SELECT   ${p.cancel} BACK`);
+      this.prompt.setText(`${promptMarkup(dev, 'confirm', 'textMuted')} SELECT   ${promptMarkup(dev, 'cancel', 'textMuted')} BACK`);
     }
   }
 }

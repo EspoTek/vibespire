@@ -64,6 +64,7 @@ if (testContentActive()) {
   const mark = new Label(W / 2, 1, 'TEST CONTENT', { font: fonts.small, align: 'center', color: C.pink, outline: C.black });
   mark.setZ(Z.TOAST + 10);
   app.toasts.root.add(mark.node);
+  app.toasts.topY = 10; // toasts start below the watermark instead of covering it
 }
 app.start();
 

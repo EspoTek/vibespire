@@ -13,8 +13,10 @@ import { Backdrop } from '../ui/Backdrop.ts';
 import { Label } from '../ui/Label.ts';
 import { Screen } from './Screen.ts';
 import { TitleScreen } from './TitleScreen.ts';
+import type { SongName } from '../music.ts';
 
 export class GateScreen extends Screen {
+  override get music(): SongName { return 'title'; }
   private button: HTMLButtonElement | null = null;
   private prompt: Label;
   private t = 0;

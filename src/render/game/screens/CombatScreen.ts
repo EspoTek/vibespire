@@ -11,8 +11,8 @@
  */
 import { getCardDef, getEnemyDef, getPotionDef, getRelicDef, getStatusDef } from '../../../content/index.ts';
 import {
-  effectTextValues, renderMoveText, renderPotionText, renderRelicText, renderStatusText, riposteWillTrigger, TUNING,
-  type Action, type CardInstance, type CombatState, type EntityRef, type GameEvent, type Intent, type PendingChoice, type RunState,
+  computeDamagePreview, effectTextValues, renderMoveText, renderPotionText, renderRelicText, renderStatusText, riposteWillTrigger, TUNING,
+  type Action, type CardInstance, type CombatState, type EntityRef, type GameEvent, type Intent, type PendingChoice, type PrimedEntry, type RunState,
 } from '../../../engine/index.ts';
 import type { App } from '../../app.ts';
 import { actBackdrop } from '../../assets.ts';
@@ -32,18 +32,18 @@ import { Picture } from '../../ui/Picture.ts';
 import { Tooltip } from '../../ui/Tooltip.ts';
 import { Widget, Z } from '../../ui/Widget.ts';
 import {
-  banner, blinkOut, EnemyPlate, EnergyOrb, floatText, HpBar, IntentBox, Metronome, MiniCard, StatusRow, type StatusView,
+  banner, blinkOut, EnemyPlate, iconPop, EnergyOrb, floatText, HpBar, IntentBox, Metronome, MiniCard, StatusRow, type StatusView,
 } from '../combatWidgets.ts';
 import { openDeckView, type DeckTab } from '../deckView.ts';
 import { handSlots, enemyCenters, battleScale, timelineSlots, TIMELINE, PLATE_W } from '../handLayout.ts';
 import { HintIcon, placeholderPortrait } from '../hud.ts';
-import { isAttackKind } from '../intents.ts';
+import { hpAfterHits, isAttackKind } from '../intents.ts';
 import { CardDetail, confirmDialog, controlsText } from '../overlays.ts';
 import { routeAfter } from '../router.ts';
 import { openChoiceModal, RunScreen } from '../RunScreen.ts';
 import type { RunSession } from '../session.ts';
-import { bloomOf, cardFace, enemyAtlas, itemIcon, portraitOrNull, unplayableReasonOrNull } from '../view.ts';
-import { PROMPTS } from '../../actions.ts';
+import { bloomOf, cardFace, enemyAtlas, itemIcon, portraitOrNull, primeForecast, statusIcon, unplayableReasonOrNull } from '../view.ts';
+import { PROMPTS, promptMarkup, type PromptAction } from '../../actions.ts';
 
 interface LiveEntity { hp: number; maxHp: number; block: number; guard: number; statuses: Record<string, number> }
 
@@ -57,6 +57,12 @@ interface Unit {
 }
 
 const STEP = 90; // base animation step, ms
+/** A hit this big (before Block) shakes the whole screen. */
+const BIG_HIT = 15;
+/** Debuffs that pop their icon when applied. */
+const POP_STATUSES: ReadonlySet<string> = new Set(['rot', 'exposed', 'stagger']);
+/** Primed rack row, just above the hand. */
+const RACK_Y = 252;
 const PILES = { draw: { x: 534, y: 318 }, discard: { x: 576, y: 318 }, scrap: { x: 618, y: 318 } } as const;
 
 export class CombatScreen extends RunScreen {
@@ -65,6 +71,10 @@ export class CombatScreen extends RunScreen {
   private readonly hand = new Map<number, CardFrame>();
   private handOrder: number[] = [];
   private minis: MiniCard[] = [];
+  /** Primed rack chips (GDD §2.2), kept live through the enemy phase until each fires or fizzles. */
+  private rack: MiniCard[] = [];
+  /** Riposte triggers still to animate per uid in the current batch (a chip returns while > 0). */
+  private pendingTriggers = new Map<number, number>();
   private playerHp!: HpBar;
   private playerHpText!: Label;
   private playerDef!: Label;
@@ -81,7 +91,9 @@ export class CombatScreen extends RunScreen {
   private tip!: Tooltip;
   private hint: Label | null = null;
   private timelineHeader: Label[] = [];
-  private targeting: { scope: FocusScope; resolve: (uid: number) => void } | null = null;
+  private targeting: { scope: FocusScope; resolve: (uid: number) => void; card: number | null } | null = null;
+  /** "29 → 17 HP" over the focused target while aiming a card. */
+  private dmgPreview!: Label;
   private animating = false;
   private live: { player: LiveEntity; enemies: Map<number, LiveEntity>; energy: number; draw: number; discard: number; exhaust: number } | null = null;
   private inPlay: { uid: number; frame: CardFrame } | null = null;
@@ -134,9 +146,12 @@ export class CombatScreen extends RunScreen {
     pile('discard', 558, 'DISC');
     pile('exhaust', 598, 'SCRAP');
     this.detail = this.add(new CardDetail(4, 96, 150));
+    this.dmgPreview = this.add(new Label(0, 0, '', { font: fonts.small, align: 'center', color: C.yellow, outline: C.black, markup: true }));
+    this.dmgPreview.setZ(Z.PANEL + 30);
+    this.dmgPreview.visible = false;
     this.tip = this.add(new Tooltip({ maxWidth: 170 }));
     if (s.floor <= 1 && this.combat.turn <= 1) {
-      this.hint = this.add(new Label(W / 2, 250, '', { font: fonts.small, align: 'center', color: C.textHi, outline: C.black }));
+      this.hint = this.add(new Label(W / 2, 250, '', { font: fonts.small, align: 'center', color: C.textHi, outline: C.black, markup: true }));
     }
     for (let i = 0; i < 3; i++) {
       const l = this.add(new Label(TIMELINE.x + i * (TIMELINE.colW + TIMELINE.gapX) + 2, TIMELINE.y, i === 0 ? 'NEXT TURN' : `+${i + 1}`, { font: fonts.small, color: C.iceBlue, outline: C.black }));
@@ -217,8 +232,13 @@ export class CombatScreen extends RunScreen {
     });
     this.handOrder = handUids;
     this.handOnly.clear();
-    // primed rack + timeline
+    // primed rack + timeline; "WILL PRIME" tags on the Riposte cards ending the turn would prime
+    this.syncRack();
     this.syncMinis();
+    const prime = primeForecast(s);
+    for (const [uid, f] of this.hand) {
+      f.setTag(prime.uids.includes(uid) ? (prime.choose ? 'PRIME?' : 'WILL PRIME') : null, C.iceBlue);
+    }
     // potions / relics strips (top)
     this.syncStrips();
     // end turn availability
@@ -334,14 +354,6 @@ export class CombatScreen extends RunScreen {
     for (const m of this.minis) { this.scope.remove(m); this.removeWidget(m); }
     this.minis = [];
     const c = this.combat;
-    // primed rack above the hand (GDD §2.2)
-    c.primed.forEach((p, i) => {
-      const name = getCardDef(p.card.id, p.card.upgraded).name;
-      const m = this.add(new MiniCard(320 - Math.floor((c.primed.length * 62) / 2) + i * 62, 252, p.card.uid, `⚔ ${name}`, { w: 60 }));
-      m.setZ(Z.CARD - 2);
-      m.label = `Primed: ${name}. Fires at the first enemy that attacks.`;
-      this.minis.push(m);
-    });
     // Timeline strip above the enemies (GDD §2.8)
     const slots = timelineSlots(c.timeline.map((t) => ({ uid: t.card.uid, dueTurn: t.dueTurn, seq: t.seq })), c.turn);
     for (const t of c.timeline) {
@@ -356,6 +368,38 @@ export class CombatScreen extends RunScreen {
     const showTl = c.timeline.length > 0 || this.state.classId === 'chronist';
     for (const l of this.timelineHeader) l.visible = showTl;
     this.scope.add(...this.minis);
+  }
+
+  /** Rebuild the primed rack from the state (outside animations). */
+  private syncRack(): void {
+    for (const m of this.rack) { this.scope.remove(m); this.removeWidget(m); }
+    this.rack = [];
+    for (const p of this.combat.primed) this.addRackChip(p.card.uid, p.charges);
+    this.layoutRack();
+  }
+
+  private addRackChip(uid: number, charges: number): MiniCard {
+    const card = this.findCard(uid, this.state);
+    const name = getCardDef(card.id, card.upgraded).name;
+    const m = this.add(new MiniCard(320, RACK_Y, uid, name, { w: 60, value: charges > 1 ? `×${charges}` : undefined }));
+    m.setZ(Z.CARD - 2);
+    m.label = `Primed: ${name}. Fires at the first enemy that attacks.`;
+    this.rack.push(m);
+    this.scope.add(m);
+    return m;
+  }
+
+  /** The rack after this batch of events; the fight may have ended in it (then nothing stays primed). */
+  private finalPrimed(): readonly PrimedEntry[] { return this.state.combat?.primed ?? []; }
+
+  private rackSlotX(i: number, n: number): number { return 320 - Math.floor((n * 62) / 2) + i * 62; }
+
+  private layoutRack(): void { this.rack.forEach((m, i) => m.moveTo(this.rackSlotX(i, this.rack.length), RACK_Y)); }
+
+  private removeRackChip(m: MiniCard): void {
+    this.rack = this.rack.filter((x) => x !== m);
+    this.scope.remove(m);
+    this.removeWidget(m);
   }
 
   private syncStrips(): void {
@@ -392,11 +436,11 @@ export class CombatScreen extends RunScreen {
 
   private updateHint(): void {
     if (!this.hint) return;
-    const p = PROMPTS[this.app.input.lastDevice];
     const dev = this.app.input.lastDevice;
+    const m = (a: PromptAction) => promptMarkup(dev, a, 'textHi');
     this.hint.setText(dev === 'mouse'
       ? 'CLICK A CARD TO PLAY  ·  CLICK AN ENEMY TO TARGET  ·  E END TURN  ·  HOLD I DETAILS'
-      : `1-0 SELECT CARD  ·  ${p.confirm} PLAY  ·  ${p.nextTarget} TARGET  ·  ${p.endTurn} END TURN  ·  HOLD ${p.info} DETAILS`);
+      : `${dev === 'gamepad' ? '◀ ▶' : '1-0'} SELECT CARD  ·  ${m('confirm')} PLAY  ·  ${m('nextTarget')} TARGET  ·  ${m('endTurn')} END TURN  ·  HOLD ${m('info')} DETAILS`);
   }
 
   // ---------------------------------------------------------------- input
@@ -453,7 +497,8 @@ export class CombatScreen extends RunScreen {
       u.view.onFocus = () => { if (previewCard !== null) this.previewAgainst(previewCard, uid); };
       views.push(u.view);
     });
-    this.targeting = { scope, resolve: onPick };
+    this.targeting = { scope, resolve: onPick, card: previewCard };
+    if (previewCard !== null) this.hand.get(previewCard)?.setAimed(true);
     this.app.toasts.show('CHOOSE A TARGET', 900);
     const firstView = views[0];
     if (firstView) this.focus.focus(firstView);
@@ -463,6 +508,8 @@ export class CombatScreen extends RunScreen {
     const t = this.targeting;
     if (!t) return;
     this.targeting = null;
+    if (t.card !== null) this.hand.get(t.card)?.setAimed(false);
+    this.dmgPreview.visible = false;
     this.focus.popScope(t.scope);
     for (const u of this.units.values()) { u.view.list = undefined; u.view.onActivate = () => { /* inspection */ }; u.view.onFocus = null; }
     this.sync();
@@ -475,6 +522,20 @@ export class CombatScreen extends RunScreen {
     if (!f || !card) return;
     f.setFace(cardFace(this.app, card, { state: this.state, target }), cardUid);
     this.detail.show(f.cardFace);
+    this.showDamagePreview(cardUid, target);
+  }
+
+  /** "HP → HP after" over the target for the aimed card's damage (Block, then Guard, soak first). */
+  private showDamagePreview(cardUid: number, target: number): void {
+    const hits = computeDamagePreview(this.state, cardUid, target);
+    const u = this.units.get(target);
+    const e = this.combat.enemies.find((x) => x.uid === target);
+    if (!u || !e) throw new Error(`damage preview: no enemy ${target}`);
+    if (hits.length === 0) { this.dmgPreview.visible = false; return; }
+    const after = hpAfterHits(e.hp, e.block, e.guard, hits);
+    this.dmgPreview.setText(after === 0 ? `${e.hp} → [pink]0 HP  LETHAL[/]` : `${e.hp} → ${after} HP`);
+    this.dmgPreview.moveAnchorTo(u.plate.rect.x + Math.floor(u.plate.rect.w / 2), u.plate.rect.y - 9);
+    this.dmgPreview.visible = true;
   }
 
   private openPiles(tab: string): void {
@@ -530,7 +591,11 @@ export class CombatScreen extends RunScreen {
     if (f instanceof HintIcon && f.hint) { this.tip.show(f.rect, f.hint, f.rect.y < 100 ? 'below' : 'above'); return; }
     if (f instanceof EnemyView) {
       const u = [...this.units.values()].find((x) => x.view === f);
-      if (u) this.tip.show(f.rect, `[yellow]${getEnemyDef(u.enemyId).name.toUpperCase()}[/]\n${this.moveText(u.uid)}`, 'right');
+      if (u) {
+        // keep clear of the other enemies (sprite, plate, intent) so the tooltip never hides a neighbour
+        const avoid = [...this.units.values()].filter((o) => o !== u).flatMap((o) => [o.view.rect, o.plate.rect, o.intent.rect]);
+        this.tip.show(f.rect, `[yellow]${getEnemyDef(u.enemyId).name.toUpperCase()}[/]\n${this.moveText(u.uid)}`, 'right', avoid);
+      }
       return;
     }
     if (f instanceof MiniCard) { this.tip.show(f.rect, f.label, 'below'); return; }
@@ -573,6 +638,9 @@ export class CombatScreen extends RunScreen {
     this.tip.hide();
     this.tipFor = null;
     this.initLive(prev);
+    this.pendingTriggers.clear();
+    for (const e of events) if (e.t === 'riposte_triggered') this.pendingTriggers.set(e.uid, (this.pendingTriggers.get(e.uid) ?? 0) + 1);
+    for (const f of this.hand.values()) f.setTag(null);
     await this.app.scheduler.enqueue(async () => {
       for (const e of events) await this.animateEvent(e, prev);
       await this.flushInPlay();
@@ -768,7 +836,8 @@ export class CombatScreen extends RunScreen {
           if (e.hpLost === 0 && e.blocked + e.guarded === 0) void floatText(this.app, root, p.x, p.y, String(e.amount), C.white, { big: true });
         }
         this.app.sfx.play(e.target === 'player' ? (e.hpLost > 0 ? 'hurt' : 'block') : 'hit');
-        if (e.target === 'player') void shake(this.app.tweens, this.root, e.hpLost > 0 ? 3 : 1, 180);
+        if (e.amount >= BIG_HIT) void shake(this.app.tweens, this.root, 5, 320); // big hits shake the whole screen
+        else if (e.target === 'player') void shake(this.app.tweens, this.root, e.hpLost > 0 ? 3 : 1, 180);
         else {
           const u = this.units.get(e.target);
           if (u && (e.hpLost > 0 || e.kind === 'attack')) await u.view.hit(this.app.tweens, e.hpLost > 0 ? 3 : 1, 200);
@@ -827,6 +896,7 @@ export class CombatScreen extends RunScreen {
           const col = e.status === 'rot' ? C.lilac : def.isDebuff ? C.pink : C.lime;
           const text = e.status === 'rot' && e.delta === 1 ? '+1 ROT' : `${e.delta > 0 ? '+' : ''}${e.delta} ${def.name.toUpperCase()}`;
           void floatText(this.app, root, p.x, p.y - 14, text, col);
+          if (POP_STATUSES.has(e.status) && e.delta > 0) void iconPop(this.app, root, p.x, p.y - 30, statusIcon(e.status));
           await this.wait(60);
         }
         break;
@@ -840,8 +910,20 @@ export class CombatScreen extends RunScreen {
         break; // shown by sync() after the batch (the intent box flickers when the forecast changes)
       case 'enemy_move': {
         const u = this.units.get(e.uid);
-        if (u) void shake(this.app.tweens, u.view.node, 2, 120);
+        // the move being made is the intent shown before this batch (the final state already holds the next one)
+        const intent = prev.combat?.enemies.find((x) => x.uid === e.uid)?.intent;
+        const attacking = intent !== undefined && isAttackKind(intent.kind);
+        if (u && attacking) void u.view.lunge(this.app.tweens);
+        else if (u) void shake(this.app.tweens, u.view.node, 2, 120);
         await banner(this.app, root, e.name.toUpperCase(), 300, 'top');
+        break;
+      }
+      case 'enemy_phase': {
+        // boss phase change: a short palette flash toward white (whole SMS levels), then a banner
+        const d = this.app.display;
+        for (const lv of [1, 2, 3, 2, 1, 0]) { d.setFade(lv); await this.wait(40); }
+        this.app.sfx.play('hurt');
+        await banner(this.app, root, `PHASE ${e.phase}`, 450);
         break;
       }
       case 'attack_cancelled': {
@@ -873,26 +955,42 @@ export class CombatScreen extends RunScreen {
         break;
       case 'card_primed': {
         const f = this.takeFromHand(e.uid);
+        const n = this.rack.length + 1;
         if (f) {
-          await this.flyTo(f, 320 - 32, 236, STEP);
+          await this.flyTo(f, this.rackSlotX(n - 1, n), RACK_Y - 30, STEP);
           this.removeWidget(f);
         }
-        void floatText(this.app, root, 320, 246, 'PRIMED', C.iceBlue);
+        const finalEntry = this.finalPrimed().find((p) => p.card.uid === e.uid); // absent: it fired or fizzled later in this batch
+        this.addRackChip(e.uid, finalEntry ? finalEntry.charges + (this.pendingTriggers.get(e.uid) ?? 0) : 1);
+        this.layoutRack();
+        void floatText(this.app, root, 320, RACK_Y - 8, 'PRIMED', C.iceBlue);
         break;
       }
       case 'riposte_triggered': {
         const name = getCardDef(this.findCard(e.uid, this.state, prev).id).name;
         const p = this.posOf(e.attacker);
-        const chip = this.minis.find((m) => m.uid === e.uid);
-        if (chip) await this.flyTo(chip, p.x - 25, p.y, STEP + 40);
+        const left = (this.pendingTriggers.get(e.uid) ?? 1) - 1;
+        this.pendingTriggers.set(e.uid, left);
+        const chip = this.rack.find((m) => m.uid === e.uid);
+        const home = chip ? { x: chip.rect.x, y: chip.rect.y } : null;
+        if (chip) await this.flyTo(chip, p.x - 30, p.y, STEP + 40);
         const u = this.units.get(e.attacker);
         if (u) void flash(this.app.tweens, u.view.sprite, 200);
         await floatText(this.app, root, p.x, p.y - 24, `RIPOSTE! ${name.toUpperCase()}`, C.iceBlue, { big: true, ms: 450 });
+        // a chip with charges left (more triggers this batch, or still primed at the end) flies home
+        const stays = left > 0 || this.finalPrimed().some((x) => x.card.uid === e.uid);
+        if (chip && home && stays) await this.flyTo(chip, home.x, home.y, STEP);
+        else if (chip) { this.removeRackChip(chip); this.layoutRack(); }
         break;
       }
       case 'prime_fizzled': {
-        const chip = this.minis.find((m) => m.uid === e.uid);
-        if (chip) await blinkOut(this.app.tweens, { setDim: (n) => { chip.visible = n < 3; } }, 200);
+        const chip = this.rack.find((m) => m.uid === e.uid);
+        if (chip) {
+          await blinkOut(this.app.tweens, { setDim: (n) => { chip.visible = n < 3; } }, 200);
+          this.removeRackChip(chip);
+          this.layoutRack();
+        }
+        void floatText(this.app, root, 320, RACK_Y - 8, 'FIZZLED', C.textMuted);
         break;
       }
       case 'timeline_added': {

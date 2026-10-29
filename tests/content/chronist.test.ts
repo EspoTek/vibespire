@@ -110,8 +110,8 @@ describe('Chronist roster', () => {
       expect(s.text.replace(/\{[a-z_0-9]+\}/g, '')).not.toMatch(/\d/);
       for (const n of [1, 2, 3]) expect(renderStatusText(s.id, n)).not.toMatch(/[{}]/);
     }
-    expect(renderCardText({ id: 'watch_bell', upgraded: false }, null)).toBe('Whenever a card on your Timeline resolves, gain 2 Block, +3 if any enemy intends to attack.');
-    expect(renderStatusText('watch_bell', 2)).toBe('Whenever a card on your Timeline resolves, gain 4 Block, +6 if any enemy intends to attack.');
+    expect(renderCardText({ id: 'watch_bell', upgraded: false }, null)).toBe('Whenever a card on your Timeline resolves, gain 3 Block, +3 if any enemy intends to attack.');
+    expect(renderStatusText('watch_bell', 2)).toBe('Whenever a card on your Timeline resolves, gain 6 Block, +6 if any enemy intends to attack.');
     expect(renderCardText({ id: 'toll_the_hours', upgraded: true }, null)).toBe('Deal 8 damage X times. Delay 1: deal 8 damage X times.');
   });
 });
@@ -168,11 +168,11 @@ describe('Cadence', () => {
     const g = fresh('test_enc_slimes');
     const [a, b] = enemyUids(g) as [number, number];
     const [s1, s2] = setHand(g, ['sweep_hand', 'sweep_hand']);
-    expect(playerHits(play(g, s1 as number, a))).toEqual([8]);
+    expect(playerHits(play(g, s1 as number, a))).toEqual([9]);
     playedAlready(g, 2);
     const ev = play(g, s2 as number, a);
-    expect(playerHits(ev, a)).toEqual([8]);
-    expect(playerHits(ev, b)).toEqual([8]);
+    expect(playerHits(ev, a)).toEqual([9]);
+    expect(playerHits(ev, b)).toEqual([9]);
   });
 
   it('a Delay card stamps the beat at play and pays it on resolution (Second Hand)', () => {
@@ -242,7 +242,7 @@ describe('Delay and the Timeline', () => {
     const g = fresh();
     const [w] = setHand(g, ['wind_forward']);
     play(g, w as number);
-    expect(combatOf(g).player.block).toBe(3);
+    expect(combatOf(g).player.block).toBe(4);
 
     const h = fresh();
     const t = enemyUids(h)[0] as number;
@@ -272,7 +272,7 @@ describe('Augury reads', () => {
     const t = enemyUids(g)[0] as number;
     expect(enemy(g, t).forecast[0]?.kind).toBe('attack');
     const [s, cu] = setHand(g, ['slack_water', 'culmination']);
-    expect(playerHits(play(g, s as number, t))).toEqual([6]);
+    expect(playerHits(play(g, s as number, t))).toEqual([7]);
     expect(playerHits(play(g, cu as number, t))).toEqual([14]);
     // Mystic: intent Hex, forecast Veiled Strike (hidden) => counts as not an attack (RULINGS 27).
     const m = fresh('test_enc_mystic');
@@ -280,13 +280,13 @@ describe('Augury reads', () => {
     if (!mystic) throw new Error('setup');
     expect(mystic.forecast[0]?.hidden).toBe(true);
     const [s2] = setHand(m, ['slack_water']);
-    expect(playerHits(play(m, s2 as number, mystic.uid))).toEqual([8]);
+    expect(playerHits(play(m, s2 as number, mystic.uid))).toEqual([9]);
   });
 
   it('forecast_damage scales Turn the Tide and Heave To; intent_damage feeds Seen It Coming at resolution', () => {
     for (const [id, check] of [
-      ['turn_the_tide', (g: Game, ev: GameEvent[]) => expect(playerHits(ev)).toEqual([3 + 10])],
-      ['heave_to', (g: Game) => expect(combatOf(g).player.guard).toBe(2 + 10)],
+      ['turn_the_tide', (g: Game, ev: GameEvent[]) => expect(playerHits(ev)).toEqual([4 + 10])],
+      ['heave_to', (g: Game) => expect(combatOf(g).player.guard).toBe(4 + 10)],
     ] as const) {
       const g = fresh('test_enc_slime');
       const e = combatOf(g).enemies[0];
@@ -450,8 +450,8 @@ describe('named functions and Power hooks', () => {
     play(g, st as number);
     expect(playerHits(play(g, w1 as number))).toEqual([]);
     const ev = play(g, w2 as number); // 3rd play
-    expect(playerHits(ev, a)).toEqual([2]);
-    expect(playerHits(ev, b)).toEqual([2]);
+    expect(playerHits(ev, a)).toEqual([3]);
+    expect(playerHits(ev, b)).toEqual([3]);
   });
 
   it('Tide Table and Watch Bell fire when a Timeline entry resolves', () => {
@@ -461,8 +461,8 @@ describe('named functions and Power hooks', () => {
     play(g, wb as number);
     play(g, tk as number);
     const ev = endTurn(g);
-    // Tock's 5 + Watch Bell 2 + 3 (Jaw always intends to attack); Tide Table draws 1 before the turn's 5.
-    expect(combatOf(g).player.block).toBe(5 + 2 + 3);
+    // Tock's 5 + Watch Bell 3 + 3 (Jaw always intends to attack); Tide Table draws 1 before the turn's 5.
+    expect(combatOf(g).player.block).toBe(5 + 3 + 3);
     const draws = eventsOf(ev, 'draw').map((d) => d.uids.length);
     expect(draws[0]).toBe(1);
   });
@@ -474,7 +474,7 @@ describe('named functions and Power hooks', () => {
     play(g, sw as number);
     play(g, po as number);
     endTurn(g);
-    expect(enemy(g, jaw).statuses.stagger).toBe(1);
+    expect(enemy(g, jaw).statuses.stagger).toBe(2);
     expect(enemy(g, jaw).statuses.exposed).toBe(1); // every forecast is an attack: no lull stack
 
     const m = fresh('test_enc_mystic');

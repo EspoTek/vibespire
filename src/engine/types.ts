@@ -89,6 +89,8 @@ export interface RunState {
   map: ActMap;
   /** Current node, null at the start of an act (before the first travel). */
   mapPos: MapPos | null;
+  /** Nodes travelled this act, oldest first (the last one is mapPos); reset at each act start. */
+  mapPath: MapPos[];
   /** What the current node resolved to ('?' nodes resolve on entry). */
   room: RoomType | null;
   combat: CombatState | null;
@@ -568,6 +570,8 @@ export interface FloorRecord {
   enemies: EnemyId[];
   turns: number;
   damageTaken: number;
+  /** Enemy HP lost on this floor (hits and HP loss from any source). null: not recorded (a save migrated from engine v1). */
+  damageDealt: number | null;
   cardsOffered: CardId[];
   cardPicked: CardId | null;
   cardSkipped: boolean;
@@ -653,6 +657,8 @@ export type GameEvent =
   | { t: 'attack_cancelled'; uid: number }
   | { t: 'enemy_spawned'; uid: number; enemyId: EnemyId }
   | { t: 'enemy_transformed'; uid: number; from: EnemyId; to: EnemyId }
+  /** aiState.phase changed (boss phases). */
+  | { t: 'enemy_phase'; uid: number; phase: number }
   | { t: 'enemy_died'; uid: number }
   | { t: 'enemy_fled'; uid: number }
   | { t: 'player_died' }
@@ -1420,6 +1426,8 @@ export interface EventDef extends DslTables {
   pages?: Record<string, EventPageDef>;
   /** Whether the event can be picked for a `?` room now (default: always). */
   eligible?(ctx: ReadCtx): boolean;
+  /** Backdrop key for the renderer (e.g. 'event_generic'); absent: the renderer picks by act. */
+  backdrop?: string;
   icon: string;
 }
 

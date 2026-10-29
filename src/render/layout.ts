@@ -125,9 +125,10 @@ export type Side = 'above' | 'below' | 'right' | 'left';
 /**
  * Position a tooltip of `size` next to `anchor`, trying `prefer` first, then the opposite side,
  * then the remaining sides; the chosen position is clamped so the box stays fully on `bounds`
- * (with `margin`). Returns integer coords.
+ * (with `margin`). Returns integer coords. Sides whose box would cover a rect in `avoid` (the
+ * anchor's neighbours: other enemies, adjacent cards) are skipped while any clear side fits.
  */
-export function placeTooltip(anchor: Rect, size: Size, prefer: Side = 'above', bounds: Rect = SCREEN, gap = 2, margin = 2): Point & { side: Side } {
+export function placeTooltip(anchor: Rect, size: Size, prefer: Side = 'above', bounds: Rect = SCREEN, gap = 2, margin = 2, avoid: readonly Rect[] = []): Point & { side: Side } {
   const opposite: Record<Side, Side> = { above: 'below', below: 'above', left: 'right', right: 'left' };
   const order: Side[] = [prefer, opposite[prefer], ...(['above', 'below', 'right', 'left'] as Side[]).filter((s) => s !== prefer && s !== opposite[prefer])];
   const at = (s: Side): Point => {
@@ -143,10 +144,15 @@ export function placeTooltip(anchor: Rect, size: Size, prefer: Side = 'above', b
   const fits = (p: Point, s: Side): boolean =>
     s === 'above' || s === 'below' ? p.y >= minY && p.y <= maxY : p.x >= minX && p.x <= maxX;
   const clamp = (v: number, lo: number, hi: number) => (hi < lo ? lo : Math.min(hi, Math.max(lo, v)));
+  const overlaps = (a: Rect, b: Rect) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
   for (const s of order) {
     const p = at(s);
-    if (fits(p, s)) return { x: clamp(p.x, minX, maxX), y: clamp(p.y, minY, maxY), side: s };
+    if (!fits(p, s)) continue;
+    const box = { x: clamp(p.x, minX, maxX), y: clamp(p.y, minY, maxY), w: size.w, h: size.h };
+    if (avoid.some((r) => overlaps(box, r))) continue;
+    return { x: box.x, y: box.y, side: s };
   }
+  if (avoid.length > 0) return placeTooltip(anchor, size, prefer, bounds, gap, margin); // every side covers a neighbour: ignore them
   const p = at(prefer); // nothing fits on its axis: clamp the preferred placement onto the screen
   return { x: clamp(p.x, minX, maxX), y: clamp(p.y, minY, maxY), side: prefer };
 }

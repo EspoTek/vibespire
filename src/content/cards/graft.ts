@@ -3,7 +3,7 @@ import type { CardDef, CardInstance, EffectCtx, StatusDef } from '../../engine/t
 
 const TRANSPLANT_BONUS = { n: 2, n_up: 3 };
 const QUICKENING = { free_cost: 0 };
-const HYPHAL = { draw: 1, wide_draw: 2, threshold: 8 };
+const HYPHAL = { draw: 1, wide_draw: 2, threshold: 6 };
 const SHEAR = { bonus_bloom: 1 };
 
 // All Bloom cards in the shipped pool belong to Graft. Use the keyword, never the
@@ -70,8 +70,8 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Gain {block} Block.',
-    effects: [ { type: 'block', amount: 5 } ],
-    upgrade: { effects: [ { type: 'block', amount: 8 } ] },
+    effects: [ { type: 'block', amount: 6 } ],
+    upgrade: { effects: [ { type: 'block', amount: 9 } ] },
     tags: [ 'starter', 'block' ],
     icon: 'card_husk'
   },
@@ -117,10 +117,10 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'all_enemies',
     keywords: [ 'bloom' ],
     text: 'Bloom. Deal {damage} (+{damage_per} per Bloom) damage to ALL enemies.',
-    effects: [ { type: 'damage', amount: { base: 7, per: 2, scale: { cardVar: 'bloom' } }, target: 'all_enemies' } ],
+    effects: [ { type: 'damage', amount: { base: 9, per: 2, scale: { cardVar: 'bloom' } }, target: 'all_enemies' } ],
     upgrade: {
       effects: [
-        { type: 'damage', amount: { base: 7, per: 3, scale: { cardVar: 'bloom' } }, target: 'all_enemies' }
+        { type: 'damage', amount: { base: 9, per: 3, scale: { cardVar: 'bloom' } }, target: 'all_enemies' }
       ]
     },
     tags: [ 'gardener', 'bloom', 'aoe', 'scaling' ],
@@ -136,9 +136,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'enemy',
     keywords: [ 'bloom' ],
     text: 'Bloom. Deal {damage} (+{damage_per} per Bloom) damage.',
-    effects: [ { type: 'damage', amount: { base: 2, per: 1, scale: { cardVar: 'bloom' } }, target: 'target' } ],
+    effects: [ { type: 'damage', amount: { base: 3, per: 1, scale: { cardVar: 'bloom' } }, target: 'target' } ],
     upgrade: {
-      effects: [ { type: 'damage', amount: { base: 2, per: 2, scale: { cardVar: 'bloom' } }, target: 'target' } ]
+      effects: [ { type: 'damage', amount: { base: 3, per: 2, scale: { cardVar: 'bloom' } }, target: 'target' } ]
     },
     tags: [ 'gardener', 'mass', 'bloom', 'cheap' ],
     icon: 'card_barb_flick'
@@ -178,12 +178,12 @@ export const GRAFT_CARDS: CardDef[] = [
     text: 'Bloom. Deal {damage} (+{damage_per} per Bloom) damage. Gain {block} Block.',
     effects: [
       { type: 'damage', amount: { base: 2, per: 1, scale: { cardVar: 'bloom' } }, target: 'target' },
-      { type: 'block', amount: 3 }
+      { type: 'block', amount: 4 }
     ],
     upgrade: {
       effects: [
         { type: 'damage', amount: { base: 2, per: 2, scale: { cardVar: 'bloom' } }, target: 'target' },
-        { type: 'block', amount: 3 }
+        { type: 'block', amount: 4 }
       ]
     },
     tags: [ 'gardener', 'blight', 'bloom', 'block' ],
@@ -199,9 +199,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'enemy',
     keywords: [],
     text: 'Deal {damage} damage, {damage_per} per Bloom card in your deck.',
-    effects: [ { type: 'damage', amount: { base: 3, per: 1, scale: 'bloom_cards_in_deck' }, target: 'target' } ],
+    effects: [ { type: 'damage', amount: { base: 4, per: 1, scale: 'bloom_cards_in_deck' }, target: 'target' } ],
     upgrade: {
-      effects: [ { type: 'damage', amount: { base: 6, per: 1, scale: 'bloom_cards_in_deck' }, target: 'target' } ]
+      effects: [ { type: 'damage', amount: { base: 7, per: 1, scale: 'bloom_cards_in_deck' }, target: 'target' } ]
     },
     tags: [ 'mass', 'gardener', 'scaling' ],
     icon: 'card_hivestrike'
@@ -241,12 +241,12 @@ export const GRAFT_CARDS: CardDef[] = [
     keywords: [],
     text: 'Deal {damage} damage. Apply {rot} Rot.',
     effects: [
-      { type: 'damage', amount: 3, target: 'target' },
+      { type: 'damage', amount: 4, target: 'target' },
       { type: 'status', target: 'target', id: 'rot', amount: 1, key: 'rot' }
     ],
     upgrade: {
       effects: [
-        { type: 'damage', amount: 3, target: 'target' },
+        { type: 'damage', amount: 4, target: 'target' },
         { type: 'status', target: 'target', id: 'rot', amount: 2, key: 'rot' }
       ]
     },
@@ -266,7 +266,7 @@ export const GRAFT_CARDS: CardDef[] = [
     effects: [
       {
         type: 'damage',
-        amount: { base: 3, per: 1, scale: { status: 'rot', of: 'target' } },
+        amount: { base: 5, per: 1, scale: { status: 'rot', of: 'target' } },
         target: 'target'
       }
     ],
@@ -274,7 +274,7 @@ export const GRAFT_CARDS: CardDef[] = [
       effects: [
         {
           type: 'damage',
-          amount: { base: 6, per: 1, scale: { status: 'rot', of: 'target' } },
+          amount: { base: 8, per: 1, scale: { status: 'rot', of: 'target' } },
           target: 'target'
         }
       ]
@@ -292,9 +292,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'enemy',
     keywords: [],
     text: 'Deal {damage} damage, {damage_per} per card in your Scrapheap.',
-    effects: [ { type: 'damage', amount: { base: 4, per: 1, scale: 'cards_in_exhaust' }, target: 'target' } ],
+    effects: [ { type: 'damage', amount: { base: 5, per: 1, scale: 'cards_in_exhaust' }, target: 'target' } ],
     upgrade: {
-      effects: [ { type: 'damage', amount: { base: 7, per: 1, scale: 'cards_in_exhaust' }, target: 'target' } ]
+      effects: [ { type: 'damage', amount: { base: 8, per: 1, scale: 'cards_in_exhaust' }, target: 'target' } ]
     },
     tags: [ 'compost', 'scaling' ],
     icon: 'card_mulch_maul'
@@ -309,9 +309,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [ 'bloom' ],
     text: 'Bloom. Gain {block} (+{block_per} per Bloom) Block.',
-    effects: [ { type: 'block', amount: { base: 4, per: 1, scale: { cardVar: 'bloom' } } } ],
+    effects: [ { type: 'block', amount: { base: 6, per: 1, scale: { cardVar: 'bloom' } } } ],
     upgrade: {
-      effects: [ { type: 'block', amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } } } ]
+      effects: [ { type: 'block', amount: { base: 6, per: 2, scale: { cardVar: 'bloom' } } } ]
     },
     tags: [ 'gardener', 'blight', 'bloom', 'block' ],
     icon: 'card_sap_shell'
@@ -359,10 +359,10 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [ 'bloom' ],
     text: 'Bloom. Gain {block} (+{block_per} per Bloom) Block. Draw {draw} card.',
-    effects: [ { type: 'block', amount: { base: 2, per: 1, scale: { cardVar: 'bloom' } } }, { type: 'draw', n: 1 } ],
+    effects: [ { type: 'block', amount: { base: 4, per: 1, scale: { cardVar: 'bloom' } } }, { type: 'draw', n: 1 } ],
     upgrade: {
       effects: [
-        { type: 'block', amount: { base: 2, per: 2, scale: { cardVar: 'bloom' } } },
+        { type: 'block', amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } } },
         { type: 'draw', n: 1 }
       ]
     },
@@ -379,8 +379,8 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Gain {block} Block, {block_per} per Bloom card in your deck.',
-    effects: [ { type: 'block', amount: { base: 2, per: 1, scale: 'bloom_cards_in_deck' } } ],
-    upgrade: { effects: [ { type: 'block', amount: { base: 5, per: 1, scale: 'bloom_cards_in_deck' } } ] },
+    effects: [ { type: 'block', amount: { base: 4, per: 1, scale: 'bloom_cards_in_deck' } } ],
+    upgrade: { effects: [ { type: 'block', amount: { base: 7, per: 1, scale: 'bloom_cards_in_deck' } } ] },
     tags: [ 'mass', 'blight', 'block', 'scaling' ],
     icon: 'card_root_mesh'
   },
@@ -394,8 +394,8 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Gain {block} Block. Prune {prune}.',
-    effects: [ { type: 'block', amount: 2 }, { type: 'prune', bloom: 2, variant: 'standard' } ],
-    upgrade: { effects: [ { type: 'block', amount: 5 }, { type: 'prune', bloom: 2, variant: 'standard' } ] },
+    effects: [ { type: 'block', amount: 3 }, { type: 'prune', bloom: 2, variant: 'standard' } ],
+    upgrade: { effects: [ { type: 'block', amount: 6 }, { type: 'prune', bloom: 2, variant: 'standard' } ] },
     tags: [ 'gardener', 'compost', 'prune', 'block' ],
     icon: 'card_deep_graft'
   },
@@ -409,8 +409,8 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Gain {block} Block. Wild Prune.',
-    effects: [ { type: 'block', amount: 3 }, { type: 'prune', bloom: 1, variant: 'wild' } ],
-    upgrade: { effects: [ { type: 'block', amount: 6 }, { type: 'prune', bloom: 1, variant: 'wild' } ] },
+    effects: [ { type: 'block', amount: 4 }, { type: 'prune', bloom: 1, variant: 'wild' } ],
+    upgrade: { effects: [ { type: 'block', amount: 7 }, { type: 'prune', bloom: 1, variant: 'wild' } ] },
     tags: [ 'gardener', 'mass', 'prune', 'block' ],
     icon: 'card_windblown_seed'
   },
@@ -440,7 +440,7 @@ export const GRAFT_CARDS: CardDef[] = [
     keywords: [],
     text: 'Gain {block} Block. If the enemy has Rot, gain {block2} more.',
     effects: [
-      { type: 'block', amount: 4 },
+      { type: 'block', amount: 6 },
       {
         type: 'conditional',
         if: { type: 'has_status', who: 'target', id: 'rot', min: 1 },
@@ -449,7 +449,7 @@ export const GRAFT_CARDS: CardDef[] = [
     ],
     upgrade: {
       effects: [
-        { type: 'block', amount: 6 },
+        { type: 'block', amount: 8 },
         {
           type: 'conditional',
           if: { type: 'has_status', who: 'target', id: 'rot', min: 1 },
@@ -489,7 +489,7 @@ export const GRAFT_CARDS: CardDef[] = [
     keywords: [],
     text: 'Gain {block} Block. Prune. If you Scrapped a Status or Curse, draw {draw} cards.',
     effects: [
-      { type: 'block', amount: 3 },
+      { type: 'block', amount: 5 },
       { type: 'custom', fn: 'remember_prunes' },
       { type: 'prune', bloom: 1, variant: 'standard' },
       {
@@ -503,7 +503,7 @@ export const GRAFT_CARDS: CardDef[] = [
     ],
     upgrade: {
       effects: [
-        { type: 'block', amount: 6 },
+        { type: 'block', amount: 8 },
         { type: 'custom', fn: 'remember_prunes' },
         { type: 'prune', bloom: 1, variant: 'standard' },
         {
@@ -618,12 +618,12 @@ export const GRAFT_CARDS: CardDef[] = [
     keywords: [ 'bloom' ],
     text: 'Bloom. Deal {damage} (+{damage_per} per Bloom) damage to ALL enemies. Apply {rot} Rot to ALL enemies.',
     effects: [
-      { type: 'damage', amount: { base: 4, per: 1, scale: { cardVar: 'bloom' } }, target: 'all_enemies' },
+      { type: 'damage', amount: { base: 5, per: 1, scale: { cardVar: 'bloom' } }, target: 'all_enemies' },
       { type: 'status', target: 'all_enemies', id: 'rot', amount: 2, key: 'rot' }
     ],
     upgrade: {
       effects: [
-        { type: 'damage', amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } }, target: 'all_enemies' },
+        { type: 'damage', amount: { base: 5, per: 2, scale: { cardVar: 'bloom' } }, target: 'all_enemies' },
         { type: 'status', target: 'all_enemies', id: 'rot', amount: 2, key: 'rot' }
       ]
     },
@@ -727,9 +727,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [ 'bloom' ],
     text: 'Bloom. Gain {block} (+{block_per} per Bloom) Block.',
-    effects: [ { type: 'block', amount: { base: 8, per: 3, scale: { cardVar: 'bloom' } } } ],
+    effects: [ { type: 'block', amount: { base: 10, per: 3, scale: { cardVar: 'bloom' } } } ],
     upgrade: {
-      effects: [ { type: 'block', amount: { base: 8, per: 4, scale: { cardVar: 'bloom' } } } ]
+      effects: [ { type: 'block', amount: { base: 10, per: 4, scale: { cardVar: 'bloom' } } } ]
     },
     tags: [ 'gardener', 'blight', 'bloom', 'block' ],
     icon: 'card_burl_wall'
@@ -745,12 +745,12 @@ export const GRAFT_CARDS: CardDef[] = [
     keywords: [],
     text: 'Apply {stagger} Stagger and {rot} Rot to ALL enemies.',
     effects: [
-      { type: 'status', target: 'all_enemies', id: 'stagger', amount: 1, key: 'stagger' },
+      { type: 'status', target: 'all_enemies', id: 'stagger', amount: 2, key: 'stagger' },
       { type: 'status', target: 'all_enemies', id: 'rot', amount: 1, key: 'rot' }
     ],
     upgrade: {
       effects: [
-        { type: 'status', target: 'all_enemies', id: 'stagger', amount: 2, key: 'stagger' },
+        { type: 'status', target: 'all_enemies', id: 'stagger', amount: 3, key: 'stagger' },
         { type: 'status', target: 'all_enemies', id: 'rot', amount: 1, key: 'rot' }
       ]
     },
@@ -823,8 +823,8 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Gain {block} Block. Spread Prune.',
-    effects: [ { type: 'block', amount: 3 }, { type: 'prune', bloom: 1, variant: 'spread' } ],
-    upgrade: { effects: [ { type: 'block', amount: 6 }, { type: 'prune', bloom: 1, variant: 'spread' } ] },
+    effects: [ { type: 'block', amount: 4 }, { type: 'prune', bloom: 1, variant: 'spread' } ],
+    upgrade: { effects: [ { type: 'block', amount: 7 }, { type: 'prune', bloom: 1, variant: 'spread' } ] },
     tags: [ 'gardener', 'mass', 'prune', 'block' ],
     icon: 'card_seed_rain'
   },
@@ -902,7 +902,7 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [],
     text: 'Whenever you Prune, apply {status} Rot to a random enemy.',
-    effects: [ { type: 'status', target: 'self', id: 'decomposer', amount: 1 } ],
+    effects: [ { type: 'status', target: 'self', id: 'decomposer', amount: 2 } ],
     upgrade: { cost: 0 },
     tags: [ 'compost', 'blight', 'prune', 'power' ],
     icon: 'card_decomposer'
@@ -928,12 +928,12 @@ export const GRAFT_CARDS: CardDef[] = [
     cls: 'graft',
     type: 'power',
     rarity: 'uncommon',
-    cost: 2,
+    cost: 1,
     target: 'self',
     keywords: [],
     text: 'At the start of your turn, gain {status} Block per Bloom card in your deck.',
     effects: [ { type: 'status', target: 'self', id: 'living_hedge', amount: 1 } ],
-    upgrade: { cost: 1 },
+    upgrade: { cost: 0 },
     tags: [ 'mass', 'blight', 'block', 'power', 'scaling' ],
     icon: 'card_living_hedge'
   },
@@ -952,7 +952,7 @@ export const GRAFT_CARDS: CardDef[] = [
         type: 'status',
         target: 'self',
         id: 'thorn_halo',
-        amount: { base: 3, per: 1, scale: { cardVar: 'bloom' } }
+        amount: { base: 4, per: 1, scale: { cardVar: 'bloom' } }
       }
     ],
     upgrade: {
@@ -961,7 +961,7 @@ export const GRAFT_CARDS: CardDef[] = [
           type: 'status',
           target: 'self',
           id: 'thorn_halo',
-          amount: { base: 3, per: 2, scale: { cardVar: 'bloom' } }
+          amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } }
         }
       ]
     },
@@ -1070,7 +1070,7 @@ export const GRAFT_CARDS: CardDef[] = [
     effects: [
       {
         type: 'damage',
-        amount: 3,
+        amount: 4,
         times: { base: 0, per: 1, scale: 'bloom_cards_in_deck' },
         target: 'target'
       }
@@ -1079,7 +1079,7 @@ export const GRAFT_CARDS: CardDef[] = [
       effects: [
         {
           type: 'damage',
-          amount: 4,
+          amount: 5,
           times: { base: 0, per: 1, scale: 'bloom_cards_in_deck' },
           target: 'target'
         }
@@ -1185,9 +1185,9 @@ export const GRAFT_CARDS: CardDef[] = [
     target: 'self',
     keywords: [ 'bloom' ],
     text: 'Bloom. Gain {block} (+{block_per} per Bloom) Block.',
-    effects: [ { type: 'block', amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } } } ],
+    effects: [ { type: 'block', amount: { base: 5, per: 2, scale: { cardVar: 'bloom' } } } ],
     upgrade: {
-      effects: [ { type: 'block', amount: { base: 4, per: 3, scale: { cardVar: 'bloom' } } } ]
+      effects: [ { type: 'block', amount: { base: 5, per: 3, scale: { cardVar: 'bloom' } } } ]
     },
     tags: [ 'blight', 'gardener', 'bloom', 'block' ],
     icon: 'card_chitin_cocoon'
@@ -1238,7 +1238,7 @@ export const GRAFT_CARDS: CardDef[] = [
         type: 'status',
         target: 'self',
         id: 'thresher',
-        amount: { base: 3, per: 1, scale: { cardVar: 'bloom' } }
+        amount: { base: 5, per: 1, scale: { cardVar: 'bloom' } }
       }
     ],
     upgrade: {
@@ -1247,7 +1247,7 @@ export const GRAFT_CARDS: CardDef[] = [
           type: 'status',
           target: 'self',
           id: 'thresher',
-          amount: { base: 3, per: 2, scale: { cardVar: 'bloom' } }
+          amount: { base: 5, per: 2, scale: { cardVar: 'bloom' } }
         }
       ]
     },

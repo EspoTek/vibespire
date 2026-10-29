@@ -26,6 +26,7 @@ import { confirmDialog } from '../overlays.ts';
 import { screenFor } from '../router.ts';
 import { RunSession } from '../session.ts';
 import { portraitOrNull } from '../view.ts';
+import type { SongName } from '../../music.ts';
 
 interface ClassEntry { id: string; name: string; blurb: string; available: boolean }
 
@@ -128,6 +129,7 @@ class SeedField extends Widget {
 }
 
 export class ClassSelectScreen extends Screen {
+  override get music(): SongName { return 'title'; }
   private readonly cards: ClassCard[] = [];
   private readonly seed: SeedField;
 
@@ -153,8 +155,11 @@ export class ClassSelectScreen extends Screen {
     this.seed = panel.addChild(new SeedField(80, 236, app), 2);
     panel.addChild(new Label(256, 241, 'CONFIRM TO TYPE  (KEYBOARD)', { font: fonts.small, color: C.textMuted }), 2);
     panel.addChild(new Button(rect(40, 270, 120, 0), 'STARTER DECK', { onActivate: () => this.showDeck(), hint: 'Preview the starting deck.' }), 2);
-    panel.addChild(new Button(rect(W - 170, 300, 130, 0), 'BEGIN CLIMB', { onActivate: () => this.begin() }), 2);
-    panel.addChild(new Button(rect(40, 300, 80, 0), 'BACK', { onActivate: () => { void this.app.screens.pop(); } }), 2);
+    const begin = panel.addChild(new Button(rect(W - 170, 300, 130, 0), 'BEGIN CLIMB', { onActivate: () => this.begin() }), 2);
+    const back = panel.addChild(new Button(rect(40, 300, 80, 0), 'BACK', { onActivate: () => { void this.app.screens.pop(); } }), 2);
+    // one row: left/right moves between BACK and BEGIN CLIMB (spatial nav would jump up to STARTER DECK)
+    back.list = { key: 'cs-bottom', index: 0, axis: 'x', wrap: false };
+    begin.list = { key: 'cs-bottom', index: 1, axis: 'x', wrap: false };
     this.focus.pushScope('class-select', () => { void this.app.screens.pop(); }).add(panel);
     const firstAvailable = this.cards.find((c) => c.entry.available);
     if (firstAvailable) this.select(firstAvailable, false);

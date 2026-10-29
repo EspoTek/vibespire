@@ -12,6 +12,7 @@ import { C } from '../palette.ts';
 import { Text } from '../text.ts';
 import { rasterizeEnergyOrb, rasterizeHpBar } from '../ui/art.ts';
 import { Icon } from '../ui/Icon.ts';
+import { Sprite } from '../sprite.ts';
 import { Label } from '../ui/Label.ts';
 import { Panel } from '../ui/Panel.ts';
 import { Widget, Z } from '../ui/Widget.ts';
@@ -293,6 +294,25 @@ export function blinkOut(tw: Tweener, target: { setDim(n: number): void }, ms = 
       const step = Math.min(3, Math.floor((t / ms) * 4));
       target.setDim(step);
       if (t >= ms) { done(); return false; }
+      return true;
+    });
+  });
+}
+
+/** A status icon that pops up over a target (Rot / Exposed / Stagger applied): rises 8 px in whole pixels, then blinks out. */
+export function iconPop(app: App, root: THREE.Object3D, x: number, y: number, frame: string): Promise<void> {
+  const s = new Sprite(app.icons, frame, 2);
+  s.renderOrder = Z.TOAST - 12;
+  root.add(s);
+  let t = 0;
+  const ms = 520;
+  return new Promise((done) => {
+    app.tweens.every((dt) => {
+      t += dt;
+      const k = Math.min(1, t / ms);
+      s.place(x - s.w / 2, y - Math.round(Math.min(1, k * 2) * 8));
+      s.setDim(k > 0.6 ? Math.min(3, Math.floor((k - 0.6) * 10)) : 0);
+      if (t >= ms) { root.remove(s); s.dispose(); done(); return false; }
       return true;
     });
   });

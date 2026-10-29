@@ -13,7 +13,7 @@ import { fonts } from '../../fonts.ts';
 import { quadGeometry, setFrameUv, spriteMaterial, textureFromPixels, type SpriteMaterial } from '../../gfx.ts';
 import { rect, type Rect } from '../../layout.ts';
 import { C } from '../../palette.ts';
-import { PixelBuffer } from '../../pixels.ts';
+import { bayer, PixelBuffer, TRANSPARENT } from '../../pixels.ts';
 import { Icon } from '../../ui/Icon.ts';
 import { Label } from '../../ui/Label.ts';
 import { Panel } from '../../ui/Panel.ts';
@@ -84,9 +84,9 @@ export class MapScreen extends RunScreen {
   constructor(app: App, session: RunSession) { super(app, session, 'map', actBackdrop(session.state.act)); }
 
   protected build(): void {
-    this.bg.setDim(2);
+    this.bg.setDim(1); // readable: the column gets its own dithered veil (drawEdges)
     const s = this.state;
-    const frame = this.add(new Panel(rect(VIEW.x - 8, VIEW.y - 4, VIEW.w + 16, VIEW.h + 8)));
+    const frame = this.add(new Panel(rect(VIEW.x - 8, VIEW.y - 4, VIEW.w + 16, VIEW.h + 8), { fill: TRANSPARENT }));
     frame.setZ(Z.PANEL - 10);
     const side = this.add(new Panel(rect(6, 42, 162, 120), { title: `ACT ${s.act}` }));
     side.setZ(Z.PANEL);
@@ -116,10 +116,12 @@ export class MapScreen extends RunScreen {
     const s = this.state;
     const h = this.layout.height + 8;
     this.edgeH = h;
-    const buf = new PixelBuffer(VIEW.w, h, C.black);
+    // a dithered black veil (~70% coverage): the act backdrop shows through, nodes and edges stay legible
+    const buf = new PixelBuffer(VIEW.w, h, TRANSPARENT);
+    for (let y = 0; y < h; y++) for (let x = 0; x < VIEW.w; x++) if (bayer(x, y, 11)) buf.set(x, y, C.black);
     // faint row stripes so the column reads as a tower
     for (let y = 0; y < h; y++) if (y % 24 === 2) buf.hline(0, y, VIEW.w, C.navy);
-    const visited = this.session.visited.path;
+    const visited = s.mapPath;
     const stepEdge = (a: MapPos, b: MapPos) => visited.some((v, i) => i > 0 && v.row === b.row && v.col === b.col && visited[i - 1]?.row === a.row && visited[i - 1]?.col === a.col);
     const next = new Set(this.session.legalOf('travel').map((t) => `${t.to.row}:${t.to.col}`));
     const here = s.mapPos;

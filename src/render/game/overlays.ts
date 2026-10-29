@@ -2,7 +2,7 @@
  * Modal overlays shared by every run screen: confirm dialog, pause menu, help, and the CardDetail
  * panel (full card text: the hand and grids clip long text, this never does).
  */
-import { PROMPTS, type Device } from '../actions.ts';
+import { promptMarkup, type Device, type PromptAction } from '../actions.ts';
 import type { App } from '../app.ts';
 import { fonts } from '../fonts.ts';
 import { H, rect, W } from '../layout.ts';
@@ -35,18 +35,18 @@ export function confirmDialog(screen: Screen, title: string, text: string, yes: 
 
 /** Controls for the current device (GDD: help overlay on '?' / Back). */
 export function controlsText(device: Device): string {
-  const p = PROMPTS[device];
+  const m = (a: PromptAction) => promptMarkup(device, a);
   const nav = device === 'gamepad' ? 'D-PAD / STICK' : device === 'mouse' ? 'HOVER' : 'ARROWS / WASD';
   return [
     `[yellow]${nav}[/]  move focus`,
-    `[yellow]${p.confirm}[/]  select / play card`,
-    `[yellow]${p.cancel}[/]  back / cancel`,
-    `[yellow]1-0[/]  pick hand card by slot`,
-    `[yellow]${p.nextTarget} / ${p.prevTarget}[/]  next / previous target`,
-    `[yellow]${p.endTurn}[/]  end turn`,
-    `[yellow]hold ${p.info}[/]  details (cards, intents, relics)`,
-    `[yellow]${p.deck}[/]  deck view    [yellow]${p.menu}[/]  pause menu`,
-    `[yellow]${p.help}[/]  this help`,
+    `${m('confirm')}  select / play card`,
+    `${m('cancel')}  back / cancel`,
+    device === 'gamepad' ? `${m('confirm')} on a card  pick it (D-pad along the hand)` : `[yellow]1-0[/]  pick hand card by slot`,
+    `${m('nextTarget')} / ${m('prevTarget')}  next / previous target`,
+    `${m('endTurn')}  end turn`,
+    `[yellow]hold[/] ${m('info')}  details (cards, intents, relics)`,
+    `${m('deck')}  deck view    ${m('menu')}  pause menu`,
+    `${m('help')}  this help`,
   ].join('\n');
 }
 
@@ -89,19 +89,24 @@ export function openPause(screen: Screen, app: App, h: PauseHandlers): () => voi
 
 export function openOptions(screen: Screen, app: App): () => void {
   return screen.openModal('options', (close) => {
-    const pw = 260, ph = 96;
+    const pw = 260, ph = 116;
     const x = Math.floor((W - pw) / 2), y = 130;
     const panel = new Panel(rect(x, y, pw, ph), { title: 'OPTIONS' });
     panel.setZ(Z.MODAL + 60);
     const inner = panel.contentRect;
-    panel.addChild(new Label(inner.x, inner.y + 4, 'VOLUME'), 2);
+    panel.addChild(new Label(inner.x, inner.y + 4, 'SFX'), 2);
     panel.addChild(new Bar(rect(inner.x + 72, inner.y + 3, 120, 10), {
-      name: 'Volume', value: Math.round(app.settings.volume * 10), max: 10, fill: C.cyan, back: C.navy, segment: 'unit', step: 1,
+      name: 'SFX volume', value: Math.round(app.settings.volume * 10), max: 10, fill: C.cyan, back: C.navy, segment: 'unit', step: 1,
       onChange: (v) => { app.saveSettings({ volume: v / 10 }); app.sfx.play('move'); },
     }), 2);
-    panel.addChild(new Label(inner.x, inner.y + 24, 'ANIM SPEED'), 2);
+    panel.addChild(new Label(inner.x, inner.y + 22, 'MUSIC'), 2);
+    panel.addChild(new Bar(rect(inner.x + 72, inner.y + 21, 120, 10), {
+      name: 'Music volume', value: Math.round(app.settings.musicVolume * 10), max: 10, fill: C.magenta, back: C.navy, segment: 'unit', step: 1,
+      onChange: (v) => { app.saveSettings({ musicVolume: v / 10 }); },
+    }), 2);
+    panel.addChild(new Label(inner.x, inner.y + 44, 'ANIM SPEED'), 2);
     const speeds = [1, 2, 4];
-    panel.addChild(new Button(rect(inner.x + 96, inner.y + 19, 48, 0), `${app.settings.animSpeed}X`, {
+    panel.addChild(new Button(rect(inner.x + 96, inner.y + 39, 48, 0), `${app.settings.animSpeed}X`, {
       onActivate: (b) => {
         const i = speeds.indexOf(app.settings.animSpeed);
         const next = speeds[(i + 1) % speeds.length] as number;

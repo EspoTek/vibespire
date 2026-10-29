@@ -10,6 +10,7 @@ import * as THREE from 'three';
 import type { App } from '../app.ts';
 import { FocusManager } from '../focus.ts';
 import { disposeMesh } from '../gfx.ts';
+import type { SongName } from '../music.ts';
 import { Widget } from '../ui/Widget.ts';
 
 export const FADE_MS = 150;
@@ -21,6 +22,8 @@ export abstract class Screen {
   protected readonly app: App;
   /** Hide the screens below while this one is on top. */
   opaque = true;
+  /** Song while this screen is on top: a loop, null = silence, undefined = keep whatever plays. */
+  get music(): SongName | null | undefined { return undefined; }
   private readonly widgets: Widget[] = [];
 
   constructor(app: App, name: string) {

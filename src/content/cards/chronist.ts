@@ -10,7 +10,7 @@ import type { CardDef, CardInstance, Effect, RunState, StatusDef } from '../../e
 // ---------------------------------------------------------------------------
 // Shared numbers (text placeholders read them through `values`, hooks read the same constants).
 
-const WATCH_BELL = { bell: 2, alarm: 3 };
+const WATCH_BELL = { bell: 3, alarm: 3 };
 const PERPETUAL_MOTION = { discount: 1 };
 const PM_USED = 'perpetual_motion_used';
 
@@ -84,8 +84,8 @@ const COMMONS: CardDef[] = [
   {
     id: 'pinion_jab', name: 'Pinion Jab', cls: 'chronist', type: 'attack', rarity: 'common', cost: 0, target: 'enemy', keywords: [],
     text: 'Deal {damage} damage. On beat: apply {beat_exposed} Exposed.',
-    effects: [hit(2), onBeat({ type: 'status', target: 'target', id: 'exposed', amount: 1, key: 'beat_exposed' })],
-    upgrade: { effects: [hit(3), onBeat({ type: 'status', target: 'target', id: 'exposed', amount: 1, key: 'beat_exposed' })] },
+    effects: [hit(3), onBeat({ type: 'status', target: 'target', id: 'exposed', amount: 1, key: 'beat_exposed' })],
+    upgrade: { effects: [hit(4), onBeat({ type: 'status', target: 'target', id: 'exposed', amount: 1, key: 'beat_exposed' })] },
     tags: ['metronome', 'glue', 'cheap', 'on_beat', 'exposed'], icon: 'card_pinion_jab',
   },
   {
@@ -98,15 +98,15 @@ const COMMONS: CardDef[] = [
   {
     id: 'downbeat', name: 'Downbeat', cls: 'chronist', type: 'attack', rarity: 'common', cost: 2, target: 'enemy', keywords: [],
     text: 'Deal {damage} damage. On beat: deal {beat_damage} more.',
-    effects: [hit(11), onBeat(hit(6, 'beat_damage'))],
-    upgrade: { effects: [hit(14), onBeat(hit(8, 'beat_damage'))] },
+    effects: [hit(13), onBeat(hit(6, 'beat_damage'))],
+    upgrade: { effects: [hit(16), onBeat(hit(8, 'beat_damage'))] },
     tags: ['metronome', 'on_beat'], icon: 'card_downbeat',
   },
   {
     id: 'slack_water', name: 'Slack Water', cls: 'chronist', type: 'attack', rarity: 'common', cost: 1, target: 'enemy', keywords: [],
     text: "Deal {damage} damage, or {lull_damage} if its intent after next isn't an attack.",
-    effects: slackWater(6, 8),
-    upgrade: { effects: slackWater(8, 11) },
+    effects: slackWater(7, 9),
+    upgrade: { effects: slackWater(9, 12) },
     tags: ['oracle', 'glue', 'forecast'], icon: 'card_slack_water',
   },
   {
@@ -140,15 +140,15 @@ const COMMONS: CardDef[] = [
     id: 'spring_tide', name: 'Spring Tide', cls: 'chronist', type: 'attack', rarity: 'common', cost: 1, target: 'all_enemies', keywords: ['delay'],
     text: 'Delay {delay_turns}: deal {delay_damage} damage to ALL enemies.',
     effects: [],
-    delay: { turns: 3, effects: [hitAll(14, 'delay_damage')] },
-    upgrade: { delay: { turns: 3, effects: [hitAll(18, 'delay_damage')] } },
+    delay: { turns: 3, effects: [hitAll(16, 'delay_damage')] },
+    upgrade: { delay: { turns: 3, effects: [hitAll(20, 'delay_damage')] } },
     tags: ['timeline', 'delay', 'aoe'], icon: 'card_spring_tide',
   },
   {
     id: 'carillon', name: 'Carillon', cls: 'chronist', type: 'attack', rarity: 'common', cost: 0, target: 'all_enemies', keywords: [],
     text: 'Deal {damage} damage to ALL enemies. On beat: deal {beat_damage} more to each.',
-    effects: [hitAll(2), onBeat(hitAll(2, 'beat_damage'))],
-    upgrade: { effects: [hitAll(3), onBeat(hitAll(2, 'beat_damage'))] },
+    effects: [hitAll(3), onBeat(hitAll(2, 'beat_damage'))],
+    upgrade: { effects: [hitAll(4), onBeat(hitAll(2, 'beat_damage'))] },
     tags: ['metronome', 'glue', 'cheap', 'aoe', 'on_beat'], icon: 'card_carillon',
   },
   {
@@ -156,8 +156,8 @@ const COMMONS: CardDef[] = [
     id: 'storm_glass', name: 'Storm Glass', cls: 'chronist', type: 'skill', rarity: 'common', cost: 1, target: 'self', keywords: ['delay'],
     text: 'Delay {delay_turns}: gain {delay_block} Block, +{storm_block} if any enemy intends to attack.',
     effects: [],
-    delay: { turns: 1, effects: stormGlass(7, 4) },
-    upgrade: { delay: { turns: 1, effects: stormGlass(9, 5) } },
+    delay: { turns: 1, effects: stormGlass(8, 4) },
+    upgrade: { delay: { turns: 1, effects: stormGlass(10, 5) } },
     tags: ['oracle', 'timeline', 'block', 'delay', 'forecast'], icon: 'card_storm_glass',
   },
   {
@@ -189,15 +189,15 @@ const COMMONS: CardDef[] = [
   {
     id: 'weather_eye', name: 'Weather Eye', cls: 'chronist', type: 'skill', rarity: 'common', cost: 1, target: 'self', keywords: [],
     text: "Gain {guard} Guard. If any enemy's intent after next is an attack, gain {storm_guard} more.",
-    effects: weatherEye(5, 4),
-    upgrade: { effects: weatherEye(7, 5) },
+    effects: weatherEye(6, 4),
+    upgrade: { effects: weatherEye(8, 5) },
     tags: ['oracle', 'glue', 'guard', 'forecast'], icon: 'card_weather_eye',
   },
   {
     id: 'balance_wheel', name: 'Balance Wheel', cls: 'chronist', type: 'skill', rarity: 'common', cost: 1, target: 'self', keywords: [],
     text: 'Gain {block} Block. On beat: apply {beat_stagger} Stagger to ALL enemies.',
-    effects: [block(5), onBeat({ type: 'status', target: 'all_enemies', id: 'stagger', amount: 1, key: 'beat_stagger' })],
-    upgrade: { effects: [block(7), onBeat({ type: 'status', target: 'all_enemies', id: 'stagger', amount: 1, key: 'beat_stagger' })] },
+    effects: [block(6), onBeat({ type: 'status', target: 'all_enemies', id: 'stagger', amount: 1, key: 'beat_stagger' })],
+    upgrade: { effects: [block(8), onBeat({ type: 'status', target: 'all_enemies', id: 'stagger', amount: 1, key: 'beat_stagger' })] },
     tags: ['metronome', 'oracle', 'block', 'on_beat', 'stagger'], icon: 'card_balance_wheel',
   },
   {
@@ -219,31 +219,31 @@ const COMMONS: CardDef[] = [
     // cards_played_this_turn includes this card (appended at pay-cost time, GDD §2.7).
     id: 'dead_reckoning', name: 'Dead Reckoning', cls: 'chronist', type: 'skill', rarity: 'common', cost: 0, target: 'self', keywords: [],
     text: 'Gain {block} Block (+{block_per} per card played this turn).',
-    effects: [{ type: 'block', amount: { base: 0, per: 1, scale: 'cards_played_this_turn' } }],
-    upgrade: { effects: [{ type: 'block', amount: { base: 1, per: 1, scale: 'cards_played_this_turn' } }] },
+    effects: [{ type: 'block', amount: { base: 1, per: 1, scale: 'cards_played_this_turn' } }],
+    upgrade: { effects: [{ type: 'block', amount: { base: 2, per: 1, scale: 'cards_played_this_turn' } }] },
     tags: ['metronome', 'glue', 'cheap', 'block', 'scaling'], icon: 'card_dead_reckoning',
   },
   {
     id: 'logbook', name: 'Logbook', cls: 'chronist', type: 'skill', rarity: 'common', cost: 1, target: 'self', keywords: [],
     text: 'Gain {block} Block (+{block_per} per Shard you hold).',
-    effects: [{ type: 'block', amount: { base: 4, per: 1, scale: 'shards' } }],
-    upgrade: { effects: [{ type: 'block', amount: { base: 6, per: 1, scale: 'shards' } }] },
+    effects: [{ type: 'block', amount: { base: 5, per: 1, scale: 'shards' } }],
+    upgrade: { effects: [{ type: 'block', amount: { base: 7, per: 1, scale: 'shards' } }] },
     tags: ['glue', 'block', 'shards'], icon: 'card_logbook',
   },
   {
     id: 'reef_the_sails', name: 'Reef the Sails', cls: 'chronist', type: 'skill', rarity: 'common', cost: 1, target: 'enemy', keywords: [],
     text: 'Gain {block} Block. If its intent after next is an attack, apply {stagger} Stagger to it.',
-    effects: reefTheSails(4),
-    upgrade: { effects: reefTheSails(6) },
+    effects: reefTheSails(5),
+    upgrade: { effects: reefTheSails(7) },
     tags: ['oracle', 'block', 'stagger', 'forecast'], icon: 'card_reef_the_sails',
   },
   {
     id: 'wind_forward', name: 'Wind Forward', cls: 'chronist', type: 'skill', rarity: 'common', cost: 0, target: 'none', keywords: [],
     text: 'Advance {advance}. If your Timeline is empty, gain {block} Block instead.',
-    effects: [{ type: 'conditional', if: { type: 'timeline_nonempty' }, then: [{ type: 'advance', n: 1, key: 'advance' }], else: [block(3)] }],
+    effects: [{ type: 'conditional', if: { type: 'timeline_nonempty' }, then: [{ type: 'advance', n: 1, key: 'advance' }], else: [block(4)] }],
     upgrade: {
       text: 'Advance {advance} and gain {adv_block} Block. If your Timeline is empty, gain {block} Block instead.',
-      effects: [{ type: 'conditional', if: { type: 'timeline_nonempty' }, then: [{ type: 'advance', n: 1, key: 'advance' }, block(2, 'adv_block')], else: [block(5)] }],
+      effects: [{ type: 'conditional', if: { type: 'timeline_nonempty' }, then: [{ type: 'advance', n: 1, key: 'advance' }, block(2, 'adv_block')], else: [block(6)] }],
     },
     tags: ['timeline', 'glue', 'cheap', 'advance'], icon: 'card_wind_forward',
   },
@@ -271,8 +271,8 @@ const UNCOMMONS: CardDef[] = [
     // A branch on the on_beat condition, not an on_beat wrapper: Offbeat Drum / Polyrhythm don't repeat it.
     id: 'sweep_hand', name: 'Sweep Hand', cls: 'chronist', type: 'attack', rarity: 'uncommon', cost: 1, target: 'enemy', keywords: [],
     text: 'Deal {damage} damage. On beat: deal it to ALL enemies instead.',
-    effects: sweepHand(8),
-    upgrade: { effects: sweepHand(11) },
+    effects: sweepHand(9),
+    upgrade: { effects: sweepHand(12) },
     tags: ['metronome', 'aoe', 'on_beat'], icon: 'card_sweep_hand',
   },
   {
@@ -293,17 +293,17 @@ const UNCOMMONS: CardDef[] = [
   {
     id: 'knell', name: 'Knell', cls: 'chronist', type: 'attack', rarity: 'uncommon', cost: 1, target: 'all_enemies', keywords: ['delay'],
     text: 'Deal {damage} damage to ALL enemies. Delay {delay_turns}: deal {delay_damage} damage to ALL enemies.',
-    effects: [hitAll(3)],
+    effects: [hitAll(4)],
     delay: { turns: 2, effects: [hitAll(9, 'delay_damage')] },
-    upgrade: { effects: [hitAll(4)], delay: { turns: 2, effects: [hitAll(12, 'delay_damage')] } },
+    upgrade: { effects: [hitAll(5)], delay: { turns: 2, effects: [hitAll(12, 'delay_damage')] } },
     tags: ['timeline', 'delay', 'aoe'], icon: 'card_knell',
   },
   {
     // RULINGS 27: forecast_damage sums the target's forecast entries (depth >= 1; hidden = 0).
     id: 'turn_the_tide', name: 'Turn the Tide', cls: 'chronist', type: 'attack', rarity: 'uncommon', cost: 1, target: 'enemy', keywords: [],
     text: 'Deal {damage} damage, +half the damage of its intent after next.',
-    effects: [{ type: 'damage', amount: { base: 3, per: 0.5, scale: 'forecast_damage' }, target: 'target' }],
-    upgrade: { effects: [{ type: 'damage', amount: { base: 6, per: 0.5, scale: 'forecast_damage' }, target: 'target' }] },
+    effects: [{ type: 'damage', amount: { base: 4, per: 0.5, scale: 'forecast_damage' }, target: 'target' }],
+    upgrade: { effects: [{ type: 'damage', amount: { base: 7, per: 0.5, scale: 'forecast_damage' }, target: 'target' }] },
     tags: ['oracle', 'forecast', 'scaling'], icon: 'card_turn_the_tide',
   },
   {
@@ -356,17 +356,17 @@ const UNCOMMONS: CardDef[] = [
   {
     id: 'breakwater', name: 'Breakwater', cls: 'chronist', type: 'skill', rarity: 'uncommon', cost: 2, target: 'self', keywords: ['delay'],
     text: 'Gain {block} Block. Delay {delay_turns}: gain {delay_block} Block.',
-    effects: [block(7)],
-    delay: { turns: 1, effects: [block(10, 'delay_block')] },
-    upgrade: { effects: [block(9)], delay: { turns: 1, effects: [block(13, 'delay_block')] } },
+    effects: [block(8)],
+    delay: { turns: 1, effects: [block(11, 'delay_block')] },
+    upgrade: { effects: [block(10)], delay: { turns: 1, effects: [block(14, 'delay_block')] } },
     tags: ['timeline', 'oracle', 'block', 'delay'], icon: 'card_breakwater',
   },
   {
     // Targets the enemy it reads; the Guard is the player's.
     id: 'heave_to', name: 'Heave To', cls: 'chronist', type: 'skill', rarity: 'uncommon', cost: 1, target: 'enemy', keywords: [],
     text: 'Gain {guard} Guard, +half the damage of its intent after next.',
-    effects: [{ type: 'guard', amount: { base: 2, per: 0.5, scale: 'forecast_damage' } }],
-    upgrade: { effects: [{ type: 'guard', amount: { base: 5, per: 0.5, scale: 'forecast_damage' } }] },
+    effects: [{ type: 'guard', amount: { base: 4, per: 0.5, scale: 'forecast_damage' } }],
+    upgrade: { effects: [{ type: 'guard', amount: { base: 7, per: 0.5, scale: 'forecast_damage' } }] },
     tags: ['oracle', 'glue', 'guard', 'forecast', 'scaling'], icon: 'card_heave_to',
   },
   {
@@ -395,8 +395,8 @@ const UNCOMMONS: CardDef[] = [
   {
     id: 'striking_train', name: 'Striking Train', cls: 'chronist', type: 'power', rarity: 'uncommon', cost: 1, target: 'none', keywords: [],
     text: 'Whenever you play a card on the beat, deal {status} damage to ALL enemies.',
-    effects: [power('striking_train', 2)],
-    upgrade: { effects: [power('striking_train', 3)] },
+    effects: [power('striking_train', 3)],
+    upgrade: { effects: [power('striking_train', 4)] },
     tags: ['metronome', 'power', 'aoe', 'on_beat'], icon: 'card_striking_train',
   },
   {
@@ -409,7 +409,7 @@ const UNCOMMONS: CardDef[] = [
   {
     id: 'storm_warning', name: 'Storm Warning', cls: 'chronist', type: 'power', rarity: 'uncommon', cost: 1, target: 'none', keywords: [],
     text: 'At the start of your turn, if any enemy intends to attack, apply {status} Stagger to ALL enemies.',
-    effects: [power('storm_warning', 1)],
+    effects: [power('storm_warning', 2)],
     upgrade: { cost: 0 },
     tags: ['oracle', 'power', 'stagger'], icon: 'card_storm_warning',
   },
@@ -501,8 +501,8 @@ const RARES: CardDef[] = [
   {
     id: 'lighthouse', name: 'Lighthouse', cls: 'chronist', type: 'skill', rarity: 'rare', cost: 2, target: 'self', keywords: [],
     text: "Gain {block} Block. If any enemy's intent after next is an attack, gain {guard} Guard.",
-    effects: lighthouse(10, 10),
-    upgrade: { effects: lighthouse(13, 13) },
+    effects: lighthouse(11, 11),
+    upgrade: { effects: lighthouse(14, 14) },
     tags: ['oracle', 'glue', 'block', 'guard', 'forecast'], icon: 'card_lighthouse',
   },
   {

@@ -38,7 +38,7 @@ function sandbox(ids: readonly string[], seed = 'act2') {
   const state: RunState = {
     version: 1, seed, classId: 'breaker', rng: createStreams(seed), act: 2, ascent: 0, floor: 1,
     phase: 'combat', player: { hp: 100000, maxHp: 100000, gold: 0, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 0 } },
-    map: { act: 2, rows: [], bossEncounter: 'unused' }, mapPos: null, room: 'monster',
+    map: { act: 2, rows: [], bossEncounter: 'unused' }, mapPos: null, mapPath: [], room: 'monster',
     reward: null, shop: null, event: null, rest: null, treasure: null, startChoices: null, bossRelicChoices: null,
     queue: [], pendingChoice: null, history: { floors: [] },
     counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 }, nextUid: 1,

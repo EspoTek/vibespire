@@ -135,7 +135,7 @@ const METRONOME = { beat: 12 };
 const PROPHET = { depth: 3 };
 const PARADOX = { delay: 2 };
 const FRACTURE = { per_stack: 2 };
-const CONTRACT = { energy: 1 };
+const CONTRACT = { energy: 1, lean_rewards: 999 }; // lean_rewards: effectively the rest of the run
 const HOURGLASS = { energy: 1 };
 const CORE = { energy: 1 };
 const STASIS = { energy: 1, draw: 1 };
@@ -240,7 +240,7 @@ const STARTER: RelicDef[] = [
   {
     id: 'riven_gauntlet', name: 'Riven Gauntlet', rarity: 'starter', cls: 'breaker',
     text: 'Whenever one of your Riposte effects triggers, gain {status} Onslaught and {guard} Guard.',
-    triggers: { onRiposteTriggered: [{ type: 'status', target: 'self', id: 'onslaught', amount: 1 }, { type: 'guard', amount: 3 }] },
+    triggers: { onRiposteTriggered: [{ type: 'status', target: 'self', id: 'onslaught', amount: 1 }, { type: 'guard', amount: 2 }] },
     icon: 'relic_riven_gauntlet', tags: ['riposte', 'onslaught', 'guard'],
   },
   {
@@ -491,7 +491,7 @@ const UNCOMMON: RelicDef[] = [
   {
     id: 'kept_fury', name: 'Kept Fury', rarity: 'uncommon', cls: 'breaker',
     text: 'At the end of your turn, keep up to {status} Onslaught.',
-    triggers: { onCombatStart: [{ type: 'status', target: 'self', id: 'onslaught_keep', amount: 2 }] },
+    triggers: { onCombatStart: [{ type: 'status', target: 'self', id: 'onslaught_keep', amount: 1 }] },
     icon: 'relic_kept_fury', tags: ['onslaught'],
   },
   {
@@ -788,7 +788,8 @@ const RARE: RelicDef[] = [
 const BOSS: RelicDef[] = [
   {
     id: 'binding_contract', name: 'Binding Contract', rarity: 'boss', values: CONTRACT,
-    text: '+{energy} energy each turn. You must take a card from every card reward (no skipping, no Shards from skipping).',
+    text: '+{energy} energy each turn. Card rewards offer one card fewer, and you must take a card from every one (no skipping, no Shards from skipping).',
+    triggers: { onPickup: [{ type: 'run_flag', key: 'lean_rewards', delta: CONTRACT.lean_rewards }] },
     hooks: { maxEnergy: (_c, e) => e + CONTRACT.energy, canSkipCardReward: () => false },
     icon: 'relic_binding_contract', tags: ['energy', 'shards'],
   },

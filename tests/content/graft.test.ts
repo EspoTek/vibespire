@@ -69,7 +69,7 @@ function sandbox(): Game {
     version: ENGINE_VERSION, seed: 'graft-content', classId: 'graft', rng: createStreams('graft-content'),
     act: 1, ascent: 0, floor: 1, phase: 'combat',
     player: { hp: 1000, maxHp: 1000, gold: 99, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 5 } },
-    map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, room: 'monster',
+    map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, mapPath: [], room: 'monster',
     combat: null, reward: null, shop: null, event: null, rest: null, treasure: null,
     startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null, history: { floors: [] },
     counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 },
@@ -178,7 +178,7 @@ describe('Graft inventory and validation', () => {
 
   it('matches the four GDD starters exactly and upgrades only Bloom increments', () => {
     for (const [id, type, base, up] of [
-      ['lash', 'damage', 6, 9], ['husk', 'block', 5, 8], ['graft_hide', 'block', 5, 7],
+      ['lash', 'damage', 6, 9], ['husk', 'block', 6, 9], ['graft_hide', 'block', 5, 7],
     ] as const) {
       const a = getCardDef(id), b = getCardDef(id, true);
       expect(a.cost).toBe(1);
@@ -335,7 +335,7 @@ describe('custom effects and Power hooks', () => {
       const c = combat(g);
       expect([...c.hand, ...c.draw, ...c.discard, ...c.exhaust, ...c.inPlay].some((card) => card.uid === copy?.uid)).toBe(false);
       const hive = addCard(g, 'hivestrike');
-      expect(renderCardText(hive, g.state, 1)).toContain('5 damage');
+      expect(renderCardText(hive, g.state, 1)).toContain('6 damage');
       expect(inHand(g, seed.uid).vars?.bloom).toBe(7);
     });
   }
@@ -481,14 +481,16 @@ describe('custom effects and Power hooks', () => {
       const g = sandbox();
       const power = addCard(g, id, 'hand', upgraded, 4);
       play(g, power);
-      const first = upgraded ? 11 : 7;
+      // Base 4 (Thorn Halo) / 5 (Thresher) at Bloom 4: +1 per Bloom, +2 upgraded. The second copy is Bloom 2.
+      const first = id === 'thresher' ? (upgraded ? 13 : 9) : (upgraded ? 12 : 8);
+      const second = id === 'thresher' ? 7 : 6;
       expect(combat(g).player.statuses[id]).toBe(first);
       // A future deck-copy edit cannot change the already running Power.
       const deckCopy = g.state.player.deck.find((c) => c.uid === power.uid);
       if (!deckCopy) throw new Error('missing power deck copy');
       deckCopy.vars = { bloom: 10 };
       play(g, addCard(g, id, 'hand', false, 2));
-      expect(combat(g).player.statuses[id]).toBe(first + 5);
+      expect(combat(g).player.statuses[id]).toBe(first + second);
       const before = combat(g).enemies.reduce((sum, enemy) => sum + enemy.hp, 0);
       if (id === 'thorn_halo') fire(g, 'onTurnStart');
       else {
@@ -496,7 +498,7 @@ describe('custom effects and Power hooks', () => {
         play(g, prune); choose(g, scrap.uid);
       }
       const after = combat(g).enemies.reduce((sum, enemy) => sum + enemy.hp, 0);
-      expect(before - after).toBe((first + 5) * (id === 'thresher' ? 2 : 1));
+      expect(before - after).toBe((first + second) * (id === 'thresher' ? 2 : 1));
     });
   }
 
@@ -524,15 +526,15 @@ describe('custom effects and Power hooks', () => {
   });
 
   it('Living Hedge and Hyphal Web count Bloom deck copies at zero Bloom and in the Scrapheap', () => {
-    for (const n of [7, 8]) {
+    for (const n of [5, 6]) {
       const g = sandbox();
       play(g, addCard(g, 'living_hedge'));
       play(g, addCard(g, 'hyphal_web', 'hand', true));
       for (let i = 0; i < n; i++) addCard(g, 'seed_bite', 'exhaust');
       fire(g, 'onTurnStart');
       expect(combat(g).player.block).toBe(n);
-      expect(combat(g).hand).toHaveLength(n >= 8 ? 2 : 1);
-      expect(combat(g).counters.effectDraw).toBe(n >= 8 ? 2 : 1);
+      expect(combat(g).hand).toHaveLength(n >= 6 ? 2 : 1);
+      expect(combat(g).counters.effectDraw).toBe(n >= 6 ? 2 : 1);
     }
   });
 
@@ -617,7 +619,7 @@ describe('Rot and deck-scaled effects', () => {
     addCard(g, 'seed_bite', 'exhaust', false, 4);
     addCard(g, 'sap_shell', 'draw', false, 3);
     const hive = addCard(g, 'hivestrike'), canopy = addCard(g, 'canopy_crush'), crash = addCard(g, 'thicket_crash');
-    expect(renderCardText(hive, g.state, 1)).toContain('5 damage');
+    expect(renderCardText(hive, g.state, 1)).toContain('6 damage');
     expect(renderCardText(canopy, g.state, 1)).toContain('11 damage');
     expect(renderCardText(crash, g.state, 1)).toContain(`(${g.state.player.deck.length})`);
     const excise = addCard(g, 'excise'), victim = addCard(g, 'barb_flick');
