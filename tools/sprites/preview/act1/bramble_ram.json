@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/bramble_ram.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/bramble_ram.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.12,
+  "phase": [
+    1.344,
+    6.056
+  ],
+  "grid_score": 0.2982672610132149,
+  "source_bbox": [
+    19,
+    20,
+    1005,
+    999
+  ],
+  "grid_size": [
+    112,
+    113
+  ],
+  "grid_content_bbox": [
+    2,
+    3,
+    110,
+    110
+  ],
+  "bbox": [
+    0,
+    1,
+    96,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.23
+}

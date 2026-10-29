@@ -1,0 +1,915 @@
+{
+  "started": 1793234281.652281,
+  "sprites": {
+    "furnace_drone": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-982dc6fb-100c-43e2-b7ce-4a9086f5ae4d.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone-attempt1.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a palette-swap tier of the Scrap Drone (keep the identical silhouette and pose; use the accepted Scrap Drone sprite as the reference image): the same hovering salvaged drone repainted in rust-orange and steel-blue plates; its lens now burning furnace-orange; the rotor ring replaced by a glowing heat-sink ring; its claws replaced by two welding nozzles with small yellow flames.",
+          "change": "",
+          "review": "Readable standalone sprite; Act 1 reference was not yet available."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-be5a072b-2639-44cf-a299-c20fc0a62989.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone-attempt2.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a palette-swap tier of the Scrap Drone (keep the identical silhouette and pose; use the accepted Scrap Drone sprite as the reference image): the same hovering salvaged drone repainted in rust-orange and steel-blue plates; its lens now burning furnace-orange; the rotor ring replaced by a glowing heat-sink ring; its claws replaced by two welding nozzles with small yellow flames.",
+          "change": "",
+          "review": "Reference-guided but body and appendage proportions differ; simplified again.",
+          "referenced_image_paths": [
+            "/Users/chrises/git/vibespire/public/assets/sprites/enemies/scrap_drone.png"
+          ]
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-21a4c2a9-7a12-46b4-93fc-99589c4a3c28.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone-attempt3.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a palette-swap tier of the Scrap Drone (keep the identical silhouette and pose; use the accepted Scrap Drone sprite as the reference image): the same hovering salvaged drone repainted in rust-orange and steel-blue plates; its lens now burning furnace-orange; the rotor ring replaced by a glowing heat-sink ring; its claws replaced by two welding nozzles with small yellow flames. Refinement: preserve the attached reference sprite silhouette and pose as closely as possible, including its body-to-ring proportions and the two hanging appendages; only repaint the plates and replace claws with welding nozzles. Square 1024x1024 canvas with clear margins.",
+          "change": " Refinement: preserve the attached reference sprite silhouette and pose as closely as possible, including its body-to-ring proportions and the two hanging appendages; only repaint the plates and replace claws with welding nozzles. Square 1024x1024 canvas with clear margins.",
+          "review": "Selected: cleanest large clusters; proportional mismatch remains flagged.",
+          "referenced_image_paths": [
+            "/Users/chrises/git/vibespire/public/assets/sprites/enemies/scrap_drone.png"
+          ]
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/furnace_drone.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 13.57,
+        "phase": [
+          2.927,
+          2.691
+        ],
+        "grid_score": 0.31248783633484745,
+        "source_bbox": [
+          167,
+          42,
+          857,
+          982
+        ],
+        "grid_size": [
+          75,
+          75
+        ],
+        "grid_content_bbox": [
+          12,
+          3,
+          63,
+          72
+        ],
+        "bbox": [
+          8,
+          0,
+          56,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.235
+      },
+      "verdict": "Accept with flag; clean heat ring, lens and nozzles. Weak: reference-guided silhouette still has different body and appendage proportions from Scrap Drone after three attempts.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone.png",
+      "selected_attempt": 3
+    },
+    "rivet_gnasher": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-f540e50a-1b21-4a07-952a-9e9f61bf8926.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/rivet_gnasher-attempt1.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a palette-swap tier of the Gnasher (keep the identical silhouette and pose; use the accepted Gnasher sprite as the reference image): the same crouching lizard-pup with rust-orange hide; riveted grey steel plates bolted over its back and frill; its jaw replaced by an iron bear-trap jaw; furnace-red eyes.",
+          "change": "",
+          "review": "Readable but different pose from subsequently available Act 1 reference."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-97fda92e-633a-4f7d-9713-ce3a0fc154b4.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/rivet_gnasher-attempt2.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a palette-swap tier of the Gnasher (keep the identical silhouette and pose; use the accepted Gnasher sprite as the reference image): the same crouching lizard-pup with rust-orange hide; riveted grey steel plates bolted over its back and frill; its jaw replaced by an iron bear-trap jaw; furnace-red eyes.",
+          "change": "",
+          "review": "Selected: reference-guided open jaw and radial frill.",
+          "referenced_image_paths": [
+            "/Users/chrises/git/vibespire/public/assets/sprites/enemies/gnasher.png"
+          ]
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/rivet_gnasher.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/rivet_gnasher.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 10.05,
+        "phase": [
+          4.423,
+          2.052
+        ],
+        "grid_score": 0.24050403350116017,
+        "source_bbox": [
+          11,
+          12,
+          1011,
+          1011
+        ],
+        "grid_size": [
+          101,
+          102
+        ],
+        "grid_content_bbox": [
+          1,
+          1,
+          100,
+          100
+        ],
+        "bbox": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.221
+      },
+      "verdict": "Accept; reference-guided open trap jaw, radial frill and crouched feet.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/rivet_gnasher.png",
+      "selected_attempt": 2
+    },
+    "cog_acolyte": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-a17208d6-8de5-4cb1-a417-74d8945fff1e.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte-attempt1.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hooded cultist in long rust-red robes with a large brass cog halo bolted behind its head; two steel-blue mechanical arms holding an oil censer on a chain in front of it; the face hidden in shadow except for two orange eye-lights; symmetrical, robes reaching the bottom of the frame.",
+          "change": "",
+          "review": "Too narrow and detailed; censer loses readability."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-5db847ab-dbc0-4eb1-b433-9a37cc89ca43.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte-attempt2.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hooded cultist in long rust-red robes with a large brass cog halo bolted behind its head; two steel-blue mechanical arms holding an oil censer on a chain in front of it; the face hidden in shadow except for two orange eye-lights; symmetrical, robes reaching the bottom of the frame. Refinement: use a square 1024x1024 canvas. Make the cultist broad and squat with large simple colour clusters, a much larger cog halo and a single large censer; remove tiny robe ornaments so all features read at 64x64.",
+          "change": " Refinement: use a square 1024x1024 canvas. Make the cultist broad and squat with large simple colour clusters, a much larger cog halo and a single large censer; remove tiny robe ornaments so all features read at 64x64.",
+          "review": "Readable censer but halo cropped at top; rejected."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-58903622-5d07-4eac-b3ea-016a2953e779.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte-attempt3.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hooded cultist in long rust-red robes with a large brass cog halo bolted behind its head; two steel-blue mechanical arms holding an oil censer on a chain in front of it; the face hidden in shadow except for two orange eye-lights; symmetrical, robes reaching the bottom of the frame. Refinement: square 1024x1024 canvas, broad simple 64x64 logical sprite, large cog halo and large censer, no tiny robe ornaments. Fit the ENTIRE cog halo and robe hem inside the central 80% of the canvas with a wide solid magenta margin on every side; do not crop any part.",
+          "change": " Refinement: square 1024x1024 canvas, broad simple 64x64 logical sprite, large cog halo and large censer, no tiny robe ornaments. Fit the ENTIRE cog halo and robe hem inside the central 80% of the canvas with a wide solid magenta margin on every side; do not crop any part.",
+          "review": "Selected: complete halo and robe with readable censer."
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/cog_acolyte.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 8.11,
+        "phase": [
+          1.027,
+          2.032
+        ],
+        "grid_score": 0.261538745566848,
+        "source_bbox": [
+          260,
+          16,
+          764,
+          1008
+        ],
+        "grid_size": [
+          126,
+          126
+        ],
+        "grid_content_bbox": [
+          32,
+          2,
+          94,
+          124
+        ],
+        "bbox": [
+          15,
+          0,
+          49,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.236
+      },
+      "verdict": "Accept; full halo, robe and censer visible after margin refinement.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte.png",
+      "selected_attempt": 3
+    },
+    "riveter": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-6f896694-e263-4c1d-9556-d6ccf1f734d7.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/riveter.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a barrel-chested steel construct robot with a rotary multi-barrel rivet gun for its right arm and a heavy clamp hand for its left; a rust-stained ammunition hopper on its back; a small domed head with a single glowing orange slit; short thick legs.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/riveter.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/riveter.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 7.62,
+        "phase": [
+          5.562,
+          6.468
+        ],
+        "grid_score": 0.15691161101759912,
+        "source_bbox": [
+          20,
+          15,
+          1003,
+          1005
+        ],
+        "grid_size": [
+          135,
+          135
+        ],
+        "grid_content_bbox": [
+          3,
+          2,
+          132,
+          132
+        ],
+        "bbox": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.235
+      },
+      "verdict": "Accept; gun, clamp and ammunition hopper remain distinct.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/riveter.png",
+      "selected_attempt": 1
+    },
+    "slag_golem": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-3bd5af69-58ed-4ffa-82ec-3bb0dcc059fa.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/slag_golem.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hulking golem built from stacked iron ingots, a furnace in its chest with glowing yellow-orange molten slag dripping down its front; steel-blue riveted arms ending in big ladle-shaped hands; a small square head with two ember eyes.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/slag_golem.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/slag_golem.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 8.7,
+        "phase": [
+          2.991,
+          7.807
+        ],
+        "grid_score": 0.16910701407141066,
+        "source_bbox": [
+          11,
+          16,
+          1013,
+          1000
+        ],
+        "grid_size": [
+          117,
+          118
+        ],
+        "grid_content_bbox": [
+          1,
+          2,
+          116,
+          115
+        ],
+        "bbox": [
+          0,
+          1,
+          64,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.233
+      },
+      "verdict": "Accept; ingot body, ladle hands and molten chest distinct.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/slag_golem.png",
+      "selected_attempt": 1
+    },
+    "loom_oracle": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-121af1d3-11fa-4810-b3e3-a1248aa13ac7.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/loom_oracle.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a cult prophet fused into a steel weaving-loom frame; many long fingers on both hands trailing copper threads into the loom; a punch-card scroll unspooling from its chest; a glowing furnace-orange third eye on its forehead; robed lower body hanging inside the frame.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/loom_oracle.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/loom_oracle.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 3.2,
+        "phase": [
+          2.358,
+          3.193
+        ],
+        "grid_score": 0.2313912443315372,
+        "source_bbox": [
+          96,
+          6,
+          927,
+          1018
+        ],
+        "grid_size": [
+          320,
+          320
+        ],
+        "grid_content_bbox": [
+          30,
+          2,
+          290,
+          318
+        ],
+        "bbox": [
+          5,
+          0,
+          58,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.236
+      },
+      "verdict": "Accept; loom frame, scroll and third eye read; fine threads become broad light clusters.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/loom_oracle.png",
+      "selected_attempt": 1
+    },
+    "the_auditor": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-b03959c1-7ce6-47f2-bfed-b29430c3c1cb.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/the_auditor.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a tall steel-blue ledger-machine standing on four spindly legs; a rust-orange abacus of glowing yellow beads across its chest; a single raised rubber-stamp arm; one large round monocle lens burning orange as its face; a long paper receipt curling from its side.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/the_auditor.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/the_auditor.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 7.4,
+        "phase": [
+          4.999,
+          7.061
+        ],
+        "grid_score": 0.13529746287782152,
+        "source_bbox": [
+          39,
+          8,
+          996,
+          997
+        ],
+        "grid_size": [
+          139,
+          138
+        ],
+        "grid_content_bbox": [
+          6,
+          1,
+          135,
+          135
+        ],
+        "bbox": [
+          1,
+          0,
+          63,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.247
+      },
+      "verdict": "Accept; abacus, receipt, stamp and four legs readable.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/the_auditor.png",
+      "selected_attempt": 1
+    },
+    "anvil_warden": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-e660d4e3-9aa6-45ac-a1f0-fa9cda86723e.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/anvil_warden.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a squat four-legged iron golem shaped like a blacksmith anvil, with a broad flat back and a horn jutting forward; a steel-blue face plate with two orange eye-slots; a row of glowing orange rivets along its sides; wide and low silhouette.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/anvil_warden.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/anvil_warden.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 9.36,
+        "phase": [
+          1.599,
+          1.956
+        ],
+        "grid_score": 0.16824471350223028,
+        "source_bbox": [
+          13,
+          160,
+          1011,
+          917
+        ],
+        "grid_size": [
+          109,
+          109
+        ],
+        "grid_content_bbox": [
+          1,
+          17,
+          108,
+          98
+        ],
+        "bbox": [
+          0,
+          15,
+          64,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.224
+      },
+      "verdict": "Accept; low anvil back and four squat legs give a distinct silhouette.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/anvil_warden.png",
+      "selected_attempt": 1
+    },
+    "hammer_warden": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-cfb8cf90-9dde-43d8-b5e0-6d96e6c8cae0.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/hammer_warden.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a lanky rust-red construct whose torso is a huge sledgehammer head mounted on a piston spine; two long thin arms ending in spiked iron knuckles; short bent legs; a single yellow-hot vent glowing in the hammer head; tall and narrow silhouette.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/hammer_warden.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/hammer_warden.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 7.2,
+        "phase": [
+          4.049,
+          0.755
+        ],
+        "grid_score": 0.24103403787904293,
+        "source_bbox": [
+          195,
+          7,
+          828,
+          1009
+        ],
+        "grid_size": [
+          143,
+          142
+        ],
+        "grid_content_bbox": [
+          28,
+          1,
+          115,
+          140
+        ],
+        "bbox": [
+          11,
+          0,
+          52,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.246
+      },
+      "verdict": "Accept; tall piston spine, hammer top and spiked hands distinct.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/hammer_warden.png",
+      "selected_attempt": 1
+    },
+    "boiler_tyrant": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-d8d1ccf8-ab45-4ee7-ab81-8984f9882249.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/boiler_tyrant.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a pot-bellied boiler colossus with a round rust-red iron belly; two circular pressure gauges for eyes with needles in the red; a smokestack crown venting a white puff of steam; steel-blue pipe arms ending in valve-wheel fists; short stumpy legs.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/boiler_tyrant.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/boiler_tyrant.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 6.41,
+        "phase": [
+          4.901,
+          0.7
+        ],
+        "grid_score": 0.14031372398110628,
+        "source_bbox": [
+          15,
+          6,
+          1009,
+          1016
+        ],
+        "grid_size": [
+          160,
+          160
+        ],
+        "grid_content_bbox": [
+          3,
+          1,
+          158,
+          158
+        ],
+        "bbox": [
+          0,
+          0,
+          63,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.225
+      },
+      "verdict": "Accept; round boiler, gauge eyes, valve fists and intentional steam puff readable.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/boiler_tyrant.png",
+      "selected_attempt": 1
+    },
+    "grand_assembler": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-3bd263b4-a4a4-4a34-8fc0-650be9dcda6e.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/grand_assembler.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 96x96 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a towering gantry-crane titan boss made of steel girders, with four mechanical arms each ending in a rust-orange welding torch with a yellow flame; a cracked furnace-glass dome for a head with one huge orange eye inside; a conveyor-belt skirt for a lower body; symmetrical, arms raised.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/grand_assembler.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/grand_assembler.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 6.55,
+        "phase": [
+          0.968,
+          1.018
+        ],
+        "grid_score": 0.15106393331283627,
+        "source_bbox": [
+          20,
+          13,
+          1004,
+          1004
+        ],
+        "grid_size": [
+          156,
+          156
+        ],
+        "grid_content_bbox": [
+          3,
+          2,
+          153,
+          153
+        ],
+        "bbox": [
+          0,
+          0,
+          95,
+          96
+        ],
+        "size": 96,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.232
+      },
+      "verdict": "Accept; four torch arms, glass eye dome and conveyor skirt readable at 96px.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/grand_assembler.png",
+      "selected_attempt": 1
+    },
+    "assembly_frame": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-06112791-bde3-49cc-9869-caf6321201d1.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/assembly_frame.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: an unfinished steel skeleton-frame of a robot, bare girders and empty bolt holes; half-welded joints glowing orange; an empty socket where the head should be; hanging cables; clearly incomplete and inert.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/assembly_frame.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/assembly_frame.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 1.0,
+        "phase": [
+          0.0,
+          0.0
+        ],
+        "grid_score": null,
+        "source_bbox": [
+          96,
+          9,
+          916,
+          1012
+        ],
+        "grid_size": [
+          1024,
+          1024
+        ],
+        "grid_content_bbox": [
+          96,
+          9,
+          916,
+          1012
+        ],
+        "bbox": [
+          5,
+          0,
+          58,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.147
+      },
+      "verdict": "Accept; headless open skeleton and hanging cables read. Irregular source grid inspected; explicit pitch 1 used after auto rejected score 0.105.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/assembly_frame.png",
+      "selected_attempt": 1
+    },
+    "welded_horror": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-9dac07b7-ca2a-4ded-b034-8d992c4abd9d.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/welded_horror.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hunched, mismatched welded robot beast assembled from scrap plates, a furnace mouth glowing yellow-orange in its chest; one big hydraulic claw arm and one welding-torch arm; visible weld seams; mismatched rust and steel-blue panels; hunched aggressive pose.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/welded_horror.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/welded_horror.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 6.5,
+        "phase": [
+          3.345,
+          0.59
+        ],
+        "grid_score": 0.13870038645434057,
+        "source_bbox": [
+          11,
+          7,
+          1012,
+          1013
+        ],
+        "grid_size": [
+          158,
+          157
+        ],
+        "grid_content_bbox": [
+          2,
+          1,
+          156,
+          156
+        ],
+        "bbox": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.228
+      },
+      "verdict": "Accept; asymmetrical scrap shoulders, giant claw, torch and chest furnace read.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/welded_horror.png",
+      "selected_attempt": 1
+    },
+    "furnace_heart": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-2ad03619-2369-471c-95b0-f7d520bc37de.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_heart.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 96x96 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a colossal iron furnace boss with a molten yellow-orange core visible through a ribcage-like grille in its chest; two large leather bellows-lungs on its sides; chain arms ending in crucible hooks; a crown of four smokestacks; heavy and symmetrical.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_heart.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/furnace_heart.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 5.28,
+        "phase": [
+          5.209,
+          0.075
+        ],
+        "grid_score": 0.15312622430227768,
+        "source_bbox": [
+          19,
+          6,
+          1006,
+          1013
+        ],
+        "grid_size": [
+          194,
+          194
+        ],
+        "grid_content_bbox": [
+          4,
+          1,
+          191,
+          192
+        ],
+        "bbox": [
+          1,
+          0,
+          95,
+          96
+        ],
+        "size": 96,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.239
+      },
+      "verdict": "Accept; four stacks, bellows lungs, chain hooks and ribcage core distinct.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_heart.png",
+      "selected_attempt": 1
+    },
+    "trihammer": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-df662d1c-5b21-417a-83d4-31e603af7eea.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 96x96 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a hunched foundry-foreman colossus boss with a steel-blue barrel torso and a narrow furnace-red visor eye; heavy chains draped over its shoulders; three empty piston sockets on its shoulders and back where arms attach (the arms are separate sprites); squat legs; symmetrical.",
+          "change": ""
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/trihammer.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 4.45,
+        "phase": [
+          2.518,
+          2.556
+        ],
+        "grid_score": 0.15214098740200382,
+        "source_bbox": [
+          54,
+          21,
+          970,
+          1000
+        ],
+        "grid_size": [
+          231,
+          231
+        ],
+        "grid_content_bbox": [
+          13,
+          5,
+          218,
+          225
+        ],
+        "bbox": [
+          3,
+          0,
+          93,
+          96
+        ],
+        "size": 96,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.234
+      },
+      "verdict": "Accept; armless barrel body with three open sockets, chains and red visor.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer.png",
+      "selected_attempt": 1
+    },
+    "trihammer_arm": {
+      "attempts": [
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-b778a874-ce95-4993-90a7-49cd11d5acb8.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer_arm-attempt1.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a detached giant rust-red piston arm hanging vertically from a short chain, ending in a squared trip-hammer head with glowing yellow seams; hydraulic pistons along its length; no body attached.",
+          "change": "",
+          "review": "Chain clipped by top canvas edge; rejected."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-6d8a24f2-732c-41f9-bf1a-90a91b56cae3.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer_arm-attempt2.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a detached giant rust-red piston arm hanging vertically from a short chain, ending in a squared trip-hammer head with glowing yellow seams; hydraulic pistons along its length; no body attached. Refinement: square 1024x1024 canvas. Show the entire short chain including its closed top link, with a generous solid magenta margin above it and below the hammer; nothing may touch the canvas edge.",
+          "change": " Refinement: square 1024x1024 canvas. Show the entire short chain including its closed top link, with a generous solid magenta margin above it and below the hammer; nothing may touch the canvas edge.",
+          "review": "Thin chain breaks into disconnected pixels after reduction; rejected."
+        },
+        {
+          "source": "/Users/chrises/.codex/generated_images/01a18516-6f7b-7ea3-b716-9abdaedee6ce/exec-25d75019-b1a2-44c0-ad45-365dd08fc74a.png",
+          "raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer_arm-attempt3.png",
+          "prompt": "Front-facing, centred, symmetrical where sensible, whole body visible and filling about 80% of the frame, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow and NO scenery. Strict 8-bit pixel art in the style of Phantasy Star on the Sega Master System: hard square pixels, no anti-aliasing, no gradients, no dithering on the body, flat colours with 2-3 tone hard shading, thick black outline around every shape. At most 16 colours, all from the Sega Master System 64-colour palette (every RGB channel 00, 55, AA or FF), biased to the Foundry palette: rust and furnace reds and oranges (#550000, #AA0000, #AA5500, #FF5500, #FFAA00) and steel greys and blues (#555555, #AAAAAA, #0055AA, #5555AA, #55AAFF), plus black (#000000) and white (#FFFFFF), with exactly one warm accent of white-hot furnace yellow (#FFFF00); no pink or magenta anywhere on the creature. Drawn as if 64x64 pixels upscaled with nearest neighbour. No text, no border, no watermark, single subject. Subject: a detached giant rust-red piston arm hanging vertically from a short chain, ending in a squared trip-hammer head with glowing yellow seams; hydraulic pistons along its length; no body attached. Refinement: square 1024x1024 canvas with wide magenta margins on all four sides. Use large simple clusters on a true 64x64 logical grid: shorten the arm, make the chain exactly two very thick closed links with wide holes, and broaden the hammer head. No tiny texture or thin lines.",
+          "change": " Refinement: square 1024x1024 canvas with wide magenta margins on all four sides. Use large simple clusters on a true 64x64 logical grid: shorten the arm, make the chain exactly two very thick closed links with wide holes, and broaden the hammer head. No tiny texture or thin lines.",
+          "review": "Selected: two thick links survive reduction."
+        }
+      ],
+      "report": {
+        "input": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer_arm.png",
+        "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/trihammer_arm.png",
+        "input_size": [
+          1024,
+          1024
+        ],
+        "pitch": 10.59,
+        "phase": [
+          3.513,
+          0.789
+        ],
+        "grid_score": 0.1787952328680193,
+        "source_bbox": [
+          241,
+          11,
+          781,
+          998
+        ],
+        "grid_size": [
+          96,
+          97
+        ],
+        "grid_content_bbox": [
+          22,
+          1,
+          73,
+          94
+        ],
+        "bbox": [
+          14,
+          0,
+          50,
+          64
+        ],
+        "size": 64,
+        "colors": 16,
+        "outline": 1,
+        "elapsed_seconds": 0.231
+      },
+      "verdict": "Accept; two thick closed chain links and broad hammer preserved after simplification.",
+      "selected_raw": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer_arm.png",
+      "selected_attempt": 3
+    }
+  }
+}

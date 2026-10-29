@@ -1,0 +1,53 @@
+{
+  "relics": {
+    "count": 72,
+    "size": [
+      16,
+      16
+    ],
+    "opaque_colors_min": 7,
+    "opaque_colors_max": 8,
+    "identical_alpha_silhouettes": [],
+    "no_opaque_magenta": true,
+    "atlas_png": "public/assets/sprites/relics-atlas.png",
+    "atlas_json": "public/assets/sprites/relics-atlas.json",
+    "contact": "tools/sprites/preview/relics/contact.png"
+  },
+  "potions": {
+    "count": 16,
+    "size": [
+      16,
+      16
+    ],
+    "opaque_colors_min": 8,
+    "opaque_colors_max": 8,
+    "identical_alpha_silhouettes": [],
+    "no_opaque_magenta": true,
+    "atlas_png": "public/assets/sprites/potions-atlas.png",
+    "atlas_json": "public/assets/sprites/potions-atlas.json",
+    "contact": "tools/sprites/preview/potions/contact.png"
+  },
+  "generations": {
+    "base": 6,
+    "targeted_potion_retry": 1,
+    "native_size": [
+      1254,
+      1254
+    ],
+    "normalized_size": [
+      1024,
+      1024
+    ]
+  },
+  "weak_ids": [
+    "heavy_heart",
+    "engine_tooth",
+    "pot_rewind_phial"
+  ],
+  "checks": {
+    "sprite_tests": "8 passed",
+    "python_types": "ty passed",
+    "repository_typecheck": "failed outside scope; see icons-repo-typecheck.log",
+    "repository_tests": "91 passed, 125 failed in engine/content; see icons-repo-tests.log"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/the_auditor.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/the_auditor.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.4,
+  "phase": [
+    4.999,
+    7.061
+  ],
+  "grid_score": 0.13529746287782152,
+  "source_bbox": [
+    39,
+    8,
+    996,
+    997
+  ],
+  "grid_size": [
+    139,
+    138
+  ],
+  "grid_content_bbox": [
+    6,
+    1,
+    135,
+    135
+  ],
+  "bbox": [
+    1,
+    0,
+    63,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.247
+}

@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/colorless_01.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "relay_ping",
+      "source_box": [
+        0,
+        0,
+        293,
+        292
+      ],
+      "pitch": 5.63,
+      "grid_score": 0.2823556549348839,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/colorless_01/relay_ping.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shardfall",
+      "source_box": [
+        332,
+        0,
+        615,
+        292
+      ],
+      "pitch": 6.08,
+      "grid_score": 0.1902511972884585,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/shardfall.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "arc_lattice",
+      "source_box": [
+        643,
+        0,
+        926,
+        292
+      ],
+      "pitch": 6.1,
+      "grid_score": 0.2248475274084325,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/arc_lattice.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "salvage_kit",
+      "source_box": [
+        960,
+        0,
+        1254,
+        292
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.1448971323872401,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/salvage_kit.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "stress_fracture",
+      "source_box": [
+        0,
+        325,
+        293,
+        603
+      ],
+      "pitch": 5.73,
+      "grid_score": 0.22710815422368227,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/colorless_01/stress_fracture.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "gyro_jammer",
+      "source_box": [
+        332,
+        325,
+        615,
+        603
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.18739263107813658,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/gyro_jammer.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "ballast_lock",
+      "source_box": [
+        643,
+        325,
+        926,
+        603
+      ],
+      "pitch": 5.91,
+      "grid_score": 0.1381267551877381,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/colorless_01/ballast_lock.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "jettison_pod",
+      "source_box": [
+        960,
+        325,
+        1254,
+        603
+      ],
+      "pitch": 5.89,
+      "grid_score": 0.1915476788387574,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/jettison_pod.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "overdraft_cell",
+      "source_box": [
+        0,
+        642,
+        293,
+        913
+      ],
+      "pitch": 5.62,
+      "grid_score": 0.27110550044195453,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/overdraft_cell.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "star_survey",
+      "source_box": [
+        332,
+        642,
+        615,
+        913
+      ],
+      "pitch": 5.64,
+      "grid_score": 0.17157945983708853,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/star_survey.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fault_beacon",
+      "source_box": [
+        643,
+        642,
+        926,
+        913
+      ],
+      "pitch": 6.05,
+      "grid_score": 0.16338010646747642,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/fault_beacon.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "snare_line",
+      "source_box": [
+        960,
+        642,
+        1254,
+        913
+      ],
+      "pitch": 5.85,
+      "grid_score": 0.17893344848135465,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/snare_line.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "cutting_torch",
+      "source_box": [
+        0,
+        947,
+        293,
+        1254
+      ],
+      "pitch": 5.63,
+      "grid_score": 0.2527445939796057,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/cutting_torch.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "medbay_voucher",
+      "source_box": [
+        332,
+        947,
+        615,
+        1254
+      ],
+      "pitch": 5.47,
+      "grid_score": 0.15150290100748875,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/medbay_voucher.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "clean_manifest",
+      "source_box": [
+        643,
+        947,
+        926,
+        1254
+      ],
+      "pitch": 6.07,
+      "grid_score": 0.1695731723507048,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/clean_manifest.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "salvage_kiln",
+      "source_box": [
+        960,
+        947,
+        1254,
+        1254
+      ],
+      "pitch": 5.95,
+      "grid_score": 0.1991447098807259,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/colorless_01/salvage_kiln.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

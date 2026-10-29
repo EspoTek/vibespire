@@ -1,0 +1,746 @@
+{
+  "class": "chronist",
+  "cell_size": [
+    32,
+    24
+  ],
+  "cell_numbering": "1-based row-major; 4 columns by 4 rows",
+  "allocation": "Sheets 1\u20133: 16 cards each. Sheet 4: final 8 cards plus 8 alternates for initially weakest/most ambiguous silhouettes.",
+  "cards": [
+    {
+      "id": "pulse_shot",
+      "name": "Pulse Shot",
+      "type": "attack",
+      "text": "Deal {damage} damage.",
+      "subject": "cyan pulse pistol firing white energy bolt",
+      "sheet": "chronist_01",
+      "cell": 1
+    },
+    {
+      "id": "ward",
+      "name": "Ward",
+      "type": "skill",
+      "text": "Gain {block} Block.",
+      "subject": "deep blue kite shield with gold rim",
+      "sheet": "chronist_01",
+      "cell": 2
+    },
+    {
+      "id": "tick",
+      "name": "Tick",
+      "type": "attack",
+      "text": "Deal {damage} damage. On beat: draw {beat_draw} card.",
+      "subject": "short golden clock needle stabbing cyan spark",
+      "sheet": "chronist_01",
+      "cell": 3
+    },
+    {
+      "id": "tock",
+      "name": "Tock",
+      "type": "skill",
+      "text": "Gain {block} Block. Delay 1: gain {delay_block} Block.",
+      "subject": "blue pendulum shield swinging behind gold pivot",
+      "sheet": "chronist_01",
+      "cell": 4
+    },
+    {
+      "id": "pinion_jab",
+      "name": "Pinion Jab",
+      "type": "attack",
+      "text": "Deal {damage} damage. On beat: apply {beat_exposed} Exposed.",
+      "subject": "sharp gold pinion spear piercing blue plate",
+      "sheet": "chronist_01",
+      "cell": 5
+    },
+    {
+      "id": "gear_train",
+      "name": "Gear Train",
+      "type": "attack",
+      "text": "Deal {damage} damage {times} times. On beat: deal {beat_damage} more.",
+      "subject": "paired blue cog blades with gold teeth",
+      "sheet": "chronist_01",
+      "cell": 6
+    },
+    {
+      "id": "downbeat",
+      "name": "Downbeat",
+      "type": "attack",
+      "text": "Deal {damage} damage. On beat: deal {beat_damage} more.",
+      "subject": "heavy gold mallet striking cyan shockwave",
+      "sheet": "chronist_01",
+      "cell": 7
+    },
+    {
+      "id": "slack_water",
+      "name": "Slack Water",
+      "type": "attack",
+      "text": "Deal {damage} damage, or {lull_damage} if its intent after next isn't an attack.",
+      "subject": "curved blue harpoon skimming still white wave",
+      "sheet": "chronist_01",
+      "cell": 8
+    },
+    {
+      "id": "parallax",
+      "name": "Parallax",
+      "type": "attack",
+      "text": "Deal {damage} damage {times} times.",
+      "subject": "twin offset cyan daggers with gold hilts",
+      "sheet": "chronist_01",
+      "cell": 9
+    },
+    {
+      "id": "noon_gun",
+      "name": "Noon Gun",
+      "type": "attack",
+      "text": "Delay 2: deal {delay_damage} damage.",
+      "subject": "stubby blue naval cannon with gold muzzle",
+      "sheet": "chronist_01",
+      "cell": 10
+    },
+    {
+      "id": "afterpeal",
+      "name": "Afterpeal",
+      "type": "attack",
+      "text": "Deal {damage} damage. Delay 1: deal {delay_damage} damage; On beat: {beat_damage} more.",
+      "subject": "gold bell clapper striking cyan echo slash",
+      "sheet": "chronist_01",
+      "cell": 11
+    },
+    {
+      "id": "spring_tide",
+      "name": "Spring Tide",
+      "type": "attack",
+      "text": "Delay 3: deal {delay_damage} damage to ALL enemies.",
+      "subject": "towering blue tidal claw with white crest",
+      "sheet": "chronist_01",
+      "cell": 12
+    },
+    {
+      "id": "carillon",
+      "name": "Carillon",
+      "type": "attack",
+      "text": "Deal {damage} damage to ALL enemies. On beat: deal {beat_damage} more to each.",
+      "subject": "three gold bell hammers radiating cyan shockwaves",
+      "sheet": "chronist_01",
+      "cell": 13
+    },
+    {
+      "id": "storm_glass",
+      "name": "Storm Glass",
+      "type": "skill",
+      "text": "Delay 1: gain {delay_block} Block, +{storm_block} if any enemy intends to attack.",
+      "subject": "sealed blue storm bottle shielding white lightning",
+      "sheet": "chronist_01",
+      "cell": 14
+    },
+    {
+      "id": "almanac",
+      "name": "Almanac",
+      "type": "skill",
+      "text": "Delay 1: draw {delay_draw} cards.",
+      "subject": "closed blue calendar folio with gold clasp",
+      "sheet": "chronist_01",
+      "cell": 15
+    },
+    {
+      "id": "ephemeris",
+      "name": "Ephemeris",
+      "type": "skill",
+      "text": "Draw {draw} cards. On beat: draw {beat_draw} more.",
+      "subject": "unrolled cyan star chart with gold dividers",
+      "sheet": "chronist_01",
+      "cell": 16
+    },
+    {
+      "id": "upbeat",
+      "name": "Upbeat",
+      "type": "skill",
+      "text": "Gain {block} Block. Can't be played on the beat.",
+      "subject": "gold tuning fork lifting blue protective arc",
+      "sheet": "chronist_02",
+      "cell": 1
+    },
+    {
+      "id": "weather_eye",
+      "name": "Weather Eye",
+      "type": "skill",
+      "text": "Gain {guard} Guard. If any enemy's intent after next is an attack, gain {storm_guard} more.",
+      "subject": "brass spyglass beneath curved blue storm shield",
+      "sheet": "chronist_02",
+      "cell": 2
+    },
+    {
+      "id": "balance_wheel",
+      "name": "Balance Wheel",
+      "type": "skill",
+      "text": "Gain {block} Block. On beat: apply {beat_stagger} Stagger to ALL enemies.",
+      "subject": "broad blue balance wheel with gold counterweight",
+      "sheet": "chronist_02",
+      "cell": 3
+    },
+    {
+      "id": "detent",
+      "name": "Detent",
+      "type": "skill",
+      "text": "Apply {stagger} Stagger. On beat: apply {beat_stagger} more.",
+      "subject": "gold locking pawl stopping blue toothed gear",
+      "sheet": "chronist_02",
+      "cell": 4
+    },
+    {
+      "id": "dead_reckoning",
+      "name": "Dead Reckoning",
+      "type": "skill",
+      "text": "Gain {block} Block (+{block_per} per card played this turn).",
+      "subject": "blue navigation compass under crossed gold rulers",
+      "sheet": "chronist_02",
+      "cell": 5,
+      "selected": {
+        "sheet": "chronist_04",
+        "id": "dead_reckoning_alt"
+      }
+    },
+    {
+      "id": "logbook",
+      "name": "Logbook",
+      "type": "skill",
+      "text": "Gain {block} Block (+{block_per} per Shard you hold).",
+      "subject": "open blue logbook holding bright cyan crystal",
+      "sheet": "chronist_02",
+      "cell": 6
+    },
+    {
+      "id": "reef_the_sails",
+      "name": "Reef the Sails",
+      "type": "skill",
+      "text": "Gain {block} Block. If its intent after next is an attack, apply {stagger} Stagger to it.",
+      "subject": "furled white sail bound with blue rope",
+      "sheet": "chronist_02",
+      "cell": 7
+    },
+    {
+      "id": "wind_forward",
+      "name": "Wind Forward",
+      "type": "skill",
+      "text": "Advance {advance}. If your Timeline is empty, gain {block} Block instead.",
+      "subject": "gold winding key trailing cyan forward gust",
+      "sheet": "chronist_02",
+      "cell": 8
+    },
+    {
+      "id": "sweep_hand",
+      "name": "Sweep Hand",
+      "type": "attack",
+      "text": "Deal {damage} damage. On beat: deal it to ALL enemies instead.",
+      "subject": "long blue clockhand scythe sweeping gold arc",
+      "sheet": "chronist_02",
+      "cell": 9
+    },
+    {
+      "id": "fermata",
+      "name": "Fermata",
+      "type": "attack",
+      "text": "Keep. Deal {damage} damage. On beat: deal {beat_damage} more.",
+      "subject": "crescent blue axe held by golden clamp",
+      "sheet": "chronist_02",
+      "cell": 10
+    },
+    {
+      "id": "appointed_hour",
+      "name": "Appointed Hour",
+      "type": "attack",
+      "text": "Delay 2: deal {delay_damage} damage.",
+      "subject": "gold hourglass bursting into downward cyan spear",
+      "sheet": "chronist_02",
+      "cell": 11,
+      "selected": {
+        "sheet": "chronist_fillup",
+        "id": "appointed_hour_retry_8"
+      }
+    },
+    {
+      "id": "knell",
+      "name": "Knell",
+      "type": "attack",
+      "text": "Deal {damage} damage to ALL enemies. Delay 2: deal {delay_damage} damage to ALL enemies.",
+      "subject": "huge blue bell striking white shockwave ring",
+      "sheet": "chronist_02",
+      "cell": 12
+    },
+    {
+      "id": "turn_the_tide",
+      "name": "Turn the Tide",
+      "type": "attack",
+      "text": "Deal {damage} damage, +half the damage of its intent after next.",
+      "subject": "curved gold trident reversing blue breaking wave",
+      "sheet": "chronist_02",
+      "cell": 13
+    },
+    {
+      "id": "confluence",
+      "name": "Confluence",
+      "type": "attack",
+      "text": "Deal {damage} damage (+{damage_per} per card on your Timeline).",
+      "subject": "three cyan streams merging into gold spearhead",
+      "sheet": "chronist_02",
+      "cell": 14
+    },
+    {
+      "id": "second_hand",
+      "name": "Second Hand",
+      "type": "attack",
+      "text": "Delay 1: deal {delay_damage} damage. On beat: {beat_damage} more.",
+      "subject": "thin silver clockhand rapier with blue afterimage",
+      "sheet": "chronist_02",
+      "cell": 15
+    },
+    {
+      "id": "mainspring",
+      "name": "Mainspring",
+      "type": "skill",
+      "text": "On beat: gain {beat_energy} energy.",
+      "subject": "coiled gold mainspring inside blue winding tool",
+      "sheet": "chronist_02",
+      "cell": 16
+    },
+    {
+      "id": "quarter_chime",
+      "name": "Quarter Chime",
+      "type": "skill",
+      "text": "On beat: draw {beat_draw} cards.",
+      "subject": "small silver handbell with gold ribbon",
+      "sheet": "chronist_03",
+      "cell": 1
+    },
+    {
+      "id": "hasten",
+      "name": "Hasten",
+      "type": "skill",
+      "text": "Advance {advance}. On beat: Advance {beat_advance} more.",
+      "subject": "blue winged hourglass with golden winding handle",
+      "sheet": "chronist_03",
+      "cell": 2
+    },
+    {
+      "id": "banked_hours",
+      "name": "Banked Hours",
+      "type": "skill",
+      "text": "Delay 1: gain {delay_energy} energy and draw {delay_draw} cards.",
+      "subject": "blue strongbox storing glowing gold sandglass",
+      "sheet": "chronist_03",
+      "cell": 3
+    },
+    {
+      "id": "breakwater",
+      "name": "Breakwater",
+      "type": "skill",
+      "text": "Gain {block} Block. Delay 1: gain {delay_block} Block.",
+      "subject": "broad blue seawall shield splitting white surf",
+      "sheet": "chronist_03",
+      "cell": 4
+    },
+    {
+      "id": "heave_to",
+      "name": "Heave To",
+      "type": "skill",
+      "text": "Gain {guard} Guard, +half the damage of its intent after next.",
+      "subject": "heavy gold anchor braced against blue wave",
+      "sheet": "chronist_03",
+      "cell": 5
+    },
+    {
+      "id": "batten_down",
+      "name": "Batten Down",
+      "type": "skill",
+      "text": "Delay 1: if it intends to attack, apply {delay_stagger} Stagger to it.",
+      "subject": "crossed blue hatch braces with gold rivets",
+      "sheet": "chronist_03",
+      "cell": 6
+    },
+    {
+      "id": "mark_the_lull",
+      "name": "Mark the Lull",
+      "type": "skill",
+      "text": "Apply {exposed} Exposed. If its intent after next isn't an attack, apply {lull_exposed} more.",
+      "subject": "gold sextant sighting isolated cyan crescent",
+      "sheet": "chronist_03",
+      "cell": 7
+    },
+    {
+      "id": "glance_ahead",
+      "name": "Glance Ahead",
+      "type": "skill",
+      "text": "Draw {draw} card. If your Timeline is not empty, draw {timeline_draw} more. Scrap.",
+      "subject": "blue crystal viewing lens on gold stand",
+      "sheet": "chronist_03",
+      "cell": 8
+    },
+    {
+      "id": "striking_train",
+      "name": "Striking Train",
+      "type": "power",
+      "text": "Whenever you play a card on the beat, deal {status} damage to ALL enemies.",
+      "subject": "radiant blue hammer emblem inside golden gear",
+      "sheet": "chronist_03",
+      "cell": 9
+    },
+    {
+      "id": "tide_table",
+      "name": "Tide Table",
+      "type": "power",
+      "text": "Whenever a card on your Timeline resolves, draw {status} card.",
+      "subject": "glowing cyan wave emblem over blue tablet",
+      "sheet": "chronist_03",
+      "cell": 10
+    },
+    {
+      "id": "storm_warning",
+      "name": "Storm Warning",
+      "type": "power",
+      "text": "At the start of your turn, if any enemy intends to attack, apply {status} Stagger to ALL enemies.",
+      "subject": "radiant white lightning emblem inside blue triangle",
+      "sheet": "chronist_03",
+      "cell": 11
+    },
+    {
+      "id": "escapement",
+      "name": "Escapement",
+      "type": "power",
+      "text": "Whenever you put a card on your Timeline on the beat, Advance {status}.",
+      "subject": "glowing gold escapement star with cyan aura",
+      "sheet": "chronist_03",
+      "cell": 12
+    },
+    {
+      "id": "zenith",
+      "name": "Zenith",
+      "type": "attack",
+      "text": "Can only be played on the beat. Deal {damage} damage.",
+      "subject": "vertical white star lance with golden wings",
+      "sheet": "chronist_03",
+      "cell": 13
+    },
+    {
+      "id": "syzygy",
+      "name": "Syzygy",
+      "type": "attack",
+      "text": "Delay 3: deal {delay_damage} damage.",
+      "subject": "aligned blue celestial blades piercing golden eclipse",
+      "sheet": "chronist_03",
+      "cell": 14
+    },
+    {
+      "id": "culmination",
+      "name": "Culmination",
+      "type": "attack",
+      "text": "Deal {damage} damage, or {lull_damage} if its intent after next isn't an attack.",
+      "subject": "crowned cyan crystal mace with gold spikes",
+      "sheet": "chronist_03",
+      "cell": 15,
+      "selected": {
+        "sheet": "chronist_fillup",
+        "id": "culmination_retry_1"
+      }
+    },
+    {
+      "id": "toll_the_hours",
+      "name": "Toll the Hours",
+      "type": "attack",
+      "text": "Deal {damage} damage X times. Delay 1: deal {delay_damage} damage X times.",
+      "subject": "gold clockwork flail with blue bell weights",
+      "sheet": "chronist_03",
+      "cell": 16
+    },
+    {
+      "id": "seen_it_coming",
+      "name": "Seen It Coming",
+      "type": "skill",
+      "text": "Delay 1: gain Block equal to the damage it intends. Scrap.",
+      "subject": "blue crystal shield reflecting golden incoming arrow",
+      "sheet": "chronist_04",
+      "cell": 1
+    },
+    {
+      "id": "star_tithe",
+      "name": "Star Tithe",
+      "type": "skill",
+      "text": "Delay 3: gain {delay_shards} Shard and draw {delay_draw} cards. Scrap.",
+      "subject": "gold offering bowl holding bright cyan star",
+      "sheet": "chronist_04",
+      "cell": 2
+    },
+    {
+      "id": "tourbillon",
+      "name": "Tourbillon",
+      "type": "skill",
+      "text": "Keep. On beat: gain {beat_energy} energy, then Scrap this.",
+      "subject": "blue gyroscope tool enclosing coiled gold spring",
+      "sheet": "chronist_04",
+      "cell": 3
+    },
+    {
+      "id": "lighthouse",
+      "name": "Lighthouse",
+      "type": "skill",
+      "text": "Gain {block} Block. If any enemy's intent after next is an attack, gain {guard} Guard.",
+      "subject": "white lighthouse tool casting broad cyan barrier",
+      "sheet": "chronist_04",
+      "cell": 4
+    },
+    {
+      "id": "polyrhythm",
+      "name": "Polyrhythm",
+      "type": "power",
+      "text": "Your On beat effects trigger twice.",
+      "subject": "interlocking luminous blue pendulum emblems with gold pivots",
+      "sheet": "chronist_04",
+      "cell": 5
+    },
+    {
+      "id": "portents",
+      "name": "Portents",
+      "type": "power",
+      "text": "At the start of your turn, apply {status} Exposed to ALL enemies. If any enemy's intent after next isn't an attack, apply {status} more.",
+      "subject": "radiant cyan comet emblem above golden crescent",
+      "sheet": "chronist_04",
+      "cell": 6
+    },
+    {
+      "id": "watch_bell",
+      "name": "Watch Bell",
+      "type": "power",
+      "text": "Whenever a card on your Timeline resolves, gain {bell} Block, +{alarm} if any enemy intends to attack.",
+      "subject": "glowing gold alarm bell inside blue shield",
+      "sheet": "chronist_04",
+      "cell": 7
+    },
+    {
+      "id": "perpetual_motion",
+      "name": "Perpetual Motion",
+      "type": "power",
+      "text": "The first card you play on the beat each turn costs 1 less.",
+      "subject": "luminous cyan infinity wheel with golden hub",
+      "sheet": "chronist_04",
+      "cell": 8
+    }
+  ],
+  "alternates": [
+    {
+      "id": "tick_alt",
+      "alternate_for": "tick",
+      "subject": "gold needle dagger bursting through cyan paper fan",
+      "sheet": "chronist_04",
+      "cell": 9
+    },
+    {
+      "id": "parallax_alt",
+      "alternate_for": "parallax",
+      "subject": "crossed cyan throwing blades with offset white echoes",
+      "sheet": "chronist_04",
+      "cell": 10
+    },
+    {
+      "id": "almanac_alt",
+      "alternate_for": "almanac",
+      "subject": "blue hinged calendar case releasing gold star token",
+      "sheet": "chronist_04",
+      "cell": 11
+    },
+    {
+      "id": "dead_reckoning_alt",
+      "alternate_for": "dead_reckoning",
+      "subject": "gold navigator dividers braced across blue compass shield",
+      "sheet": "chronist_04",
+      "cell": 12
+    },
+    {
+      "id": "fermata_alt",
+      "alternate_for": "fermata",
+      "subject": "blue crescent cleaver suspended from golden chain",
+      "sheet": "chronist_04",
+      "cell": 13
+    },
+    {
+      "id": "mark_the_lull_alt",
+      "alternate_for": "mark_the_lull",
+      "subject": "gold sighting sextant framing blue calm wave",
+      "sheet": "chronist_04",
+      "cell": 14
+    },
+    {
+      "id": "syzygy_alt",
+      "alternate_for": "syzygy",
+      "subject": "gold eclipse spear crossing aligned cyan crescent blades",
+      "sheet": "chronist_04",
+      "cell": 15
+    },
+    {
+      "id": "polyrhythm_alt",
+      "alternate_for": "polyrhythm",
+      "subject": "radiant crossed gold pendulums inside twin cyan rings",
+      "sheet": "chronist_04",
+      "cell": 16
+    }
+  ],
+  "fill_up": [
+    {
+      "id": "appointed_hour_retry_1",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 1,
+      "subject": "broad golden hourglass with short cyan spearhead"
+    },
+    {
+      "id": "appointed_hour_retry_2",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 2,
+      "subject": "wide blue hourglass shield with golden piercing tip"
+    },
+    {
+      "id": "appointed_hour_retry_3",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 3,
+      "subject": "large cyan sandglass firing short golden blade"
+    },
+    {
+      "id": "appointed_hour_retry_4",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 4,
+      "subject": "squat gold sandglass mounted on blue spearhead"
+    },
+    {
+      "id": "appointed_hour_retry_5",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 5,
+      "subject": "wide blue sandglass with gold downward arrow"
+    },
+    {
+      "id": "appointed_hour_retry_6",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 6,
+      "subject": "gold hourglass above broad cyan triangular strike"
+    },
+    {
+      "id": "appointed_hour_retry_7",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 7,
+      "subject": "blue hourglass weapon with wide golden blade"
+    },
+    {
+      "id": "appointed_hour_retry_8",
+      "alternate_for": "appointed_hour",
+      "sheet": "chronist_fillup",
+      "cell": 8,
+      "subject": "chunky golden sandglass launching short cyan lance"
+    },
+    {
+      "id": "culmination_retry_1",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 9,
+      "subject": "wide crowned cyan mace head with short handle"
+    },
+    {
+      "id": "culmination_retry_2",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 10,
+      "subject": "broad blue crystal warhammer with golden crown"
+    },
+    {
+      "id": "culmination_retry_3",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 11,
+      "subject": "large cyan spiked mace with short gold grip"
+    },
+    {
+      "id": "culmination_retry_4",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 12,
+      "subject": "chunky blue morningstar crowned with gold spikes"
+    },
+    {
+      "id": "culmination_retry_5",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 13,
+      "subject": "wide golden crowned club with cyan crystal core"
+    },
+    {
+      "id": "culmination_retry_6",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 14,
+      "subject": "broad cyan crystal mace with golden flanges"
+    },
+    {
+      "id": "culmination_retry_7",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 15,
+      "subject": "heavy blue crowned scepter with short gold handle"
+    },
+    {
+      "id": "culmination_retry_8",
+      "alternate_for": "culmination",
+      "sheet": "chronist_fillup",
+      "cell": 16,
+      "subject": "oversized cyan mace head ringed by golden spikes"
+    }
+  ],
+  "review": {
+    "chronist_01": "16/16 readable, no bleed; keep originals",
+    "chronist_02": "appointed_hour too narrow; retry once with broad hourglass",
+    "chronist_03": "culmination head too small; retry once with broad mace",
+    "chronist_04": "16/16 readable; dead_reckoning alternate clearer; other originals stronger",
+    "chronist_fillup": "Inspected all 16 at 4x. Selected appointed_hour_retry_8 (wide hourglass with cyan lance), culmination_retry_1 (large cyan crowned mace). Both original failures resolved."
+  },
+  "weak_ids": [
+    "tourbillon",
+    "escapement"
+  ],
+  "weak_notes": "Both readable as clockwork emblems, but internal mechanism details remain abstract at 32x24.",
+  "generation": {
+    "tool": "built-in image_gen.imagegen",
+    "native_dimensions": [
+      1254,
+      1254
+    ],
+    "normalization": "none; grid.py slices native image directly",
+    "sheets": [
+      {
+        "sheet": "chronist_01",
+        "source": "raw/cards/chronist_01.png",
+        "generator_file": "/Users/chrises/.codex/generated_images/01a18527-443f-73d1-abc5-4c2f066cd3f2/exec-46ce0b23-8727-4e6a-b62a-8c2c1615d283.png"
+      },
+      {
+        "sheet": "chronist_02",
+        "source": "raw/cards/chronist_02.png",
+        "generator_file": "/Users/chrises/.codex/generated_images/01a18527-443f-73d1-abc5-4c2f066cd3f2/exec-0159e9c4-110c-42ed-b497-815b2c9accd7.png"
+      },
+      {
+        "sheet": "chronist_03",
+        "source": "raw/cards/chronist_03.png",
+        "generator_file": "/Users/chrises/.codex/generated_images/01a18527-443f-73d1-abc5-4c2f066cd3f2/exec-6293028e-5296-4c23-9bd8-c0a3f731ec03.png"
+      },
+      {
+        "sheet": "chronist_04",
+        "source": "raw/cards/chronist_04.png",
+        "generator_file": "/Users/chrises/.codex/generated_images/01a18527-443f-73d1-abc5-4c2f066cd3f2/exec-ad94dd9b-d92a-4636-9e50-2eb1062ad721.png"
+      },
+      {
+        "sheet": "chronist_fillup",
+        "source": "raw/cards/chronist_fillup.png",
+        "generator_file": "/Users/chrises/.codex/generated_images/01a18527-443f-73d1-abc5-4c2f066cd3f2/exec-528f0f56-c303-4225-8310-174f9663ca7f.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/prism_seer.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/prism_seer.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.01,
+  "phase": [
+    0.243,
+    4.664
+  ],
+  "grid_score": 0.2459970523768084,
+  "source_bbox": [
+    114,
+    7,
+    910,
+    1017
+  ],
+  "grid_size": [
+    146,
+    146
+  ],
+  "grid_content_bbox": [
+    16,
+    2,
+    130,
+    145
+  ],
+  "bbox": [
+    6,
+    0,
+    57,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.231
+}

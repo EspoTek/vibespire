@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/gnasher_alpha.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/gnasher_alpha.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.85,
+  "phase": [
+    0.894,
+    3.784
+  ],
+  "grid_score": 0.262822120022269,
+  "source_bbox": [
+    34,
+    11,
+    991,
+    1008
+  ],
+  "grid_size": [
+    130,
+    130
+  ],
+  "grid_content_bbox": [
+    4,
+    1,
+    126,
+    128
+  ],
+  "bbox": [
+    1,
+    0,
+    63,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.235
+}

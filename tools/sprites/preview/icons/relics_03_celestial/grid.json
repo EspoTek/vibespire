@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/relics_03_celestial.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "chrono_lens",
+      "source_box": [
+        0,
+        0,
+        247,
+        248
+      ],
+      "pitch": 6.9,
+      "grid_score": 0.2818422144214523,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/chrono_lens.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "tuning_fork",
+      "source_box": [
+        287,
+        0,
+        485,
+        248
+      ],
+      "pitch": 7.14,
+      "grid_score": 0.394434533452648,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/tuning_fork.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "sandglass_bead",
+      "source_box": [
+        543,
+        0,
+        732,
+        248
+      ],
+      "pitch": 6.8,
+      "grid_score": 0.3978374171524009,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/sandglass_bead.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "star_pip",
+      "source_box": [
+        781,
+        0,
+        1024,
+        248
+      ],
+      "pitch": 7.21,
+      "grid_score": 0.4625935054706297,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/star_pip.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pocket_star_chart",
+      "source_box": [
+        0,
+        285,
+        247,
+        488
+      ],
+      "pitch": 6.62,
+      "grid_score": 0.1719969167189344,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/pocket_star_chart.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "wayfinder_needle",
+      "source_box": [
+        287,
+        285,
+        485,
+        488
+      ],
+      "pitch": 5.69,
+      "grid_score": 0.3053224372241981,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/wayfinder_needle.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "offbeat_drum",
+      "source_box": [
+        543,
+        285,
+        732,
+        488
+      ],
+      "pitch": 5.66,
+      "grid_score": 0.19476453199894028,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/offbeat_drum.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "timeline_spool",
+      "source_box": [
+        781,
+        285,
+        1024,
+        488
+      ],
+      "pitch": 6.09,
+      "grid_score": 0.2648716776164633,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/timeline_spool.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "seers_veil",
+      "source_box": [
+        0,
+        528,
+        247,
+        741
+      ],
+      "pitch": 5.52,
+      "grid_score": 0.3667312029699465,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/seers_veil.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "metronome_heart",
+      "source_box": [
+        287,
+        528,
+        485,
+        741
+      ],
+      "pitch": 5.59,
+      "grid_score": 0.2568450511616652,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/metronome_heart.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "prophet_glass",
+      "source_box": [
+        543,
+        528,
+        732,
+        741
+      ],
+      "pitch": 5.83,
+      "grid_score": 0.20393708730816063,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/prophet_glass.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "paradox_coil",
+      "source_box": [
+        781,
+        528,
+        1024,
+        741
+      ],
+      "pitch": 6.13,
+      "grid_score": 0.28307539330145337,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/paradox_coil.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "void_compass",
+      "source_box": [
+        0,
+        758,
+        247,
+        1024
+      ],
+      "pitch": 6.06,
+      "grid_score": 0.32290205496280616,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/void_compass.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "cracked_hourglass",
+      "source_box": [
+        287,
+        758,
+        485,
+        1024
+      ],
+      "pitch": 6.44,
+      "grid_score": 0.24622277622307204,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/cracked_hourglass.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "fixed_star",
+      "source_box": [
+        543,
+        758,
+        732,
+        1024
+      ],
+      "pitch": 6.01,
+      "grid_score": 0.3547132989701857,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/fixed_star.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "star_atlas",
+      "source_box": [
+        781,
+        758,
+        1024,
+        1024
+      ],
+      "pitch": 5.76,
+      "grid_score": 0.16942117392226386,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_03_celestial/star_atlas.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

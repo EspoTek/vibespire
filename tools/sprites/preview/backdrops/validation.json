@@ -1,0 +1,336 @@
+{
+  "contact_size": [
+    640,
+    2520
+  ],
+  "rows_match_assets": true,
+  "middle_metrics_are_descriptive_not_a_visual_approval": true,
+  "backdrops": [
+    {
+      "name": "act1_verdant",
+      "row": 0,
+      "y": 0,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 18,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#005500",
+        "#005555",
+        "#0055AA",
+        "#00AA00",
+        "#00AA55",
+        "#00FF00",
+        "#550055",
+        "#5500AA",
+        "#555555",
+        "#55AA00",
+        "#AA0055",
+        "#AA00AA",
+        "#AA5555",
+        "#AA55AA",
+        "#AAAA55"
+      ],
+      "sha256": "9fa591eb1ed58920af13b4a827ba327a6eb339002f361a05c2628522136df0ca",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 5,
+      "middle_dominant_color": "#005500",
+      "middle_dominant_fraction": 0.9532,
+      "pitch": 8.0,
+      "grid_score": 0.7491986652099418,
+      "recovered_size": [
+        192,
+        108
+      ]
+    },
+    {
+      "name": "act2_foundry",
+      "row": 1,
+      "y": 360,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 19,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#005555",
+        "#0055AA",
+        "#550000",
+        "#550055",
+        "#555500",
+        "#555555",
+        "#5555AA",
+        "#55AAAA",
+        "#AA0000",
+        "#AA5500",
+        "#AAAAAA",
+        "#AAAAFF",
+        "#FF0000",
+        "#FF5500",
+        "#FFAA00",
+        "#FFAA55"
+      ],
+      "sha256": "17e0ed43283f7134f0d1caee123b697e2ef7994ab7afc5c57d8da6ecf7a805d4",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 1,
+      "middle_dominant_color": "#000055",
+      "middle_dominant_fraction": 1.0,
+      "pitch": 7.99,
+      "grid_score": 0.3910653779882795,
+      "recovered_size": [
+        192,
+        108
+      ]
+    },
+    {
+      "name": "act3_crown",
+      "row": 2,
+      "y": 720,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 14,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#005555",
+        "#0055AA",
+        "#0055FF",
+        "#00AAAA",
+        "#00AAFF",
+        "#00FFFF",
+        "#5500AA",
+        "#5555AA",
+        "#AA00FF",
+        "#AAFFFF",
+        "#FFFFFF"
+      ],
+      "sha256": "94d7ffdb15ea3ea77fd1581105bd618890950ba97f547a02566d175620859b1c",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 13,
+      "middle_dominant_color": "#000055",
+      "middle_dominant_fraction": 0.8083,
+      "pitch": 6.07,
+      "grid_score": 0.2101977269473082,
+      "recovered_size": [
+        275,
+        155
+      ]
+    },
+    {
+      "name": "title_spire",
+      "row": 3,
+      "y": 1080,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 20,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#005500",
+        "#005555",
+        "#00AA00",
+        "#00FF00",
+        "#550000",
+        "#550055",
+        "#5500AA",
+        "#555555",
+        "#AA0055",
+        "#AA00AA",
+        "#AA5555",
+        "#AA55AA",
+        "#AAAAAA",
+        "#FF00AA",
+        "#FF55AA",
+        "#FF55FF",
+        "#FFAAAA",
+        "#FFAAFF"
+      ],
+      "sha256": "8d3ef4db9e958989d3a6aaae6ab989c199bad7ad4ebd6f25248755b64f6bbbea",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 3,
+      "middle_dominant_color": "#005500",
+      "middle_dominant_fraction": 0.9313,
+      "pitch": 8.0,
+      "grid_score": 0.5735907921351231,
+      "recovered_size": [
+        192,
+        108
+      ]
+    },
+    {
+      "name": "rest_site",
+      "row": 4,
+      "y": 1440,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 20,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#005555",
+        "#0055AA",
+        "#550000",
+        "#555555",
+        "#5555AA",
+        "#55AAAA",
+        "#55AAFF",
+        "#AA0000",
+        "#AAAAAA",
+        "#AAAAFF",
+        "#FF0000",
+        "#FF5500",
+        "#FFAA00",
+        "#FFAA55",
+        "#FFAAAA",
+        "#FFFF00",
+        "#FFFF55"
+      ],
+      "sha256": "1e53d8b9b2d7bd559d0e3b69b7926b500ced4384a80b2697bfc508a44b47f0e2",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 1,
+      "middle_dominant_color": "#000055",
+      "middle_dominant_fraction": 1.0,
+      "pitch": 8.0,
+      "grid_score": 0.25620523681424,
+      "recovered_size": [
+        192,
+        108
+      ]
+    },
+    {
+      "name": "shop_interior",
+      "row": 5,
+      "y": 1800,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 15,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#0000FF",
+        "#005555",
+        "#0055AA",
+        "#0055FF",
+        "#00AAAA",
+        "#00AAFF",
+        "#00FFAA",
+        "#00FFFF",
+        "#555500",
+        "#AA5500",
+        "#FF5500",
+        "#FFAA00"
+      ],
+      "sha256": "39b3a09f7ebd149402e03a9b764a23cfa792941b101351c2b108759ac2da1dd6",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 1,
+      "middle_dominant_color": "#005555",
+      "middle_dominant_fraction": 1.0,
+      "pitch": 11.57,
+      "grid_score": 0.28059661848357287,
+      "recovered_size": [
+        133,
+        75
+      ]
+    },
+    {
+      "name": "event_generic",
+      "row": 6,
+      "y": 2160,
+      "size": [
+        640,
+        360
+      ],
+      "colors": 17,
+      "palette": [
+        "#000000",
+        "#000055",
+        "#0000AA",
+        "#0000FF",
+        "#005500",
+        "#005555",
+        "#0055AA",
+        "#0055FF",
+        "#00AA00",
+        "#00AA55",
+        "#00AAAA",
+        "#00AAFF",
+        "#00FF00",
+        "#00FFFF",
+        "#55FFFF",
+        "#AAFFFF",
+        "#FFFFFF"
+      ],
+      "sha256": "27db86f773c12ff378f41a3addb00cb0a0c1845971959ef65d8cf1de294f0fe8",
+      "preview_exact_2x": true,
+      "middle_rect": [
+        160,
+        130,
+        480,
+        230
+      ],
+      "middle_colors": 9,
+      "middle_dominant_color": "#0000AA",
+      "middle_dominant_fraction": 0.8181,
+      "pitch": 5.33,
+      "grid_score": 0.36474327868440437,
+      "recovered_size": [
+        288,
+        162
+      ]
+    }
+  ]
+}

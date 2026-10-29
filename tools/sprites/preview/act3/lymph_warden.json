@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/lymph_warden.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/lymph_warden.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.58,
+  "phase": [
+    0.336,
+    0.081
+  ],
+  "grid_score": 0.2528335646271066,
+  "source_bbox": [
+    156,
+    19,
+    868,
+    1002
+  ],
+  "grid_size": [
+    135,
+    135
+  ],
+  "grid_content_bbox": [
+    21,
+    2,
+    114,
+    132
+  ],
+  "bbox": [
+    9,
+    0,
+    55,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.232
+}

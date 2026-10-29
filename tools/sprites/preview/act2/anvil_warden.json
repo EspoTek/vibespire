@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/anvil_warden.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/anvil_warden.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.36,
+  "phase": [
+    1.599,
+    1.956
+  ],
+  "grid_score": 0.16824471350223028,
+  "source_bbox": [
+    13,
+    160,
+    1011,
+    917
+  ],
+  "grid_size": [
+    109,
+    109
+  ],
+  "grid_content_bbox": [
+    1,
+    17,
+    108,
+    98
+  ],
+  "bbox": [
+    0,
+    15,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.224
+}

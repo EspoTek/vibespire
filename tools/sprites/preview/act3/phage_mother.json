@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/phage_mother.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/phage_mother.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 6.55,
+  "phase": [
+    0.794,
+    2.304
+  ],
+  "grid_score": 0.3691829794727314,
+  "source_bbox": [
+    72,
+    13,
+    952,
+    1009
+  ],
+  "grid_size": [
+    156,
+    156
+  ],
+  "grid_content_bbox": [
+    11,
+    2,
+    145,
+    154
+  ],
+  "bbox": [
+    3,
+    0,
+    60,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.234
+}

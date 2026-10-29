@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/echo_cantor.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/echo_cantor.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.11,
+  "phase": [
+    3.606,
+    0.233
+  ],
+  "grid_score": 0.19553771259243402,
+  "source_bbox": [
+    227,
+    8,
+    798,
+    1014
+  ],
+  "grid_size": [
+    145,
+    144
+  ],
+  "grid_content_bbox": [
+    32,
+    1,
+    113,
+    143
+  ],
+  "bbox": [
+    13,
+    0,
+    50,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.235
+}

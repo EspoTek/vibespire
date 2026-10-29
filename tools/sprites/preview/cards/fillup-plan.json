@@ -1,0 +1,58 @@
+{
+  "id": "fillup_01",
+  "names": [
+    "chitin_ram",
+    "mulch_maul",
+    "thicket_crash",
+    "excise",
+    "death_cap",
+    "sporeburst",
+    "shard_cache",
+    "clean_manifest",
+    "chitin_ram_retry_alt",
+    "mulch_maul_retry_alt",
+    "thicket_crash_retry_alt",
+    "excise_retry_alt",
+    "death_cap_retry_alt",
+    "sporeburst_retry_alt",
+    "shard_cache_retry_alt",
+    "clean_manifest_retry_alt"
+  ],
+  "prompt": "Use case: stylized-concept. Production pixel sprite sheet. Exactly 4 columns x 4 rows on flat #FF00FF magenta with wide uninterrupted gutters. Each centered icon fills 65 percent of its equal cell. No borders, text, numbers, faces, shadows. Very coarse Phantasy Star Sega Master System pixel art, each icon drawn as ONLY 24x20 logical pixels enlarged; thick black outline, 5 flat colors, no texture, no little highlights, NO fine details. Big connected shapes which read clearly at 32x24. Green cyan violet amber for organic items; steel blue cyan gold for technological items. Layout row major, numbering is metadata and must not be drawn:\n1: single broad cyan beetle horn smashing amber wedge\n2: simple wooden mallet with one large violet mushroom\n3: three thick emerald stakes crossing amber impact star\n4: broad silver pruning scalpel severing one purple root\n5: large purple mushroom spearhead on short green handle\n6: single split violet puffball with cyan explosion\n7: open blue chest holding two large cyan crystals\n8: wide silver cleaver slicing single blank golden sheet\n9: single broad cyan beetle horn smashing amber wedge, even simpler bolder silhouette\n10: simple wooden mallet with one large violet mushroom, even simpler bolder silhouette\n11: three thick emerald stakes crossing amber impact star, even simpler bolder silhouette\n12: broad silver pruning scalpel severing one purple root, even simpler bolder silhouette\n13: large purple mushroom spearhead on short green handle, even simpler bolder silhouette\n14: single split violet puffball with cyan explosion, even simpler bolder silhouette\n15: open blue chest holding two large cyan crystals, even simpler bolder silhouette\n16: wide silver cleaver slicing single blank golden sheet, even simpler bolder silhouette",
+  "subjects": [
+    [
+      "chitin_ram",
+      "single broad cyan beetle horn smashing amber wedge"
+    ],
+    [
+      "mulch_maul",
+      "simple wooden mallet with one large violet mushroom"
+    ],
+    [
+      "thicket_crash",
+      "three thick emerald stakes crossing amber impact star"
+    ],
+    [
+      "excise",
+      "broad silver pruning scalpel severing one purple root"
+    ],
+    [
+      "death_cap",
+      "large purple mushroom spearhead on short green handle"
+    ],
+    [
+      "sporeburst",
+      "single split violet puffball with cyan explosion"
+    ],
+    [
+      "shard_cache",
+      "open blue chest holding two large cyan crystals"
+    ],
+    [
+      "clean_manifest",
+      "wide silver cleaver slicing single blank golden sheet"
+    ]
+  ],
+  "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-1ccaf5fa-4fe8-41cb-9dac-62a85e23c94a.png",
+  "source": "raw/cards/graft-colorless/fillup_01.png"
+}

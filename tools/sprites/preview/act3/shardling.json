@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/shardling.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/shardling.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.35,
+  "phase": [
+    1.027,
+    3.117
+  ],
+  "grid_score": 0.23854470357430962,
+  "source_bbox": [
+    25,
+    22,
+    999,
+    999
+  ],
+  "grid_size": [
+    139,
+    139
+  ],
+  "grid_content_bbox": [
+    3,
+    3,
+    136,
+    135
+  ],
+  "bbox": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.223
+}

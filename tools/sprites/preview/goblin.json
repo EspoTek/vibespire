@@ -1,0 +1,40 @@
+{
+  "input": "raw/goblin.png",
+  "output": "../../public/assets/sprites/enemies/goblin.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 13.59,
+  "phase": [
+    8.847,
+    0.358
+  ],
+  "grid_score": 0.20712958027224665,
+  "source_bbox": [
+    74,
+    149,
+    887,
+    901
+  ],
+  "grid_size": [
+    76,
+    75
+  ],
+  "grid_content_bbox": [
+    6,
+    11,
+    66,
+    66
+  ],
+  "bbox": [
+    0,
+    5,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.208
+}

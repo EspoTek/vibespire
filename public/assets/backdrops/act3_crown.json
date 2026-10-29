@@ -1,0 +1,30 @@
+{
+  "source": "raw/backdrops/act3_crown-v5.png",
+  "source_size": [
+    1672,
+    941
+  ],
+  "crop": [
+    0,
+    0,
+    1672,
+    940
+  ],
+  "pitch": 6.07,
+  "phase": [
+    1.309,
+    5.998
+  ],
+  "grid_score": 0.2101977269473082,
+  "recovered_size": [
+    275,
+    155
+  ],
+  "size": [
+    640,
+    360
+  ],
+  "colors": 14,
+  "output": "../../public/assets/backdrops/act3_crown.png",
+  "preview": "../../public/assets/backdrops/act3_crown@2x.png"
+}

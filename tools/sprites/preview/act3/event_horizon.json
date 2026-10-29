@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/event_horizon.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/event_horizon.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 8.45,
+  "phase": [
+    0.57,
+    7.7
+  ],
+  "grid_score": 0.33178501655988624,
+  "source_bbox": [
+    7,
+    166,
+    1017,
+    828
+  ],
+  "grid_size": [
+    121,
+    121
+  ],
+  "grid_content_bbox": [
+    1,
+    20,
+    120,
+    98
+  ],
+  "bbox": [
+    0,
+    21,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.248
+}

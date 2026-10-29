@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/relics_04_crystalline.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "cracked_prism",
+      "source_box": [
+        0,
+        0,
+        242,
+        243
+      ],
+      "pitch": 7.01,
+      "grid_score": 0.34612798030310094,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/cracked_prism.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "geode_heart",
+      "source_box": [
+        274,
+        0,
+        492,
+        243
+      ],
+      "pitch": 6.5,
+      "grid_score": 0.19566314485900993,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/geode_heart.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "shard_lens",
+      "source_box": [
+        515,
+        0,
+        749,
+        243
+      ],
+      "pitch": 6.96,
+      "grid_score": 0.28605440866679016,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/shard_lens.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "crystal_spine",
+      "source_box": [
+        785,
+        0,
+        1024,
+        243
+      ],
+      "pitch": 6.67,
+      "grid_score": 0.37066055408866083,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/crystal_spine.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "stormbreak_gem",
+      "source_box": [
+        0,
+        278,
+        242,
+        492
+      ],
+      "pitch": 6.51,
+      "grid_score": 0.24581044351710052,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/stormbreak_gem.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "shard_crucible",
+      "source_box": [
+        274,
+        278,
+        492,
+        492
+      ],
+      "pitch": 6.08,
+      "grid_score": 0.21974789946603146,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/shard_crucible.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "fracture_engine",
+      "source_box": [
+        515,
+        278,
+        749,
+        492
+      ],
+      "pitch": 6.9,
+      "grid_score": 0.20284110000742334,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/fracture_engine.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "exposed_core",
+      "source_box": [
+        785,
+        278,
+        1024,
+        492
+      ],
+      "pitch": 6.21,
+      "grid_score": 0.2477105210637713,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/exposed_core.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "stasis_engine",
+      "source_box": [
+        0,
+        510,
+        242,
+        750
+      ],
+      "pitch": 6.44,
+      "grid_score": 0.179293772648962,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/stasis_engine.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "ghost_lantern",
+      "source_box": [
+        274,
+        510,
+        492,
+        750
+      ],
+      "pitch": 7.6,
+      "grid_score": 0.17906626555808777,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/ghost_lantern.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "ascendant_prism",
+      "source_box": [
+        515,
+        510,
+        749,
+        750
+      ],
+      "pitch": 7.08,
+      "grid_score": 0.3311461906428126,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/ascendant_prism.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "gravity_loom",
+      "source_box": [
+        785,
+        510,
+        1024,
+        750
+      ],
+      "pitch": 7.06,
+      "grid_score": 0.26282321576762196,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/gravity_loom.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "oracle_pebble",
+      "source_box": [
+        0,
+        777,
+        242,
+        1024
+      ],
+      "pitch": 6.45,
+      "grid_score": 0.2915226725648596,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/oracle_pebble.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "engine_tooth",
+      "source_box": [
+        274,
+        777,
+        492,
+        1024
+      ],
+      "pitch": 6.48,
+      "grid_score": 0.17174712360957683,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/engine_tooth.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "shard_debt",
+      "source_box": [
+        515,
+        777,
+        749,
+        1024
+      ],
+      "pitch": 7.23,
+      "grid_score": 0.24103589504953632,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/shard_debt.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "crown_fragment",
+      "source_box": [
+        785,
+        777,
+        1024,
+        1024
+      ],
+      "pitch": 7.32,
+      "grid_score": 0.2297700361145697,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_04_crystalline/crown_fragment.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "input": "raw/portraits/final/breaker.png",
+  "output": "../../public/assets/sprites/portraits/breaker.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 15.99,
+  "phase": [
+    0.584,
+    0.175
+  ],
+  "grid_score": 0.6656746359367773,
+  "source_bbox": [
+    0,
+    16,
+    1024,
+    1024
+  ],
+  "grid_size": [
+    64,
+    64
+  ],
+  "grid_content_bbox": [
+    0,
+    1,
+    64,
+    64
+  ],
+  "bbox": [
+    0,
+    1,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.229,
+  "small_colors": 16
+}

@@ -1,0 +1,14 @@
+Vibespire bitmap fonts (embedded as data in src/render/font8x8.ts and src/render/fontSmall.ts)
+
+8x8 UI font
+  font8x8_basic, https://github.com/dhepper/font8x8, by Daniel Hepper
+  Based on Marcel Sondaar's font8_8 and the IBM public-domain VGA fonts.
+  License: Public Domain.
+  Extra glyphs (arrows, heart, pips, circles, block, middle dot) drawn for Vibespire.
+
+4x6 small font
+  "Tom Thumb" (tom-thumb.bdf), https://robey.lag.net/2010/01/23/tiny-monospace-font.html,
+  by Robey Pointer, derived from Brian Swetland's 4x6 VT100 font.
+  License: MIT (BDF COPYRIGHT property). Per the author's 2015 update the font may also be
+  used under CC0 or CC-BY 3.0.
+  Extra glyphs (arrow, heart, pip, middle dot) drawn for Vibespire.

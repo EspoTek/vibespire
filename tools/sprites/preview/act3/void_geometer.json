@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/void_geometer-attempt3.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/void_geometer.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.33,
+  "phase": [
+    6.149,
+    1.236
+  ],
+  "grid_score": 0.16541308799947047,
+  "source_bbox": [
+    109,
+    7,
+    914,
+    1017
+  ],
+  "grid_size": [
+    140,
+    140
+  ],
+  "grid_content_bbox": [
+    15,
+    1,
+    125,
+    139
+  ],
+  "bbox": [
+    6,
+    0,
+    57,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.243
+}

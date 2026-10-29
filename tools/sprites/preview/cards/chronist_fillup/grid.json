@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/chronist_fillup.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "appointed_hour_retry_1",
+      "source_box": [
+        0,
+        0,
+        279,
+        304
+      ],
+      "pitch": 9.67,
+      "grid_score": 0.2721444547371207,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_1.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_2",
+      "source_box": [
+        335,
+        0,
+        607,
+        304
+      ],
+      "pitch": 9.87,
+      "grid_score": 0.44396262183578783,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_2.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_3",
+      "source_box": [
+        637,
+        0,
+        933,
+        304
+      ],
+      "pitch": 9.78,
+      "grid_score": 0.31348817474045415,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_3.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_4",
+      "source_box": [
+        944,
+        0,
+        1254,
+        304
+      ],
+      "pitch": 9.97,
+      "grid_score": 0.26612683210688337,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_4.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_5",
+      "source_box": [
+        0,
+        330,
+        279,
+        599
+      ],
+      "pitch": 9.95,
+      "grid_score": 0.2577794704832209,
+      "colors": 11,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_5.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_6",
+      "source_box": [
+        335,
+        330,
+        607,
+        599
+      ],
+      "pitch": 9.95,
+      "grid_score": 0.3598016063359387,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_6.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_7",
+      "source_box": [
+        637,
+        330,
+        933,
+        599
+      ],
+      "pitch": 9.78,
+      "grid_score": 0.4031547975178623,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_7.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour_retry_8",
+      "source_box": [
+        944,
+        330,
+        1254,
+        599
+      ],
+      "pitch": 9.33,
+      "grid_score": 0.2656378918272746,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/appointed_hour_retry_8.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_1",
+      "source_box": [
+        0,
+        613,
+        279,
+        903
+      ],
+      "pitch": 10.0,
+      "grid_score": 0.41228631300100893,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_1.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_2",
+      "source_box": [
+        335,
+        613,
+        607,
+        903
+      ],
+      "pitch": 9.58,
+      "grid_score": 0.19578394253318804,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_2.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_3",
+      "source_box": [
+        637,
+        613,
+        933,
+        903
+      ],
+      "pitch": 8.53,
+      "grid_score": 0.31784145507876194,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_3.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_4",
+      "source_box": [
+        944,
+        613,
+        1254,
+        903
+      ],
+      "pitch": 7.99,
+      "grid_score": 0.1932331345312648,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_4.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_5",
+      "source_box": [
+        0,
+        918,
+        279,
+        1254
+      ],
+      "pitch": 9.94,
+      "grid_score": 0.34936340876539196,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_5.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_6",
+      "source_box": [
+        335,
+        918,
+        607,
+        1254
+      ],
+      "pitch": 9.79,
+      "grid_score": 0.5145768818455869,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_6.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_7",
+      "source_box": [
+        637,
+        918,
+        933,
+        1254
+      ],
+      "pitch": 9.96,
+      "grid_score": 0.39143650238856553,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_7.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination_retry_8",
+      "source_box": [
+        944,
+        918,
+        1254,
+        1254
+      ],
+      "pitch": 9.2,
+      "grid_score": 0.33577333262545417,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_fillup/culmination_retry_8.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

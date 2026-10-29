@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/mirror_knight.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/mirror_knight.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 5.62,
+  "phase": [
+    0.291,
+    0.711
+  ],
+  "grid_score": 0.13953535824357302,
+  "source_bbox": [
+    69,
+    6,
+    955,
+    1015
+  ],
+  "grid_size": [
+    182,
+    182
+  ],
+  "grid_content_bbox": [
+    12,
+    1,
+    170,
+    180
+  ],
+  "bbox": [
+    3,
+    0,
+    60,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.233
+}

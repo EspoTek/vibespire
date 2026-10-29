@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/breaker_02.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "cool_the_steel",
+      "source_box": [
+        0,
+        0,
+        242,
+        234
+      ],
+      "pitch": 5.01,
+      "grid_score": 0.2536657750324484,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/cool_the_steel.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "find_the_seam",
+      "source_box": [
+        274,
+        0,
+        499,
+        234
+      ],
+      "pitch": 4.94,
+      "grid_score": 0.23877620594461998,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/find_the_seam.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "read_the_line",
+      "source_box": [
+        526,
+        0,
+        753,
+        234
+      ],
+      "pitch": 4.97,
+      "grid_score": 0.29377982739099584,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/read_the_line.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "pivot_sweep",
+      "source_box": [
+        779,
+        0,
+        1024,
+        234
+      ],
+      "pitch": 4.98,
+      "grid_score": 0.27774201808759014,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/pivot_sweep.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "rivet_wall",
+      "source_box": [
+        0,
+        273,
+        242,
+        495
+      ],
+      "pitch": 4.87,
+      "grid_score": 0.2466899276615925,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/rivet_wall.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "planted_feet",
+      "source_box": [
+        274,
+        273,
+        499,
+        495
+      ],
+      "pitch": 4.89,
+      "grid_score": 0.2724617630540248,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/planted_feet.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "loaded_spring",
+      "source_box": [
+        526,
+        273,
+        753,
+        495
+      ],
+      "pitch": 5.04,
+      "grid_score": 0.2103788271634324,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/loaded_spring.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sabre_rattle",
+      "source_box": [
+        779,
+        273,
+        1024,
+        495
+      ],
+      "pitch": 4.85,
+      "grid_score": 0.3274489017321852,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/sabre_rattle.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hammerfall",
+      "source_box": [
+        0,
+        519,
+        242,
+        724
+      ],
+      "pitch": 4.97,
+      "grid_score": 0.3209195942511638,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/hammerfall.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "piston_volley",
+      "source_box": [
+        274,
+        519,
+        499,
+        724
+      ],
+      "pitch": 4.96,
+      "grid_score": 0.30956460923561896,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/piston_volley.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "answering_steel",
+      "source_box": [
+        526,
+        519,
+        753,
+        724
+      ],
+      "pitch": 5.01,
+      "grid_score": 0.3316929330443261,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/answering_steel.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "rampart_crash",
+      "source_box": [
+        779,
+        519,
+        1024,
+        724
+      ],
+      "pitch": 5.01,
+      "grid_score": 0.35694096751076554,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/rampart_crash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "coiled_strike",
+      "source_box": [
+        0,
+        748,
+        242,
+        1024
+      ],
+      "pitch": 5.04,
+      "grid_score": 0.16731528967078238,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/coiled_strike.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "seam_ripper",
+      "source_box": [
+        274,
+        748,
+        499,
+        1024
+      ],
+      "pitch": 5.01,
+      "grid_score": 0.16928610660057894,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/seam_ripper.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "quake_hammer",
+      "source_box": [
+        526,
+        748,
+        753,
+        1024
+      ],
+      "pitch": 5.04,
+      "grid_score": 0.25788736825924224,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/quake_hammer.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "prism_edge",
+      "source_box": [
+        779,
+        748,
+        1024,
+        1024
+      ],
+      "pitch": 5.02,
+      "grid_score": 0.22786868336641453,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_02/prism_edge.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

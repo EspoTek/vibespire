@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/assembly_frame.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/assembly_frame.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 1.0,
+  "phase": [
+    0.0,
+    0.0
+  ],
+  "grid_score": null,
+  "source_bbox": [
+    96,
+    9,
+    916,
+    1012
+  ],
+  "grid_size": [
+    1024,
+    1024
+  ],
+  "grid_content_bbox": [
+    96,
+    9,
+    916,
+    1012
+  ],
+  "bbox": [
+    5,
+    0,
+    58,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.147
+}

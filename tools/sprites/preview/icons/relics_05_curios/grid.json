@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/relics_05_curios.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "surveyor_ink",
+      "source_box": [
+        0,
+        0,
+        241,
+        233
+      ],
+      "pitch": 5.74,
+      "grid_score": 0.2626970962786664,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/surveyor_ink.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "tally_stick",
+      "source_box": [
+        264,
+        0,
+        505,
+        233
+      ],
+      "pitch": 5.66,
+      "grid_score": 0.274917748958049,
+      "colors": 7,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/tally_stick.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "overwatch_drone",
+      "source_box": [
+        528,
+        0,
+        753,
+        233
+      ],
+      "pitch": 5.42,
+      "grid_score": 0.31414412736953884,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/overwatch_drone.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "binding_contract",
+      "source_box": [
+        775,
+        0,
+        1024,
+        233
+      ],
+      "pitch": 5.4,
+      "grid_score": 0.23805078098617527,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/binding_contract.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "shard_writ",
+      "source_box": [
+        0,
+        268,
+        241,
+        498
+      ],
+      "pitch": 6.76,
+      "grid_score": 0.25975006254331023,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/shard_writ.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "vial_rack",
+      "source_box": [
+        264,
+        268,
+        505,
+        498
+      ],
+      "pitch": 5.12,
+      "grid_score": 0.2759613647158073,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/vial_rack.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "practice_dummy",
+      "source_box": [
+        528,
+        268,
+        753,
+        498
+      ],
+      "pitch": 5.15,
+      "grid_score": 0.18279867885645748,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/practice_dummy.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "timeline_clamp",
+      "source_box": [
+        775,
+        268,
+        1024,
+        498
+      ],
+      "pitch": 5.83,
+      "grid_score": 0.3212202150094017,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/timeline_clamp.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_mycelial_net",
+      "source_box": [
+        0,
+        522,
+        241,
+        741
+      ],
+      "pitch": 5.15,
+      "grid_score": 0.28214001252742016,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_mycelial_net.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_heavy_heart",
+      "source_box": [
+        264,
+        522,
+        505,
+        741
+      ],
+      "pitch": 5.2,
+      "grid_score": 0.21514959768536598,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_heavy_heart.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_paradox_coil",
+      "source_box": [
+        528,
+        522,
+        753,
+        741
+      ],
+      "pitch": 5.17,
+      "grid_score": 0.3442398340294235,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_paradox_coil.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_gravity_loom",
+      "source_box": [
+        775,
+        522,
+        1024,
+        741
+      ],
+      "pitch": 5.11,
+      "grid_score": 0.17686426382009984,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_gravity_loom.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_fracture_engine",
+      "source_box": [
+        0,
+        759,
+        241,
+        1024
+      ],
+      "pitch": 5.45,
+      "grid_score": 0.15127146581543008,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_fracture_engine.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_shard_debt",
+      "source_box": [
+        264,
+        759,
+        505,
+        1024
+      ],
+      "pitch": 5.41,
+      "grid_score": 0.1541483728293467,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_shard_debt.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_seers_veil",
+      "source_box": [
+        528,
+        759,
+        753,
+        1024
+      ],
+      "pitch": 5.43,
+      "grid_score": 0.17788795647888805,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_seers_veil.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "alt_duelists_oath",
+      "source_box": [
+        775,
+        759,
+        1024,
+        1024
+      ],
+      "pitch": 5.75,
+      "grid_score": 0.19707603337992335,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_05_curios/alt_duelists_oath.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

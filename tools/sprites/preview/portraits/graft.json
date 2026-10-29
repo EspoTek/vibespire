@@ -1,0 +1,41 @@
+{
+  "input": "raw/portraits/final/graft.png",
+  "output": "../../public/assets/sprites/portraits/graft.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 18.57,
+  "phase": [
+    7.968,
+    8.081
+  ],
+  "grid_score": 0.7691766818529573,
+  "source_bbox": [
+    10,
+    9,
+    1013,
+    1024
+  ],
+  "grid_size": [
+    55,
+    55
+  ],
+  "grid_content_bbox": [
+    0,
+    0,
+    54,
+    55
+  ],
+  "bbox": [
+    0,
+    0,
+    63,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.2,
+  "small_colors": 16
+}

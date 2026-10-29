@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/flitterfang.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/flitterfang.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 8.12,
+  "phase": [
+    0.413,
+    0.246
+  ],
+  "grid_score": 0.37801030298401944,
+  "source_bbox": [
+    8,
+    68,
+    1015,
+    876
+  ],
+  "grid_size": [
+    126,
+    126
+  ],
+  "grid_content_bbox": [
+    1,
+    8,
+    125,
+    108
+  ],
+  "bbox": [
+    0,
+    12,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.237
+}

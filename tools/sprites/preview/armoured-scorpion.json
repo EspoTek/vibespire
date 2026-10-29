@@ -1,0 +1,40 @@
+{
+  "input": "raw/armoured-scorpion.png",
+  "output": "../../public/assets/sprites/enemies/armoured-scorpion.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 11.95,
+  "phase": [
+    3.289,
+    2.914
+  ],
+  "grid_score": 0.21741309527032435,
+  "source_bbox": [
+    90,
+    12,
+    934,
+    984
+  ],
+  "grid_size": [
+    85,
+    85
+  ],
+  "grid_content_bbox": [
+    7,
+    1,
+    78,
+    82
+  ],
+  "bbox": [
+    4,
+    0,
+    60,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.238
+}

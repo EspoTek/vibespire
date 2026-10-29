@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/welded_horror.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/welded_horror.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 6.5,
+  "phase": [
+    3.345,
+    0.59
+  ],
+  "grid_score": 0.13870038645434057,
+  "source_bbox": [
+    11,
+    7,
+    1012,
+    1013
+  ],
+  "grid_size": [
+    158,
+    157
+  ],
+  "grid_content_bbox": [
+    2,
+    1,
+    156,
+    156
+  ],
+  "bbox": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.228
+}

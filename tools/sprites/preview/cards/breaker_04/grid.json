@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/breaker_04.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "equal",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "forge_oath",
+      "source_box": [
+        0,
+        0,
+        256,
+        238
+      ],
+      "pitch": 5.07,
+      "grid_score": 0.25068784978156333,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/forge_oath.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "en_garde",
+      "source_box": [
+        256,
+        0,
+        512,
+        238
+      ],
+      "pitch": 5.18,
+      "grid_score": 0.1836604077100283,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/en_garde.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "vent_pressure",
+      "source_box": [
+        512,
+        0,
+        768,
+        238
+      ],
+      "pitch": 5.05,
+      "grid_score": 0.2637503844529409,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/vent_pressure.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "iron_rhythm",
+      "source_box": [
+        768,
+        0,
+        1024,
+        238
+      ],
+      "pitch": 5.21,
+      "grid_score": 0.2292209146056302,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/iron_rhythm.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shed_plating",
+      "source_box": [
+        0,
+        257,
+        256,
+        492
+      ],
+      "pitch": 5.05,
+      "grid_score": 0.23159351725623706,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/shed_plating.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "smouldering_core",
+      "source_box": [
+        256,
+        257,
+        512,
+        492
+      ],
+      "pitch": 5.45,
+      "grid_score": 0.274309459888117,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/smouldering_core.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "recoil_spring",
+      "source_box": [
+        512,
+        257,
+        768,
+        492
+      ],
+      "pitch": 5.06,
+      "grid_score": 0.22603579024636122,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/recoil_spring.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "reactive_plate",
+      "source_box": [
+        768,
+        257,
+        1024,
+        492
+      ],
+      "pitch": 5.24,
+      "grid_score": 0.1987411914496222,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/reactive_plate.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "cool_the_steel_alt",
+      "source_box": [
+        0,
+        515,
+        256,
+        725
+      ],
+      "pitch": 5.06,
+      "grid_score": 0.24576851201046496,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/cool_the_steel_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "find_the_seam_alt",
+      "source_box": [
+        256,
+        515,
+        512,
+        725
+      ],
+      "pitch": 4.94,
+      "grid_score": 0.19689012724545127,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/find_the_seam_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "read_the_line_alt",
+      "source_box": [
+        512,
+        515,
+        768,
+        725
+      ],
+      "pitch": 5.03,
+      "grid_score": 0.30321787280626544,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/read_the_line_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sabre_rattle_alt",
+      "source_box": [
+        768,
+        515,
+        1024,
+        725
+      ],
+      "pitch": 4.92,
+      "grid_score": 0.24212246086553288,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/sabre_rattle_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hairline_mark_alt",
+      "source_box": [
+        0,
+        740,
+        256,
+        1024
+      ],
+      "pitch": 5.05,
+      "grid_score": 0.3983963052057389,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/hairline_mark_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "read_the_blow_alt",
+      "source_box": [
+        256,
+        740,
+        512,
+        1024
+      ],
+      "pitch": 5.04,
+      "grid_score": 0.2511477153692173,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/read_the_blow_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "parry_ledger_alt",
+      "source_box": [
+        512,
+        740,
+        768,
+        1024
+      ],
+      "pitch": 5.03,
+      "grid_score": 0.30062418278800074,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/parry_ledger_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fault_reader_alt",
+      "source_box": [
+        768,
+        740,
+        1024,
+        1024
+      ],
+      "pitch": 5.04,
+      "grid_score": 0.3624309145649885,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_04/fault_reader_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

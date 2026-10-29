@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/star_archivist-attempt2.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/star_archivist.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.59,
+  "phase": [
+    7.021,
+    7.251
+  ],
+  "grid_score": 0.1980863435693907,
+  "source_bbox": [
+    24,
+    7,
+    1000,
+    1008
+  ],
+  "grid_size": [
+    135,
+    135
+  ],
+  "grid_content_bbox": [
+    3,
+    1,
+    132,
+    133
+  ],
+  "bbox": [
+    1,
+    1,
+    95,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.238
+}

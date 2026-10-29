@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/leukarch.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/leukarch.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 4.96,
+  "phase": [
+    4.247,
+    3.08
+  ],
+  "grid_score": 0.1515469135160298,
+  "source_bbox": [
+    21,
+    0,
+    1002,
+    1023
+  ],
+  "grid_size": [
+    207,
+    207
+  ],
+  "grid_content_bbox": [
+    4,
+    0,
+    202,
+    207
+  ],
+  "bbox": [
+    2,
+    1,
+    94,
+    95
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.223
+}

@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/breaker_01.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "hew",
+      "source_box": [
+        0,
+        0,
+        252,
+        246
+      ],
+      "pitch": 4.64,
+      "grid_score": 0.20333029638481193,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/hew.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "bulwark",
+      "source_box": [
+        271,
+        0,
+        499,
+        246
+      ],
+      "pitch": 4.68,
+      "grid_score": 0.1806911336546464,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/bulwark.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shoulder_check",
+      "source_box": [
+        520,
+        0,
+        755,
+        246
+      ],
+      "pitch": 4.78,
+      "grid_score": 0.23430972868180883,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/shoulder_check.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "brace",
+      "source_box": [
+        776,
+        0,
+        1024,
+        246
+      ],
+      "pitch": 4.83,
+      "grid_score": 0.1729552591016715,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/brace.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "piston_jab",
+      "source_box": [
+        0,
+        265,
+        252,
+        500
+      ],
+      "pitch": 4.52,
+      "grid_score": 0.2586146970085679,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/piston_jab.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "chain_driver",
+      "source_box": [
+        271,
+        265,
+        499,
+        500
+      ],
+      "pitch": 4.38,
+      "grid_score": 0.1806281758735164,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/chain_driver.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "overhand_drive",
+      "source_box": [
+        520,
+        265,
+        755,
+        500
+      ],
+      "pitch": 4.8,
+      "grid_score": 0.17255607430594702,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/overhand_drive.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "breach_hammer",
+      "source_box": [
+        776,
+        265,
+        1024,
+        500
+      ],
+      "pitch": 4.8,
+      "grid_score": 0.1772676737732719,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/breach_hammer.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thresher_arc",
+      "source_box": [
+        0,
+        520,
+        252,
+        749
+      ],
+      "pitch": 4.41,
+      "grid_score": 0.1927431544896206,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/thresher_arc.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fault_line",
+      "source_box": [
+        271,
+        520,
+        499,
+        749
+      ],
+      "pitch": 4.41,
+      "grid_score": 0.2431666432061342,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/fault_line.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "rivet_flurry",
+      "source_box": [
+        520,
+        520,
+        755,
+        749
+      ],
+      "pitch": 4.4,
+      "grid_score": 0.12355114787838127,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/rivet_flurry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "counterweight",
+      "source_box": [
+        776,
+        520,
+        1024,
+        749
+      ],
+      "pitch": 4.89,
+      "grid_score": 0.15946460099654758,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/counterweight.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "plate_ram",
+      "source_box": [
+        0,
+        776,
+        252,
+        1024
+      ],
+      "pitch": 4.63,
+      "grid_score": 0.2222633710908034,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/plate_ram.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "return_stroke",
+      "source_box": [
+        271,
+        776,
+        499,
+        1024
+      ],
+      "pitch": 4.63,
+      "grid_score": 0.2581144457702663,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/return_stroke.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "gauntlet_tap",
+      "source_box": [
+        520,
+        776,
+        755,
+        1024
+      ],
+      "pitch": 4.76,
+      "grid_score": 0.18950274496320266,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/gauntlet_tap.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "catch_blade",
+      "source_box": [
+        776,
+        776,
+        1024,
+        1024
+      ],
+      "pitch": 4.76,
+      "grid_score": 0.18620153314905513,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_01/catch_blade.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

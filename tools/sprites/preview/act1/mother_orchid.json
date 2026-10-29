@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/mother_orchid.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/mother_orchid.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 4.83,
+  "phase": [
+    4.678,
+    1.542
+  ],
+  "grid_score": 0.2016516481439559,
+  "source_bbox": [
+    11,
+    10,
+    1013,
+    1009
+  ],
+  "grid_size": [
+    212,
+    212
+  ],
+  "grid_content_bbox": [
+    2,
+    2,
+    210,
+    209
+  ],
+  "bbox": [
+    0,
+    1,
+    96,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.227
+}

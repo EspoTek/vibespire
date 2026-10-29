@@ -1,0 +1,30 @@
+{
+  "source": "raw/backdrops/rest_site-v3.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "crop": [
+    0,
+    80,
+    1536,
+    944
+  ],
+  "pitch": 8.0,
+  "phase": [
+    7.97,
+    0.144
+  ],
+  "grid_score": 0.25620523681424,
+  "recovered_size": [
+    192,
+    108
+  ],
+  "size": [
+    640,
+    360
+  ],
+  "colors": 20,
+  "output": "../../public/assets/backdrops/rest_site.png",
+  "preview": "../../public/assets/backdrops/rest_site@2x.png"
+}

@@ -1,0 +1,1032 @@
+{
+  "class": "breaker",
+  "cell_size": [
+    32,
+    24
+  ],
+  "cell_numbering": "1-based row-major, 4 columns and 4 rows",
+  "allocation": "Sheets 1\u20133: sixteen cards each. Sheet 4: eight cards plus eight planned alternatives for abstract or ambiguous subjects.",
+  "cards": [
+    {
+      "id": "hew",
+      "name": "Hew",
+      "type": "attack",
+      "text": "Deal {damage} damage.",
+      "subject": "broad steel cleaver carving red crescent slash",
+      "sheet": "breaker_01",
+      "cell": 1,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "hew"
+      }
+    },
+    {
+      "id": "bulwark",
+      "name": "Bulwark",
+      "type": "skill",
+      "text": "Gain {block} Block.",
+      "subject": "blue tower shield with bronze central boss",
+      "sheet": "breaker_01",
+      "cell": 2,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "bulwark"
+      }
+    },
+    {
+      "id": "shoulder_check",
+      "name": "Shoulder Check",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Onslaught. Riposte: deal {rdamage} damage to the attacker.",
+      "subject": "spiked purple pauldron crashing through red sparks",
+      "sheet": "breaker_01",
+      "cell": 3,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "shoulder_check_retry"
+      }
+    },
+    {
+      "id": "brace",
+      "name": "Brace",
+      "type": "skill",
+      "text": "Gain {guard} Guard.",
+      "subject": "crossed steel forearm braces beneath bronze shield",
+      "sheet": "breaker_01",
+      "cell": 4,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "brace"
+      }
+    },
+    {
+      "id": "piston_jab",
+      "name": "Piston Jab",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Onslaught.",
+      "subject": "extended blue piston fist with red impact",
+      "sheet": "breaker_01",
+      "cell": 5,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "piston_jab"
+      }
+    },
+    {
+      "id": "chain_driver",
+      "name": "Chain Driver",
+      "type": "attack",
+      "text": "Deal {damage} damage. If Onslaught \u2265 {min}: draw {draw} card.",
+      "subject": "steel chain flail swinging bronze spiked weight",
+      "sheet": "breaker_01",
+      "cell": 6,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "chain_driver_retry"
+      }
+    },
+    {
+      "id": "overhand_drive",
+      "name": "Overhand Drive",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Onslaught.",
+      "subject": "vertical greatsword plunging through purple impact burst",
+      "sheet": "breaker_01",
+      "cell": 7,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "overhand_drive_retry"
+      }
+    },
+    {
+      "id": "breach_hammer",
+      "name": "Breach Hammer",
+      "type": "attack",
+      "text": "Deal {damage} damage. Spend {spend} Onslaught: deal {sdamage} instead.",
+      "subject": "bronze sledgehammer smashing split blue armour plate",
+      "sheet": "breaker_01",
+      "cell": 8,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "breach_hammer_retry"
+      }
+    },
+    {
+      "id": "thresher_arc",
+      "name": "Thresher Arc",
+      "type": "attack",
+      "text": "Deal {damage} damage to ALL enemies, +{damage_per} per Onslaught.",
+      "subject": "double crescent poleaxe sweeping wide purple arc",
+      "sheet": "breaker_01",
+      "cell": 9,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "thresher_arc_retry"
+      }
+    },
+    {
+      "id": "fault_line",
+      "name": "Fault Line",
+      "type": "attack",
+      "text": "Apply {status} Exposed. Deal {damage} damage.",
+      "subject": "steel pickaxe splitting red fissure through armour",
+      "sheet": "breaker_01",
+      "cell": 10,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "fault_line"
+      }
+    },
+    {
+      "id": "rivet_flurry",
+      "name": "Rivet Flurry",
+      "type": "attack",
+      "text": "Deal {damage} damage {times} times.",
+      "subject": "three bronze rivet darts with blue streaks",
+      "sheet": "breaker_01",
+      "cell": 11,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "rivet_flurry"
+      }
+    },
+    {
+      "id": "counterweight",
+      "name": "Counterweight",
+      "type": "attack",
+      "text": "Deal {damage} damage. Riposte: apply {rstatus} Stagger to the attacker.",
+      "subject": "suspended steel wrecking weight on bronze chain",
+      "sheet": "breaker_01",
+      "cell": 12,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "counterweight"
+      }
+    },
+    {
+      "id": "plate_ram",
+      "name": "Plate Ram",
+      "type": "attack",
+      "text": "Deal {damage} damage. If your defence \u2265 {min}: deal {cdamage} instead.",
+      "subject": "wedge shaped blue battering ram with bronze spikes",
+      "sheet": "breaker_01",
+      "cell": 13,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "plate_ram"
+      }
+    },
+    {
+      "id": "return_stroke",
+      "name": "Return Stroke",
+      "type": "attack",
+      "text": "Deal {damage} damage. Riposte: deal {rdamage} damage to the attacker and gain {rstatus} Onslaught.",
+      "subject": "hooked steel sabre reversing red crescent stroke",
+      "sheet": "breaker_01",
+      "cell": 14,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "return_stroke"
+      }
+    },
+    {
+      "id": "gauntlet_tap",
+      "name": "Gauntlet Tap",
+      "type": "attack",
+      "text": "Deal {damage} damage. Gain {guard} Guard.",
+      "subject": "compact bronze knuckle gauntlet striking blue spark",
+      "sheet": "breaker_01",
+      "cell": 15,
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "gauntlet_tap"
+      }
+    },
+    {
+      "id": "catch_blade",
+      "name": "Catch Blade",
+      "type": "skill",
+      "text": "Gain {block} Block. Riposte: gain {rguard_per} Guard for each hit of its attack.",
+      "subject": "blue clamp gauntlet gripping incoming steel sword",
+      "sheet": "breaker_01",
+      "cell": 16,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "catch_blade_retry"
+      }
+    },
+    {
+      "id": "cool_the_steel",
+      "name": "Cool the Steel",
+      "type": "skill",
+      "text": "Gain {guard} Guard, +{guard_per} per Onslaught.",
+      "subject": "steel shield resting inside blue cooling tongs",
+      "sheet": "breaker_02",
+      "cell": 1,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "cool_the_steel"
+      }
+    },
+    {
+      "id": "find_the_seam",
+      "name": "Find the Seam",
+      "type": "skill",
+      "text": "Apply {status} Exposed.",
+      "subject": "bronze awl probing seam between purple plates",
+      "sheet": "breaker_02",
+      "cell": 2,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "find_the_seam_retry"
+      }
+    },
+    {
+      "id": "read_the_line",
+      "name": "Read the Line",
+      "type": "skill",
+      "text": "Draw {draw} cards. If Onslaught \u2265 {min}: draw {draw2} more.",
+      "subject": "bronze calipers measuring blue sword edge",
+      "sheet": "breaker_02",
+      "cell": 3,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "read_the_line"
+      }
+    },
+    {
+      "id": "pivot_sweep",
+      "name": "Pivot Sweep",
+      "type": "skill",
+      "text": "Gain {block} Block. Riposte: deal {rdamage} damage to ALL enemies.",
+      "subject": "round blue buckler spinning with bronze sweep",
+      "sheet": "breaker_02",
+      "cell": 4,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "pivot_sweep"
+      }
+    },
+    {
+      "id": "rivet_wall",
+      "name": "Rivet Wall",
+      "type": "skill",
+      "text": "Gain {guard} Guard.",
+      "subject": "three joined blue armour panels with bronze rivets",
+      "sheet": "breaker_02",
+      "cell": 5,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "rivet_wall"
+      }
+    },
+    {
+      "id": "planted_feet",
+      "name": "Planted Feet",
+      "type": "skill",
+      "text": "Gain {block} Block. If you have {min} or more Guard: draw {draw} card.",
+      "subject": "heavy blue sabatons anchored by bronze ground spikes",
+      "sheet": "breaker_02",
+      "cell": 6,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "planted_feet"
+      }
+    },
+    {
+      "id": "loaded_spring",
+      "name": "Loaded Spring",
+      "type": "skill",
+      "text": "Gain {guard} Guard. Riposte: gain {rguard} Guard and {rstatus} Onslaught.",
+      "subject": "compressed bronze spring behind square blue shield",
+      "sheet": "breaker_02",
+      "cell": 7,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "loaded_spring"
+      }
+    },
+    {
+      "id": "sabre_rattle",
+      "name": "Sabre Rattle",
+      "type": "skill",
+      "text": "Apply {status} Exposed to ALL enemies. Draw {draw} card.",
+      "subject": "bronze war horn beside sheathed blue sabre",
+      "sheet": "breaker_02",
+      "cell": 8,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "sabre_rattle_alt"
+      }
+    },
+    {
+      "id": "hammerfall",
+      "name": "Hammerfall",
+      "type": "attack",
+      "text": "Keep. Spend all Onslaught: deal {damage} damage, +{damage_per} per Onslaught spent.",
+      "subject": "massive rectangular steel hammer descending red impact",
+      "sheet": "breaker_02",
+      "cell": 9,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "hammerfall"
+      }
+    },
+    {
+      "id": "piston_volley",
+      "name": "Piston Volley",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Onslaught, {times} times.",
+      "subject": "three blue piston punches with bronze knuckles",
+      "sheet": "breaker_02",
+      "cell": 10,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "piston_volley"
+      }
+    },
+    {
+      "id": "answering_steel",
+      "name": "Answering Steel",
+      "type": "attack",
+      "text": "Deal {damage} damage. Riposte: deal {rdamage_per} damage to the attacker per hit of its attack.",
+      "subject": "forked parrying sword deflecting bronze incoming blade",
+      "sheet": "breaker_02",
+      "cell": 11,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "answering_steel"
+      }
+    },
+    {
+      "id": "rampart_crash",
+      "name": "Rampart Crash",
+      "type": "attack",
+      "text": "Deal {damage} damage, plus your Guard.",
+      "subject": "blue fortress shield falling into bronze shockwave",
+      "sheet": "breaker_02",
+      "cell": 12,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "rampart_crash"
+      }
+    },
+    {
+      "id": "coiled_strike",
+      "name": "Coiled Strike",
+      "type": "attack",
+      "text": "Deal {damage} damage. Riposte: deal {rdamage} damage to the attacker.",
+      "subject": "curled steel chain whip ending red spearhead",
+      "sheet": "breaker_02",
+      "cell": 13,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "coiled_strike"
+      }
+    },
+    {
+      "id": "seam_ripper",
+      "name": "Seam Ripper",
+      "type": "attack",
+      "text": "Deal {damage} damage. If the enemy has Exposed: draw {draw} card.",
+      "subject": "serrated blue dagger tearing purple armour seam",
+      "sheet": "breaker_02",
+      "cell": 14,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "seam_ripper"
+      }
+    },
+    {
+      "id": "quake_hammer",
+      "name": "Quake Hammer",
+      "type": "attack",
+      "text": "Deal {damage} damage to ALL enemies. Spend {spend} Onslaught: deal {sdamage} instead.",
+      "subject": "round bronze maul splitting blue stone shockwave",
+      "sheet": "breaker_02",
+      "cell": 15,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "quake_hammer"
+      }
+    },
+    {
+      "id": "prism_edge",
+      "name": "Prism Edge",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Shard you hold.",
+      "subject": "faceted cyan broadsword with purple crystal guard",
+      "sheet": "breaker_02",
+      "cell": 16,
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "prism_edge"
+      }
+    },
+    {
+      "id": "feint_step",
+      "name": "Feint Step",
+      "type": "skill",
+      "text": "Gain {block} Block. Riposte: deal {rdamage} damage to the attacker.",
+      "subject": "blue armoured boot behind purple decoy footprint",
+      "sheet": "breaker_03",
+      "cell": 1,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "feint_step"
+      }
+    },
+    {
+      "id": "bind_the_blade",
+      "name": "Bind the Blade",
+      "type": "skill",
+      "text": "Apply {status} Stagger. Riposte: apply {rstatus} Stagger to the attacker and gain {rstatus2} Onslaught.",
+      "subject": "bronze locking chain wrapped around blue sword",
+      "sheet": "breaker_03",
+      "cell": 2,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "bind_the_blade_retry"
+      }
+    },
+    {
+      "id": "anneal",
+      "name": "Anneal",
+      "type": "skill",
+      "text": "Gain {guard} Guard. Your Guard doesn't halve at the start of your next turn.",
+      "subject": "blue shield held above bronze forge coals",
+      "sheet": "breaker_03",
+      "cell": 3,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "anneal"
+      }
+    },
+    {
+      "id": "quench",
+      "name": "Quench",
+      "type": "skill",
+      "text": "Gain {guard} Guard. Spend {spend} Onslaught: gain {sguard} instead.",
+      "subject": "blue sword immersed in bronze cooling trough",
+      "sheet": "breaker_03",
+      "cell": 4,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "quench"
+      }
+    },
+    {
+      "id": "ride_the_surge",
+      "name": "Ride the Surge",
+      "type": "skill",
+      "text": "Draw {draw} cards. If Onslaught \u2265 {min}: gain {energy} energy.",
+      "subject": "bronze hand crank releasing blue lightning wheel",
+      "sheet": "breaker_03",
+      "cell": 5,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "ride_the_surge"
+      }
+    },
+    {
+      "id": "hairline_mark",
+      "name": "Hairline Mark",
+      "type": "skill",
+      "text": "Apply {status} Exposed. Draw {draw} card.",
+      "subject": "bronze engraving chisel scoring cracked blue shield",
+      "sheet": "breaker_03",
+      "cell": 6,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "hairline_mark_retry"
+      }
+    },
+    {
+      "id": "read_the_blow",
+      "name": "Read the Blow",
+      "type": "skill",
+      "text": "If it intends to attack: gain {guard} Guard, apply {status} Stagger. Else draw {draw} cards.",
+      "subject": "blue inspection lens framing bronze incoming arrow",
+      "sheet": "breaker_03",
+      "cell": 7,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "read_the_blow_alt"
+      }
+    },
+    {
+      "id": "furnace_heart",
+      "name": "Furnace Heart",
+      "type": "power",
+      "text": "At the start of your turn, gain {status} Onslaught.",
+      "subject": "glowing red furnace heart within blue armoured emblem",
+      "sheet": "breaker_03",
+      "cell": 8,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "furnace_heart"
+      }
+    },
+    {
+      "id": "crossed_blades",
+      "name": "Crossed Blades",
+      "type": "power",
+      "text": "You can prime {status} additional Riposte card.",
+      "subject": "crossed luminous blue sabres within bronze halo",
+      "sheet": "breaker_03",
+      "cell": 9,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "crossed_blades"
+      }
+    },
+    {
+      "id": "parry_ledger",
+      "name": "Parry Ledger",
+      "type": "power",
+      "text": "Whenever one of your Ripostes triggers, draw {status} more card next turn.",
+      "subject": "glowing blue book emblem with bronze parrying dagger",
+      "sheet": "breaker_03",
+      "cell": 10,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "parry_ledger"
+      }
+    },
+    {
+      "id": "anvil_heart",
+      "name": "Anvil Heart",
+      "type": "power",
+      "text": "When an enemy attack ends and you lost no HP to it, gain {status} Onslaught.",
+      "subject": "radiant purple anvil heart with bronze spark aura",
+      "sheet": "breaker_03",
+      "cell": 11,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "anvil_heart"
+      }
+    },
+    {
+      "id": "fault_reader",
+      "name": "Fault Reader",
+      "type": "power",
+      "text": "At the start of your turn, apply {status} Exposed to the lowest-HP enemy.",
+      "subject": "glowing red crack emblem across blue crystal eye",
+      "sheet": "breaker_03",
+      "cell": 12,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "fault_reader_retry"
+      }
+    },
+    {
+      "id": "jackhammer",
+      "name": "Jackhammer",
+      "type": "attack",
+      "text": "Spend all Onslaught: deal {damage} damage, +{times_per} hit per Onslaught spent.",
+      "subject": "heavy blue pneumatic drill pounding bronze impact rings",
+      "sheet": "breaker_03",
+      "cell": 13,
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "jackhammer"
+      }
+    },
+    {
+      "id": "steal_the_swing",
+      "name": "Steal the Swing",
+      "type": "attack",
+      "text": "Scrap. Deal {damage} damage. Riposte: cancel the attack.",
+      "subject": "steel hooked sword trapping red curved blade",
+      "sheet": "breaker_03",
+      "cell": 14,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "steal_the_swing_retry"
+      }
+    },
+    {
+      "id": "iron_avalanche",
+      "name": "Iron Avalanche",
+      "type": "attack",
+      "text": "Keep. Deal damage equal to your defence to ALL enemies. Lose all Guard.",
+      "subject": "tumbling blue spiked armour slabs with bronze impacts",
+      "sheet": "breaker_03",
+      "cell": 15,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "iron_avalanche_retry"
+      }
+    },
+    {
+      "id": "endless_maul",
+      "name": "Endless Maul",
+      "type": "attack",
+      "text": "Deal {damage} damage, +{damage_per} per Onslaught. If Onslaught \u2265 {min}: add a copy to your hand.",
+      "subject": "steel double headed maul trailing purple echoes",
+      "sheet": "breaker_03",
+      "cell": 16,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "endless_maul_retry"
+      }
+    },
+    {
+      "id": "forge_oath",
+      "name": "Forge Oath",
+      "type": "skill",
+      "text": "Scrap. Gain {status} Onslaught. Remove this from your deck. Later combats start with {run_flag} more Onslaught.",
+      "subject": "bronze oath seal pressed by blue smithing tongs",
+      "sheet": "breaker_04",
+      "cell": 1,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "forge_oath_retry"
+      }
+    },
+    {
+      "id": "en_garde",
+      "name": "En Garde",
+      "type": "skill",
+      "text": "Prime up to {prime} Riposte cards from your hand now, past capacity.",
+      "subject": "blue fencing buckler poised beside bronze rapier",
+      "sheet": "breaker_04",
+      "cell": 2,
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "en_garde_retry"
+      }
+    },
+    {
+      "id": "vent_pressure",
+      "name": "Vent Pressure",
+      "type": "skill",
+      "text": "Spend {spend} Onslaught: gain {energy} energy and draw {draw} cards.",
+      "subject": "bronze pressure valve releasing broad blue steam jets",
+      "sheet": "breaker_04",
+      "cell": 3,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "vent_pressure"
+      }
+    },
+    {
+      "id": "iron_rhythm",
+      "name": "Iron Rhythm",
+      "type": "skill",
+      "text": "Draw {draw} cards. This turn, Skills also add {status} Onslaught (this one too).",
+      "subject": "blue war drum with crossed bronze drumsticks",
+      "sheet": "breaker_04",
+      "cell": 4,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "iron_rhythm"
+      }
+    },
+    {
+      "id": "shed_plating",
+      "name": "Shed Plating",
+      "type": "skill",
+      "text": "If you have {lose_guard}+ Guard: lose {lose_guard}, gain {energy} energy, draw {draw} cards.",
+      "subject": "blue armour shell opening around bronze spring",
+      "sheet": "breaker_04",
+      "cell": 5,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "shed_plating"
+      }
+    },
+    {
+      "id": "smouldering_core",
+      "name": "Smouldering Core",
+      "type": "power",
+      "text": "At the end of your turn, keep up to {status} Onslaught.",
+      "subject": "glowing orange coal emblem inside purple iron cage",
+      "sheet": "breaker_04",
+      "cell": 6,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "smouldering_core"
+      }
+    },
+    {
+      "id": "recoil_spring",
+      "name": "Recoil Spring",
+      "type": "power",
+      "text": "When a primed card fires, it comes back to your hand next turn.",
+      "subject": "radiant bronze spiral spring with blue returning aura",
+      "sheet": "breaker_04",
+      "cell": 7,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "recoil_spring"
+      }
+    },
+    {
+      "id": "reactive_plate",
+      "name": "Reactive Plate",
+      "type": "power",
+      "text": "Whenever Guard absorbs damage from a hit, deal that much to the attacker.",
+      "subject": "glowing blue spiked shield emblem reflecting red burst",
+      "sheet": "breaker_04",
+      "cell": 8,
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "reactive_plate"
+      }
+    }
+  ],
+  "alternates": [
+    {
+      "id": "cool_the_steel_alt",
+      "alternate_for": "cool_the_steel",
+      "subject": "blue shield cradled by bronze ice tongs",
+      "sheet": "breaker_04",
+      "cell": 9
+    },
+    {
+      "id": "find_the_seam_alt",
+      "alternate_for": "find_the_seam",
+      "subject": "bronze armour probe opening blue plate joint",
+      "sheet": "breaker_04",
+      "cell": 10
+    },
+    {
+      "id": "read_the_line_alt",
+      "alternate_for": "read_the_line",
+      "subject": "blue sword beneath bronze measuring compass",
+      "sheet": "breaker_04",
+      "cell": 11
+    },
+    {
+      "id": "sabre_rattle_alt",
+      "alternate_for": "sabre_rattle",
+      "subject": "wide bronze war horn with purple tassel",
+      "sheet": "breaker_04",
+      "cell": 12
+    },
+    {
+      "id": "hairline_mark_alt",
+      "alternate_for": "hairline_mark",
+      "subject": "bronze chisel marking red split in shield",
+      "sheet": "breaker_04",
+      "cell": 13
+    },
+    {
+      "id": "read_the_blow_alt",
+      "alternate_for": "read_the_blow",
+      "subject": "bronze spyglass behind curved blue shield",
+      "sheet": "breaker_04",
+      "cell": 14
+    },
+    {
+      "id": "parry_ledger_alt",
+      "alternate_for": "parry_ledger",
+      "subject": "radiant blue folio with crossed bronze guards",
+      "sheet": "breaker_04",
+      "cell": 15
+    },
+    {
+      "id": "fault_reader_alt",
+      "alternate_for": "fault_reader",
+      "subject": "purple crystal eye radiating red fracture halo",
+      "sheet": "breaker_04",
+      "cell": 16
+    }
+  ],
+  "fill_up": [
+    {
+      "id": "shoulder_check_retry",
+      "retry_for": "shoulder_check",
+      "subject": "single huge purple spiked pauldron striking red spark",
+      "sheet": "breaker_fillup",
+      "cell": 1
+    },
+    {
+      "id": "thresher_arc_retry",
+      "retry_for": "thresher_arc",
+      "subject": "broad silver double axe sweeping purple crescent",
+      "sheet": "breaker_fillup",
+      "cell": 2
+    },
+    {
+      "id": "catch_blade_retry",
+      "retry_for": "catch_blade",
+      "subject": "bronze gripping clamp holding horizontal blue sword",
+      "sheet": "breaker_fillup",
+      "cell": 3
+    },
+    {
+      "id": "find_the_seam_retry",
+      "retry_for": "find_the_seam",
+      "subject": "bronze wedge tool separating two blue armour plates",
+      "sheet": "breaker_fillup",
+      "cell": 4
+    },
+    {
+      "id": "endless_maul_retry",
+      "retry_for": "endless_maul",
+      "subject": "large blue double hammer with single purple echo",
+      "sheet": "breaker_fillup",
+      "cell": 5
+    },
+    {
+      "id": "iron_avalanche_retry",
+      "retry_for": "iron_avalanche",
+      "subject": "three falling blue spiked slabs over red impact",
+      "sheet": "breaker_fillup",
+      "cell": 6
+    },
+    {
+      "id": "bind_the_blade_retry",
+      "retry_for": "bind_the_blade",
+      "subject": "large bronze padlock chaining short blue blade",
+      "sheet": "breaker_fillup",
+      "cell": 7
+    },
+    {
+      "id": "fault_reader_retry",
+      "retry_for": "fault_reader",
+      "subject": "glowing blue eye emblem with red fracture pupil",
+      "sheet": "breaker_fillup",
+      "cell": 8
+    },
+    {
+      "id": "chain_driver_retry",
+      "retry_for": "chain_driver",
+      "subject": "blue chain loop swinging oversized bronze flail head",
+      "sheet": "breaker_fillup",
+      "cell": 9
+    },
+    {
+      "id": "overhand_drive_retry",
+      "retry_for": "overhand_drive",
+      "subject": "wide vertical silver greatsword with red downward burst",
+      "sheet": "breaker_fillup",
+      "cell": 10
+    },
+    {
+      "id": "breach_hammer_retry",
+      "retry_for": "breach_hammer",
+      "subject": "square bronze hammer breaking single blue armour slab",
+      "sheet": "breaker_fillup",
+      "cell": 11
+    },
+    {
+      "id": "read_the_line_retry",
+      "retry_for": "read_the_line",
+      "subject": "bronze calipers gripping broad horizontal blue blade",
+      "sheet": "breaker_fillup",
+      "cell": 12
+    },
+    {
+      "id": "hairline_mark_retry",
+      "retry_for": "hairline_mark",
+      "subject": "bronze engraving stylus beside red cracked blue shield",
+      "sheet": "breaker_fillup",
+      "cell": 13
+    },
+    {
+      "id": "en_garde_retry",
+      "retry_for": "en_garde",
+      "subject": "round blue fencing buckler beside short bronze rapier",
+      "sheet": "breaker_fillup",
+      "cell": 14
+    },
+    {
+      "id": "forge_oath_retry",
+      "retry_for": "forge_oath",
+      "subject": "large bronze oath seal inside blue forging tongs",
+      "sheet": "breaker_fillup",
+      "cell": 15
+    },
+    {
+      "id": "steal_the_swing_retry",
+      "retry_for": "steal_the_swing",
+      "subject": "blue hook sword catching red curved dagger",
+      "sheet": "breaker_fillup",
+      "cell": 16
+    }
+  ],
+  "review": {
+    "fillup_reason": "Single targeted regeneration: simplify clutter, brighten dark blades, separate repeated plate-and-tool compositions. Four original 4x contacts inspected before planning this retry.",
+    "initial_failed_ids": [
+      "shoulder_check",
+      "thresher_arc",
+      "catch_blade",
+      "find_the_seam",
+      "endless_maul",
+      "iron_avalanche",
+      "bind_the_blade",
+      "fault_reader"
+    ],
+    "borderline_retry_ids": [
+      "chain_driver",
+      "overhand_drive",
+      "breach_hammer",
+      "read_the_line",
+      "hairline_mark",
+      "en_garde",
+      "forge_oath",
+      "steal_the_swing"
+    ],
+    "selected_retry_ids": [
+      "shoulder_check",
+      "thresher_arc",
+      "catch_blade",
+      "find_the_seam",
+      "endless_maul",
+      "iron_avalanche",
+      "bind_the_blade",
+      "fault_reader",
+      "chain_driver",
+      "overhand_drive",
+      "breach_hammer",
+      "hairline_mark",
+      "en_garde",
+      "forge_oath",
+      "steal_the_swing"
+    ],
+    "selected_planned_alternates": [
+      "sabre_rattle",
+      "read_the_blow"
+    ],
+    "weak_ids": [
+      "thresher_arc",
+      "read_the_line",
+      "hairline_mark"
+    ],
+    "verdict": "All five sheet contacts inspected at exactly 4x. All eight initially failed subjects received one targeted retry. Fifteen retries and two planned alternates selected. Original read_the_line retained to avoid the retry resembling catch_blade. Weak: thresher_arc has a dark motion crescent; read_the_line caliper tool is abstract; hairline_mark chisel remains thin. No selected subject visibly bleeds into a gutter; final motifs are distinct. Sheet 3 and 4 use equal horizontal division because full-length global magenta runs are absent; inspected per-cell boundaries are intact."
+  },
+  "generation": {
+    "method": "built-in image_gen.imagegen",
+    "exact_prompts": "preview/cards/breaker-generation-prompts.json",
+    "sources": {
+      "breaker_01": {
+        "generator_path": "/Users/chrises/.codex/generated_images/01a185c7-8c9d-7b23-a963-5f1663e14eec/exec-48a276e2-786d-4468-9da7-f88a8d8335c3.png",
+        "native_size": [
+          1254,
+          1254
+        ],
+        "native_copy": "raw/cards/native/breaker_01.png",
+        "normalized_input": "raw/cards/breaker_01.png",
+        "normalized_size": [
+          1024,
+          1024
+        ]
+      },
+      "breaker_02": {
+        "generator_path": "/Users/chrises/.codex/generated_images/01a185c7-8c9d-7b23-a963-5f1663e14eec/exec-24486fb7-e1ca-4da8-93e9-471e790f64cb.png",
+        "native_size": [
+          1254,
+          1254
+        ],
+        "native_copy": "raw/cards/native/breaker_02.png",
+        "normalized_input": "raw/cards/breaker_02.png",
+        "normalized_size": [
+          1024,
+          1024
+        ]
+      },
+      "breaker_03": {
+        "generator_path": "/Users/chrises/.codex/generated_images/01a185c7-8c9d-7b23-a963-5f1663e14eec/exec-f642f683-e780-4170-8990-7e16ebe5bf6c.png",
+        "native_size": [
+          1254,
+          1254
+        ],
+        "native_copy": "raw/cards/native/breaker_03.png",
+        "normalized_input": "raw/cards/breaker_03.png",
+        "normalized_size": [
+          1024,
+          1024
+        ]
+      },
+      "breaker_04": {
+        "generator_path": "/Users/chrises/.codex/generated_images/01a185c7-8c9d-7b23-a963-5f1663e14eec/exec-f65a0d66-fdf8-44cb-81b8-db6bd71d587a.png",
+        "native_size": [
+          1254,
+          1254
+        ],
+        "native_copy": "raw/cards/native/breaker_04.png",
+        "normalized_input": "raw/cards/breaker_04.png",
+        "normalized_size": [
+          1024,
+          1024
+        ]
+      },
+      "breaker_fillup": {
+        "generator_path": "/Users/chrises/.codex/generated_images/01a185c7-8c9d-7b23-a963-5f1663e14eec/exec-3e4f949b-664d-4bcf-a430-998eee7fae4c.png",
+        "native_size": [
+          1254,
+          1254
+        ],
+        "native_copy": "raw/cards/native/breaker_fillup.png",
+        "normalized_input": "raw/cards/breaker_fillup.png",
+        "normalized_size": [
+          1024,
+          1024
+        ]
+      }
+    }
+  }
+}

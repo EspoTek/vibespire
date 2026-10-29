@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/chronist_02.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "upbeat",
+      "source_box": [
+        0,
+        0,
+        298,
+        292
+      ],
+      "pitch": 8.04,
+      "grid_score": 0.3197035393162424,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/upbeat.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "weather_eye",
+      "source_box": [
+        327,
+        0,
+        622,
+        292
+      ],
+      "pitch": 6.66,
+      "grid_score": 0.19401765482353733,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/weather_eye.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "balance_wheel",
+      "source_box": [
+        644,
+        0,
+        908,
+        292
+      ],
+      "pitch": 6.64,
+      "grid_score": 0.22928963252502044,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/balance_wheel.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "detent",
+      "source_box": [
+        942,
+        0,
+        1254,
+        292
+      ],
+      "pitch": 6.5,
+      "grid_score": 0.23824136160290277,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/detent.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "dead_reckoning",
+      "source_box": [
+        0,
+        331,
+        298,
+        599
+      ],
+      "pitch": 6.07,
+      "grid_score": 0.2591736075216985,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/dead_reckoning.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "logbook",
+      "source_box": [
+        327,
+        331,
+        622,
+        599
+      ],
+      "pitch": 6.95,
+      "grid_score": 0.23985518191048577,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/logbook.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "reef_the_sails",
+      "source_box": [
+        644,
+        331,
+        908,
+        599
+      ],
+      "pitch": 6.87,
+      "grid_score": 0.18828059854856327,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/reef_the_sails.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "wind_forward",
+      "source_box": [
+        942,
+        331,
+        1254,
+        599
+      ],
+      "pitch": 6.8,
+      "grid_score": 0.24077596541494972,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/wind_forward.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sweep_hand",
+      "source_box": [
+        0,
+        627,
+        298,
+        905
+      ],
+      "pitch": 7.58,
+      "grid_score": 0.20268245624250267,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/sweep_hand.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fermata",
+      "source_box": [
+        327,
+        627,
+        622,
+        905
+      ],
+      "pitch": 7.49,
+      "grid_score": 0.20783762319256593,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/fermata.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "appointed_hour",
+      "source_box": [
+        644,
+        627,
+        908,
+        905
+      ],
+      "pitch": 7.61,
+      "grid_score": 0.22488662862122694,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/appointed_hour.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "knell",
+      "source_box": [
+        942,
+        627,
+        1254,
+        905
+      ],
+      "pitch": 6.43,
+      "grid_score": 0.2923054908195016,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/knell.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "turn_the_tide",
+      "source_box": [
+        0,
+        930,
+        298,
+        1254
+      ],
+      "pitch": 6.68,
+      "grid_score": 0.1630113265671379,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/turn_the_tide.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "confluence",
+      "source_box": [
+        327,
+        930,
+        622,
+        1254
+      ],
+      "pitch": 6.16,
+      "grid_score": 0.23519704429374128,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/confluence.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "second_hand",
+      "source_box": [
+        644,
+        930,
+        908,
+        1254
+      ],
+      "pitch": 6.85,
+      "grid_score": 0.2625169921821129,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/second_hand.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mainspring",
+      "source_box": [
+        942,
+        930,
+        1254,
+        1254
+      ],
+      "pitch": 6.44,
+      "grid_score": 0.24859682343196332,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_02/mainspring.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

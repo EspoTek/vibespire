@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/riveter.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/riveter.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.62,
+  "phase": [
+    5.562,
+    6.468
+  ],
+  "grid_score": 0.15691161101759912,
+  "source_bbox": [
+    20,
+    15,
+    1003,
+    1005
+  ],
+  "grid_size": [
+    135,
+    135
+  ],
+  "grid_content_bbox": [
+    3,
+    2,
+    132,
+    132
+  ],
+  "bbox": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.235
+}

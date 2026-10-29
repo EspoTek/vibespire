@@ -1,0 +1,18 @@
+{
+  "sprites": 15,
+  "dimensions": "pass",
+  "binary_alpha": "pass",
+  "sms_palette": "pass",
+  "colour_limit": 16,
+  "magenta_key_residue": "none",
+  "visual_review": "all exact 4x previews inspected individually and on checkerboard",
+  "weak_ids": [],
+  "anatomy_caveats": {
+    "shardling": "four obvious legs rather than six",
+    "phage": "four obvious legs rather than six"
+  },
+  "pipeline_tests": "7 passed",
+  "repository_typecheck": "fails outside sprite scope: engine/content/render type mismatches",
+  "repository_tests": "11 files failed, 13 passed; missing engine/enemies module and invalid map weights",
+  "shared_atlas": "untouched"
+}

@@ -1,0 +1,40 @@
+{
+  "input": "raw/stone-golem.png",
+  "output": "../../public/assets/sprites/enemies/stone-golem.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 10.69,
+  "phase": [
+    9.346,
+    10.47
+  ],
+  "grid_score": 0.3295814070586474,
+  "source_bbox": [
+    33,
+    96,
+    991,
+    959
+  ],
+  "grid_size": [
+    96,
+    96
+  ],
+  "grid_content_bbox": [
+    3,
+    9,
+    93,
+    90
+  ],
+  "bbox": [
+    0,
+    6,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.201
+}

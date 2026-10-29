@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/relics_01_forged.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "riven_gauntlet",
+      "source_box": [
+        0,
+        0,
+        244,
+        237
+      ],
+      "pitch": 6.35,
+      "grid_score": 0.33185725261746074,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/riven_gauntlet.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "glass_spurs",
+      "source_box": [
+        265,
+        0,
+        505,
+        237
+      ],
+      "pitch": 6.58,
+      "grid_score": 0.3385834177686068,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/glass_spurs.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "dampener_coil",
+      "source_box": [
+        519,
+        0,
+        750,
+        237
+      ],
+      "pitch": 6.25,
+      "grid_score": 0.3935597120870727,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/dampener_coil.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "bulwark_rivets",
+      "source_box": [
+        784,
+        0,
+        1024,
+        237
+      ],
+      "pitch": 6.9,
+      "grid_score": 0.37806210920648015,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/bulwark_rivets.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "stim_patch",
+      "source_box": [
+        0,
+        276,
+        244,
+        495
+      ],
+      "pitch": 6.86,
+      "grid_score": 0.21115363854012933,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/stim_patch.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "scrap_magnet",
+      "source_box": [
+        265,
+        276,
+        505,
+        495
+      ],
+      "pitch": 6.81,
+      "grid_score": 0.348446635185363,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/scrap_magnet.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "notched_buckler",
+      "source_box": [
+        519,
+        276,
+        750,
+        495
+      ],
+      "pitch": 6.43,
+      "grid_score": 0.22751398952053614,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/notched_buckler.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "chain_wraps",
+      "source_box": [
+        784,
+        276,
+        1024,
+        495
+      ],
+      "pitch": 6.74,
+      "grid_score": 0.2569039962599125,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/chain_wraps.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "parry_charm",
+      "source_box": [
+        0,
+        519,
+        244,
+        748
+      ],
+      "pitch": 6.66,
+      "grid_score": 0.28070726628365306,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/parry_charm.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "kept_fury",
+      "source_box": [
+        265,
+        519,
+        505,
+        748
+      ],
+      "pitch": 6.72,
+      "grid_score": 0.23752408129013047,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/kept_fury.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "crowd_breaker",
+      "source_box": [
+        519,
+        519,
+        750,
+        748
+      ],
+      "pitch": 6.45,
+      "grid_score": 0.18555074623014417,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/crowd_breaker.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "concussion_rig",
+      "source_box": [
+        784,
+        519,
+        1024,
+        748
+      ],
+      "pitch": 6.63,
+      "grid_score": 0.3067257773520472,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/concussion_rig.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "slow_temper",
+      "source_box": [
+        0,
+        758,
+        244,
+        1024
+      ],
+      "pitch": 6.55,
+      "grid_score": 0.3388993122449805,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/slow_temper.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "hairline_saw",
+      "source_box": [
+        265,
+        758,
+        505,
+        1024
+      ],
+      "pitch": 6.65,
+      "grid_score": 0.3648359621139034,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/hairline_saw.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "duelists_oath",
+      "source_box": [
+        519,
+        758,
+        750,
+        1024
+      ],
+      "pitch": 6.28,
+      "grid_score": 0.4370681604128445,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/duelists_oath.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "bastion_core",
+      "source_box": [
+        784,
+        758,
+        1024,
+        1024
+      ],
+      "pitch": 6.25,
+      "grid_score": 0.30334437881379517,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_01_forged/bastion_core.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

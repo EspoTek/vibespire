@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/boiler_tyrant.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/boiler_tyrant.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 6.41,
+  "phase": [
+    4.901,
+    0.7
+  ],
+  "grid_score": 0.14031372398110628,
+  "source_bbox": [
+    15,
+    6,
+    1009,
+    1016
+  ],
+  "grid_size": [
+    160,
+    160
+  ],
+  "grid_content_bbox": [
+    3,
+    1,
+    158,
+    158
+  ],
+  "bbox": [
+    0,
+    0,
+    63,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.225
+}

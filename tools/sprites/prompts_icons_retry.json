@@ -1,0 +1,68 @@
+{
+  "retry_potions_01": [
+    {
+      "id": "retry_quicksilver_a",
+      "subject": "silver teardrop flask hooked blue neck"
+    },
+    {
+      "id": "retry_tempo_a",
+      "subject": "violet crescent flask gold beat dot"
+    },
+    {
+      "id": "retry_rewind_a",
+      "subject": "turquoise square flask gold backward arrow"
+    },
+    {
+      "id": "retry_halt_a",
+      "subject": "amber hexagon flask black clock hand"
+    },
+    {
+      "id": "retry_quicksilver_b",
+      "subject": "silver long neck flask wing handle"
+    },
+    {
+      "id": "retry_tempo_b",
+      "subject": "violet pear flask gold pendulum detail"
+    },
+    {
+      "id": "retry_rewind_b",
+      "subject": "turquoise barrel flask gold reverse arrow"
+    },
+    {
+      "id": "retry_halt_b",
+      "subject": "amber short square flask clock dial"
+    },
+    {
+      "id": "retry_quicksilver_c",
+      "subject": "silver narrow ampoule swept wing stopper"
+    },
+    {
+      "id": "retry_tempo_c",
+      "subject": "violet bent neck flask gold metronome"
+    },
+    {
+      "id": "retry_rewind_c",
+      "subject": "turquoise squat flask gold left arrow"
+    },
+    {
+      "id": "retry_halt_c",
+      "subject": "amber hexagon bottle black clock hands"
+    },
+    {
+      "id": "retry_quicksilver_d",
+      "subject": "silver swan neck flask blue wing"
+    },
+    {
+      "id": "retry_tempo_d",
+      "subject": "violet crescent bottle gold pendulum"
+    },
+    {
+      "id": "retry_rewind_d",
+      "subject": "turquoise flat flask gold backward arrow"
+    },
+    {
+      "id": "retry_halt_d",
+      "subject": "amber octagon flask black hour hand"
+    }
+  ]
+}

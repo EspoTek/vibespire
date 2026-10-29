@@ -1,0 +1,57 @@
+{
+  "generator": "built-in image_gen.imagegen",
+  "requested_size": [
+    1024,
+    1024
+  ],
+  "native_size": [
+    1254,
+    1254
+  ],
+  "normalization": "Keep untouched native PNGs under raw/native; normalize to 1024x1024 with NEAREST under raw/.",
+  "template": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: <MONSTER>, front-facing, centred, symmetrical overall silhouette, whole body visible, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline 1-2 logical pixels, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm accent colour, drawn as if 64x64 pixels upscaled with nearest neighbour. Use large simple colour clusters, no dithering or tiny decorative texture. Strong silhouette and unmistakable features at 64x64. Leave a little magenta margin on all four sides. No text, no border, no watermark.",
+  "monsters": [
+    {
+      "name": "armoured-scorpion",
+      "prompt": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: a giant armoured scorpion, front-facing, centred, symmetrical, whole body visible, raised curled stinger above its head, two huge open pincers and six clearly separated legs. Floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm orange accent on stinger and eyes, drawn as if 64x64 pixels upscaled with nearest neighbour. Large simple armour plates, strong silhouette readable at 64x64. Outline 1-2 logical pixels. No text, no border, no watermark. Refinement for 64x64 readability: drastically simplify the anatomy into large chunky shapes. Exactly three broad blue body plates, two huge crescent pincers, three legs on each side separated by wide magenta gaps, and a short thick curled tail. Each claw and tail must retain a continuous black outline. NO fine armour scales, NO tiny highlights, NO texture. Use only 8 distinct flat colours: black, dark blue, blue, cyan, purple, green, orange and pale yellow. Think of an actual 56-pixel-wide by 60-pixel-high sprite, with every logical pixel a large 16x16 square on the requested 1024 canvas.",
+      "native": "raw/native/armoured-scorpion.png",
+      "raw": "raw/armoured-scorpion.png",
+      "generated_file": "exec-72e3b16f-378d-42a5-a3b9-6604dd6ba57e.png",
+      "iteration": 2
+    },
+    {
+      "name": "jellyfish-spirit",
+      "prompt": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: a floating one-eyed jellyfish spirit, one enormous warm yellow iris with a black pupil inside a cyan domed bell, purple rim and five short chunky curling green tentacles, no extra eyes, front-facing, centred, symmetrical overall silhouette, whole body visible, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline 1-2 logical pixels, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm accent colour, drawn as if 64x64 pixels upscaled with nearest neighbour. Use large simple colour clusters, no dithering or tiny decorative texture. Strong silhouette and unmistakable features at 64x64. Leave a little magenta margin on all four sides. No text, no border, no watermark.",
+      "native": "raw/native/jellyfish-spirit.png",
+      "raw": "raw/jellyfish-spirit.png",
+      "generated_file": "exec-bd19bbd0-60a6-4f9d-8a8f-5f7dd587484c.png",
+      "iteration": 1
+    },
+    {
+      "name": "goblin",
+      "prompt": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: a hunched goblin with a club, squat broad green body, huge pointed ears, purple tunic, blue shoulder plates, bent knees and two broad bare feet, snarling face with two warm yellow eyes; holds a single simple wooden club beside its body; club is the only intentional asymmetry, front-facing, centred, symmetrical overall silhouette, whole body visible, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline 1-2 logical pixels, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm accent colour, drawn as if 64x64 pixels upscaled with nearest neighbour. Use large simple colour clusters, no dithering or tiny decorative texture. Strong silhouette and unmistakable features at 64x64. Leave a little magenta margin on all four sides. No text, no border, no watermark.",
+      "native": "raw/native/goblin.png",
+      "raw": "raw/goblin.png",
+      "generated_file": "exec-dffd3464-156a-47cc-9805-f0bf455242c1.png",
+      "iteration": 1
+    },
+    {
+      "name": "stone-golem",
+      "prompt": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: a stone golem, massive squat blocky humanoid assembled from a few huge blue and purple stone slabs, broad shoulders, large fists, two thick separated legs with flat feet, small head sunk between shoulders, two warm orange glowing eyes, cyan planes and deep black joints, front-facing, centred, symmetrical overall silhouette, whole body visible, floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline 1-2 logical pixels, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm accent colour, drawn as if 64x64 pixels upscaled with nearest neighbour. Use large simple colour clusters, no dithering or tiny decorative texture. Strong silhouette and unmistakable features at 64x64. Leave a little magenta margin on all four sides. No text, no border, no watermark.",
+      "native": "raw/native/stone-golem.png",
+      "raw": "raw/stone-golem.png",
+      "generated_file": "exec-6bb469ba-608b-4126-98eb-8eb37c40fc1e.png",
+      "iteration": 1
+    }
+  ],
+  "rejected": [
+    {
+      "name": "armoured-scorpion-v1",
+      "prompt": "Use case: stylized-concept. Asset type: production enemy sprite for Vibespire. Generate one 1024x1024 square image. Sega Master System pixel art enemy sprite in the exact style of Phantasy Star (1987) battle screens: a giant armoured scorpion, front-facing, centred, symmetrical, whole body visible, raised curled stinger above its head, two huge open pincers and six clearly separated legs. Floating on a solid flat magenta background (#FF00FF) with NO ground, NO shadow, NO scenery. Strict 8-bit pixel art: hard-edged square pixels on a uniform grid, no anti-aliasing, no gradients, no blur, flat colours, thick black outline, limited 16-colour palette of saturated blues, purples, cyans and greens with one warm orange accent on stinger and eyes, drawn as if 64x64 pixels upscaled with nearest neighbour. Large simple armour plates, strong silhouette readable at 64x64. Outline 1-2 logical pixels. No text, no border, no watermark.",
+      "reason": "Recognizable at 64x64, but fine armour detail overcrowded the silhouette.",
+      "raw": "raw/rejected/armoured-scorpion-v1.png",
+      "native": "raw/rejected/armoured-scorpion-v1-native.png",
+      "detected_pitch": 9.24
+    }
+  ]
+}

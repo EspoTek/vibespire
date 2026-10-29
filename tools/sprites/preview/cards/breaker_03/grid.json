@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/breaker_03.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "equal",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "feint_step",
+      "source_box": [
+        0,
+        0,
+        256,
+        247
+      ],
+      "pitch": 4.85,
+      "grid_score": 0.3036893501451984,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/feint_step.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "bind_the_blade",
+      "source_box": [
+        256,
+        0,
+        512,
+        247
+      ],
+      "pitch": 4.87,
+      "grid_score": 0.226028669760531,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/bind_the_blade.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "anneal",
+      "source_box": [
+        512,
+        0,
+        768,
+        247
+      ],
+      "pitch": 4.85,
+      "grid_score": 0.24447946758241246,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/anneal.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "quench",
+      "source_box": [
+        768,
+        0,
+        1024,
+        247
+      ],
+      "pitch": 4.83,
+      "grid_score": 0.25075647427246067,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/quench.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "ride_the_surge",
+      "source_box": [
+        0,
+        274,
+        256,
+        499
+      ],
+      "pitch": 5.1,
+      "grid_score": 0.2595715755741481,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/ride_the_surge.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hairline_mark",
+      "source_box": [
+        256,
+        274,
+        512,
+        499
+      ],
+      "pitch": 5.16,
+      "grid_score": 0.2373916573921308,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/hairline_mark.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "read_the_blow",
+      "source_box": [
+        512,
+        274,
+        768,
+        499
+      ],
+      "pitch": 5.16,
+      "grid_score": 0.2669298248767268,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/read_the_blow.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "furnace_heart",
+      "source_box": [
+        768,
+        274,
+        1024,
+        499
+      ],
+      "pitch": 5.13,
+      "grid_score": 0.35230614543932115,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/furnace_heart.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "crossed_blades",
+      "source_box": [
+        0,
+        525,
+        256,
+        729
+      ],
+      "pitch": 4.97,
+      "grid_score": 0.2489124503001616,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/crossed_blades.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "parry_ledger",
+      "source_box": [
+        256,
+        525,
+        512,
+        729
+      ],
+      "pitch": 4.84,
+      "grid_score": 0.2338894197638074,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/parry_ledger.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "anvil_heart",
+      "source_box": [
+        512,
+        525,
+        768,
+        729
+      ],
+      "pitch": 4.96,
+      "grid_score": 0.23807219702910715,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/anvil_heart.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fault_reader",
+      "source_box": [
+        768,
+        525,
+        1024,
+        729
+      ],
+      "pitch": 5.14,
+      "grid_score": 0.22690324347100746,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/fault_reader.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "jackhammer",
+      "source_box": [
+        0,
+        753,
+        256,
+        1024
+      ],
+      "pitch": 4.86,
+      "grid_score": 0.3033704307405687,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/jackhammer.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "steal_the_swing",
+      "source_box": [
+        256,
+        753,
+        512,
+        1024
+      ],
+      "pitch": 4.86,
+      "grid_score": 0.36089192718854746,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/steal_the_swing.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "iron_avalanche",
+      "source_box": [
+        512,
+        753,
+        768,
+        1024
+      ],
+      "pitch": 4.84,
+      "grid_score": 0.22966024716855366,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/iron_avalanche.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "endless_maul",
+      "source_box": [
+        768,
+        753,
+        1024,
+        1024
+      ],
+      "pitch": 4.87,
+      "grid_score": 0.22402422609321426,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_03/endless_maul.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

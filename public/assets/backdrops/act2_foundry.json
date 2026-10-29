@@ -1,0 +1,30 @@
+{
+  "source": "raw/backdrops/act2_foundry-v2.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "crop": [
+    0,
+    80,
+    1536,
+    944
+  ],
+  "pitch": 7.99,
+  "phase": [
+    0.997,
+    1.368
+  ],
+  "grid_score": 0.3910653779882795,
+  "recovered_size": [
+    192,
+    108
+  ],
+  "size": [
+    640,
+    360
+  ],
+  "colors": 19,
+  "output": "../../public/assets/backdrops/act2_foundry.png",
+  "preview": "../../public/assets/backdrops/act2_foundry@2x.png"
+}

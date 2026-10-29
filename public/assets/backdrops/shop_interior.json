@@ -1,0 +1,30 @@
+{
+  "source": "raw/backdrops/shop_interior-v4.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "crop": [
+    0,
+    80,
+    1536,
+    944
+  ],
+  "pitch": 11.57,
+  "phase": [
+    10.218,
+    1.446
+  ],
+  "grid_score": 0.28059661848357287,
+  "recovered_size": [
+    133,
+    75
+  ],
+  "size": [
+    640,
+    360
+  ],
+  "colors": 15,
+  "output": "../../public/assets/backdrops/shop_interior.png",
+  "preview": "../../public/assets/backdrops/shop_interior@2x.png"
+}

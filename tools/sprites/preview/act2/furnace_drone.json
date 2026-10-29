@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_drone.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/furnace_drone.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 13.57,
+  "phase": [
+    2.927,
+    2.691
+  ],
+  "grid_score": 0.31248783633484745,
+  "source_bbox": [
+    167,
+    42,
+    857,
+    982
+  ],
+  "grid_size": [
+    75,
+    75
+  ],
+  "grid_content_bbox": [
+    12,
+    3,
+    63,
+    72
+  ],
+  "bbox": [
+    8,
+    0,
+    56,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.235
+}

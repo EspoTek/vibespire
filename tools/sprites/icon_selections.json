@@ -1,0 +1,41 @@
+{
+  "alternates": {
+    "mycelial_net": "alt_mycelial_net",
+    "paradox_coil": "alt_paradox_coil",
+    "fracture_engine": "alt_fracture_engine",
+    "shard_debt": "alt_shard_debt",
+    "seers_veil": "alt_seers_veil",
+    "duelists_oath": "alt_duelists_oath",
+    "pot_quicksilver": "retry_quicksilver_d",
+    "pot_tempo_draught": "retry_tempo_d",
+    "pot_rewind_phial": "retry_rewind_c",
+    "pot_halt_ampoule": "retry_halt_b"
+  },
+  "alternate_review": {
+    "mycelial_net": "Alternate reads as a looped net; original resembles a white branching burst.",
+    "heavy_heart": "Keep original. Alternate is a round medallion; original at least retains a hollow asymmetrical heart, but is weak.",
+    "paradox_coil": "Alternate gives a clearer single figure eight silhouette.",
+    "gravity_loom": "Keep original. Its arch and hanging threads read as a loom; alternate loses the threads.",
+    "fracture_engine": "Alternate has a more visible broken gear rim.",
+    "shard_debt": "Alternate shows a restrained vertical shard instead of a cluttered cluster.",
+    "seers_veil": "Alternate triangular fabric is clearer than the original crumpled veil.",
+    "duelists_oath": "Alternate broad diagonal silver sword survives the 16px reduction. Original blade is too thin."
+  },
+  "weak_ids": [
+    "heavy_heart",
+    "engine_tooth",
+    "pot_rewind_phial"
+  ],
+  "weak_reasons": {
+    "heavy_heart": "Dark chain and heart merge into an abstract hollow metal shape; both candidates reviewed.",
+    "engine_tooth": "Reads as a small bronze zigzag more readily than an individual cog tooth.",
+    "pot_rewind_phial": "The gold mark reads as an arrow at 4x but its backward direction remains subtle at native 16px; best of five candidates."
+  },
+  "review": "Every base sheet and the half-sheet alternatives inspected on labelled nearest-neighbour 4x contacts. No gutter merges observed. The two weak relics are usable distinct silhouettes but semantically ambiguous. One targeted potion retry sheet also inspected at 4x, containing four subjects with four variants each. No further regeneration.",
+  "potion_retry_review": {
+    "pot_quicksilver": "Swan neck separates it from triangular Fault Dust.",
+    "pot_tempo_draught": "Crescent with gold pendulum has a unique silhouette.",
+    "pot_rewind_phial": "Broad low bottle and gold left arrow; arrow direction remains subtle at 16px.",
+    "pot_halt_ampoule": "Square clock dial reads better than the original narrow hand."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/rivet_gnasher.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/rivet_gnasher.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 10.05,
+  "phase": [
+    4.423,
+    2.052
+  ],
+  "grid_score": 0.24050403350116017,
+  "source_bbox": [
+    11,
+    12,
+    1011,
+    1011
+  ],
+  "grid_size": [
+    101,
+    102
+  ],
+  "grid_content_bbox": [
+    1,
+    1,
+    100,
+    100
+  ],
+  "bbox": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.221
+}

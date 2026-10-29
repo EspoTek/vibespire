@@ -1,0 +1,1018 @@
+{
+  "cards": [
+    {
+      "id": "hew",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "hew"
+      }
+    },
+    {
+      "id": "bulwark",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        8,
+        0,
+        24,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "bulwark"
+      }
+    },
+    {
+      "id": "shoulder_check",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "shoulder_check_retry"
+      }
+    },
+    {
+      "id": "brace",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "brace"
+      }
+    },
+    {
+      "id": "piston_jab",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "piston_jab"
+      }
+    },
+    {
+      "id": "chain_driver",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "chain_driver_retry"
+      }
+    },
+    {
+      "id": "overhand_drive",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "overhand_drive_retry"
+      }
+    },
+    {
+      "id": "breach_hammer",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "breach_hammer_retry"
+      }
+    },
+    {
+      "id": "thresher_arc",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "thresher_arc_retry"
+      }
+    },
+    {
+      "id": "fault_line",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "fault_line"
+      }
+    },
+    {
+      "id": "rivet_flurry",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        1,
+        0,
+        31,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "rivet_flurry"
+      }
+    },
+    {
+      "id": "counterweight",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 13,
+      "bbox": [
+        8,
+        0,
+        24,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "counterweight"
+      }
+    },
+    {
+      "id": "plate_ram",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "plate_ram"
+      }
+    },
+    {
+      "id": "return_stroke",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "return_stroke"
+      }
+    },
+    {
+      "id": "gauntlet_tap",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_01",
+        "id": "gauntlet_tap"
+      }
+    },
+    {
+      "id": "catch_blade",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        0,
+        1,
+        32,
+        23
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "catch_blade_retry"
+      }
+    },
+    {
+      "id": "cool_the_steel",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "cool_the_steel"
+      }
+    },
+    {
+      "id": "find_the_seam",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "find_the_seam_retry"
+      }
+    },
+    {
+      "id": "read_the_line",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "read_the_line"
+      }
+    },
+    {
+      "id": "pivot_sweep",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "pivot_sweep"
+      }
+    },
+    {
+      "id": "rivet_wall",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "rivet_wall"
+      }
+    },
+    {
+      "id": "planted_feet",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "planted_feet"
+      }
+    },
+    {
+      "id": "loaded_spring",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "loaded_spring"
+      }
+    },
+    {
+      "id": "sabre_rattle",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        2,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "sabre_rattle_alt"
+      }
+    },
+    {
+      "id": "hammerfall",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "hammerfall"
+      }
+    },
+    {
+      "id": "piston_volley",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "piston_volley"
+      }
+    },
+    {
+      "id": "answering_steel",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "answering_steel"
+      }
+    },
+    {
+      "id": "rampart_crash",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "rampart_crash"
+      }
+    },
+    {
+      "id": "coiled_strike",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "coiled_strike"
+      }
+    },
+    {
+      "id": "seam_ripper",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "seam_ripper"
+      }
+    },
+    {
+      "id": "quake_hammer",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "quake_hammer"
+      }
+    },
+    {
+      "id": "prism_edge",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_02",
+        "id": "prism_edge"
+      }
+    },
+    {
+      "id": "feint_step",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "feint_step"
+      }
+    },
+    {
+      "id": "bind_the_blade",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "bind_the_blade_retry"
+      }
+    },
+    {
+      "id": "anneal",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "anneal"
+      }
+    },
+    {
+      "id": "quench",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "quench"
+      }
+    },
+    {
+      "id": "ride_the_surge",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "ride_the_surge"
+      }
+    },
+    {
+      "id": "hairline_mark",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "hairline_mark_retry"
+      }
+    },
+    {
+      "id": "read_the_blow",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "read_the_blow_alt"
+      }
+    },
+    {
+      "id": "furnace_heart",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "furnace_heart"
+      }
+    },
+    {
+      "id": "crossed_blades",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "crossed_blades"
+      }
+    },
+    {
+      "id": "parry_ledger",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "parry_ledger"
+      }
+    },
+    {
+      "id": "anvil_heart",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        29,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "anvil_heart"
+      }
+    },
+    {
+      "id": "fault_reader",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "fault_reader_retry"
+      }
+    },
+    {
+      "id": "jackhammer",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        4,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_03",
+        "id": "jackhammer"
+      }
+    },
+    {
+      "id": "steal_the_swing",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "steal_the_swing_retry"
+      }
+    },
+    {
+      "id": "iron_avalanche",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "iron_avalanche_retry"
+      }
+    },
+    {
+      "id": "endless_maul",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "endless_maul_retry"
+      }
+    },
+    {
+      "id": "forge_oath",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "forge_oath_retry"
+      }
+    },
+    {
+      "id": "en_garde",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_fillup",
+        "id": "en_garde_retry"
+      }
+    },
+    {
+      "id": "vent_pressure",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "vent_pressure"
+      }
+    },
+    {
+      "id": "iron_rhythm",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "iron_rhythm"
+      }
+    },
+    {
+      "id": "shed_plating",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "shed_plating"
+      }
+    },
+    {
+      "id": "smouldering_core",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        7,
+        0,
+        24,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "smouldering_core"
+      }
+    },
+    {
+      "id": "recoil_spring",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "recoil_spring"
+      }
+    },
+    {
+      "id": "reactive_plate",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ],
+      "selected": {
+        "sheet": "breaker_04",
+        "id": "reactive_plate"
+      }
+    }
+  ],
+  "atlas_frames": 188,
+  "atlas_size": [
+    448,
+    336
+  ],
+  "all_atlas_frames_match": true
+}

@@ -1,0 +1,114 @@
+{
+  "sprites": [
+    {
+      "id": "gnasher",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "sporepuff",
+      "size": 64,
+      "colours": 16,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "scrap_drone",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "thornback",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "vinelash",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "flitterfang",
+      "size": 64,
+      "colours": 16,
+      "attempts": 3,
+      "passed": true
+    },
+    {
+      "id": "sickle_mantis",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "pollen_wisp",
+      "size": 64,
+      "colours": 16,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "gnasher_alpha",
+      "size": 64,
+      "colours": 16,
+      "attempts": 3,
+      "passed": true
+    },
+    {
+      "id": "dreadcap",
+      "size": 64,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "shellback_titan",
+      "size": 64,
+      "colours": 16,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "bramble_ram",
+      "size": 96,
+      "colours": 16,
+      "attempts": 3,
+      "passed": true
+    },
+    {
+      "id": "mother_orchid",
+      "size": 96,
+      "colours": 16,
+      "attempts": 2,
+      "passed": true
+    },
+    {
+      "id": "orchid_bud",
+      "size": 64,
+      "colours": 16,
+      "attempts": 1,
+      "passed": true
+    },
+    {
+      "id": "gloam_empress",
+      "size": 96,
+      "colours": 16,
+      "attempts": 1,
+      "passed": true
+    }
+  ],
+  "pipeline_tests": "12 passed",
+  "helper_ty": "passed",
+  "npm_typecheck": "failed in out-of-scope src and tests",
+  "npm_tests": "125 failed, 114 passed; out-of-scope engine/content failures",
+  "shared_atlas": "not rebuilt"
+}

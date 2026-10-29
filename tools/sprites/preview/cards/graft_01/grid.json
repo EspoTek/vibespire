@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/graft_01.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "lash",
+      "source_box": [
+        0,
+        0,
+        318,
+        294
+      ],
+      "pitch": 5.23,
+      "grid_score": 0.1529891520949776,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/lash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "husk",
+      "source_box": [
+        326,
+        0,
+        616,
+        294
+      ],
+      "pitch": 4.92,
+      "grid_score": 0.17304367040423607,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/husk.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "seed_bite",
+      "source_box": [
+        640,
+        0,
+        930,
+        294
+      ],
+      "pitch": 4.9,
+      "grid_score": 0.20548179869275632,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/seed_bite.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "graft_hide",
+      "source_box": [
+        946,
+        0,
+        1254,
+        294
+      ],
+      "pitch": 4.97,
+      "grid_score": 0.21207696829087644,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/graft_hide.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thornwhirl",
+      "source_box": [
+        0,
+        334,
+        318,
+        611
+      ],
+      "pitch": 4.67,
+      "grid_score": 0.1541237034280047,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/thornwhirl.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "barb_flick",
+      "source_box": [
+        326,
+        334,
+        616,
+        611
+      ],
+      "pitch": 5.45,
+      "grid_score": 0.14145504502804934,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/barb_flick.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "grafting_cut",
+      "source_box": [
+        640,
+        334,
+        930,
+        611
+      ],
+      "pitch": 4.78,
+      "grid_score": 0.16046520214562868,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/grafting_cut.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "chitin_ram",
+      "source_box": [
+        946,
+        334,
+        1254,
+        611
+      ],
+      "pitch": 5.26,
+      "grid_score": 0.1718335250903795,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/chitin_ram.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hivestrike",
+      "source_box": [
+        0,
+        637,
+        318,
+        928
+      ],
+      "pitch": 5.19,
+      "grid_score": 0.12002798625040557,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/hivestrike.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shear",
+      "source_box": [
+        326,
+        637,
+        616,
+        928
+      ],
+      "pitch": 4.8,
+      "grid_score": 0.18861019787023758,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/shear.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "spore_lash",
+      "source_box": [
+        640,
+        637,
+        930,
+        928
+      ],
+      "pitch": 4.91,
+      "grid_score": 0.1741713773260471,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/spore_lash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "canker_bite",
+      "source_box": [
+        946,
+        637,
+        1254,
+        928
+      ],
+      "pitch": 5.0,
+      "grid_score": 0.1997162641801652,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/canker_bite.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mulch_maul",
+      "source_box": [
+        0,
+        951,
+        318,
+        1254
+      ],
+      "pitch": 5.19,
+      "grid_score": 0.1984282796572624,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/mulch_maul.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sap_shell",
+      "source_box": [
+        326,
+        951,
+        616,
+        1254
+      ],
+      "pitch": 5.41,
+      "grid_score": 0.17708593550441895,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/sap_shell.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "blightcap",
+      "source_box": [
+        640,
+        951,
+        930,
+        1254
+      ],
+      "pitch": 5.25,
+      "grid_score": 0.2024031497109711,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/blightcap.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tendril_reach",
+      "source_box": [
+        946,
+        951,
+        1254,
+        1254
+      ],
+      "pitch": 5.19,
+      "grid_score": 0.19147567246365754,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_01/tendril_reach.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

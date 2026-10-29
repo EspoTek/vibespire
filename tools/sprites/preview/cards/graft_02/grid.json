@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/graft_02.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "root_mesh",
+      "source_box": [
+        0,
+        0,
+        289,
+        294
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.34177261399850745,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/root_mesh.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "deep_graft",
+      "source_box": [
+        326,
+        0,
+        604,
+        294
+      ],
+      "pitch": 6.06,
+      "grid_score": 0.37662955057317316,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/deep_graft.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "windblown_seed",
+      "source_box": [
+        639,
+        0,
+        927,
+        294
+      ],
+      "pitch": 6.07,
+      "grid_score": 0.31500022582031983,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/windblown_seed.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "spore_haze",
+      "source_box": [
+        957,
+        0,
+        1254,
+        294
+      ],
+      "pitch": 6.03,
+      "grid_score": 0.3121279420971592,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/spore_haze.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mire_carapace",
+      "source_box": [
+        0,
+        325,
+        289,
+        605
+      ],
+      "pitch": 5.99,
+      "grid_score": 0.40209744083010274,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/mire_carapace.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shed_husk",
+      "source_box": [
+        326,
+        325,
+        604,
+        605
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.40249045805963835,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/shed_husk.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sap_drip",
+      "source_box": [
+        639,
+        325,
+        927,
+        605
+      ],
+      "pitch": 6.32,
+      "grid_score": 0.3216202529972755,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/sap_drip.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "leaf_litter",
+      "source_box": [
+        957,
+        325,
+        1254,
+        605
+      ],
+      "pitch": 5.99,
+      "grid_score": 0.3250339439498503,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/leaf_litter.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "twin_thorn",
+      "source_box": [
+        0,
+        647,
+        289,
+        911
+      ],
+      "pitch": 5.94,
+      "grid_score": 0.3196112229560036,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/twin_thorn.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "canopy_crush",
+      "source_box": [
+        326,
+        647,
+        604,
+        911
+      ],
+      "pitch": 5.92,
+      "grid_score": 0.29880255384081816,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/canopy_crush.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "miasma_sweep",
+      "source_box": [
+        639,
+        647,
+        927,
+        911
+      ],
+      "pitch": 5.93,
+      "grid_score": 0.32901733822503415,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/miasma_sweep.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "uproot",
+      "source_box": [
+        957,
+        647,
+        1254,
+        911
+      ],
+      "pitch": 5.95,
+      "grid_score": 0.2960673616088374,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/uproot.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "prism_thorn",
+      "source_box": [
+        0,
+        952,
+        289,
+        1254
+      ],
+      "pitch": 6.15,
+      "grid_score": 0.21842138433601788,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/prism_thorn.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "pollen_sting",
+      "source_box": [
+        326,
+        952,
+        604,
+        1254
+      ],
+      "pitch": 6.07,
+      "grid_score": 0.25816961940819083,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/pollen_sting.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thicket_crash",
+      "source_box": [
+        639,
+        952,
+        927,
+        1254
+      ],
+      "pitch": 6.29,
+      "grid_score": 0.2054772388144303,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/thicket_crash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "patient_thorn",
+      "source_box": [
+        957,
+        952,
+        1254,
+        1254
+      ],
+      "pitch": 6.04,
+      "grid_score": 0.20771745253279225,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_02/patient_thorn.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

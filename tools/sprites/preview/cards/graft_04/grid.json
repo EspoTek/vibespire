@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/graft_04.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "humus_rite",
+      "source_box": [
+        0,
+        0,
+        298,
+        301
+      ],
+      "pitch": 6.03,
+      "grid_score": 0.33979039964918684,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/humus_rite.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "crystal_graft",
+      "source_box": [
+        324,
+        0,
+        605,
+        301
+      ],
+      "pitch": 6.03,
+      "grid_score": 0.30771023758161026,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/crystal_graft.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "transplant",
+      "source_box": [
+        633,
+        0,
+        924,
+        301
+      ],
+      "pitch": 5.97,
+      "grid_score": 0.317711543345637,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/transplant.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "chitin_cocoon",
+      "source_box": [
+        943,
+        0,
+        1254,
+        301
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.3018398699386471,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_04/chitin_cocoon.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "quickening_sap",
+      "source_box": [
+        0,
+        320,
+        298,
+        601
+      ],
+      "pitch": 6.23,
+      "grid_score": 0.2037871473640244,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/quickening_sap.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fungal_aegis",
+      "source_box": [
+        324,
+        320,
+        605,
+        601
+      ],
+      "pitch": 6.14,
+      "grid_score": 0.23300656666251035,
+      "colors": 13,
+      "output": "tools/sprites/preview/cards/graft_04/fungal_aegis.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thresher",
+      "source_box": [
+        633,
+        320,
+        924,
+        601
+      ],
+      "pitch": 5.96,
+      "grid_score": 0.24680748376463937,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/thresher.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hyphal_web",
+      "source_box": [
+        943,
+        320,
+        1254,
+        601
+      ],
+      "pitch": 5.82,
+      "grid_score": 0.17914288168520445,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_04/hyphal_web.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "prism_resonance",
+      "source_box": [
+        0,
+        614,
+        298,
+        907
+      ],
+      "pitch": 6.0,
+      "grid_score": 0.24939006608417721,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_04/prism_resonance.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shard_cache",
+      "source_box": [
+        324,
+        614,
+        605,
+        907
+      ],
+      "pitch": 6.02,
+      "grid_score": 0.28306624558941,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/shard_cache.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mirror_tether",
+      "source_box": [
+        633,
+        614,
+        924,
+        907
+      ],
+      "pitch": 5.98,
+      "grid_score": 0.32651913858144643,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/mirror_tether.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "grav_clamp",
+      "source_box": [
+        943,
+        614,
+        1254,
+        907
+      ],
+      "pitch": 6.47,
+      "grid_score": 0.22685450020141976,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/grav_clamp.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "graft_hide_alt",
+      "source_box": [
+        0,
+        922,
+        298,
+        1254
+      ],
+      "pitch": 6.32,
+      "grid_score": 0.272213339643179,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/graft_hide_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "deep_graft_alt",
+      "source_box": [
+        324,
+        922,
+        605,
+        1254
+      ],
+      "pitch": 6.23,
+      "grid_score": 0.22242831615893852,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/deep_graft_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "transplant_alt",
+      "source_box": [
+        633,
+        922,
+        924,
+        1254
+      ],
+      "pitch": 6.28,
+      "grid_score": 0.27753364575981265,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/transplant_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hyphal_web_alt",
+      "source_box": [
+        943,
+        922,
+        1254,
+        1254
+      ],
+      "pitch": 6.28,
+      "grid_score": 0.19075308168889976,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_04/hyphal_web_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

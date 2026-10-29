@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/orchid_bud.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/orchid_bud.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 11.08,
+  "phase": [
+    6.846,
+    9.178
+  ],
+  "grid_score": 0.36368876577937975,
+  "source_bbox": [
+    298,
+    134,
+    727,
+    922
+  ],
+  "grid_size": [
+    93,
+    93
+  ],
+  "grid_content_bbox": [
+    27,
+    12,
+    66,
+    83
+  ],
+  "bbox": [
+    14,
+    2,
+    50,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.221
+}

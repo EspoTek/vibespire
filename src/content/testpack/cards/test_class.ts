@@ -1,0 +1,130 @@
+// TEST PACK cards for `test_class` (engine tests, sim smoke runs, renderer dev builds via ?content=test).
+// Each exercises one or two DSL primitives / zones. Not real game content.
+import type { CardDef, Effect } from '../../../engine/types';
+
+const hit = (n: number): Effect => ({ type: 'damage', amount: n, target: 'target' });
+const blk = (n: number): Effect => ({ type: 'block', amount: n });
+
+export const TEST_CLASS_CARDS: CardDef[] = [
+  // --- starters
+  { id: 'test_strike', name: 'Test Strike', cls: 'test_class', type: 'attack', rarity: 'starter', cost: 1, target: 'enemy',
+    text: 'Deal {damage} damage.', effects: [hit(6)], upgrade: { effects: [hit(9)] }, icon: 'card_strike', tags: ['starter'] },
+  { id: 'test_block', name: 'Test Block', cls: 'test_class', type: 'skill', rarity: 'starter', cost: 1, target: 'self',
+    text: 'Gain {block} Block.', effects: [blk(5)], upgrade: { effects: [blk(8)] }, icon: 'card_defend', tags: ['starter', 'block'] },
+  { id: 'test_draw', name: 'Test Draw', cls: 'test_class', type: 'skill', rarity: 'starter', cost: 1, target: 'none',
+    text: 'Draw {draw} cards.', effects: [{ type: 'draw', n: 2 }], upgrade: { cost: 0 }, icon: 'card_draw', tags: ['draw'] },
+
+  // --- commons
+  { id: 'test_bash', name: 'Test Bash', cls: 'test_class', type: 'attack', rarity: 'common', cost: 2, target: 'enemy',
+    text: 'Deal {damage} damage. Apply {status} Vulnerable.',
+    effects: [hit(8), { type: 'status', target: 'target', id: 'test_vulnerable', amount: 2 }],
+    upgrade: { effects: [hit(10), { type: 'status', target: 'target', id: 'test_vulnerable', amount: 3 }] },
+    icon: 'card_bash', tags: ['debuff'] },
+  { id: 'test_cleave', name: 'Test Cleave', cls: 'test_class', type: 'attack', rarity: 'common', cost: 1, target: 'all_enemies',
+    text: 'Deal {damage} damage to ALL enemies.', effects: [{ type: 'damage', amount: 8, target: 'all_enemies' }],
+    upgrade: { effects: [{ type: 'damage', amount: 11, target: 'all_enemies' }] }, icon: 'card_cleave', tags: ['aoe'] },
+  { id: 'test_twin', name: 'Test Twin', cls: 'test_class', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
+    text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 5, times: 2, target: 'target' }],
+    upgrade: { effects: [{ type: 'damage', amount: 7, times: 2, target: 'target' }] }, icon: 'card_twin', tags: ['multihit'] },
+  { id: 'test_shrug', name: 'Test Shrug', cls: 'test_class', type: 'skill', rarity: 'common', cost: 1, target: 'self',
+    text: 'Gain {block} Block. Draw {draw} card.', effects: [blk(8), { type: 'draw', n: 1 }],
+    upgrade: { effects: [blk(11), { type: 'draw', n: 1 }] }, icon: 'card_shrug', tags: ['block', 'draw'] },
+  { id: 'test_scry', name: 'Test Scry', cls: 'test_class', type: 'skill', rarity: 'common', cost: 0, target: 'none',
+    text: 'Scry {scry}.', effects: [{ type: 'scry', n: 3 }], upgrade: { effects: [{ type: 'scry', n: 5 }] }, icon: 'card_scry' },
+  { id: 'test_retainer', name: 'Test Retainer', cls: 'test_class', type: 'skill', rarity: 'common', cost: 1, target: 'self',
+    keywords: ['retain'], text: 'Retain. Gain {block} Block.', effects: [blk(6)], upgrade: { effects: [blk(9)] },
+    icon: 'card_retain', tags: ['block'] },
+
+  // --- uncommons
+  { id: 'test_sift', name: 'Test Sift', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 1, target: 'none',
+    text: 'Draw {draw} cards. Discard {discard} card.', effects: [{ type: 'draw', n: 2 }, { type: 'discard', n: 1, choose: true }],
+    upgrade: { effects: [{ type: 'draw', n: 3 }, { type: 'discard', n: 1, choose: true }] }, icon: 'card_sift', tags: ['draw'] },
+  { id: 'test_purge', name: 'Test Purge', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 0, target: 'none',
+    text: 'Exhaust {exhaust} card. Gain {energy} Energy.',
+    effects: [{ type: 'exhaust', n: 1, from: 'hand', choose: true }, { type: 'energy', n: 1 }],
+    upgrade: { effects: [{ type: 'exhaust', n: 1, from: 'hand', choose: true }, { type: 'energy', n: 2 }] }, icon: 'card_purge' },
+  { id: 'test_modal', name: 'Test Modal', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 1, target: 'self',
+    text: 'Choose: gain Block or draw cards.',
+    effects: [{ type: 'choose', prompt: 'Choose one', options: [
+      { label: 'Gain {block} Block.', effects: [blk(9)] },
+      { label: 'Draw {draw} cards.', effects: [{ type: 'draw', n: 2 }] },
+    ] }],
+    upgrade: { effects: [{ type: 'choose', prompt: 'Choose one', options: [
+      { label: 'Gain {block} Block.', effects: [blk(12)] },
+      { label: 'Draw {draw} cards.', effects: [{ type: 'draw', n: 3 }] },
+    ] }] },
+    icon: 'card_modal' },
+  { id: 'test_finisher', name: 'Test Finisher', cls: 'test_class', type: 'attack', rarity: 'uncommon', cost: 1, target: 'enemy',
+    text: 'Deal {damage} damage. If this kills, gain {gold} gold.',
+    effects: [hit(10), { type: 'conditional', if: { type: 'target_dead' }, then: [{ type: 'gold', amount: 10 }] }],
+    upgrade: { effects: [hit(13), { type: 'conditional', if: { type: 'target_dead' }, then: [{ type: 'gold', amount: 15 }] }] },
+    icon: 'card_finisher' },
+  { id: 'test_armory', name: 'Test Armory', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 1, target: 'self',
+    text: 'Gain {block} Block. Upgrade a card in your hand.', effects: [blk(5), { type: 'upgrade', where: 'hand', choose: true }],
+    upgrade: { text: 'Gain {block} Block. Upgrade ALL cards in your hand.', effects: [blk(5), { type: 'upgrade', where: 'all_hand' }] },
+    icon: 'card_armory' },
+  { id: 'test_jab', name: 'Test Jab', cls: 'test_class', type: 'attack', rarity: 'uncommon', cost: 0, target: 'enemy',
+    keywords: ['innate'], text: 'Innate. Deal {damage} damage.', effects: [hit(3)], upgrade: { effects: [hit(5)] }, icon: 'card_jab' },
+
+  // --- rares
+  { id: 'test_whirl', name: 'Test Whirl', cls: 'test_class', type: 'attack', rarity: 'rare', cost: 'X', target: 'all_enemies',
+    text: 'Deal {damage} damage to ALL enemies {repeat} times.',
+    effects: [{ type: 'repeat', times: 'X', effects: [{ type: 'damage', amount: 5, target: 'all_enemies' }] }],
+    upgrade: { effects: [{ type: 'repeat', times: 'X', effects: [{ type: 'damage', amount: 8, target: 'all_enemies' }] }] },
+    icon: 'card_whirl', tags: ['aoe'] },
+  { id: 'test_ritual', name: 'Test Ritual', cls: 'test_class', type: 'power', rarity: 'rare', cost: 1, target: 'self',
+    text: 'Gain {status} Strength.', effects: [{ type: 'status', target: 'self', id: 'test_strength', amount: 2 }],
+    upgrade: { effects: [{ type: 'status', target: 'self', id: 'test_strength', amount: 3 }] }, icon: 'card_ritual', tags: ['scaling'] },
+  { id: 'test_double', name: 'Test Double', cls: 'test_class', type: 'skill', rarity: 'rare', cost: 1, target: 'self',
+    text: 'Double your Block.', effects: [{ type: 'custom', fn: 'double_block' }], upgrade: { cost: 0 },
+    custom: {
+      double_block: (c) => {
+        const combat = c.combat;
+        if (!combat) throw new Error('test_double outside combat');
+        c.now([{ type: 'block', amount: combat.player.block }]);
+      },
+    },
+    icon: 'card_double', tags: ['block'] },
+  { id: 'test_ghost', name: 'Test Ghost', cls: 'test_class', type: 'skill', rarity: 'rare', cost: 1, target: 'self',
+    keywords: ['ethereal', 'exhaust'], text: 'Ethereal. Gain {block} Block. Exhaust.', effects: [blk(15)],
+    upgrade: { effects: [blk(20)] }, icon: 'card_ghost', tags: ['block'] },
+
+  // --- v2 zones (the starter deck shows each one)
+  { id: 'test_parry', name: 'Test Parry', cls: 'test_class', type: 'attack', rarity: 'starter', cost: 1, target: 'enemy',
+    keywords: ['riposte'], text: 'Deal {damage} damage. Riposte: deal {rdamage} damage to the attacker.',
+    effects: [hit(5)], riposte: [{ type: 'damage', amount: 4, target: 'attacker', key: 'rdamage' }],
+    upgrade: { effects: [hit(7)], riposte: [{ type: 'damage', amount: 6, target: 'attacker', key: 'rdamage' }] }, icon: 'card_parry', tags: ['riposte'] },
+  { id: 'test_tock', name: 'Test Tock', cls: 'test_class', type: 'skill', rarity: 'starter', cost: 1, target: 'self',
+    keywords: ['delay'], text: 'Gain {block} Block. Delay 1: gain {delay_block} Block.',
+    effects: [blk(3)], delay: { turns: 1, effects: [{ type: 'block', amount: 5, key: 'delay_block' }] },
+    upgrade: { effects: [blk(4)], delay: { turns: 1, effects: [{ type: 'block', amount: 7, key: 'delay_block' }] } }, icon: 'card_tock', tags: ['delay'] },
+  { id: 'test_sprout', name: 'Test Sprout', cls: 'test_class', type: 'attack', rarity: 'starter', cost: 1, target: 'enemy',
+    keywords: ['bloom'], text: 'Bloom. Deal {damage} (+{damage_per} per Bloom) damage.',
+    effects: [{ type: 'damage', amount: { base: 4, per: 2, scale: { cardVar: 'bloom' } }, target: 'target' }],
+    upgrade: { effects: [{ type: 'damage', amount: { base: 4, per: 3, scale: { cardVar: 'bloom' } }, target: 'target' }] }, icon: 'card_sprout', tags: ['bloom'] },
+  { id: 'test_graft', name: 'Test Graft', cls: 'test_class', type: 'skill', rarity: 'starter', cost: 1, target: 'self',
+    text: 'Gain {block} Block. Prune.', effects: [blk(4), { type: 'prune', bloom: 1, variant: 'standard' }],
+    upgrade: { effects: [blk(6), { type: 'prune', bloom: 1, variant: 'standard' }] }, icon: 'card_graft', tags: ['prune', 'block'] },
+  { id: 'test_beat', name: 'Test Beat', cls: 'test_class', type: 'attack', rarity: 'starter', cost: 0, target: 'enemy',
+    text: 'Deal {damage} damage. On beat: draw {draw} card.', effects: [hit(3), { type: 'on_beat', effects: [{ type: 'draw', n: 1 }] }],
+    upgrade: { effects: [hit(4), { type: 'on_beat', effects: [{ type: 'draw', n: 2 }] }] }, icon: 'card_beat', tags: ['cadence'] },
+  { id: 'test_brace', name: 'Test Brace', cls: 'test_class', type: 'skill', rarity: 'starter', cost: 1, target: 'self',
+    text: 'Gain {guard} Guard.', effects: [{ type: 'guard', amount: 6 }], upgrade: { effects: [{ type: 'guard', amount: 9 }] }, icon: 'card_brace', tags: ['guard'] },
+  { id: 'test_cashin', name: 'Test Cash-in', cls: 'test_class', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
+    text: 'Deal {damage} damage. Spend {spend} Onslaught: deal {sdamage} damage.',
+    effects: [hit(4), { type: 'spend_status', id: 'onslaught', n: 2, key: 'spend', effects: [{ type: 'damage', amount: 8, target: 'target', key: 'sdamage' }] }],
+    upgrade: { effects: [hit(6), { type: 'spend_status', id: 'onslaught', n: 2, key: 'spend', effects: [{ type: 'damage', amount: 11, target: 'target', key: 'sdamage' }] }] },
+    icon: 'card_cashin', tags: ['onslaught'] },
+  { id: 'test_advance', name: 'Test Advance', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 0, target: 'none',
+    text: 'Advance {advance}. Draw {draw} card.', effects: [{ type: 'advance', n: 1 }, { type: 'draw', n: 1 }],
+    upgrade: { effects: [{ type: 'advance', n: 2 }, { type: 'draw', n: 1 }] }, icon: 'card_advance', tags: ['delay'] },
+  { id: 'test_noon', name: 'Test Noon', cls: 'test_class', type: 'attack', rarity: 'rare', cost: 1, target: 'enemy',
+    keywords: ['delay'], text: 'Delay 2: deal {damage} damage.', effects: [], delay: { turns: 2, effects: [hit(14)] },
+    upgrade: { delay: { turns: 2, effects: [hit(18)] } }, icon: 'card_noon', tags: ['delay'] },
+  { id: 'test_wild_prune', name: 'Test Wild Prune', cls: 'test_class', type: 'skill', rarity: 'uncommon', cost: 0, target: 'none',
+    text: 'Wild Prune {prune}.', effects: [{ type: 'prune', bloom: 1, variant: 'wild' }], upgrade: { effects: [{ type: 'prune', bloom: 2, variant: 'wild' }] },
+    icon: 'card_wildprune', tags: ['prune'] },
+  { id: 'test_shard_guard', name: 'Test Shard Guard', cls: 'test_class', type: 'skill', rarity: 'rare', cost: 0, target: 'self',
+    text: 'Spend {shards_abs} Shard: gain {guard} Guard.', effects: [{ type: 'shards', amount: -1 }, { type: 'guard', amount: 12 }],
+    upgrade: { effects: [{ type: 'shards', amount: -1 }, { type: 'guard', amount: 16 }] }, icon: 'card_shard', tags: ['shards'] },
+];

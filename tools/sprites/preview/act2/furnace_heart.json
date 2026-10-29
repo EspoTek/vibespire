@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/furnace_heart.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/furnace_heart.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 5.28,
+  "phase": [
+    5.209,
+    0.075
+  ],
+  "grid_score": 0.15312622430227768,
+  "source_bbox": [
+    19,
+    6,
+    1006,
+    1013
+  ],
+  "grid_size": [
+    194,
+    194
+  ],
+  "grid_content_bbox": [
+    4,
+    1,
+    191,
+    192
+  ],
+  "bbox": [
+    1,
+    0,
+    95,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.239
+}

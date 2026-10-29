@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/trihammer.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/trihammer.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 4.45,
+  "phase": [
+    2.518,
+    2.556
+  ],
+  "grid_score": 0.15214098740200382,
+  "source_bbox": [
+    54,
+    21,
+    970,
+    1000
+  ],
+  "grid_size": [
+    231,
+    231
+  ],
+  "grid_content_bbox": [
+    13,
+    5,
+    218,
+    225
+  ],
+  "bbox": [
+    3,
+    0,
+    93,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.234
+}

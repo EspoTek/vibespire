@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/hammer_warden.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/hammer_warden.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 7.2,
+  "phase": [
+    4.049,
+    0.755
+  ],
+  "grid_score": 0.24103403787904293,
+  "source_bbox": [
+    195,
+    7,
+    828,
+    1009
+  ],
+  "grid_size": [
+    143,
+    142
+  ],
+  "grid_content_bbox": [
+    28,
+    1,
+    115,
+    140
+  ],
+  "bbox": [
+    11,
+    0,
+    52,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.246
+}

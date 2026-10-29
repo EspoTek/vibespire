@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/thornback.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/thornback.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 8.01,
+  "phase": [
+    7.504,
+    6.894
+  ],
+  "grid_score": 0.2865356537831947,
+  "source_bbox": [
+    64,
+    9,
+    959,
+    1008
+  ],
+  "grid_size": [
+    128,
+    128
+  ],
+  "grid_content_bbox": [
+    8,
+    1,
+    120,
+    126
+  ],
+  "bbox": [
+    3,
+    0,
+    61,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.251
+}

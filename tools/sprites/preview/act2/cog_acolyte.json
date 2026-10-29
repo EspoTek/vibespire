@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/cog_acolyte.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/cog_acolyte.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 8.11,
+  "phase": [
+    1.027,
+    2.032
+  ],
+  "grid_score": 0.261538745566848,
+  "source_bbox": [
+    260,
+    16,
+    764,
+    1008
+  ],
+  "grid_size": [
+    126,
+    126
+  ],
+  "grid_content_bbox": [
+    32,
+    2,
+    94,
+    124
+  ],
+  "bbox": [
+    15,
+    0,
+    49,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.236
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/pyrexia_node.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/pyrexia_node.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.01,
+  "phase": [
+    3.088,
+    0.15
+  ],
+  "grid_score": 0.3268773902411006,
+  "source_bbox": [
+    10,
+    10,
+    1013,
+    1005
+  ],
+  "grid_size": [
+    113,
+    114
+  ],
+  "grid_content_bbox": [
+    1,
+    1,
+    112,
+    112
+  ],
+  "bbox": [
+    1,
+    1,
+    63,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.227
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/loom_oracle.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/loom_oracle.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 3.2,
+  "phase": [
+    2.358,
+    3.193
+  ],
+  "grid_score": 0.2313912443315372,
+  "source_bbox": [
+    96,
+    6,
+    927,
+    1018
+  ],
+  "grid_size": [
+    320,
+    320
+  ],
+  "grid_content_bbox": [
+    30,
+    2,
+    290,
+    318
+  ],
+  "bbox": [
+    5,
+    0,
+    58,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.236
+}

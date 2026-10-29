@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/phage.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/phage.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.94,
+  "phase": [
+    5.029,
+    2.492
+  ],
+  "grid_score": 0.35116751759998516,
+  "source_bbox": [
+    158,
+    64,
+    866,
+    959
+  ],
+  "grid_size": [
+    104,
+    103
+  ],
+  "grid_content_bbox": [
+    16,
+    6,
+    88,
+    96
+  ],
+  "bbox": [
+    6,
+    0,
+    58,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.215
+}

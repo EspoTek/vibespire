@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/vinelash.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/vinelash.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.48,
+  "phase": [
+    4.038,
+    8.697
+  ],
+  "grid_score": 0.15012000414694388,
+  "source_bbox": [
+    36,
+    10,
+    989,
+    1012
+  ],
+  "grid_size": [
+    108,
+    108
+  ],
+  "grid_content_bbox": [
+    3,
+    1,
+    104,
+    107
+  ],
+  "bbox": [
+    1,
+    0,
+    62,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.234
+}

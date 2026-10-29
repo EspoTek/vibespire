@@ -1,0 +1,186 @@
+[
+  {
+    "path": "public/assets/backdrops/act1_verdant.png",
+    "size": [
+      640,
+      360
+    ],
+    "opaque_colors": 18
+  },
+  {
+    "path": "public/assets/sprites/cards/test/boot-kick.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 15
+  },
+  {
+    "path": "public/assets/sprites/cards/test/burning-ember.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 10
+  },
+  {
+    "path": "public/assets/sprites/cards/test/clock-face.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/comet.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 10
+  },
+  {
+    "path": "public/assets/sprites/cards/test/crystal-lens.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 11
+  },
+  {
+    "path": "public/assets/sprites/cards/test/gold-coins.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 9
+  },
+  {
+    "path": "public/assets/sprites/cards/test/heavy-sword-slash.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/hourglass.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/potion-flask.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/raised-shield.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 15
+  },
+  {
+    "path": "public/assets/sprites/cards/test/spiral-vortex.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 11
+  },
+  {
+    "path": "public/assets/sprites/cards/test/spore-skull.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/sprouting-seed.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 15
+  },
+  {
+    "path": "public/assets/sprites/cards/test/thorned-heart.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 12
+  },
+  {
+    "path": "public/assets/sprites/cards/test/thrown-dagger.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/cards/test/vine-whip.png",
+    "size": [
+      32,
+      24
+    ],
+    "opaque_colors": 8
+  },
+  {
+    "path": "public/assets/sprites/portraits/breaker.png",
+    "size": [
+      64,
+      64
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/portraits/breaker@32.png",
+    "size": [
+      32,
+      32
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/portraits/chronist.png",
+    "size": [
+      64,
+      64
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/portraits/chronist@32.png",
+    "size": [
+      32,
+      32
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/portraits/graft.png",
+    "size": [
+      64,
+      64
+    ],
+    "opaque_colors": 16
+  },
+  {
+    "path": "public/assets/sprites/portraits/graft@32.png",
+    "size": [
+      32,
+      32
+    ],
+    "opaque_colors": 16
+  }
+]

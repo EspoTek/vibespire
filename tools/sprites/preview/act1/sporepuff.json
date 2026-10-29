@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/sporepuff.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/sporepuff.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 14.84,
+  "phase": [
+    0.467,
+    5.526
+  ],
+  "grid_score": 0.16563510314183105,
+  "source_bbox": [
+    28,
+    83,
+    996,
+    968
+  ],
+  "grid_size": [
+    69,
+    69
+  ],
+  "grid_content_bbox": [
+    2,
+    5,
+    67,
+    65
+  ],
+  "bbox": [
+    0,
+    5,
+    64,
+    63
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.227
+}

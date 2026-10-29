@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/tether_sovereign.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/tether_sovereign.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 4.38,
+  "phase": [
+    4.377,
+    3.868
+  ],
+  "grid_score": 0.25902518001117425,
+  "source_bbox": [
+    27,
+    4,
+    997,
+    1015
+  ],
+  "grid_size": [
+    234,
+    234
+  ],
+  "grid_content_bbox": [
+    6,
+    1,
+    228,
+    232
+  ],
+  "bbox": [
+    2,
+    1,
+    94,
+    96
+  ],
+  "size": 96,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.226
+}

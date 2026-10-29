@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/sickle_mantis.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/sickle_mantis.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 5.1,
+  "phase": [
+    2.03,
+    4.497
+  ],
+  "grid_score": 0.31211581511545644,
+  "source_bbox": [
+    272,
+    11,
+    752,
+    1013
+  ],
+  "grid_size": [
+    200,
+    201
+  ],
+  "grid_content_bbox": [
+    53,
+    2,
+    147,
+    199
+  ],
+  "bbox": [
+    16,
+    0,
+    48,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.231
+}

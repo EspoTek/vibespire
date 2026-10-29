@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/shellback_titan.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/shellback_titan.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.56,
+  "phase": [
+    5.199,
+    5.987
+  ],
+  "grid_score": 0.20306773671665868,
+  "source_bbox": [
+    32,
+    66,
+    992,
+    981
+  ],
+  "grid_size": [
+    108,
+    107
+  ],
+  "grid_content_bbox": [
+    4,
+    7,
+    104,
+    103
+  ],
+  "bbox": [
+    0,
+    2,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.231
+}

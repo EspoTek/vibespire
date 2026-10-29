@@ -1,0 +1,40 @@
+{
+  "input": "raw/jellyfish-spirit.png",
+  "output": "../../public/assets/sprites/enemies/jellyfish-spirit.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 14.2,
+  "phase": [
+    0.66,
+    2.486
+  ],
+  "grid_score": 0.3248434129699369,
+  "source_bbox": [
+    145,
+    157,
+    879,
+    888
+  ],
+  "grid_size": [
+    72,
+    72
+  ],
+  "grid_content_bbox": [
+    10,
+    11,
+    62,
+    62
+  ],
+  "bbox": [
+    0,
+    1,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.208
+}

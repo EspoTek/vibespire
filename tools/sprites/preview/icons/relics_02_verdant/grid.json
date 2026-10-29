@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/relics_02_verdant.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "heartseed",
+      "source_box": [
+        0,
+        0,
+        251,
+        253
+      ],
+      "pitch": 5.19,
+      "grid_score": 0.16224813705066243,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/heartseed.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "seed_pouch",
+      "source_box": [
+        279,
+        0,
+        490,
+        253
+      ],
+      "pitch": 6.07,
+      "grid_score": 0.2135599952452104,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/seed_pouch.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pollen_sac",
+      "source_box": [
+        526,
+        0,
+        753,
+        253
+      ],
+      "pitch": 5.2,
+      "grid_score": 0.34370346642226657,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/pollen_sac.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "compost_heap",
+      "source_box": [
+        786,
+        0,
+        1024,
+        253
+      ],
+      "pitch": 5.1,
+      "grid_score": 0.19888585066350598,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/compost_heap.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "rot_censer",
+      "source_box": [
+        0,
+        278,
+        251,
+        498
+      ],
+      "pitch": 5.18,
+      "grid_score": 0.19480779043690105,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/rot_censer.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "grafting_knife",
+      "source_box": [
+        279,
+        278,
+        490,
+        498
+      ],
+      "pitch": 5.46,
+      "grid_score": 0.31246463745422404,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/grafting_knife.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "heartwood_ring",
+      "source_box": [
+        526,
+        278,
+        753,
+        498
+      ],
+      "pitch": 5.21,
+      "grid_score": 0.2727825005724148,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/heartwood_ring.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "mycelial_net",
+      "source_box": [
+        786,
+        278,
+        1024,
+        498
+      ],
+      "pitch": 5.17,
+      "grid_score": 0.2129412036029723,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/mycelial_net.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "elder_seed",
+      "source_box": [
+        0,
+        523,
+        251,
+        762
+      ],
+      "pitch": 5.14,
+      "grid_score": 0.24790243862236722,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/elder_seed.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "hollow_bough",
+      "source_box": [
+        279,
+        523,
+        490,
+        762
+      ],
+      "pitch": 5.15,
+      "grid_score": 0.22282829796966816,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/hollow_bough.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "plague_bloom",
+      "source_box": [
+        526,
+        523,
+        753,
+        762
+      ],
+      "pitch": 5.19,
+      "grid_score": 0.3052930118247116,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/plague_bloom.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "wild_growth",
+      "source_box": [
+        786,
+        523,
+        1024,
+        762
+      ],
+      "pitch": 5.1,
+      "grid_score": 0.1882718960180647,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/wild_growth.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "nursery_tray",
+      "source_box": [
+        0,
+        777,
+        251,
+        1024
+      ],
+      "pitch": 5.17,
+      "grid_score": 0.19480156451778852,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/nursery_tray.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "field_dressing",
+      "source_box": [
+        279,
+        777,
+        490,
+        1024
+      ],
+      "pitch": 5.43,
+      "grid_score": 0.1827381243395585,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/field_dressing.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "heavy_heart",
+      "source_box": [
+        526,
+        777,
+        753,
+        1024
+      ],
+      "pitch": 5.17,
+      "grid_score": 0.3354571376519512,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/heavy_heart.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "tender_plating",
+      "source_box": [
+        786,
+        777,
+        1024,
+        1024
+      ],
+      "pitch": 5.13,
+      "grid_score": 0.24053904213135152,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/relics_02_verdant/tender_plating.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

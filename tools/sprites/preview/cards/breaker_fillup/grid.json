@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/breaker_fillup.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "equal",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "shoulder_check_retry",
+      "source_box": [
+        0,
+        0,
+        256,
+        243
+      ],
+      "pitch": 4.66,
+      "grid_score": 0.2157128363006313,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/shoulder_check_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thresher_arc_retry",
+      "source_box": [
+        256,
+        0,
+        512,
+        243
+      ],
+      "pitch": 4.46,
+      "grid_score": 0.2789619991171486,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/thresher_arc_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "catch_blade_retry",
+      "source_box": [
+        512,
+        0,
+        768,
+        243
+      ],
+      "pitch": 4.62,
+      "grid_score": 0.2433560284544411,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/catch_blade_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "find_the_seam_retry",
+      "source_box": [
+        768,
+        0,
+        1024,
+        243
+      ],
+      "pitch": 4.92,
+      "grid_score": 0.2405360206470625,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/find_the_seam_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "endless_maul_retry",
+      "source_box": [
+        0,
+        262,
+        256,
+        488
+      ],
+      "pitch": 4.48,
+      "grid_score": 0.20662047615246856,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/endless_maul_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "iron_avalanche_retry",
+      "source_box": [
+        256,
+        262,
+        512,
+        488
+      ],
+      "pitch": 4.67,
+      "grid_score": 0.15834460187196564,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/iron_avalanche_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "bind_the_blade_retry",
+      "source_box": [
+        512,
+        262,
+        768,
+        488
+      ],
+      "pitch": 4.53,
+      "grid_score": 0.23618118693423065,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/bind_the_blade_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fault_reader_retry",
+      "source_box": [
+        768,
+        262,
+        1024,
+        488
+      ],
+      "pitch": 4.48,
+      "grid_score": 0.22431201664464684,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/fault_reader_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "chain_driver_retry",
+      "source_box": [
+        0,
+        505,
+        256,
+        737
+      ],
+      "pitch": 4.49,
+      "grid_score": 0.1632491929652363,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/chain_driver_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "overhand_drive_retry",
+      "source_box": [
+        256,
+        505,
+        512,
+        737
+      ],
+      "pitch": 4.9,
+      "grid_score": 0.19895539610003243,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/overhand_drive_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "breach_hammer_retry",
+      "source_box": [
+        512,
+        505,
+        768,
+        737
+      ],
+      "pitch": 4.85,
+      "grid_score": 0.19912478202008121,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/breach_hammer_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "read_the_line_retry",
+      "source_box": [
+        768,
+        505,
+        1024,
+        737
+      ],
+      "pitch": 4.68,
+      "grid_score": 0.15943143164807644,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/read_the_line_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hairline_mark_retry",
+      "source_box": [
+        0,
+        752,
+        256,
+        1024
+      ],
+      "pitch": 4.68,
+      "grid_score": 0.2326465396636591,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/hairline_mark_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "en_garde_retry",
+      "source_box": [
+        256,
+        752,
+        512,
+        1024
+      ],
+      "pitch": 4.68,
+      "grid_score": 0.14218252768608897,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/en_garde_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "forge_oath_retry",
+      "source_box": [
+        512,
+        752,
+        768,
+        1024
+      ],
+      "pitch": 4.68,
+      "grid_score": 0.1819973902800698,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/forge_oath_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "steal_the_swing_retry",
+      "source_box": [
+        768,
+        752,
+        1024,
+        1024
+      ],
+      "pitch": 4.66,
+      "grid_score": 0.1852572877780696,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/breaker_fillup/steal_the_swing_retry.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

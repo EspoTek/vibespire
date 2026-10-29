@@ -1,0 +1,398 @@
+{
+  "relics_01_forged": [
+    {
+      "id": "riven_gauntlet",
+      "subject": "cracked red iron armored gauntlet"
+    },
+    {
+      "id": "glass_spurs",
+      "subject": "cyan glass boot spur"
+    },
+    {
+      "id": "dampener_coil",
+      "subject": "blue copper helical spring"
+    },
+    {
+      "id": "bulwark_rivets",
+      "subject": "three bronze shield rivets"
+    },
+    {
+      "id": "stim_patch",
+      "subject": "red medical adhesive patch"
+    },
+    {
+      "id": "scrap_magnet",
+      "subject": "red horseshoe scrap magnet"
+    },
+    {
+      "id": "notched_buckler",
+      "subject": "notched round bronze buckler"
+    },
+    {
+      "id": "chain_wraps",
+      "subject": "silver chain wrapped fist"
+    },
+    {
+      "id": "parry_charm",
+      "subject": "crossed silver swords pendant"
+    },
+    {
+      "id": "kept_fury",
+      "subject": "red flame inside iron cage"
+    },
+    {
+      "id": "crowd_breaker",
+      "subject": "wide bronze spiked warhammer"
+    },
+    {
+      "id": "concussion_rig",
+      "subject": "steel helmet with orange shock pads"
+    },
+    {
+      "id": "slow_temper",
+      "subject": "blue silver metal ingot"
+    },
+    {
+      "id": "hairline_saw",
+      "subject": "silver serrated hand saw"
+    },
+    {
+      "id": "duelists_oath",
+      "subject": "upright silver rapier red ribbon"
+    },
+    {
+      "id": "bastion_core",
+      "subject": "bronze shield with red core"
+    }
+  ],
+  "relics_02_verdant": [
+    {
+      "id": "heartseed",
+      "subject": "red heart shaped sprouting seed"
+    },
+    {
+      "id": "seed_pouch",
+      "subject": "brown seed pouch green sprout"
+    },
+    {
+      "id": "pollen_sac",
+      "subject": "yellow hanging pollen pod"
+    },
+    {
+      "id": "compost_heap",
+      "subject": "brown compost mound green mushroom"
+    },
+    {
+      "id": "rot_censer",
+      "subject": "green smoking bronze censer"
+    },
+    {
+      "id": "grafting_knife",
+      "subject": "curved silver knife green handle"
+    },
+    {
+      "id": "heartwood_ring",
+      "subject": "coiled green vine wooden ring"
+    },
+    {
+      "id": "mycelial_net",
+      "subject": "white fungal web green nodes"
+    },
+    {
+      "id": "elder_seed",
+      "subject": "large gold seed branching roots"
+    },
+    {
+      "id": "hollow_bough",
+      "subject": "hollow forked brown tree branch"
+    },
+    {
+      "id": "plague_bloom",
+      "subject": "purple flower sickly green center"
+    },
+    {
+      "id": "wild_growth",
+      "subject": "tangled green thorny sprouting bulb"
+    },
+    {
+      "id": "nursery_tray",
+      "subject": "brown rectangular tray three seedlings"
+    },
+    {
+      "id": "field_dressing",
+      "subject": "rolled white bandage red clasp"
+    },
+    {
+      "id": "heavy_heart",
+      "subject": "dark iron heart bronze chain"
+    },
+    {
+      "id": "tender_plating",
+      "subject": "cracked red overlapping armor plates"
+    }
+  ],
+  "relics_03_celestial": [
+    {
+      "id": "chrono_lens",
+      "subject": "gold round lens cyan clock hand"
+    },
+    {
+      "id": "tuning_fork",
+      "subject": "silver two pronged tuning fork"
+    },
+    {
+      "id": "sandglass_bead",
+      "subject": "tiny gold hourglass cyan sand"
+    },
+    {
+      "id": "star_pip",
+      "subject": "small cyan four pointed star"
+    },
+    {
+      "id": "pocket_star_chart",
+      "subject": "folded navy chart gold constellation"
+    },
+    {
+      "id": "wayfinder_needle",
+      "subject": "long gold compass needle"
+    },
+    {
+      "id": "offbeat_drum",
+      "subject": "purple drum gold zigzag rim"
+    },
+    {
+      "id": "timeline_spool",
+      "subject": "cyan thread bronze spool"
+    },
+    {
+      "id": "seers_veil",
+      "subject": "flowing blue veil silver eye"
+    },
+    {
+      "id": "metronome_heart",
+      "subject": "gold triangular metronome red pendulum"
+    },
+    {
+      "id": "prophet_glass",
+      "subject": "blue crystal ball gold pedestal"
+    },
+    {
+      "id": "paradox_coil",
+      "subject": "interlocking cyan violet spiral loops"
+    },
+    {
+      "id": "void_compass",
+      "subject": "black diamond compass cyan needle"
+    },
+    {
+      "id": "cracked_hourglass",
+      "subject": "cracked silver hourglass blue sand"
+    },
+    {
+      "id": "fixed_star",
+      "subject": "gold five pointed star silver pin"
+    },
+    {
+      "id": "star_atlas",
+      "subject": "open blue book gold star"
+    }
+  ],
+  "relics_04_crystalline": [
+    {
+      "id": "cracked_prism",
+      "subject": "cracked blue triangular prism shard"
+    },
+    {
+      "id": "geode_heart",
+      "subject": "purple crystal heart gray shell"
+    },
+    {
+      "id": "shard_lens",
+      "subject": "gold handled loupe blue shard"
+    },
+    {
+      "id": "crystal_spine",
+      "subject": "vertical jagged cyan crystal spine"
+    },
+    {
+      "id": "stormbreak_gem",
+      "subject": "red diamond gem yellow lightning"
+    },
+    {
+      "id": "shard_crucible",
+      "subject": "black crucible overflowing cyan crystals"
+    },
+    {
+      "id": "fracture_engine",
+      "subject": "split bronze gear red core"
+    },
+    {
+      "id": "exposed_core",
+      "subject": "red glowing orb broken silver cage"
+    },
+    {
+      "id": "stasis_engine",
+      "subject": "square blue engine frozen cyan core"
+    },
+    {
+      "id": "ghost_lantern",
+      "subject": "hanging bronze lantern pale cyan flame"
+    },
+    {
+      "id": "ascendant_prism",
+      "subject": "upright gold violet crystal prism"
+    },
+    {
+      "id": "gravity_loom",
+      "subject": "purple arch loom cyan hanging threads"
+    },
+    {
+      "id": "oracle_pebble",
+      "subject": "smooth cyan pebble white eye"
+    },
+    {
+      "id": "engine_tooth",
+      "subject": "single bronze cog tooth"
+    },
+    {
+      "id": "shard_debt",
+      "subject": "three cyan shards red chain"
+    },
+    {
+      "id": "crown_fragment",
+      "subject": "broken gold crown three points"
+    }
+  ],
+  "relics_05_curios": [
+    {
+      "id": "surveyor_ink",
+      "subject": "navy ink bottle gold feather"
+    },
+    {
+      "id": "tally_stick",
+      "subject": "brown wooden stick carved notches"
+    },
+    {
+      "id": "overwatch_drone",
+      "subject": "silver winged drone red eye"
+    },
+    {
+      "id": "binding_contract",
+      "subject": "rolled parchment red wax seal"
+    },
+    {
+      "id": "shard_writ",
+      "subject": "flat parchment cyan crystal seal"
+    },
+    {
+      "id": "vial_rack",
+      "subject": "wooden rack three colored vials"
+    },
+    {
+      "id": "practice_dummy",
+      "subject": "straw training dummy red target"
+    },
+    {
+      "id": "timeline_clamp",
+      "subject": "silver C clamp cyan jaws"
+    },
+    {
+      "id": "alt_mycelial_net",
+      "subject": "green diamond mesh white fungal knots"
+    },
+    {
+      "id": "alt_heavy_heart",
+      "subject": "large iron heart gold shackle"
+    },
+    {
+      "id": "alt_paradox_coil",
+      "subject": "cyan figure eight coil gold joint"
+    },
+    {
+      "id": "alt_gravity_loom",
+      "subject": "purple rectangular loom silver threads"
+    },
+    {
+      "id": "alt_fracture_engine",
+      "subject": "cracked orange gear cyan hub"
+    },
+    {
+      "id": "alt_shard_debt",
+      "subject": "cyan crystal bound red padlock"
+    },
+    {
+      "id": "alt_seers_veil",
+      "subject": "triangular blue veil white eye"
+    },
+    {
+      "id": "alt_duelists_oath",
+      "subject": "broad silver rapier red ribbon"
+    }
+  ],
+  "potions_01": [
+    {
+      "id": "pot_flare_cell",
+      "subject": "round red flask orange flame detail"
+    },
+    {
+      "id": "pot_shield_gel",
+      "subject": "square cobalt flask white shield detail"
+    },
+    {
+      "id": "pot_bastion_tonic",
+      "subject": "wide teal flask bronze battlement stopper"
+    },
+    {
+      "id": "pot_quicksilver",
+      "subject": "slender silver flask cyan wing detail"
+    },
+    {
+      "id": "pot_charge_cell",
+      "subject": "rectangular yellow flask black lightning detail"
+    },
+    {
+      "id": "pot_fault_dust",
+      "subject": "triangular orange flask white crack detail"
+    },
+    {
+      "id": "pot_concussion_gas",
+      "subject": "bulbous purple flask gray cloud detail"
+    },
+    {
+      "id": "pot_shard_tincture",
+      "subject": "diamond cyan flask gold crystal stopper"
+    },
+    {
+      "id": "pot_blight_vial",
+      "subject": "crooked lime flask white spore dots"
+    },
+    {
+      "id": "pot_seers_draught",
+      "subject": "oval navy flask white eye detail"
+    },
+    {
+      "id": "pot_fury_draught",
+      "subject": "spiked crimson flask gold fang detail"
+    },
+    {
+      "id": "pot_growth_sap",
+      "subject": "pear green flask brown thorn collar"
+    },
+    {
+      "id": "pot_tempo_draught",
+      "subject": "tall violet flask gold musical beat detail"
+    },
+    {
+      "id": "pot_mending_ampoule",
+      "subject": "heart pink flask white bandage detail"
+    },
+    {
+      "id": "pot_rewind_phial",
+      "subject": "curved turquoise flask gold counterclockwise arrow"
+    },
+    {
+      "id": "pot_halt_ampoule",
+      "subject": "hexagonal amber flask black clock hand"
+    }
+  ]
+}

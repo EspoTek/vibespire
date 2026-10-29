@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/slag_golem.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/slag_golem.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 8.7,
+  "phase": [
+    2.991,
+    7.807
+  ],
+  "grid_score": 0.16910701407141066,
+  "source_bbox": [
+    11,
+    16,
+    1013,
+    1000
+  ],
+  "grid_size": [
+    117,
+    118
+  ],
+  "grid_content_bbox": [
+    1,
+    2,
+    116,
+    115
+  ],
+  "bbox": [
+    0,
+    1,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.233
+}

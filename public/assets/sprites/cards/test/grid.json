@@ -1,0 +1,285 @@
+{
+  "source": "raw/cards/test-grid-v1.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "heavy-sword-slash",
+      "source_box": [
+        0,
+        0,
+        252,
+        229
+      ],
+      "pitch": 6.58,
+      "grid_score": 0.31764760968202177,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/heavy-sword-slash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "raised-shield",
+      "source_box": [
+        262,
+        0,
+        500,
+        229
+      ],
+      "pitch": 6.67,
+      "grid_score": 0.44697261388228515,
+      "colors": 15,
+      "output": "../../public/assets/sprites/cards/test/raised-shield.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "boot-kick",
+      "source_box": [
+        527,
+        0,
+        755,
+        229
+      ],
+      "pitch": 6.73,
+      "grid_score": 0.33481701597903346,
+      "colors": 15,
+      "output": "../../public/assets/sprites/cards/test/boot-kick.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thrown-dagger",
+      "source_box": [
+        786,
+        0,
+        1024,
+        229
+      ],
+      "pitch": 6.71,
+      "grid_score": 0.3462979868426246,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/thrown-dagger.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sprouting-seed",
+      "source_box": [
+        0,
+        296,
+        252,
+        482
+      ],
+      "pitch": 6.78,
+      "grid_score": 0.3853251636570494,
+      "colors": 15,
+      "output": "../../public/assets/sprites/cards/test/sprouting-seed.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "vine-whip",
+      "source_box": [
+        262,
+        296,
+        500,
+        482
+      ],
+      "pitch": 6.69,
+      "grid_score": 0.39704555998414737,
+      "colors": 8,
+      "output": "../../public/assets/sprites/cards/test/vine-whip.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "spore-skull",
+      "source_box": [
+        527,
+        296,
+        755,
+        482
+      ],
+      "pitch": 6.63,
+      "grid_score": 0.25230907397332425,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/spore-skull.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thorned-heart",
+      "source_box": [
+        786,
+        296,
+        1024,
+        482
+      ],
+      "pitch": 6.89,
+      "grid_score": 0.3737253611333962,
+      "colors": 12,
+      "output": "../../public/assets/sprites/cards/test/thorned-heart.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hourglass",
+      "source_box": [
+        0,
+        536,
+        252,
+        724
+      ],
+      "pitch": 6.49,
+      "grid_score": 0.3060229988987254,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/hourglass.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "comet",
+      "source_box": [
+        262,
+        536,
+        500,
+        724
+      ],
+      "pitch": 6.67,
+      "grid_score": 0.37478559420826585,
+      "colors": 10,
+      "output": "../../public/assets/sprites/cards/test/comet.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "clock-face",
+      "source_box": [
+        527,
+        536,
+        755,
+        724
+      ],
+      "pitch": 6.54,
+      "grid_score": 0.2595884156492265,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/clock-face.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "crystal-lens",
+      "source_box": [
+        786,
+        536,
+        1024,
+        724
+      ],
+      "pitch": 6.44,
+      "grid_score": 0.3377974607471803,
+      "colors": 11,
+      "output": "../../public/assets/sprites/cards/test/crystal-lens.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "potion-flask",
+      "source_box": [
+        0,
+        782,
+        252,
+        1024
+      ],
+      "pitch": 7.07,
+      "grid_score": 0.36284114700262105,
+      "colors": 16,
+      "output": "../../public/assets/sprites/cards/test/potion-flask.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "gold-coins",
+      "source_box": [
+        262,
+        782,
+        500,
+        1024
+      ],
+      "pitch": 7.02,
+      "grid_score": 0.4336823330535834,
+      "colors": 9,
+      "output": "../../public/assets/sprites/cards/test/gold-coins.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "spiral-vortex",
+      "source_box": [
+        527,
+        782,
+        755,
+        1024
+      ],
+      "pitch": 6.97,
+      "grid_score": 0.2863333865478811,
+      "colors": 11,
+      "output": "../../public/assets/sprites/cards/test/spiral-vortex.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "burning-ember",
+      "source_box": [
+        786,
+        782,
+        1024,
+        1024
+      ],
+      "pitch": 7.05,
+      "grid_score": 0.4576428438325455,
+      "colors": 10,
+      "output": "../../public/assets/sprites/cards/test/burning-ember.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

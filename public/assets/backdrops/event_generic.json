@@ -1,0 +1,30 @@
+{
+  "source": "raw/backdrops/event_generic-v1.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "crop": [
+    0,
+    80,
+    1536,
+    944
+  ],
+  "pitch": 5.33,
+  "phase": [
+    0.511,
+    0.645
+  ],
+  "grid_score": 0.36474327868440437,
+  "recovered_size": [
+    288,
+    162
+  ],
+  "size": [
+    640,
+    360
+  ],
+  "colors": 17,
+  "output": "../../public/assets/backdrops/event_generic.png",
+  "preview": "../../public/assets/backdrops/event_generic@2x.png"
+}

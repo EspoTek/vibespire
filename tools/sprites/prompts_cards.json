@@ -1,0 +1,1311 @@
+{
+  "cell_size": [
+    32,
+    24
+  ],
+  "cell_numbering": "1-based row-major, 4 columns by 4 rows",
+  "allocation": "48 Graft in sheets 1\u20133; sheet 4: 8 Graft, 4 colorless, 4 Graft alternates; colorless sheet: 16 colorless.",
+  "cards": [
+    {
+      "id": "lash",
+      "name": "Lash",
+      "type": "attack",
+      "text": "Deal {damage} damage.",
+      "class": "graft",
+      "subject": "curved green thorn whip striking sideways",
+      "sheet": "graft_01",
+      "cell": 1,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "lash"
+      }
+    },
+    {
+      "id": "husk",
+      "name": "Husk",
+      "type": "skill",
+      "text": "Gain {block} Block.",
+      "class": "graft",
+      "subject": "hollow violet seed husk shield",
+      "sheet": "graft_01",
+      "cell": 2,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "husk"
+      }
+    },
+    {
+      "id": "seed_bite",
+      "name": "Seed Bite",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage.",
+      "class": "graft",
+      "subject": "split carnivorous seed with ivory fangs",
+      "sheet": "graft_01",
+      "cell": 3,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "seed_bite"
+      }
+    },
+    {
+      "id": "graft_hide",
+      "name": "Graft Hide",
+      "type": "skill",
+      "text": "Gain {block} Block. Prune.",
+      "class": "graft",
+      "subject": "stitched green leaf shield with amber seam",
+      "sheet": "graft_01",
+      "cell": 4,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "graft_hide_alt"
+      }
+    },
+    {
+      "id": "thornwhirl",
+      "name": "Thornwhirl",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage to ALL enemies.",
+      "class": "graft",
+      "subject": "spiralling crescent of sharp emerald thorns",
+      "sheet": "graft_01",
+      "cell": 5,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "thornwhirl"
+      }
+    },
+    {
+      "id": "barb_flick",
+      "name": "Barb Flick",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage.",
+      "class": "graft",
+      "subject": "single flying violet barb with cyan trail",
+      "sheet": "graft_01",
+      "cell": 6,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "barb_flick"
+      }
+    },
+    {
+      "id": "grafting_cut",
+      "name": "Grafting Cut",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage. Prune.",
+      "class": "graft",
+      "subject": "curved amber grafting knife cutting green stem",
+      "sheet": "graft_01",
+      "cell": 7,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "grafting_cut"
+      }
+    },
+    {
+      "id": "chitin_ram",
+      "name": "Chitin Ram",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage. Gain {block} Block.",
+      "class": "graft",
+      "subject": "heavy beetle horn charging through cyan impact",
+      "sheet": "graft_01",
+      "cell": 8,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "chitin_ram"
+      }
+    },
+    {
+      "id": "hivestrike",
+      "name": "Hivestrike",
+      "type": "attack",
+      "text": "Deal {damage} damage, {damage_per} per Bloom card in your deck.",
+      "class": "graft",
+      "subject": "honeycomb hammer releasing violet stinging darts",
+      "sheet": "graft_01",
+      "cell": 9,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "hivestrike"
+      }
+    },
+    {
+      "id": "shear",
+      "name": "Shear",
+      "type": "attack",
+      "text": "Deal {damage} damage. Prune. If you Scrapped an Attack, +1 Bloom.",
+      "class": "graft",
+      "subject": "crossed silver pruning shears clipping thorn branch",
+      "sheet": "graft_01",
+      "cell": 10,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "shear"
+      }
+    },
+    {
+      "id": "spore_lash",
+      "name": "Spore Lash",
+      "type": "attack",
+      "text": "Deal {damage} damage. Apply {rot} Rot.",
+      "class": "graft",
+      "subject": "green spore-tipped vine whip lashing",
+      "sheet": "graft_01",
+      "cell": 11,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "spore_lash"
+      }
+    },
+    {
+      "id": "canker_bite",
+      "name": "Canker Bite",
+      "type": "attack",
+      "text": "Deal {damage} damage, {damage_per} per Rot on the enemy.",
+      "class": "graft",
+      "subject": "jagged violet insect mandibles dripping green venom",
+      "sheet": "graft_01",
+      "cell": 12,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "canker_bite"
+      }
+    },
+    {
+      "id": "mulch_maul",
+      "name": "Mulch Maul",
+      "type": "attack",
+      "text": "Deal {damage} damage, {damage_per} per card in your Scrapheap.",
+      "class": "graft",
+      "subject": "broad rotten log hammer with mushroom studs",
+      "sheet": "graft_01",
+      "cell": 13,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "mulch_maul"
+      }
+    },
+    {
+      "id": "sap_shell",
+      "name": "Sap Shell",
+      "type": "skill",
+      "text": "Bloom. Gain {block} ({block_per} per Bloom) Block.",
+      "class": "graft",
+      "subject": "amber sap bubble encasing green shell",
+      "sheet": "graft_01",
+      "cell": 14,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "sap_shell"
+      }
+    },
+    {
+      "id": "blightcap",
+      "name": "Blightcap",
+      "type": "skill",
+      "text": "Bloom. Apply {rot} ({rot_per} per Bloom) Rot.",
+      "class": "graft",
+      "subject": "drooping violet mushroom dripping luminous green poison",
+      "sheet": "graft_01",
+      "cell": 15,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "blightcap"
+      }
+    },
+    {
+      "id": "tendril_reach",
+      "name": "Tendril Reach",
+      "type": "skill",
+      "text": "Bloom. Gain {block} ({block_per} per Bloom) Block. Draw {draw} card.",
+      "class": "graft",
+      "subject": "forked cyan tendril unfurling protective broad leaf",
+      "sheet": "graft_01",
+      "cell": 16,
+      "selected": {
+        "sheet": "graft_01",
+        "name": "tendril_reach"
+      }
+    },
+    {
+      "id": "root_mesh",
+      "name": "Root Mesh",
+      "type": "skill",
+      "text": "Gain {block} Block, {block_per} per Bloom card in your deck.",
+      "class": "graft",
+      "subject": "interwoven green roots forming round buckler",
+      "sheet": "graft_02",
+      "cell": 1,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "root_mesh"
+      }
+    },
+    {
+      "id": "deep_graft",
+      "name": "Deep Graft",
+      "type": "skill",
+      "text": "Gain {block} Block. Prune 2.",
+      "class": "graft",
+      "subject": "thick cut root joined by cyan staples",
+      "sheet": "graft_02",
+      "cell": 2,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "deep_graft"
+      }
+    },
+    {
+      "id": "windblown_seed",
+      "name": "Windblown Seed",
+      "type": "skill",
+      "text": "Gain {block} Block. Wild Prune.",
+      "class": "graft",
+      "subject": "winged amber seed riding cyan wind curl",
+      "sheet": "graft_02",
+      "cell": 3,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "windblown_seed"
+      }
+    },
+    {
+      "id": "spore_haze",
+      "name": "Spore Haze",
+      "type": "skill",
+      "text": "Apply {rot} Rot to ALL enemies. Scrap.",
+      "class": "graft",
+      "subject": "violet spore cloud surrounding green fungus stalk",
+      "sheet": "graft_02",
+      "cell": 4,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "spore_haze"
+      }
+    },
+    {
+      "id": "mire_carapace",
+      "name": "Mire Carapace",
+      "type": "skill",
+      "text": "Gain {block} Block. If the enemy has Rot, gain {block2} more.",
+      "class": "graft",
+      "subject": "blue beetle shell crusted with green moss",
+      "sheet": "graft_02",
+      "cell": 5,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "mire_carapace"
+      }
+    },
+    {
+      "id": "shed_husk",
+      "name": "Shed Husk",
+      "type": "skill",
+      "text": "Gain {block} Block. Prune. If you Scrapped a Status or Curse, draw {draw} cards.",
+      "class": "graft",
+      "subject": "split empty cicada shell revealing cyan leaf",
+      "sheet": "graft_02",
+      "cell": 6,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "shed_husk"
+      }
+    },
+    {
+      "id": "sap_drip",
+      "name": "Sap Drip",
+      "type": "skill",
+      "text": "Choose a Bloom card in your hand; it gains {bloom} Bloom. Draw {draw} card. Scrap.",
+      "class": "graft",
+      "subject": "golden sap droplet falling onto emerald bud",
+      "sheet": "graft_02",
+      "cell": 7,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "sap_drip"
+      }
+    },
+    {
+      "id": "leaf_litter",
+      "name": "Leaf Litter",
+      "type": "skill",
+      "text": "Prune. Apply {rot} Rot to ALL enemies.",
+      "class": "graft",
+      "subject": "pile of violet fallen leaves sprouting fungus",
+      "sheet": "graft_02",
+      "cell": 8,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "leaf_litter"
+      }
+    },
+    {
+      "id": "twin_thorn",
+      "name": "Twin Thorn",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage twice.",
+      "class": "graft",
+      "subject": "paired emerald thorn daggers crossing outward",
+      "sheet": "graft_02",
+      "cell": 9,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "twin_thorn"
+      }
+    },
+    {
+      "id": "canopy_crush",
+      "name": "Canopy Crush",
+      "type": "attack",
+      "text": "Deal {damage} damage, {damage_per} per Bloom in your deck.",
+      "class": "graft",
+      "subject": "heavy leafy branch smashing with amber impact",
+      "sheet": "graft_02",
+      "cell": 10,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "canopy_crush"
+      }
+    },
+    {
+      "id": "miasma_sweep",
+      "name": "Miasma Sweep",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage to ALL enemies. Apply {rot} Rot to ALL enemies.",
+      "class": "graft",
+      "subject": "broad sickle sweeping violet poisonous crescent",
+      "sheet": "graft_02",
+      "cell": 11,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "miasma_sweep"
+      }
+    },
+    {
+      "id": "uproot",
+      "name": "Uproot",
+      "type": "attack",
+      "text": "Deal {damage} damage. Prune away. Scrap.",
+      "class": "graft",
+      "subject": "torn green root club with amber soil",
+      "sheet": "graft_02",
+      "cell": 12,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "uproot"
+      }
+    },
+    {
+      "id": "prism_thorn",
+      "name": "Prism Thorn",
+      "type": "attack",
+      "text": "Deal {damage} damage, {damage_per} per Shard you have.",
+      "class": "graft",
+      "subject": "long cyan crystal thorn piercing violet shard",
+      "sheet": "graft_02",
+      "cell": 13,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "prism_thorn"
+      }
+    },
+    {
+      "id": "pollen_sting",
+      "name": "Pollen Sting",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage. Choose a Bloom card in your hand; it gains {bloom} Bloom.",
+      "class": "graft",
+      "subject": "golden pollen stinger with green barbed tail",
+      "sheet": "graft_02",
+      "cell": 14,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "pollen_sting"
+      }
+    },
+    {
+      "id": "thicket_crash",
+      "name": "Thicket Crash",
+      "type": "attack",
+      "text": "Deal damage to ALL enemies equal to the number of cards in your deck ({damage}).",
+      "class": "graft",
+      "subject": "spiked bramble battering log with scattered leaves",
+      "sheet": "graft_02",
+      "cell": 15,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "thicket_crash"
+      }
+    },
+    {
+      "id": "patient_thorn",
+      "name": "Patient Thorn",
+      "type": "attack",
+      "text": "Bloom. Keep. Deal {damage} ({damage_per} per Bloom) damage.",
+      "class": "graft",
+      "subject": "coiled green thorn spring with amber tip",
+      "sheet": "graft_02",
+      "cell": 16,
+      "selected": {
+        "sheet": "graft_02",
+        "name": "patient_thorn"
+      }
+    },
+    {
+      "id": "burl_wall",
+      "name": "Burl Wall",
+      "type": "skill",
+      "text": "Bloom. Gain {block} ({block_per} per Bloom) Block.",
+      "class": "graft",
+      "subject": "broad knotted tree bark shield with cyan rings",
+      "sheet": "graft_03",
+      "cell": 1,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "burl_wall"
+      }
+    },
+    {
+      "id": "choking_spores",
+      "name": "Choking Spores",
+      "type": "skill",
+      "text": "Apply {stagger} Stagger and {rot} Rot to ALL enemies.",
+      "class": "graft",
+      "subject": "bulbous green pitcher plant exhaling violet spores",
+      "sheet": "graft_03",
+      "cell": 2,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "choking_spores"
+      }
+    },
+    {
+      "id": "excise",
+      "name": "Excise",
+      "type": "skill",
+      "text": "Prune away. Scrap.",
+      "class": "graft",
+      "subject": "silver scalpel beside severed violet infected root",
+      "sheet": "graft_03",
+      "cell": 3,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "excise"
+      }
+    },
+    {
+      "id": "propagate",
+      "name": "Propagate",
+      "type": "skill",
+      "text": "Choose a Bloom card in your hand. Add a copy of it to your deck. Scrap.",
+      "class": "graft",
+      "subject": "branching green seedling splitting into twin sprouts",
+      "sheet": "graft_03",
+      "cell": 4,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "propagate"
+      }
+    },
+    {
+      "id": "seed_rain",
+      "name": "Seed Rain",
+      "type": "skill",
+      "text": "Gain {block} Block. Spread Prune.",
+      "class": "graft",
+      "subject": "three amber seeds under protective green leaf",
+      "sheet": "graft_03",
+      "cell": 5,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "seed_rain"
+      }
+    },
+    {
+      "id": "puffball",
+      "name": "Puffball",
+      "type": "skill",
+      "text": "Bloom. Apply {rot} ({rot_per} per Bloom) Rot to ALL enemies. Scrap.",
+      "class": "graft",
+      "subject": "round ivory puffball venting green spore jets",
+      "sheet": "graft_03",
+      "cell": 6,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "puffball"
+      }
+    },
+    {
+      "id": "sporeburst",
+      "name": "Sporeburst",
+      "type": "skill",
+      "text": "The enemy loses HP equal to its Rot ({lose_hp}). Then it gains {rot} Rot.",
+      "class": "graft",
+      "subject": "cracked violet spore sac exploding cyan rays",
+      "sheet": "graft_03",
+      "cell": 7,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "sporeburst"
+      }
+    },
+    {
+      "id": "decomposer",
+      "name": "Decomposer",
+      "type": "power",
+      "text": "Whenever you Prune, apply {status} Rot to a random enemy.",
+      "class": "graft",
+      "subject": "glowing mushroom emblem above dissolving amber leaf",
+      "sheet": "graft_03",
+      "cell": 8,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "decomposer"
+      }
+    },
+    {
+      "id": "dusk_pruning",
+      "name": "Dusk Pruning",
+      "type": "power",
+      "text": "At the end of your turn, Prune.",
+      "class": "graft",
+      "subject": "violet crescent aura surrounding emerald pruning shears",
+      "sheet": "graft_03",
+      "cell": 9,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "dusk_pruning"
+      }
+    },
+    {
+      "id": "living_hedge",
+      "name": "Living Hedge",
+      "type": "power",
+      "text": "At the start of your turn, gain 1 Block per Bloom card in your deck.",
+      "class": "graft",
+      "subject": "glowing square bramble emblem with amber core",
+      "sheet": "graft_03",
+      "cell": 10,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "living_hedge"
+      }
+    },
+    {
+      "id": "thorn_halo",
+      "name": "Thorn Halo",
+      "type": "power",
+      "text": "Bloom. At the start of your turn, deal {status} ({status_per} per Bloom) damage to a random enemy.",
+      "class": "graft",
+      "subject": "radiant cyan thorn ring with violet centre",
+      "sheet": "graft_03",
+      "cell": 11,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "thorn_halo"
+      }
+    },
+    {
+      "id": "ripening_rot",
+      "name": "Ripening Rot",
+      "type": "power",
+      "text": "At the start of your turn, each enemy with Rot gains 1 Rot.",
+      "class": "graft",
+      "subject": "glowing violet decay spiral around amber fruit",
+      "sheet": "graft_03",
+      "cell": 12,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "ripening_rot"
+      }
+    },
+    {
+      "id": "heartwood_spear",
+      "name": "Heartwood Spear",
+      "type": "attack",
+      "text": "Bloom. Deal {damage} ({damage_per} per Bloom) damage.",
+      "class": "graft",
+      "subject": "long amber wooden spear with emerald blade",
+      "sheet": "graft_03",
+      "cell": 13,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "heartwood_spear"
+      }
+    },
+    {
+      "id": "death_cap",
+      "name": "Death Cap",
+      "type": "attack",
+      "text": "Deal {damage} damage. If the enemy has Rot, apply {rot} Rot. Scrap.",
+      "class": "graft",
+      "subject": "sharp violet mushroom lance with toxic green droplets",
+      "sheet": "graft_03",
+      "cell": 14,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "death_cap"
+      }
+    },
+    {
+      "id": "reaping_vine",
+      "name": "Reaping Vine",
+      "type": "attack",
+      "text": "Prune. Deal {damage} damage for each time you Pruned this combat ({times}).",
+      "class": "graft",
+      "subject": "hooked emerald vine scythe slicing amber arc",
+      "sheet": "graft_03",
+      "cell": 15,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "reaping_vine"
+      }
+    },
+    {
+      "id": "verdant_tide",
+      "name": "Verdant Tide",
+      "type": "attack",
+      "text": "Deal {damage} damage once for each Bloom card in your deck ({times}).",
+      "class": "graft",
+      "subject": "surging emerald leaf wave with cyan crest",
+      "sheet": "graft_03",
+      "cell": 16,
+      "selected": {
+        "sheet": "graft_03",
+        "name": "verdant_tide"
+      }
+    },
+    {
+      "id": "humus_rite",
+      "name": "Humus Rite",
+      "type": "skill",
+      "text": "Choose a Bloom card in your hand; it gains Bloom equal to the cards in your Scrapheap ({bloom}). Scrap.",
+      "class": "graft",
+      "subject": "cupped root bowl holding glowing amber seed",
+      "sheet": "graft_04",
+      "cell": 1,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "humus_rite"
+      }
+    },
+    {
+      "id": "crystal_graft",
+      "name": "Crystal Graft",
+      "type": "skill",
+      "text": "Keep. Playable only if you have a Shard. Lose 1 Shard: choose a Bloom card in your hand; it gains {bloom} Bloom. Scrap.",
+      "class": "graft",
+      "subject": "cyan crystal joined to living green branch",
+      "sheet": "graft_04",
+      "cell": 2,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "crystal_graft"
+      }
+    },
+    {
+      "id": "transplant",
+      "name": "Transplant",
+      "type": "skill",
+      "text": "Choose two Bloom cards in your hand. Move all Bloom from the first to the second, plus {n}. Scrap.",
+      "class": "graft",
+      "subject": "amber bulb moving between two violet roots",
+      "sheet": "graft_04",
+      "cell": 3,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "transplant_alt"
+      }
+    },
+    {
+      "id": "chitin_cocoon",
+      "name": "Chitin Cocoon",
+      "type": "skill",
+      "text": "Bloom. Keep. Gain {block} ({block_per} per Bloom) Block.",
+      "class": "graft",
+      "subject": "closed segmented cyan chrysalis with green seams",
+      "sheet": "graft_04",
+      "cell": 4,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "chitin_cocoon"
+      }
+    },
+    {
+      "id": "quickening_sap",
+      "name": "Quickening Sap",
+      "type": "power",
+      "text": "Whenever a card in your hand gains Bloom, it costs 0 this turn.",
+      "class": "graft",
+      "subject": "radiant amber sap lightning emblem with leaves",
+      "sheet": "graft_04",
+      "cell": 5,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "quickening_sap"
+      }
+    },
+    {
+      "id": "fungal_aegis",
+      "name": "Fungal Aegis",
+      "type": "power",
+      "text": "At the start of your turn, gain Block equal to the highest Rot among enemies.",
+      "class": "graft",
+      "subject": "glowing cyan mushroom shield emblem with violet aura",
+      "sheet": "graft_04",
+      "cell": 6,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "fungal_aegis"
+      }
+    },
+    {
+      "id": "thresher",
+      "name": "Thresher",
+      "type": "power",
+      "text": "Bloom. Whenever you Prune, deal {status} ({status_per} per Bloom) damage to ALL enemies.",
+      "class": "graft",
+      "subject": "radiant emerald toothed wheel with amber hub",
+      "sheet": "graft_04",
+      "cell": 7,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "thresher"
+      }
+    },
+    {
+      "id": "hyphal_web",
+      "name": "Hyphal Web",
+      "type": "power",
+      "text": "At the start of your turn, draw 1 card (2 if you have 8+ Bloom cards in your deck).",
+      "class": "graft",
+      "subject": "glowing violet mycelium web with cyan nodes",
+      "sheet": "graft_04",
+      "cell": 8,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "hyphal_web_alt"
+      }
+    },
+    {
+      "id": "relay_ping",
+      "name": "Relay Ping",
+      "type": "skill",
+      "text": "Draw 2 cards. Add a Jitter to your hand.",
+      "class": "colorless",
+      "subject": "steel antenna tool emitting cyan signal arcs",
+      "sheet": "colorless_01",
+      "cell": 1,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "relay_ping"
+      }
+    },
+    {
+      "id": "shardfall",
+      "name": "Shardfall",
+      "type": "attack",
+      "text": "Deal 16 damage, +2 per Shard you hold. Scrap.",
+      "class": "colorless",
+      "subject": "falling cyan crystal spear with golden streak",
+      "sheet": "colorless_01",
+      "cell": 2,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "shardfall"
+      }
+    },
+    {
+      "id": "arc_lattice",
+      "name": "Arc Lattice",
+      "type": "attack",
+      "text": "Deal 4 damage, +2 per living enemy, to ALL enemies.",
+      "class": "colorless",
+      "subject": "crossed steel lightning rods firing cyan bolts",
+      "sheet": "colorless_01",
+      "cell": 3,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "arc_lattice"
+      }
+    },
+    {
+      "id": "salvage_kit",
+      "name": "Salvage Kit",
+      "type": "skill",
+      "text": "Choose: gain 7 Block, draw 2 cards, or deal 5 damage to ALL enemies.",
+      "class": "colorless",
+      "subject": "open steel toolkit with glowing cyan parts",
+      "sheet": "colorless_01",
+      "cell": 4,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "salvage_kit"
+      }
+    },
+    {
+      "id": "stress_fracture",
+      "name": "Stress Fracture",
+      "type": "skill",
+      "text": "Apply 3 Exposed to an enemy. Gain 2 Exposed.",
+      "class": "colorless",
+      "subject": "cracked steel armour plate with golden wedge",
+      "sheet": "colorless_01",
+      "cell": 5,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "stress_fracture"
+      }
+    },
+    {
+      "id": "gyro_jammer",
+      "name": "Gyro Jammer",
+      "type": "skill",
+      "text": "Apply 1 Stagger per hit the enemy intends (max 3).",
+      "class": "colorless",
+      "subject": "steel gyroscope caught in cyan magnetic clamp",
+      "sheet": "colorless_01",
+      "cell": 6,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "gyro_jammer"
+      }
+    },
+    {
+      "id": "ballast_lock",
+      "name": "Ballast Lock",
+      "type": "skill",
+      "text": "Gain 10 Guard. Next turn, your Guard doesn't halve.",
+      "class": "colorless",
+      "subject": "heavy steel anchor shield with golden padlock",
+      "sheet": "colorless_01",
+      "cell": 7,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "ballast_lock"
+      }
+    },
+    {
+      "id": "jettison_pod",
+      "name": "Jettison Pod",
+      "type": "skill",
+      "text": "Keep. Gain 6 Guard. Scrap.",
+      "class": "colorless",
+      "subject": "steel escape capsule behind curved cyan shield",
+      "sheet": "colorless_01",
+      "cell": 8,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "jettison_pod"
+      }
+    },
+    {
+      "id": "overdraft_cell",
+      "name": "Overdraft Cell",
+      "type": "skill",
+      "text": "Gain 2 energy. Add a Drift to your hand. Scrap.",
+      "class": "colorless",
+      "subject": "cracked golden battery leaking cyan lightning",
+      "sheet": "colorless_01",
+      "cell": 9,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "overdraft_cell"
+      }
+    },
+    {
+      "id": "star_survey",
+      "name": "Star Survey",
+      "type": "skill",
+      "text": "Opening. Gain Augury. Draw 1 card. Scrap.",
+      "class": "colorless",
+      "subject": "unrolled blue star chart with golden compass",
+      "sheet": "colorless_01",
+      "cell": 10,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "star_survey"
+      }
+    },
+    {
+      "id": "fault_beacon",
+      "name": "Fault Beacon",
+      "type": "skill",
+      "text": "Delay 1: apply 2 Exposed to ALL enemies.",
+      "class": "colorless",
+      "subject": "steel warning beacon emitting golden concentric pulses",
+      "sheet": "colorless_01",
+      "cell": 11,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "fault_beacon"
+      }
+    },
+    {
+      "id": "snare_line",
+      "name": "Snare Line",
+      "type": "skill",
+      "text": "Gain 6 Block. Riposte: apply 3 Stagger to the attacker.",
+      "class": "colorless",
+      "subject": "looped cyan tether cable with steel hooks",
+      "sheet": "colorless_01",
+      "cell": 12,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "snare_line"
+      }
+    },
+    {
+      "id": "cutting_torch",
+      "name": "Cutting Torch",
+      "type": "skill",
+      "text": "Remove a card in your hand from your deck. Lose 3 Max HP. Scrap.",
+      "class": "colorless",
+      "subject": "steel cutting torch with sharp cyan flame",
+      "sheet": "colorless_01",
+      "cell": 13,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "cutting_torch"
+      }
+    },
+    {
+      "id": "medbay_voucher",
+      "name": "Medbay Voucher",
+      "type": "skill",
+      "text": "Spend 35 gold: gain 3 Max HP. Scrap.",
+      "class": "colorless",
+      "subject": "golden medical token in steel dispensing tool",
+      "sheet": "colorless_01",
+      "cell": 14,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "medbay_voucher"
+      }
+    },
+    {
+      "id": "clean_manifest",
+      "name": "Clean Manifest",
+      "type": "attack",
+      "text": "Deal 6 damage, +2 per card fewer than 20 in your deck.",
+      "class": "colorless",
+      "subject": "sleek steel blade slicing blank golden card stack",
+      "sheet": "colorless_01",
+      "cell": 15,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "clean_manifest"
+      }
+    },
+    {
+      "id": "salvage_kiln",
+      "name": "Salvage Kiln",
+      "type": "power",
+      "text": "When a card is Scrapped, apply 1 Exposed to a random enemy.",
+      "class": "colorless",
+      "subject": "radiant golden furnace emblem within steel gear",
+      "sheet": "colorless_01",
+      "cell": 16,
+      "selected": {
+        "sheet": "colorless_01",
+        "name": "salvage_kiln"
+      }
+    },
+    {
+      "id": "prism_resonance",
+      "name": "Prism Resonance",
+      "type": "power",
+      "text": "At the start of your turn, gain 1 Guard per Shard you hold.",
+      "class": "colorless",
+      "subject": "glowing cyan prism shield with golden orbit",
+      "sheet": "graft_04",
+      "cell": 9,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "prism_resonance"
+      }
+    },
+    {
+      "id": "shard_cache",
+      "name": "Shard Cache",
+      "type": "skill",
+      "text": "Gain 2 energy and 2 Shards. Remove this card from your deck.",
+      "class": "colorless",
+      "subject": "open steel strongbox bursting with cyan crystals",
+      "sheet": "graft_04",
+      "cell": 10,
+      "selected": {
+        "sheet": "fillup_01",
+        "name": "shard_cache"
+      }
+    },
+    {
+      "id": "mirror_tether",
+      "name": "Mirror Tether",
+      "type": "attack",
+      "text": "Deal damage equal to the damage the enemy intends. Scrap.",
+      "class": "colorless",
+      "subject": "silver mirror blade tethered by golden cable",
+      "sheet": "graft_04",
+      "cell": 11,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "mirror_tether"
+      }
+    },
+    {
+      "id": "grav_clamp",
+      "name": "Grav Clamp",
+      "type": "skill",
+      "text": "The enemy skips its next move. Scrap.",
+      "class": "colorless",
+      "subject": "heavy steel horseshoe clamp trapping cyan orb",
+      "sheet": "graft_04",
+      "cell": 12,
+      "selected": {
+        "sheet": "graft_04",
+        "name": "grav_clamp"
+      }
+    }
+  ],
+  "alternates": [
+    {
+      "id": "graft_hide_alt",
+      "alternate_for": "graft_hide",
+      "class": "graft",
+      "subject": "broad emerald leaf buckler with amber graft stitches",
+      "sheet": "graft_04",
+      "cell": 13
+    },
+    {
+      "id": "deep_graft_alt",
+      "alternate_for": "deep_graft",
+      "class": "graft",
+      "subject": "split violet root bound by golden grafting clips",
+      "sheet": "graft_04",
+      "cell": 14
+    },
+    {
+      "id": "transplant_alt",
+      "alternate_for": "transplant",
+      "class": "graft",
+      "subject": "glowing amber bulb cradled by cyan root tongs",
+      "sheet": "graft_04",
+      "cell": 15
+    },
+    {
+      "id": "hyphal_web_alt",
+      "alternate_for": "hyphal_web",
+      "class": "graft",
+      "subject": "radiant branching cyan mycelium emblem with violet nodes",
+      "sheet": "graft_04",
+      "cell": 16
+    }
+  ],
+  "sheets": [
+    {
+      "id": "graft_01",
+      "prompt": "Generate a production pixel-art sprite sheet, square image, exactly 4 columns by 4 rows of 16 separate icons, row-major. Flat solid magenta #FF00FF everywhere behind icons. No grid lines or cell borders. Equal 256x256 cells in a 1024x1024 composition. Each illustration is centered and fits in 70 percent of its cell, generous clear magenta gutters separating every icon. One simple bold icon-like illustration per cell. Actual Sega Master System Phantasy Star 1987 pixel art: hard square pixels, drawn as if each icon is just 28x22 logical pixels enlarged nearest-neighbour; thick continuous black outline, 6 to 10 flat colours, RGB channel values only 00/55/AA/FF. Large readable clusters; no tiny texture, no gradients, no antialiasing, no ground or shadows. Maintain the silhouette and distinguish every item at 32x24. No text, letters, numerals, faces, watermark or UI. Subjects occupy a landscape silhouette where possible. Do not connect separate cells. Palette bias greens, cyans, violets and a warm amber accent for organic Graft icons; steel blue, cyan, gold for technological colourless icons. The following numbered list is layout metadata only, never draw the numbers.\nRow 1, column 1: curved green thorn whip striking sideways.\nRow 1, column 2: hollow violet seed husk shield.\nRow 1, column 3: split carnivorous seed with ivory fangs.\nRow 1, column 4: stitched green leaf shield with amber seam.\nRow 2, column 1: spiralling crescent of sharp emerald thorns.\nRow 2, column 2: single flying violet barb with cyan trail.\nRow 2, column 3: curved amber grafting knife cutting green stem.\nRow 2, column 4: heavy beetle horn charging through cyan impact.\nRow 3, column 1: honeycomb hammer releasing violet stinging darts.\nRow 3, column 2: crossed silver pruning shears clipping thorn branch.\nRow 3, column 3: green spore-tipped vine whip lashing.\nRow 3, column 4: jagged violet insect mandibles dripping green venom.\nRow 4, column 1: broad rotten log hammer with mushroom studs.\nRow 4, column 2: amber sap bubble encasing green shell.\nRow 4, column 3: drooping violet mushroom dripping luminous green poison.\nRow 4, column 4: forked cyan tendril unfurling protective broad leaf.",
+      "names": [
+        "lash",
+        "husk",
+        "seed_bite",
+        "graft_hide",
+        "thornwhirl",
+        "barb_flick",
+        "grafting_cut",
+        "chitin_ram",
+        "hivestrike",
+        "shear",
+        "spore_lash",
+        "canker_bite",
+        "mulch_maul",
+        "sap_shell",
+        "blightcap",
+        "tendril_reach"
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-54f4622d-771c-43d9-99ae-c0aed5b6e5fe.png",
+      "source": "raw/cards/graft-colorless/graft_01.png"
+    },
+    {
+      "id": "graft_02",
+      "prompt": "Generate a production pixel-art sprite sheet, square image, exactly 4 columns by 4 rows of 16 separate icons, row-major. Flat solid magenta #FF00FF everywhere behind icons. No grid lines or cell borders. Equal 256x256 cells in a 1024x1024 composition. Each illustration is centered and fits in 70 percent of its cell, generous clear magenta gutters separating every icon. One simple bold icon-like illustration per cell. Actual Sega Master System Phantasy Star 1987 pixel art: hard square pixels, drawn as if each icon is just 28x22 logical pixels enlarged nearest-neighbour; thick continuous black outline, 6 to 10 flat colours, RGB channel values only 00/55/AA/FF. Large readable clusters; no tiny texture, no gradients, no antialiasing, no ground or shadows. Maintain the silhouette and distinguish every item at 32x24. No text, letters, numerals, faces, watermark or UI. Subjects occupy a landscape silhouette where possible. Do not connect separate cells. Palette bias greens, cyans, violets and a warm amber accent for organic Graft icons; steel blue, cyan, gold for technological colourless icons. The following numbered list is layout metadata only, never draw the numbers.\nRow 1, column 1: interwoven green roots forming round buckler.\nRow 1, column 2: thick cut root joined by cyan staples.\nRow 1, column 3: winged amber seed riding cyan wind curl.\nRow 1, column 4: violet spore cloud surrounding green fungus stalk.\nRow 2, column 1: blue beetle shell crusted with green moss.\nRow 2, column 2: split empty cicada shell revealing cyan leaf.\nRow 2, column 3: golden sap droplet falling onto emerald bud.\nRow 2, column 4: pile of violet fallen leaves sprouting fungus.\nRow 3, column 1: paired emerald thorn daggers crossing outward.\nRow 3, column 2: heavy leafy branch smashing with amber impact.\nRow 3, column 3: broad sickle sweeping violet poisonous crescent.\nRow 3, column 4: torn green root club with amber soil.\nRow 4, column 1: long cyan crystal thorn piercing violet shard.\nRow 4, column 2: golden pollen stinger with green barbed tail.\nRow 4, column 3: spiked bramble battering log with scattered leaves.\nRow 4, column 4: coiled green thorn spring with amber tip.",
+      "names": [
+        "root_mesh",
+        "deep_graft",
+        "windblown_seed",
+        "spore_haze",
+        "mire_carapace",
+        "shed_husk",
+        "sap_drip",
+        "leaf_litter",
+        "twin_thorn",
+        "canopy_crush",
+        "miasma_sweep",
+        "uproot",
+        "prism_thorn",
+        "pollen_sting",
+        "thicket_crash",
+        "patient_thorn"
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-d520ca6e-233d-4d7f-af69-88d689d40f27.png",
+      "source": "raw/cards/graft-colorless/graft_02.png"
+    },
+    {
+      "id": "graft_03",
+      "prompt": "Generate a production pixel-art sprite sheet, square image, exactly 4 columns by 4 rows of 16 separate icons, row-major. Flat solid magenta #FF00FF everywhere behind icons. No grid lines or cell borders. Equal 256x256 cells in a 1024x1024 composition. Each illustration is centered and fits in 70 percent of its cell, generous clear magenta gutters separating every icon. One simple bold icon-like illustration per cell. Actual Sega Master System Phantasy Star 1987 pixel art: hard square pixels, drawn as if each icon is just 28x22 logical pixels enlarged nearest-neighbour; thick continuous black outline, 6 to 10 flat colours, RGB channel values only 00/55/AA/FF. Large readable clusters; no tiny texture, no gradients, no antialiasing, no ground or shadows. Maintain the silhouette and distinguish every item at 32x24. No text, letters, numerals, faces, watermark or UI. Subjects occupy a landscape silhouette where possible. Do not connect separate cells. Palette bias greens, cyans, violets and a warm amber accent for organic Graft icons; steel blue, cyan, gold for technological colourless icons. The following numbered list is layout metadata only, never draw the numbers.\nRow 1, column 1: broad knotted tree bark shield with cyan rings.\nRow 1, column 2: bulbous green pitcher plant exhaling violet spores.\nRow 1, column 3: silver scalpel beside severed violet infected root.\nRow 1, column 4: branching green seedling splitting into twin sprouts.\nRow 2, column 1: three amber seeds under protective green leaf.\nRow 2, column 2: round ivory puffball venting green spore jets.\nRow 2, column 3: cracked violet spore sac exploding cyan rays.\nRow 2, column 4: glowing mushroom emblem above dissolving amber leaf.\nRow 3, column 1: violet crescent aura surrounding emerald pruning shears.\nRow 3, column 2: glowing square bramble emblem with amber core.\nRow 3, column 3: radiant cyan thorn ring with violet centre.\nRow 3, column 4: glowing violet decay spiral around amber fruit.\nRow 4, column 1: long amber wooden spear with emerald blade.\nRow 4, column 2: sharp violet mushroom lance with toxic green droplets.\nRow 4, column 3: hooked emerald vine scythe slicing amber arc.\nRow 4, column 4: surging emerald leaf wave with cyan crest.",
+      "names": [
+        "burl_wall",
+        "choking_spores",
+        "excise",
+        "propagate",
+        "seed_rain",
+        "puffball",
+        "sporeburst",
+        "decomposer",
+        "dusk_pruning",
+        "living_hedge",
+        "thorn_halo",
+        "ripening_rot",
+        "heartwood_spear",
+        "death_cap",
+        "reaping_vine",
+        "verdant_tide"
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-d8fe0a2f-2c63-4562-a409-0ce5c3669c97.png",
+      "source": "raw/cards/graft-colorless/graft_03.png"
+    },
+    {
+      "id": "graft_04",
+      "prompt": "Generate a production pixel-art sprite sheet, square image, exactly 4 columns by 4 rows of 16 separate icons, row-major. Flat solid magenta #FF00FF everywhere behind icons. No grid lines or cell borders. Equal 256x256 cells in a 1024x1024 composition. Each illustration is centered and fits in 70 percent of its cell, generous clear magenta gutters separating every icon. One simple bold icon-like illustration per cell. Actual Sega Master System Phantasy Star 1987 pixel art: hard square pixels, drawn as if each icon is just 28x22 logical pixels enlarged nearest-neighbour; thick continuous black outline, 6 to 10 flat colours, RGB channel values only 00/55/AA/FF. Large readable clusters; no tiny texture, no gradients, no antialiasing, no ground or shadows. Maintain the silhouette and distinguish every item at 32x24. No text, letters, numerals, faces, watermark or UI. Subjects occupy a landscape silhouette where possible. Do not connect separate cells. Palette bias greens, cyans, violets and a warm amber accent for organic Graft icons; steel blue, cyan, gold for technological colourless icons. The following numbered list is layout metadata only, never draw the numbers.\nRow 1, column 1: cupped root bowl holding glowing amber seed.\nRow 1, column 2: cyan crystal joined to living green branch.\nRow 1, column 3: amber bulb moving between two violet roots.\nRow 1, column 4: closed segmented cyan chrysalis with green seams.\nRow 2, column 1: radiant amber sap lightning emblem with leaves.\nRow 2, column 2: glowing cyan mushroom shield emblem with violet aura.\nRow 2, column 3: radiant emerald toothed wheel with amber hub.\nRow 2, column 4: glowing violet mycelium web with cyan nodes.\nRow 3, column 1: glowing cyan prism shield with golden orbit.\nRow 3, column 2: open steel strongbox bursting with cyan crystals.\nRow 3, column 3: silver mirror blade tethered by golden cable.\nRow 3, column 4: heavy steel horseshoe clamp trapping cyan orb.\nRow 4, column 1: broad emerald leaf buckler with amber graft stitches.\nRow 4, column 2: split violet root bound by golden grafting clips.\nRow 4, column 3: glowing amber bulb cradled by cyan root tongs.\nRow 4, column 4: radiant branching cyan mycelium emblem with violet nodes.",
+      "names": [
+        "humus_rite",
+        "crystal_graft",
+        "transplant",
+        "chitin_cocoon",
+        "quickening_sap",
+        "fungal_aegis",
+        "thresher",
+        "hyphal_web",
+        "prism_resonance",
+        "shard_cache",
+        "mirror_tether",
+        "grav_clamp",
+        "graft_hide_alt",
+        "deep_graft_alt",
+        "transplant_alt",
+        "hyphal_web_alt"
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-260af693-f494-4cab-bfe2-cc0ad44e69bc.png",
+      "source": "raw/cards/graft-colorless/graft_04.png"
+    },
+    {
+      "id": "colorless_01",
+      "prompt": "Generate a production pixel-art sprite sheet, square image, exactly 4 columns by 4 rows of 16 separate icons, row-major. Flat solid magenta #FF00FF everywhere behind icons. No grid lines or cell borders. Equal 256x256 cells in a 1024x1024 composition. Each illustration is centered and fits in 70 percent of its cell, generous clear magenta gutters separating every icon. One simple bold icon-like illustration per cell. Actual Sega Master System Phantasy Star 1987 pixel art: hard square pixels, drawn as if each icon is just 28x22 logical pixels enlarged nearest-neighbour; thick continuous black outline, 6 to 10 flat colours, RGB channel values only 00/55/AA/FF. Large readable clusters; no tiny texture, no gradients, no antialiasing, no ground or shadows. Maintain the silhouette and distinguish every item at 32x24. No text, letters, numerals, faces, watermark or UI. Subjects occupy a landscape silhouette where possible. Do not connect separate cells. Palette bias greens, cyans, violets and a warm amber accent for organic Graft icons; steel blue, cyan, gold for technological colourless icons. The following numbered list is layout metadata only, never draw the numbers.\nRow 1, column 1: steel antenna tool emitting cyan signal arcs.\nRow 1, column 2: falling cyan crystal spear with golden streak.\nRow 1, column 3: crossed steel lightning rods firing cyan bolts.\nRow 1, column 4: open steel toolkit with glowing cyan parts.\nRow 2, column 1: cracked steel armour plate with golden wedge.\nRow 2, column 2: steel gyroscope caught in cyan magnetic clamp.\nRow 2, column 3: heavy steel anchor shield with golden padlock.\nRow 2, column 4: steel escape capsule behind curved cyan shield.\nRow 3, column 1: cracked golden battery leaking cyan lightning.\nRow 3, column 2: unrolled blue star chart with golden compass.\nRow 3, column 3: steel warning beacon emitting golden concentric pulses.\nRow 3, column 4: looped cyan tether cable with steel hooks.\nRow 4, column 1: steel cutting torch with sharp cyan flame.\nRow 4, column 2: golden medical token in steel dispensing tool.\nRow 4, column 3: sleek steel blade slicing blank golden card stack.\nRow 4, column 4: radiant golden furnace emblem within steel gear.",
+      "names": [
+        "relay_ping",
+        "shardfall",
+        "arc_lattice",
+        "salvage_kit",
+        "stress_fracture",
+        "gyro_jammer",
+        "ballast_lock",
+        "jettison_pod",
+        "overdraft_cell",
+        "star_survey",
+        "fault_beacon",
+        "snare_line",
+        "cutting_torch",
+        "medbay_voucher",
+        "clean_manifest",
+        "salvage_kiln"
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-6b33099d-b2cb-4d11-8e4d-bd3fe40b1b5c.png",
+      "source": "raw/cards/graft-colorless/colorless_01.png"
+    },
+    {
+      "id": "fillup_01",
+      "names": [
+        "chitin_ram",
+        "mulch_maul",
+        "thicket_crash",
+        "excise",
+        "death_cap",
+        "sporeburst",
+        "shard_cache",
+        "clean_manifest",
+        "chitin_ram_retry_alt",
+        "mulch_maul_retry_alt",
+        "thicket_crash_retry_alt",
+        "excise_retry_alt",
+        "death_cap_retry_alt",
+        "sporeburst_retry_alt",
+        "shard_cache_retry_alt",
+        "clean_manifest_retry_alt"
+      ],
+      "prompt": "Use case: stylized-concept. Production pixel sprite sheet. Exactly 4 columns x 4 rows on flat #FF00FF magenta with wide uninterrupted gutters. Each centered icon fills 65 percent of its equal cell. No borders, text, numbers, faces, shadows. Very coarse Phantasy Star Sega Master System pixel art, each icon drawn as ONLY 24x20 logical pixels enlarged; thick black outline, 5 flat colors, no texture, no little highlights, NO fine details. Big connected shapes which read clearly at 32x24. Green cyan violet amber for organic items; steel blue cyan gold for technological items. Layout row major, numbering is metadata and must not be drawn:\n1: single broad cyan beetle horn smashing amber wedge\n2: simple wooden mallet with one large violet mushroom\n3: three thick emerald stakes crossing amber impact star\n4: broad silver pruning scalpel severing one purple root\n5: large purple mushroom spearhead on short green handle\n6: single split violet puffball with cyan explosion\n7: open blue chest holding two large cyan crystals\n8: wide silver cleaver slicing single blank golden sheet\n9: single broad cyan beetle horn smashing amber wedge, even simpler bolder silhouette\n10: simple wooden mallet with one large violet mushroom, even simpler bolder silhouette\n11: three thick emerald stakes crossing amber impact star, even simpler bolder silhouette\n12: broad silver pruning scalpel severing one purple root, even simpler bolder silhouette\n13: large purple mushroom spearhead on short green handle, even simpler bolder silhouette\n14: single split violet puffball with cyan explosion, even simpler bolder silhouette\n15: open blue chest holding two large cyan crystals, even simpler bolder silhouette\n16: wide silver cleaver slicing single blank golden sheet, even simpler bolder silhouette",
+      "subjects": [
+        [
+          "chitin_ram",
+          "single broad cyan beetle horn smashing amber wedge"
+        ],
+        [
+          "mulch_maul",
+          "simple wooden mallet with one large violet mushroom"
+        ],
+        [
+          "thicket_crash",
+          "three thick emerald stakes crossing amber impact star"
+        ],
+        [
+          "excise",
+          "broad silver pruning scalpel severing one purple root"
+        ],
+        [
+          "death_cap",
+          "large purple mushroom spearhead on short green handle"
+        ],
+        [
+          "sporeburst",
+          "single split violet puffball with cyan explosion"
+        ],
+        [
+          "shard_cache",
+          "open blue chest holding two large cyan crystals"
+        ],
+        [
+          "clean_manifest",
+          "wide silver cleaver slicing single blank golden sheet"
+        ]
+      ],
+      "generator_source": "/Users/chrises/.codex/generated_images/01a18527-de88-7721-8cc6-540be735d1fb/exec-1ccaf5fa-4fe8-41cb-9dac-62a85e23c94a.png",
+      "source": "raw/cards/graft-colorless/fillup_01.png"
+    }
+  ],
+  "generator": "built-in image_gen",
+  "review": {
+    "selected_alternates": {
+      "graft_hide": "graft_hide_alt",
+      "transplant": "transplant_alt",
+      "hyphal_web": "hyphal_web_alt"
+    },
+    "retry_ids": [
+      "chitin_ram",
+      "mulch_maul",
+      "thicket_crash",
+      "excise",
+      "death_cap",
+      "sporeburst",
+      "shard_cache",
+      "clean_manifest"
+    ],
+    "weak_ids": [
+      "death_cap",
+      "excise"
+    ],
+    "verdict": "All six sheet contacts inspected at 4x. Eight retries selected; no gutter bleeding or near-duplicate final icons. Death Cap reads as a spearhead; Excise root remains thin."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/pollen_wisp.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/pollen_wisp.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.16,
+  "phase": [
+    8.17,
+    1.443
+  ],
+  "grid_score": 0.4679037853399519,
+  "source_bbox": [
+    191,
+    130,
+    833,
+    870
+  ],
+  "grid_size": [
+    112,
+    112
+  ],
+  "grid_content_bbox": [
+    21,
+    14,
+    91,
+    95
+  ],
+  "bbox": [
+    4,
+    0,
+    60,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.217
+}

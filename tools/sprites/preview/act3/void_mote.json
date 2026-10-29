@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/void_mote.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/void_mote.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 10.65,
+  "phase": [
+    0.874,
+    1.099
+  ],
+  "grid_score": 0.668682523436855,
+  "source_bbox": [
+    118,
+    39,
+    906,
+    987
+  ],
+  "grid_size": [
+    96,
+    96
+  ],
+  "grid_content_bbox": [
+    11,
+    4,
+    85,
+    93
+  ],
+  "bbox": [
+    5,
+    0,
+    59,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.231
+}

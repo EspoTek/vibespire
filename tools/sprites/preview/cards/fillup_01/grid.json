@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/fillup_01.png",
+  "source_size": [
+    1402,
+    1122
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "chitin_ram",
+      "source_box": [
+        0,
+        0,
+        320,
+        283
+      ],
+      "pitch": 9.06,
+      "grid_score": 0.346202200352281,
+      "colors": 14,
+      "output": "tools/sprites/preview/cards/fillup_01/chitin_ram.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mulch_maul",
+      "source_box": [
+        387,
+        0,
+        666,
+        283
+      ],
+      "pitch": 9.16,
+      "grid_score": 0.30437644917284795,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/fillup_01/mulch_maul.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thicket_crash",
+      "source_box": [
+        737,
+        0,
+        1007,
+        283
+      ],
+      "pitch": 9.19,
+      "grid_score": 0.407580860105375,
+      "colors": 11,
+      "output": "tools/sprites/preview/cards/fillup_01/thicket_crash.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "excise",
+      "source_box": [
+        1072,
+        0,
+        1402,
+        283
+      ],
+      "pitch": 9.19,
+      "grid_score": 0.2775984753349836,
+      "colors": 12,
+      "output": "tools/sprites/preview/cards/fillup_01/excise.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "death_cap",
+      "source_box": [
+        0,
+        311,
+        320,
+        561
+      ],
+      "pitch": 9.97,
+      "grid_score": 0.2875852794191358,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/fillup_01/death_cap.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sporeburst",
+      "source_box": [
+        387,
+        311,
+        666,
+        561
+      ],
+      "pitch": 8.68,
+      "grid_score": 0.28980716498594955,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/fillup_01/sporeburst.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shard_cache",
+      "source_box": [
+        737,
+        311,
+        1007,
+        561
+      ],
+      "pitch": 9.51,
+      "grid_score": 0.301979744206053,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/fillup_01/shard_cache.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "clean_manifest",
+      "source_box": [
+        1072,
+        311,
+        1402,
+        561
+      ],
+      "pitch": 10.18,
+      "grid_score": 0.27982384548164124,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/fillup_01/clean_manifest.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "chitin_ram_retry_alt",
+      "source_box": [
+        0,
+        584,
+        320,
+        838
+      ],
+      "pitch": 10.06,
+      "grid_score": 0.41323961246061086,
+      "colors": 6,
+      "output": "tools/sprites/preview/cards/fillup_01/chitin_ram_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mulch_maul_retry_alt",
+      "source_box": [
+        387,
+        584,
+        666,
+        838
+      ],
+      "pitch": 10.17,
+      "grid_score": 0.3298942893703313,
+      "colors": 9,
+      "output": "tools/sprites/preview/cards/fillup_01/mulch_maul_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thicket_crash_retry_alt",
+      "source_box": [
+        737,
+        584,
+        1007,
+        838
+      ],
+      "pitch": 10.72,
+      "grid_score": 0.36780588933079134,
+      "colors": 7,
+      "output": "tools/sprites/preview/cards/fillup_01/thicket_crash_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "excise_retry_alt",
+      "source_box": [
+        1072,
+        584,
+        1402,
+        838
+      ],
+      "pitch": 10.35,
+      "grid_score": 0.33680338120602127,
+      "colors": 10,
+      "output": "tools/sprites/preview/cards/fillup_01/excise_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "death_cap_retry_alt",
+      "source_box": [
+        0,
+        862,
+        320,
+        1122
+      ],
+      "pitch": 10.79,
+      "grid_score": 0.34864650547489073,
+      "colors": 9,
+      "output": "tools/sprites/preview/cards/fillup_01/death_cap_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sporeburst_retry_alt",
+      "source_box": [
+        387,
+        862,
+        666,
+        1122
+      ],
+      "pitch": 10.12,
+      "grid_score": 0.43704644820783917,
+      "colors": 6,
+      "output": "tools/sprites/preview/cards/fillup_01/sporeburst_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "shard_cache_retry_alt",
+      "source_box": [
+        737,
+        862,
+        1007,
+        1122
+      ],
+      "pitch": 11.14,
+      "grid_score": 0.3288214103381729,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/fillup_01/shard_cache_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "clean_manifest_retry_alt",
+      "source_box": [
+        1072,
+        862,
+        1402,
+        1122
+      ],
+      "pitch": 10.79,
+      "grid_score": 0.36242099056147103,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/fillup_01/clean_manifest_retry_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

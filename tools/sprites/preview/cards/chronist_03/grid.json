@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/chronist_03.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "quarter_chime",
+      "source_box": [
+        0,
+        0,
+        306,
+        290
+      ],
+      "pitch": 8.04,
+      "grid_score": 0.19756757751374515,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/quarter_chime.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "hasten",
+      "source_box": [
+        340,
+        0,
+        604,
+        290
+      ],
+      "pitch": 7.94,
+      "grid_score": 0.3166866270728786,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/hasten.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "banked_hours",
+      "source_box": [
+        627,
+        0,
+        938,
+        290
+      ],
+      "pitch": 7.26,
+      "grid_score": 0.27726481406309356,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/banked_hours.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "breakwater",
+      "source_box": [
+        948,
+        0,
+        1254,
+        290
+      ],
+      "pitch": 7.32,
+      "grid_score": 0.34431833600167117,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/breakwater.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "heave_to",
+      "source_box": [
+        0,
+        327,
+        306,
+        596
+      ],
+      "pitch": 7.56,
+      "grid_score": 0.2439638045555304,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/heave_to.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "batten_down",
+      "source_box": [
+        340,
+        327,
+        604,
+        596
+      ],
+      "pitch": 8.01,
+      "grid_score": 0.17265357725880237,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/batten_down.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mark_the_lull",
+      "source_box": [
+        627,
+        327,
+        938,
+        596
+      ],
+      "pitch": 7.46,
+      "grid_score": 0.29404206785415227,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/mark_the_lull.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "glance_ahead",
+      "source_box": [
+        948,
+        327,
+        1254,
+        596
+      ],
+      "pitch": 7.5,
+      "grid_score": 0.3033895147974808,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/glance_ahead.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "striking_train",
+      "source_box": [
+        0,
+        618,
+        306,
+        893
+      ],
+      "pitch": 6.96,
+      "grid_score": 0.2634882880913832,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/striking_train.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tide_table",
+      "source_box": [
+        340,
+        618,
+        604,
+        893
+      ],
+      "pitch": 7.24,
+      "grid_score": 0.36531394956029817,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/tide_table.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "storm_warning",
+      "source_box": [
+        627,
+        618,
+        938,
+        893
+      ],
+      "pitch": 6.99,
+      "grid_score": 0.25883384327113934,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/storm_warning.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "escapement",
+      "source_box": [
+        948,
+        618,
+        1254,
+        893
+      ],
+      "pitch": 6.99,
+      "grid_score": 0.22487204057253327,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/escapement.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "zenith",
+      "source_box": [
+        0,
+        900,
+        306,
+        1254
+      ],
+      "pitch": 7.46,
+      "grid_score": 0.3270344489196298,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/zenith.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "syzygy",
+      "source_box": [
+        340,
+        900,
+        604,
+        1254
+      ],
+      "pitch": 7.37,
+      "grid_score": 0.19031725598354524,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/syzygy.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "culmination",
+      "source_box": [
+        627,
+        900,
+        938,
+        1254
+      ],
+      "pitch": 7.46,
+      "grid_score": 0.2565037188914959,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/culmination.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "toll_the_hours",
+      "source_box": [
+        948,
+        900,
+        1254,
+        1254
+      ],
+      "pitch": 6.84,
+      "grid_score": 0.17190588277835406,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_03/toll_the_hours.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

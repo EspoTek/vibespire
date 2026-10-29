@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/potions_01.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "pot_flare_cell",
+      "source_box": [
+        0,
+        0,
+        216,
+        247
+      ],
+      "pitch": 6.21,
+      "grid_score": 0.23134176077995824,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_flare_cell.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_shield_gel",
+      "source_box": [
+        282,
+        0,
+        491,
+        247
+      ],
+      "pitch": 6.89,
+      "grid_score": 0.21335867093352814,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_shield_gel.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_bastion_tonic",
+      "source_box": [
+        531,
+        0,
+        750,
+        247
+      ],
+      "pitch": 4.78,
+      "grid_score": 0.19791426909227075,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_bastion_tonic.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_quicksilver",
+      "source_box": [
+        808,
+        0,
+        1024,
+        247
+      ],
+      "pitch": 6.37,
+      "grid_score": 0.15524109035115807,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_quicksilver.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_charge_cell",
+      "source_box": [
+        0,
+        270,
+        216,
+        500
+      ],
+      "pitch": 6.16,
+      "grid_score": 0.24727610778036252,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_charge_cell.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_fault_dust",
+      "source_box": [
+        282,
+        270,
+        491,
+        500
+      ],
+      "pitch": 4.78,
+      "grid_score": 0.1665982836063173,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_fault_dust.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_concussion_gas",
+      "source_box": [
+        531,
+        270,
+        750,
+        500
+      ],
+      "pitch": 6.26,
+      "grid_score": 0.17735260863034474,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_concussion_gas.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_shard_tincture",
+      "source_box": [
+        808,
+        270,
+        1024,
+        500
+      ],
+      "pitch": 4.74,
+      "grid_score": 0.19858195412358348,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_shard_tincture.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_blight_vial",
+      "source_box": [
+        0,
+        521,
+        216,
+        742
+      ],
+      "pitch": 4.44,
+      "grid_score": 0.1976780078927099,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_blight_vial.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_seers_draught",
+      "source_box": [
+        282,
+        521,
+        491,
+        742
+      ],
+      "pitch": 6.67,
+      "grid_score": 0.1882269938171312,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_seers_draught.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_fury_draught",
+      "source_box": [
+        531,
+        521,
+        750,
+        742
+      ],
+      "pitch": 4.55,
+      "grid_score": 0.1665687411890986,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_fury_draught.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_growth_sap",
+      "source_box": [
+        808,
+        521,
+        1024,
+        742
+      ],
+      "pitch": 5.97,
+      "grid_score": 0.14699022983965018,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_growth_sap.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_tempo_draught",
+      "source_box": [
+        0,
+        764,
+        216,
+        1024
+      ],
+      "pitch": 4.59,
+      "grid_score": 0.2096001244262549,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_tempo_draught.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_mending_ampoule",
+      "source_box": [
+        282,
+        764,
+        491,
+        1024
+      ],
+      "pitch": 4.45,
+      "grid_score": 0.1706468597350555,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_mending_ampoule.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_rewind_phial",
+      "source_box": [
+        531,
+        764,
+        750,
+        1024
+      ],
+      "pitch": 6.39,
+      "grid_score": 0.14353916780764558,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_rewind_phial.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "pot_halt_ampoule",
+      "source_box": [
+        808,
+        764,
+        1024,
+        1024
+      ],
+      "pitch": 5.99,
+      "grid_score": 0.22841543616315818,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/potions_01/pot_halt_ampoule.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

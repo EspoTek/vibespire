@@ -1,0 +1,291 @@
+{
+  "reference": "public/assets/backdrops/act1_verdant@2x.png",
+  "settings": {
+    "width": 640,
+    "height": 360,
+    "colors": 24,
+    "pitch": "auto"
+  },
+  "backdrops": {
+    "act2_foundry": {
+      "selected_iteration": 2,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: Act 2, The Foundry, machine levels of a derelict orbital elevator, still half-running. Rust orange and steel blue industrial silhouettes, a narrow furnace-red glow LOW on the distant horizon below a dark soot-black sky band. Heavy chunky pistons, pipes and gantries frame ONLY the far left/right edges; simple repeated riveted metal floor plates confined to foreground bottom third. Keep middle stage a wide plain dark steel-blue floor with no bright seams, bolts or machines crossing it. Furnace glow is a thin hard flat red/orange band, no bloom. Palette rust #AA5500 #FF5500, steel #000055 #0055AA #5555AA #AAAAAA, furnace #AA0000 #FF0000, black.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-f80a5444-4f7d-452d-b855-92054282ed39.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: Act 2, The Foundry, machine levels of a derelict orbital elevator, still half-running. Rust orange and steel blue industrial silhouettes, a narrow furnace-red glow LOW on the distant horizon below a dark soot-black sky band. Heavy chunky pistons, pipes and gantries frame ONLY the far left/right edges; simple repeated riveted metal floor plates confined to foreground bottom third. Keep middle stage a wide plain dark steel-blue floor with no bright seams, bolts or machines crossing it. Furnace glow is a thin hard flat red/orange band, no bloom. Palette rust #AA5500 #FF5500, steel #000055 #0055AA #5555AA #AAAAAA, furnace #AA0000 #FF0000, black. Refinement: use MUCH larger pixels and fewer machine pieces, exactly like the approved forest. Draw on an actual coarse 192x128 whole-image grid, each pixel enlarged into an 8x8 square on 1536x1024; the centre crop is then 192x108. Thick simple mechanical silhouettes, only two pistons and two pipes at far sides, only 6 broad floor plates at bottom, no hazard stripes, no micro-bolts or tiny trim. The middle floor must be dark desaturated steel #000055, not bright royal blue. Use only 12-16 flat colours and NO soft shading. Keep the horizon at 40% in final crop.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-404db413-29bc-4315-979c-72b6094e8fc4.png",
+          "status": "selected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ]
+        }
+      ],
+      "verdict": "Chunky rust pistons, red furnace strip and riveted foreground read like an SMS machine stage; the central y=130\u2013230 band is flat dark blue and calm.",
+      "source": "raw/backdrops/act2_foundry-v2.png"
+    },
+    "act3_crown": {
+      "selected_iteration": 5,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: Act 3, The Crown, observatory at the top of an orbital elevator tether in orbit. Void black-blue sparse starfield across top band, a THIN curved cyan planet-horizon glow across distant 40%-height horizon, pale ice-white and cyan crystalline floor in perspective. Large simple cyan and single-magenta prism-light shards ONLY at extreme sides. Floor is crystalline through silhouette and a few broad facets at bottom third; central stage is uninterrupted flat pale ice with only very low contrast wide facets and no tile grid or star points. Sparse chunky stars confined above horizon. Palette black #000000, void #000055 #0000AA, cyan #00AAAA #00FFFF #AAFFFF, ice #FFFFFF, ONE magenta accent #AA00AA. No rainbow colours or purple haze.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-11d5e44a-14c7-40e9-a4c8-d744322c01df.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: Act 3, The Crown, observatory at the top of an orbital elevator tether in orbit. Void black-blue sparse starfield across top band, a THIN curved cyan planet-horizon glow across distant 40%-height horizon, pale ice-white and cyan crystalline floor in perspective. Large simple cyan and single-magenta prism-light shards ONLY at extreme sides. Floor is crystalline through silhouette and a few broad facets at bottom third; central stage is uninterrupted flat pale ice with only very low contrast wide facets and no tile grid or star points. Sparse chunky stars confined above horizon. Palette black #000000, void #000055 #0000AA, cyan #00AAAA #00FFFF #AAFFFF, ice #FFFFFF, ONE magenta accent #AA00AA. No rainbow colours or purple haze. Refinement: use MUCH larger pixels exactly like approved forest, draw on actual coarse 192x128 whole-image grid, enlarged in uniform 8x8 squares to 1536x1024; centre crop then 192x108. The planet is ONLY a thin gentle cyan ARC, 2 logical pixels thick, no landmasses, no clouds, no detailed bright globe or wide stripe. Top is mostly black with only 10 sparse chunky stars. Exactly one magenta colour for small edge shards, no additional pink shades. Floor plain pale ice across centre y=130-230, wide low-contrast geometric facets only at bottom third and sides, no dithering at centre. Use only 12-16 flat colours.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-fc705b45-9d4e-42c4-ad3f-3d3227521c65.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 3,
+          "prompt": "Use case: style-transfer. Create one opaque full-screen game backdrop, 1536x1024, safe for centre 16:9 crop removing 80px top and bottom. Match image 1's EXACT coarse pixel style: draw as only 192x128 pixels then enlarge each pixel to an 8x8 square. This is Phantasy Star for Sega Master System 1987. No modern pixel art, no gradients, no shading beyond 2 flat colours per material. Scene: THE CROWN, orbital observatory. Broad empty flat pale ice #AAFFFF floor starts at final y=130 and extends down. A FEW large white/cyan floor facets ONLY at bottom corners imply crystalline floor in perspective. Central rectangle x=160..480 y=130..230 is entirely ONE pale ice colour #AAFFFF. Top band black #000000 with 8 chunky stars. Thin curved cyan line of planet horizon at final y=110, ONLY 1-2 logical pixels thick, no detailed planet surface. Far side silhouettes of chunky cyan crystal columns and one small magenta prism at each edge, each prism ENTIRELY ONE FLAT magenta #AA00AA bounded by black, no highlight or alternate purple/magenta tones. Only these 9 flat colours: #000000 #000055 #0000AA #0055AA #00AAAA #00FFFF #AAFFFF #FFFFFF #AA00AA. Maximal simplicity and tile repetition, match approved forest image 1's hard 8px grid, no fine detail. NO characters, UI, text, frames, watermark, blur, bloom, anti-aliasing, texture or colour gradients.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-a9e68fa0-8177-40e0-8453-415f8cef9a7d.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "User rejected: lower 60 percent flat pale cyan; pale enemy highlights disappear."
+        },
+        {
+          "iteration": 4,
+          "prompt": "Use case: stylized-concept. Asset type: opaque production pixel-art battle backdrop for Vibespire, Act 3 THE CROWN. Input images 1 (Foundry) and 2 (Verdant) are STYLE/DENSITY references only: match their coarse square pixels, large flat colour clusters, black shape breaks and calm sprite stage. Generate ONE wide 1536x1024 landscape composed for a centered 16:9 crop removing 80px at top and bottom, then export to 640x360. Draw as a genuine coarse 192x128 logical pixel image enlarged with uniform 8x8 squares. Authentic Phantasy Star (Sega Master System, 1987) battle screen, sparse detail budget like references.\nScene: observatory deck at the top of an orbital elevator tether IN ORBIT. Mostly dark, bright accents occupying only a small area. Top band deep void black-blue with about 8 sparse chunky stars; a THIN gently curved planet horizon cyan/white line with a faint single-purple limb, near final y=85-105. Black space remains above and below the line, no bright planet disc. Side framing: tall faceted prism crystals and dark observatory pylons with cyan, white and single magenta rim accents, two receding arch pairs converging slightly toward a SMALL distant central portal/lens at final y=95-125. Bright structural framing largely stays outside central x=140..500. Central lens is small and far away, does not become a huge glowing doorway.\nCRITICAL FLOOR: dark midnight-blue / dark steel observatory deck starts at final y=125 and fills ALL the lower image. Enemy stage final y=130..230 is predominantly #000055 midnight blue, flat dark deck panels, with a FAINT SPARSE perspective grid of thin pale blue-grey lines, like Phantasy Star dungeon floors. Thin lines separated by broad DARK panels: at least 90 percent dark surface in middle stage. Grid converges to distant lens. No bright cyan floor, no ice sheet, no flat pale block. Grid subtle at enemy positions, with only a few long seams and three horizontal depth seams. Foreground bottom third: broad dark navy deck plates, black joints, a few brighter cyan crystal shards near bottom corners only. Must have visible deck geometry through the lower 60 percent while preserving high contrast for 128px pale blue monsters standing with feet at final y=200.\nPalette: no more than 16 requested flat SMS colours, channels only 00/55/AA/FF: #000000 void, #000055 midnight, #0000AA navy, #005555 dark steel teal, #5555AA muted seam blue-grey, #00AAAA and #00FFFF two cyans, #FFFFFF ice white, #550055 faint purple limb, #AA00AA the ONLY magenta accent. Keep overall value mostly dark. Cyan/white concentrated in thin edge highlights; no bloom, glow gradients, soft shading, antialiasing, tiny noise, fine microtexture or modern high-resolution pixel art. No characters, enemies, UI, lettering, border or watermark.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18515-2257-7d03-a1d9-7bc5f54e824a/exec-21ddf63f-dc55-4fea-93d2-689923e43f4d.png",
+          "status": "superseded",
+          "references": [
+            "public/assets/backdrops/act2_foundry@2x.png",
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Dark deck and orbital framing accepted; foreground crystal shards missing, added in iteration 5."
+        },
+        {
+          "iteration": 5,
+          "prompt": "Use case: precise-object-edit. This is the selected Act 3 Crown Vibespire battle backdrop. Preserve the entire composition, dark midnight-blue deck, faint sparse perspective grid, small distant central lens, black orbital sky, thin cyan/white planet arc with purple limb, and cyan/magenta observatory pylons and prism crystals at the sides. Change ONLY the foreground bottom corners: add three small chunky fallen crystal shards, two near bottom left and one near bottom right, pale cyan and white lit facets with black outlines. Keep shards outside the central half and above the very bottom edge so they survive centered 16:9 cropping. Shards must be sparse small accents on dark deck plates, not big piles or additional columns. Use coarse hard square pixel clusters matching the existing art; flat SMS colours, no gradients, anti-aliasing, texture, bloom, UI, characters, text or watermark. Keep the floor dark and the y=130-230 enemy stage visually unchanged. Output one wide opaque landscape.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18515-2257-7d03-a1d9-7bc5f54e824a/exec-02bd0d0d-6cbf-45c9-b33e-a163ffd2132d.png",
+          "status": "selected",
+          "references": [
+            "tools/sprites/raw/backdrops/act3_crown-v4.png"
+          ]
+        }
+      ],
+      "verdict": "Dark midnight-blue observatory deck with faint perspective grid, receding cyan/magenta pylons, a thin orbital horizon and foreground shards. Stone golem and jellyfish at 2x with feet at y=200 both read clearly; pale highlights pop against the dark baseline.",
+      "source": "raw/backdrops/act3_crown-v5.png",
+      "settings_override": {
+        "colors": 14
+      },
+      "palette_review": "24-colour trial retained extra ramps; 12-colour trial lost magenta. Selected 14 SMS colours, one magenta-violet accent #AA00FF.",
+      "contrast_preview": {
+        "path": "preview/backdrops/act3-enemy-contrast.png",
+        "scale": 2,
+        "baseline_y": 200,
+        "sprites": [
+          {
+            "name": "stone-golem",
+            "x": 176
+          },
+          {
+            "name": "jellyfish-spirit",
+            "x": 336
+          }
+        ]
+      }
+    },
+    "title_spire": {
+      "selected_iteration": 5,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: title screen seen from the surface of a dying colony world at dusk. A colossal slender derelict orbital elevator tower rises from a dark-green jungle horizon up through simple stepped clouds to a tiny orbital crown with a single star. Purple-pink sky in three wide FLAT horizontal colour bands, dark green foreground canopy framing bottom corners. Keep the top-centre 40% of the picture exceptionally calm for a future logo: almost plain purple sky, no clouds or texture there; the tower can be a narrow dark silhouette extending up through it with a tiny crown/star, occupying only a few percent of width. Jungle horizon about 40% down; middle band broad flat low-detail muted purple dusk air above and dark green canopy below, no individual bright leaves at centre. Palette black, #000055 #550055 #5500AA #AA55AA #FFAAAA, #005500 #00AA00. No sun or lettering.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-bcac04e1-788e-43b5-b037-19eb9f40fd4a.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: title screen seen from the surface of a dying colony world at dusk. A colossal slender derelict orbital elevator tower rises from a dark-green jungle horizon up through simple stepped clouds to a tiny orbital crown with a single star. Purple-pink sky in three wide FLAT horizontal colour bands, dark green foreground canopy framing bottom corners. Keep the top-centre 40% of the picture exceptionally calm for a future logo: almost plain purple sky, no clouds or texture there; the tower can be a narrow dark silhouette extending up through it with a tiny crown/star, occupying only a few percent of width. Jungle horizon about 40% down; middle band broad flat low-detail muted purple dusk air above and dark green canopy below, no individual bright leaves at centre. Palette black, #000055 #550055 #5500AA #AA55AA #FFAAAA, #005500 #00AA00. No sun or lettering. Refinement: keep ALL important tower parts within the centred crop: crown and star at source y=150, far below the top 80px crop margin. The narrow central tower must stay whole from jungle to crown. Top-centre 40% otherwise plain purple sky, no clouds there. Reduce foliage and cloud detail to the approved forest's coarse pixel scale: actual 192x128 whole-image drawing enlarged to 1536x1024 in uniform 8x8 square pixels. Only a few large flat tile-like leaf clusters, 12-16 flat colours, no delicate leaf sprays or fine cloud texture.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-56fd3fb5-37b0-44b0-8dc2-8d65ce5424c3.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 3,
+          "prompt": "Use case: style-transfer. One opaque game title backdrop 1536x1024, composed for centred 16:9 crop, 80px top/bottom removed. Match approved image 1 EXACTLY in coarse pixel scale and calm density: a real 192x128 drawing enlarged in uniform 8x8 square pixels, strict Phantasy Star Sega Master System 1987, black shape breaks, 12-16 flat SMS colours, no fine detail or gradients. Scene: the colossal derelict orbital elevator Spire seen from a dying colony surface at dusk. A narrow immense tower rises from a jungle horizon through stepped clouds to a tiny orbital crown and one small star. IMPORTANT geometry: jungle horizon at SOURCE y=392, which is final y=130, NOT halfway down. From source y=410 to y=750 (final y=138..279), central half is uninterrupted flat dark green #005500, exactly like the approved forest clearing. Jungle only a shallow distant silhouette line. Foreground leafy canopy only extreme bottom corners. Sky in three broad flat purple-pink bands, clouds ONLY at far upper side edges, never at top-centre. Keep top-centre 40% plain purple sky for future logo, except the narrow 1-3 logical pixel tower; crown and STAR at SOURCE y=160, never at image top, whole tower survives crop. Palette #000000 #000055 #550055 #5500AA #AA55AA #FFAAAA #005500 #00AA00, no soft shading. NO characters, UI, text, lettering, logos, frames, watermark, blur, anti-aliasing.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-e1307830-5215-4035-862c-22eb77e7d6cb.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable crop safety, central stage, pixel density or palette than selected iteration."
+        },
+        {
+          "iteration": 4,
+          "prompt": "Use case: precise-object-edit. Make a new TITLE SCREEN version of image 1 while preserving its EXACT coarse 8x8 pixel drawing scale, limited flat SMS colours, quiet stage and corner density. Image 1 is the approved forest backdrop. Preserve the central flat dark-green clearing and its boundary EXACTLY: horizon at SOURCE y=400, plain dark green #005500 below it through y=900 except sparse corner foliage. Replace ONLY the upper background and top canopy with dusk sky and an orbital elevator. Three broad FLAT purple-pink sky bands, blocky clouds restricted to far side edges. A COLOSSAL narrow dark tower rises from jungle horizon source y=400 through clouds to a tiny orbital crown at source y=150 and one clear small star at y=125. Entire crown/star must be below the top crop margin of 80 pixels. Jungle is a THIN dark-green silhouette at y=370..410, no detailed bright leaves across centre. The top-centre 40% is plain purple sky except the slender tower, reserved for a future logo. Dark-green foreground canopy ONLY in extreme bottom corners. Original 1536x1024 canvas, crop safe y=80..944, strict Phantasy Star Sega Master System 1987. Think 192x128 logical pixels in uniform 8x8 blocks. At most 16 flat colours, channels 00/55/AA/FF, no gradients, no anti-aliasing, no blur, no painterly texture, no new objects. No characters, UI, text, frames, watermark. The ENTIRE central middle band of the final crop from y=140 to230 MUST be plain green, like image 1.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-4932e362-da9c-4957-bb8d-0c6910b9ce1e.png",
+          "status": "rejected",
+          "references": [
+            "tools/sprites/raw/backdrops/act1-verdant-v1.png"
+          ],
+          "reason": "The composition/grid matched Act 1, but the star was above the 80px crop boundary; iteration 5 fixes the crown/star position."
+        },
+        {
+          "iteration": 5,
+          "prompt": "Use case: precise-object-edit. Edit image 1, KEEP its entire composition, pixel grid, colours, flat green clearing, dusk bands, clouds, jungle and tower unchanged. Only fix the tiny crown/star near top: shorten the upper tower so the orbital crown is lower, centred at source x=768 y=220, and put one distinct four-point pale ice-white STAR above it at source x=768 y=170. The star is essential, a chunky 3x3 logical pixel sparkle. Leave at least 150 physical pixels of completely plain purple sky above this star. All crown/star pixels must be below source y=150 so they SURVIVE removing the TOP 80 pixels for a centre 16:9 crop. Maintain 1536x1024 canvas and uniform 8x8 source pixel blocks (192x128 logical drawing). Preserve reference's broad green empty stage, corner foliage, pink-purple sky bands and narrow colossal tower base EXACTLY. No additional stars or objects. No characters, UI, text, gradients, blur or smoothing; Sega Master System flat palette only.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-bb55a06c-63b2-43bb-a48b-139fe009f8fa.png",
+          "status": "selected",
+          "references": [
+            "tools/sprites/raw/backdrops/title_spire-v4.png"
+          ]
+        }
+      ],
+      "verdict": "Purple-pink dusk, jungle silhouette, tether/crown and star read clearly; top-centre is quiet except the narrow tower, and the middle stage is flat green and calm.",
+      "source": "raw/backdrops/title_spire-v5.png"
+    },
+    "rest_site": {
+      "selected_iteration": 3,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: a sheltered rest-site alcove INSIDE the Spire. Front-on Phantasy Star dungeon chamber: huge blue-grey wall blocks, a small simple dark doorway at the back, side walls in restrained first-person perspective. Five to six flat blue/blue-grey steps (#000055 #0000AA #0055AA #5555AA #AAAAFF #AAAAAA) with black mortar lines, no other wall colours. A SMALL campfire with warm orange light is the ONLY warm light, set in lower-left foreground, its hard two-step orange glow localized to floor immediately around it, no radial gradient. A chunky rolled bedroll and two crates sit low at side foreground, not in middle. Large plain dark-blue floor in the central middle band, broad flat wall panels above it; no brick seams across the central stage. Doorway at back is dark blue, no warm light. Floor props wholly in bottom third. No people.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-a7bda0db-3f7c-4e6e-83e9-300b444608d7.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: a sheltered rest-site alcove INSIDE the Spire. Front-on Phantasy Star dungeon chamber: huge blue-grey wall blocks, a small simple dark doorway at the back, side walls in restrained first-person perspective. Five to six flat blue/blue-grey steps (#000055 #0000AA #0055AA #5555AA #AAAAFF #AAAAAA) with black mortar lines, no other wall colours. A SMALL campfire with warm orange light is the ONLY warm light, set in lower-left foreground, its hard two-step orange glow localized to floor immediately around it, no radial gradient. A chunky rolled bedroll and two crates sit low at side foreground, not in middle. Large plain dark-blue floor in the central middle band, broad flat wall panels above it; no brick seams across the central stage. Doorway at back is dark blue, no warm light. Floor props wholly in bottom third. No people. Refinement: floor begins at final y=125 (source y=380), so the ENTIRE y=130-230 centre is uninterrupted flat dark blue. No staircase or steps. A small dark doorway in broad flat blue-grey wall at back, no mortar crossing centre stage. Campfire INCLUDING its whole stone ring and bedroll/crates must sit within source y=700..870 so all props survive the 80px top/bottom centre crop. Fire is small, localized, with just three warm tones. Palette only 5-6 blue/grey shades and black plus three warm shades, 16 colours maximum. Draw on actual 192x128 grid with uniform 8x8 blocks at 1536x1024, exactly approved forest pixel scale.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-6064f137-5392-48f0-83b8-8f6ac20cfeb4.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 3,
+          "prompt": "Use case: style-transfer. One 1536x1024 opaque landscape, crop-safe inside y=80..944. Match image 1's pixel scale EXACTLY: uniform 8x8 square pixels, a 192x128 logical drawing at 1536x1024. Authentic Phantasy Star Sega Master System 1987 background, black outlines, large FLAT colour regions, only 12-16 flat colours from RGB channels 00/55/AA/FF. Centre y=400..650 must be calm, minimal detail, for game sprites. No gradients, shading noise, texture, blur, anti-aliasing, characters, UI, text, borders or watermark. A sheltered BLUE-GREY dungeon alcove inside derelict orbital elevator. Broad blue-grey wall panels in 5-6 flat blue steps, dark small doorway in back. Walls end at source y=385, all centre floor below ONE EXACT SOLID COLOUR #000055, no shading or mottling. Tiny campfire, whole stone ring, blue-grey bedroll at lower-left source y=720..860; two blue-grey crates lower-right. Fire is ONLY warm light, orange red yellow localized pixels at fire and immediate small floor patch. Props fully above source y=880 and outside central half. NO stairs. Sparse checker dither on upper corner walls only. Huge flat quiet middle floor like reference forest's grass.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-7aa4220b-eba2-44ba-862a-fe6a9f98e69b.png",
+          "status": "selected",
+          "references": [
+            "tools/sprites/raw/backdrops/act1-verdant-v1.png"
+          ]
+        }
+      ],
+      "verdict": "Small warm fire and cool alcove read clearly; bedroll/crates remain at the edges and the entire central middle band is flat and calm.",
+      "source": "raw/backdrops/rest_site-v3.png"
+    },
+    "shop_interior": {
+      "selected_iteration": 4,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: cramped merchant's den inside the Spire, front-on Phantasy Star shop interior WITHOUT a merchant. Chunky shelves with a FEW simple jars and hanging tools at left/right edges and across top third, dark teal/blue wall panels, one small warm orange lantern high at one side. A broad simple counter across foreground. Leave the counter front and its broad top entirely plain flat dark teal so floating item windows can sit over them, and keep middle central area calm with a wide unornamented teal wall above counter. No items on centre of counter, no price labels. Flat two-tone surfaces, no wood grain, no tiny clutter. Palette black #000000, blue #000055 #0000AA #0055AA, teal #005555 #00AAAA, pale cyan #55FFFF, warm lantern #AA5500 #FFAA00. No people.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-2a0fe98d-e0e8-45ac-a0f5-55a29e7cf8b3.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: cramped merchant's den inside the Spire, front-on Phantasy Star shop interior WITHOUT a merchant. Chunky shelves with a FEW simple jars and hanging tools at left/right edges and across top third, dark teal/blue wall panels, one small warm orange lantern high at one side. A broad simple counter across foreground. Leave the counter front and its broad top entirely plain flat dark teal so floating item windows can sit over them, and keep middle central area calm with a wide unornamented teal wall above counter. No items on centre of counter, no price labels. Flat two-tone surfaces, no wood grain, no tiny clutter. Palette black #000000, blue #000055 #0000AA #0055AA, teal #005555 #00AAAA, pale cyan #55FFFF, warm lantern #AA5500 #FFAA00. No people. Refinement: much chunkier pixels, exactly the approved reference's scale: actual 192x128 drawing enlarged in UNIFORM 8x8 square blocks to 1536x1024. Remove small trim, use a few large tile-like jars with only two flat tones and black outline. 12-16 colours total, no tiny edge texture or soft shading. Whole central wall ONE FLAT dark teal #005555, counter top ONE FLAT #00AAAA, counter front ONE FLAT #005555. Keep centre y=130-230 calm, tools only far edge and high top. ONE small warm lantern, top-right inside crop-safe area.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-16c96ffb-e7bf-43cf-a3f8-f132073ee7f5.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png"
+          ],
+          "reason": "Visual comparison: less suitable crop safety, central stage, pixel density or palette than selected iteration."
+        },
+        {
+          "iteration": 3,
+          "prompt": "Use case: style-transfer. One 1536x1024 opaque landscape, crop-safe inside y=80..944. Match image 1's pixel scale EXACTLY: uniform 8x8 square pixels, a 192x128 logical drawing at 1536x1024. Authentic Phantasy Star Sega Master System 1987 background, black outlines, large FLAT colour regions, only 12-16 flat colours from RGB channels 00/55/AA/FF. Centre y=400..650 must be calm, minimal detail, for game sprites. No gradients, shading noise, texture, blur, anti-aliasing, characters, UI, text, borders or watermark. Cramped merchant den WITHOUT merchant. Teal blue walls, side shelves with a few chunky jars, hanging tools high at edges, ONE small warm lantern at upper-right source y=140..300, wholly within crop. A broad plain counter foreground source y=680..900. Middle wall one EXACT flat teal #005555, counter top one flat cyan-teal #00AAAA, counter front one flat teal #005555. No items at centre of counter; windows will overlay it later. Huge quiet middle, simple chunky jars, two flat tones each, no trim, no clutter. Foreground counter plain, 12-16 colours.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-75800355-d814-4443-9075-c632aaa24306.png",
+          "status": "rejected",
+          "references": [
+            "tools/sprites/raw/backdrops/act1-verdant-v1.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        },
+        {
+          "iteration": 4,
+          "prompt": "Use case: style-transfer. Create one 1536x1024 opaque image. Image 1 is the approved PIXEL STYLE reference, image 2 is a shop COMPOSITION reference. Redraw the shop with EXACTLY image 1's pixel size and density: every logical pixel a uniform 8x8 square, 192x128 logical drawing. Phantasy Star Sega Master System 1987, strict flat 8-bit colours, black outlines. Cramped merchant den, teal-blue walls, side shelves with blue/cyan jars, high hanging tools, one small warm orange lantern. Keep the broad middle wall completely plain dark teal #005555 and the foreground counter completely plain teal with cyan-teal top for item windows. Preserve image 2's simple props and central negative space, but use smaller 8x8 pixels and reposition top shelf jars and lantern wholly into crop-safe source y=130..370. Counter top begins source y=700. Everything important remains inside source y=80..944 because 80px top and bottom will be cropped. Flat empty centre source y=390..650. ONLY 14 flat colours, RGB channels only 00/55/AA/FF, two flat tones per material, no colour noise, no gradient, no dithering, no soft shading, no fine trim. No characters, no merchant, no labels, no UI, no text, no border, no watermark.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-d35b5b03-3c81-4ad2-900a-c4808d2edc63.png",
+          "status": "selected",
+          "references": [
+            "tools/sprites/raw/backdrops/act1-verdant-v1.png",
+            "tools/sprites/raw/backdrops/shop_interior-v2.png"
+          ]
+        }
+      ],
+      "verdict": "Jars, hanging tools and lantern read clearly; teal wall/counter are calm for item windows. Its pixel scale is coarser than Act 1 and the upper jars are partly cropped.",
+      "source": "raw/backdrops/shop_interior-v4.png"
+    },
+    "event_generic": {
+      "selected_iteration": 1,
+      "attempts": [
+        {
+          "iteration": 1,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: an unknown corridor junction inside the overgrown Spire. Phantasy Star 1987 first-person dungeon corridor, chunky blue wall planes with black mortar and sparse perspective lines, two dark side openings making a junction. A small closed door at the far end has a narrow cyan-white rim of light from behind it, no rays or bloom. Faint dark-green vines at extreme side corners only. Follow the blue corridor reference's simple geometric planes and 5-6 flat blue steps, but open the middle into a broad quiet floor stage: perspective lines and block seams stay at sides and bottom third, central middle band is plain dark blue with door a small distant element above it. No fine wall brick pattern in centre. Palette black #000000, #000055 #0000AA #0000FF #0055FF #00AAFF, cyan #AAFFFF, dark green #005500. No warm lights, no characters. Input image 2 is a GEOMETRY and blue-palette reference; keep image 1's chunkier density.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-7553d3b0-aeba-443d-b9dc-95c049437f81.png",
+          "status": "selected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png",
+            "docs/research/refs/ps1-dungeon-corridor-segaretro.png"
+          ]
+        },
+        {
+          "iteration": 2,
+          "prompt": "Use case: style-transfer. Asset type: opaque full-screen Vibespire backdrop. Input image 1 is the approved Act 1 STYLE REFERENCE only: preserve its chunky pixel scale, sparse scene density, flat colour discipline, black shape breaks and calm middle; replace the scene with the requested setting. Generate ONE wide landscape 1536x1024 image composed for a centred 16:9 crop. Phantasy Star battle screen (Sega Master System, 1987) authentic strict 8-bit pixel art, as if 320x180 enlarged nearest neighbour. Match the reference's actual coarse 192x108-like detail budget: hard square pixel edges, flat colour clusters, repeated tile-like motifs, occasional ordered checker dithering confined to corners, at most 16 colours, SMS RGB channels only 00/55/AA/FF. Horizon around 40% down in the final 16:9 crop. The CENTRAL HALF from 36% to 65% of cropped height (final y=130-230) must be exceptionally calm: large uninterrupted flat low-detail colour areas reserved for bright 128px-tall sprites. Busy framing allowed only at extreme sides and top and bottom thirds. No gradients, atmospheric blur, soft light, sunbeams, anti-aliasing, painterly texture, tiny decorative noise, characters, monsters, UI, frames, text or watermark. Scene: an unknown corridor junction inside the overgrown Spire. Phantasy Star 1987 first-person dungeon corridor, chunky blue wall planes with black mortar and sparse perspective lines, two dark side openings making a junction. A small closed door at the far end has a narrow cyan-white rim of light from behind it, no rays or bloom. Faint dark-green vines at extreme side corners only. Follow the blue corridor reference's simple geometric planes and 5-6 flat blue steps, but open the middle into a broad quiet floor stage: perspective lines and block seams stay at sides and bottom third, central middle band is plain dark blue with door a small distant element above it. No fine wall brick pattern in centre. Palette black #000000, #000055 #0000AA #0000FF #0055FF #00AAFF, cyan #AAFFFF, dark green #005500. No warm lights, no characters. Input image 2 is a GEOMETRY and blue-palette reference; keep image 1's chunkier density. Refinement: exactly approved forest coarse pixel scale, draw the whole 1536x1024 image as a 192x128 logical drawing enlarged in UNIFORM 8x8 square blocks. Very few enormous blue wall blocks, only five flat blue shades plus black and cyan, dark green vines only as a few chunky shapes at extreme corners. Door a small simple distant dark rectangle outlined by cyan light at final y=85..125. Wide quiet blue floor starts at y=130 with NO lines at all until y=260. No fine textures, no little chipped bricks or leafy noise. Keep the first-person blue corridor geometry and side junctions.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-1f43254f-c0b7-47ec-9897-85a99d11bef4.png",
+          "status": "rejected",
+          "references": [
+            "public/assets/backdrops/act1_verdant@2x.png",
+            "docs/research/refs/ps1-dungeon-corridor-segaretro.png"
+          ],
+          "reason": "Auto grid detection failed: score 0.065. No pitch override used."
+        },
+        {
+          "iteration": 3,
+          "prompt": "Use case: style-transfer. One 1536x1024 opaque landscape, crop-safe inside y=80..944. Match image 1's pixel scale EXACTLY: uniform 8x8 square pixels, a 192x128 logical drawing at 1536x1024. Authentic Phantasy Star Sega Master System 1987 background, black outlines, large FLAT colour regions, only 12-16 flat colours from RGB channels 00/55/AA/FF. Centre y=400..650 must be calm, minimal detail, for game sprites. No gradients, shading noise, texture, blur, anti-aliasing, characters, UI, text, borders or watermark. First-person blue dungeon CORRIDOR JUNCTION with two black side openings, a small closed far door outlined in cyan light. Restrained perspective lines and huge flat blue wall blocks. Faint chunky green vines in extreme corners. Reference 2 is geometric corridor reference, preserve image 1's coarse pixel density. Floor starts source y=385, middle floor ONE EXACT SOLID COLOUR #0000AA until source y=720. Door is small at source y=275..380, plain black door face with narrow cyan rim. Wall seams limited to sides/top, floor lines only bottom third.",
+          "generator_path": "/Users/chrises/.codex/generated_images/01a18505-6ff1-7ea3-a09d-87b5c456a256/exec-e23c994c-12ea-4c67-b37a-293f1b7b1be2.png",
+          "status": "rejected",
+          "references": [
+            "tools/sprites/raw/backdrops/act1-verdant-v1.png",
+            "docs/research/refs/ps1-dungeon-corridor-segaretro.png"
+          ],
+          "reason": "Visual comparison: less suitable composition, pixel density, palette or sampling than selected iteration."
+        }
+      ],
+      "verdict": "Strong first-person blue junction with restrained vines and a lit door; central floor is calm, though the distant threshold touches the upper middle band.",
+      "source": "raw/backdrops/event_generic-v1.png"
+    }
+  }
+}

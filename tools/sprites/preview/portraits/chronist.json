@@ -1,0 +1,41 @@
+{
+  "input": "raw/portraits/final/chronist.png",
+  "output": "../../public/assets/sprites/portraits/chronist.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 16.01,
+  "phase": [
+    15.724,
+    15.669
+  ],
+  "grid_score": 0.7788909915860276,
+  "source_bbox": [
+    16,
+    16,
+    1008,
+    1008
+  ],
+  "grid_size": [
+    64,
+    64
+  ],
+  "grid_content_bbox": [
+    1,
+    1,
+    63,
+    63
+  ],
+  "bbox": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.207,
+  "small_colors": 16
+}

@@ -1,0 +1,802 @@
+{
+  "cards": 56,
+  "atlas_frames": 132,
+  "atlas_size": [
+    384,
+    264
+  ],
+  "checks": [
+    "56 ids covered",
+    "32x24 RGBA",
+    "binary alpha",
+    "SMS palette <=16 colors",
+    "no magenta spill",
+    "atlas frame pixels match"
+  ],
+  "assets": [
+    {
+      "id": "pulse_shot",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 13,
+      "bbox": [
+        0,
+        3,
+        32,
+        21
+      ]
+    },
+    {
+      "id": "ward",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "tick",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "tock",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "pinion_jab",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "gear_train",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "downbeat",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "slack_water",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        1,
+        0,
+        31,
+        24
+      ]
+    },
+    {
+      "id": "parallax",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ]
+    },
+    {
+      "id": "noon_gun",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        0,
+        0,
+        32,
+        23
+      ]
+    },
+    {
+      "id": "afterpeal",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "spring_tide",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "carillon",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "storm_glass",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        8,
+        0,
+        24,
+        24
+      ]
+    },
+    {
+      "id": "almanac",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        6,
+        0,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "ephemeris",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ]
+    },
+    {
+      "id": "upbeat",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        4,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "weather_eye",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ]
+    },
+    {
+      "id": "balance_wheel",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "detent",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "dead_reckoning",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "logbook",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        2,
+        0,
+        30,
+        24
+      ]
+    },
+    {
+      "id": "reef_the_sails",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "wind_forward",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        0,
+        0,
+        31,
+        24
+      ]
+    },
+    {
+      "id": "sweep_hand",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "fermata",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "appointed_hour",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        0,
+        1,
+        32,
+        23
+      ]
+    },
+    {
+      "id": "knell",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 13,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "turn_the_tide",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "confluence",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        2,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "second_hand",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "mainspring",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "quarter_chime",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "hasten",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        2,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "banked_hours",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "breakwater",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "heave_to",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "batten_down",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        4,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "mark_the_lull",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        1,
+        0,
+        31,
+        24
+      ]
+    },
+    {
+      "id": "glance_ahead",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "striking_train",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "tide_table",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        4,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "storm_warning",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "escapement",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        4,
+        0,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "zenith",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 13,
+      "bbox": [
+        6,
+        0,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "syzygy",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        6,
+        0,
+        25,
+        24
+      ]
+    },
+    {
+      "id": "culmination",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "toll_the_hours",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "seen_it_coming",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "star_tithe",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        6,
+        0,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "tourbillon",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 15,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "lighthouse",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "polyrhythm",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        3,
+        0,
+        29,
+        24
+      ]
+    },
+    {
+      "id": "portents",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 12,
+      "bbox": [
+        5,
+        0,
+        27,
+        24
+      ]
+    },
+    {
+      "id": "watch_bell",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 14,
+      "bbox": [
+        6,
+        0,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "perpetual_motion",
+      "size": [
+        32,
+        24
+      ],
+      "colors": 16,
+      "bbox": [
+        0,
+        2,
+        32,
+        22
+      ]
+    }
+  ]
+}

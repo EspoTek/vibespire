@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/chronist_04.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "seen_it_coming",
+      "source_box": [
+        0,
+        0,
+        311,
+        306
+      ],
+      "pitch": 6.8,
+      "grid_score": 0.2295343071905278,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/seen_it_coming.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "star_tithe",
+      "source_box": [
+        323,
+        0,
+        612,
+        306
+      ],
+      "pitch": 7.37,
+      "grid_score": 0.18442475423004265,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/star_tithe.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tourbillon",
+      "source_box": [
+        638,
+        0,
+        921,
+        306
+      ],
+      "pitch": 7.0,
+      "grid_score": 0.25395563813343985,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/tourbillon.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "lighthouse",
+      "source_box": [
+        938,
+        0,
+        1254,
+        306
+      ],
+      "pitch": 6.7,
+      "grid_score": 0.2293423633978524,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/lighthouse.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "polyrhythm",
+      "source_box": [
+        0,
+        327,
+        311,
+        601
+      ],
+      "pitch": 6.4,
+      "grid_score": 0.2482202983310312,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/polyrhythm.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "portents",
+      "source_box": [
+        323,
+        327,
+        612,
+        601
+      ],
+      "pitch": 7.07,
+      "grid_score": 0.22033674665515732,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/portents.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "watch_bell",
+      "source_box": [
+        638,
+        327,
+        921,
+        601
+      ],
+      "pitch": 6.45,
+      "grid_score": 0.2896578364426491,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/watch_bell.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "perpetual_motion",
+      "source_box": [
+        938,
+        327,
+        1254,
+        601
+      ],
+      "pitch": 6.39,
+      "grid_score": 0.2850587390045484,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/perpetual_motion.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tick_alt",
+      "source_box": [
+        0,
+        612,
+        311,
+        897
+      ],
+      "pitch": 6.83,
+      "grid_score": 0.2236362776218278,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/tick_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "parallax_alt",
+      "source_box": [
+        323,
+        612,
+        612,
+        897
+      ],
+      "pitch": 6.84,
+      "grid_score": 0.2648617001790299,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/parallax_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "almanac_alt",
+      "source_box": [
+        638,
+        612,
+        921,
+        897
+      ],
+      "pitch": 6.91,
+      "grid_score": 0.22496393401952902,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/almanac_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "dead_reckoning_alt",
+      "source_box": [
+        938,
+        612,
+        1254,
+        897
+      ],
+      "pitch": 6.92,
+      "grid_score": 0.258682870635806,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/dead_reckoning_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "fermata_alt",
+      "source_box": [
+        0,
+        910,
+        311,
+        1254
+      ],
+      "pitch": 6.55,
+      "grid_score": 0.3368127784951076,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/fermata_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "mark_the_lull_alt",
+      "source_box": [
+        323,
+        910,
+        612,
+        1254
+      ],
+      "pitch": 6.72,
+      "grid_score": 0.24414901435054487,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/mark_the_lull_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "syzygy_alt",
+      "source_box": [
+        638,
+        910,
+        921,
+        1254
+      ],
+      "pitch": 6.53,
+      "grid_score": 0.20756841959064823,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/syzygy_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "polyrhythm_alt",
+      "source_box": [
+        938,
+        910,
+        1254,
+        1254
+      ],
+      "pitch": 6.42,
+      "grid_score": 0.23670081798307124,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_04/polyrhythm_alt.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

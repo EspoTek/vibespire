@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/antibody.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/antibody.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 10.4,
+  "phase": [
+    7.47,
+    2.538
+  ],
+  "grid_score": 0.42356463530436295,
+  "source_bbox": [
+    99,
+    121,
+    926,
+    903
+  ],
+  "grid_size": [
+    99,
+    98
+  ],
+  "grid_content_bbox": [
+    10,
+    11,
+    89,
+    87
+  ],
+  "bbox": [
+    0,
+    2,
+    64,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.246
+}

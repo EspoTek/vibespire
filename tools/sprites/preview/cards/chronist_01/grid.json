@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/cards/chronist_01.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "equal",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "pulse_shot",
+      "source_box": [
+        0,
+        0,
+        314,
+        289
+      ],
+      "pitch": 6.71,
+      "grid_score": 0.28856009652175796,
+      "colors": 13,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/pulse_shot.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "ward",
+      "source_box": [
+        314,
+        0,
+        627,
+        289
+      ],
+      "pitch": 7.99,
+      "grid_score": 0.2525880134480995,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/ward.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tick",
+      "source_box": [
+        627,
+        0,
+        940,
+        289
+      ],
+      "pitch": 7.03,
+      "grid_score": 0.2187630028764682,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/tick.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "tock",
+      "source_box": [
+        940,
+        0,
+        1254,
+        289
+      ],
+      "pitch": 6.58,
+      "grid_score": 0.26184871268885146,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/tock.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "pinion_jab",
+      "source_box": [
+        0,
+        335,
+        314,
+        594
+      ],
+      "pitch": 6.31,
+      "grid_score": 0.24343153969066755,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/pinion_jab.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "gear_train",
+      "source_box": [
+        314,
+        335,
+        627,
+        594
+      ],
+      "pitch": 7.58,
+      "grid_score": 0.1745475332232536,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/gear_train.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "downbeat",
+      "source_box": [
+        627,
+        335,
+        940,
+        594
+      ],
+      "pitch": 6.92,
+      "grid_score": 0.2571431203000122,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/downbeat.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "slack_water",
+      "source_box": [
+        940,
+        335,
+        1254,
+        594
+      ],
+      "pitch": 6.49,
+      "grid_score": 0.2979911455985716,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/slack_water.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "parallax",
+      "source_box": [
+        0,
+        641,
+        314,
+        892
+      ],
+      "pitch": 6.39,
+      "grid_score": 0.31160721417114184,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/parallax.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "noon_gun",
+      "source_box": [
+        314,
+        641,
+        627,
+        892
+      ],
+      "pitch": 6.52,
+      "grid_score": 0.2798088389160987,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/noon_gun.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "afterpeal",
+      "source_box": [
+        627,
+        641,
+        940,
+        892
+      ],
+      "pitch": 6.9,
+      "grid_score": 0.33383705588720025,
+      "colors": 12,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/afterpeal.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "spring_tide",
+      "source_box": [
+        940,
+        641,
+        1254,
+        892
+      ],
+      "pitch": 6.95,
+      "grid_score": 0.2826942353114074,
+      "colors": 14,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/spring_tide.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "carillon",
+      "source_box": [
+        0,
+        931,
+        314,
+        1254
+      ],
+      "pitch": 6.34,
+      "grid_score": 0.21593867602867356,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/carillon.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "storm_glass",
+      "source_box": [
+        314,
+        931,
+        627,
+        1254
+      ],
+      "pitch": 7.2,
+      "grid_score": 0.24203711850935472,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/storm_glass.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "almanac",
+      "source_box": [
+        627,
+        931,
+        940,
+        1254
+      ],
+      "pitch": 6.81,
+      "grid_score": 0.35344121393268835,
+      "colors": 15,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/almanac.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "ephemeris",
+      "source_box": [
+        940,
+        931,
+        1254,
+        1254
+      ],
+      "pitch": 6.9,
+      "grid_score": 0.21389897529776664,
+      "colors": 16,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/cards/chronist_01/ephemeris.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "source": "/Users/chrises/git/vibespire/tools/sprites/raw/icons/retry_potions_01.png",
+  "source_size": [
+    1024,
+    1024
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "retry_quicksilver_a",
+      "source_box": [
+        0,
+        0,
+        219,
+        235
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_quicksilver_a.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_tempo_a",
+      "source_box": [
+        296,
+        0,
+        464,
+        235
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_tempo_a.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_rewind_a",
+      "source_box": [
+        536,
+        0,
+        752,
+        235
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_rewind_a.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_halt_a",
+      "source_box": [
+        817,
+        0,
+        1024,
+        235
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_halt_a.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_quicksilver_b",
+      "source_box": [
+        0,
+        270,
+        219,
+        486
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_quicksilver_b.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_tempo_b",
+      "source_box": [
+        296,
+        270,
+        464,
+        486
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_tempo_b.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_rewind_b",
+      "source_box": [
+        536,
+        270,
+        752,
+        486
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_rewind_b.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_halt_b",
+      "source_box": [
+        817,
+        270,
+        1024,
+        486
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_halt_b.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_quicksilver_c",
+      "source_box": [
+        0,
+        523,
+        219,
+        734
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_quicksilver_c.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_tempo_c",
+      "source_box": [
+        296,
+        523,
+        464,
+        734
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_tempo_c.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_rewind_c",
+      "source_box": [
+        536,
+        523,
+        752,
+        734
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_rewind_c.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_halt_c",
+      "source_box": [
+        817,
+        523,
+        1024,
+        734
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_halt_c.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_quicksilver_d",
+      "source_box": [
+        0,
+        767,
+        219,
+        1024
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_quicksilver_d.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_tempo_d",
+      "source_box": [
+        296,
+        767,
+        464,
+        1024
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_tempo_d.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_rewind_d",
+      "source_box": [
+        536,
+        767,
+        752,
+        1024
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_rewind_d.png",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "retry_halt_d",
+      "source_box": [
+        817,
+        767,
+        1024,
+        1024
+      ],
+      "pitch": 1.0,
+      "grid_score": null,
+      "colors": 8,
+      "output": "/Users/chrises/git/vibespire/tools/sprites/preview/icons/retry_potions_01/retry_halt_d.png",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

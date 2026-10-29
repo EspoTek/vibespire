@@ -1,0 +1,40 @@
+{
+  "input": "/Users/chrises/git/vibespire/tools/sprites/raw/scrap_drone.png",
+  "output": "/Users/chrises/git/vibespire/public/assets/sprites/enemies/scrap_drone.png",
+  "input_size": [
+    1024,
+    1024
+  ],
+  "pitch": 9.15,
+  "phase": [
+    8.653,
+    2.007
+  ],
+  "grid_score": 0.1992597607194328,
+  "source_bbox": [
+    134,
+    19,
+    890,
+    999
+  ],
+  "grid_size": [
+    112,
+    112
+  ],
+  "grid_content_bbox": [
+    15,
+    2,
+    97,
+    109
+  ],
+  "bbox": [
+    7,
+    0,
+    57,
+    64
+  ],
+  "size": 64,
+  "colors": 16,
+  "outline": 1,
+  "elapsed_seconds": 0.233
+}

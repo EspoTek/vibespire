@@ -1,0 +1,285 @@
+{
+  "source": "tools/sprites/raw/cards/graft-colorless/graft_03.png",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "cols": 4,
+  "rows": 4,
+  "x_detection": "magenta-gutters",
+  "y_detection": "magenta-gutters",
+  "cells": [
+    {
+      "name": "burl_wall",
+      "source_box": [
+        0,
+        0,
+        299,
+        297
+      ],
+      "pitch": 8.03,
+      "grid_score": 0.22796340056126235,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_03/burl_wall.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "choking_spores",
+      "source_box": [
+        327,
+        0,
+        605,
+        297
+      ],
+      "pitch": 8.2,
+      "grid_score": 0.21787354929066424,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/choking_spores.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "excise",
+      "source_box": [
+        626,
+        0,
+        933,
+        297
+      ],
+      "pitch": 7.3,
+      "grid_score": 0.2262742310546467,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/excise.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "propagate",
+      "source_box": [
+        960,
+        0,
+        1254,
+        297
+      ],
+      "pitch": 7.27,
+      "grid_score": 0.2899773988515463,
+      "colors": 11,
+      "output": "tools/sprites/preview/cards/graft_03/propagate.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "seed_rain",
+      "source_box": [
+        0,
+        325,
+        299,
+        613
+      ],
+      "pitch": 7.63,
+      "grid_score": 0.23935649803492295,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/seed_rain.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "puffball",
+      "source_box": [
+        327,
+        325,
+        605,
+        613
+      ],
+      "pitch": 7.79,
+      "grid_score": 0.20211350204736944,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/puffball.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "sporeburst",
+      "source_box": [
+        626,
+        325,
+        933,
+        613
+      ],
+      "pitch": 7.84,
+      "grid_score": 0.2531706961954739,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/sporeburst.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "decomposer",
+      "source_box": [
+        960,
+        325,
+        1254,
+        613
+      ],
+      "pitch": 7.74,
+      "grid_score": 0.21393170204159223,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_03/decomposer.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "dusk_pruning",
+      "source_box": [
+        0,
+        642,
+        299,
+        925
+      ],
+      "pitch": 7.99,
+      "grid_score": 0.3065028442889836,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/dusk_pruning.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "living_hedge",
+      "source_box": [
+        327,
+        642,
+        605,
+        925
+      ],
+      "pitch": 8.16,
+      "grid_score": 0.215573539883877,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/living_hedge.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "thorn_halo",
+      "source_box": [
+        626,
+        642,
+        933,
+        925
+      ],
+      "pitch": 8.02,
+      "grid_score": 0.22303177273304217,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_03/thorn_halo.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "ripening_rot",
+      "source_box": [
+        960,
+        642,
+        1254,
+        925
+      ],
+      "pitch": 8.1,
+      "grid_score": 0.2640277859209068,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/ripening_rot.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "heartwood_spear",
+      "source_box": [
+        0,
+        946,
+        299,
+        1254
+      ],
+      "pitch": 8.12,
+      "grid_score": 0.33799039472955433,
+      "colors": 15,
+      "output": "tools/sprites/preview/cards/graft_03/heartwood_spear.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "death_cap",
+      "source_box": [
+        327,
+        946,
+        605,
+        1254
+      ],
+      "pitch": 8.17,
+      "grid_score": 0.2853503689687006,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/death_cap.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "reaping_vine",
+      "source_box": [
+        626,
+        946,
+        933,
+        1254
+      ],
+      "pitch": 8.11,
+      "grid_score": 0.3223138539027271,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/reaping_vine.png",
+      "size": [
+        32,
+        24
+      ]
+    },
+    {
+      "name": "verdant_tide",
+      "source_box": [
+        960,
+        946,
+        1254,
+        1254
+      ],
+      "pitch": 8.15,
+      "grid_score": 0.3429585398395639,
+      "colors": 16,
+      "output": "tools/sprites/preview/cards/graft_03/verdant_tide.png",
+      "size": [
+        32,
+        24
+      ]
+    }
+  ]
+}
