@@ -3,7 +3,7 @@ import { ACTIONS, ActionTracker, KEY_BINDINGS, PAD_BINDINGS, PROMPTS, promptMark
 
 describe('bindings', () => {
   it('cover every spec action', () => {
-    expect(ACTIONS).toHaveLength(24);
+    expect(ACTIONS).toHaveLength(25);
     const bound = new Set([...Object.values(KEY_BINDINGS), ...Object.values(PAD_BINDINGS)]);
     for (const a of ACTIONS) expect(bound.has(a), a).toBe(true);
     expect(KEY_BINDINGS['Digit0']).toBe('cardSlot10');

@@ -1,5 +1,7 @@
 # The Graft — card pool (56)
 
+> **v2 (2026-10-30):** the v2 design (engines, new and reworked cards, Spill, Ripe, Harvest, Chaff) is in `docs/v2/graft-design.md` and supersedes this file where they differ. The v1 machine blocks below remain the source for every card v2 marks **kept**.
+
 Status: v1, card designer (Graft). Source of truth for rules is `docs/GDD.md`; this file only adds card content. Every card is priced against GDD §8.5. Every machine block can be transcribed into a `CardDef` (ENGINE_SPEC §8, `src/engine/types.ts`).
 
 Pool: **4 starters** (GDD §4.1, verbatim) + **20 common** + **20 uncommon** + **12 rare** = 56. Types: 23 Attacks (41%), 24 Skills (43%), 9 Powers (16%; uncommon/rare only). **18 Bloom cards**, **12 cards with a Prune variant**, 1 Opening (upgraded only), 3 Keep, 0 Ethereal, 2 Shard cards (+3 Prune away / deck-surgery cards that touch the run deck).
@@ -1365,62 +1367,65 @@ tuned: "Sim pass 2026-10-29 (docs/balance/changelog.md): threshold 8 → 6 Bloom
 
 **G** Gardener: Bloom growth and Bloom payoffs. **B** Blight: Rot application, Rot acceleration and spread payoffs, and stall. **C** Compost: Prune/Scrap payoffs, `onPrune` Powers, in-fight thinning, Prune away. **M** Mass: deck-count scaling that wants a wider deck. The first letter in each row is the card's primary archetype.
 
+v2 (Phase C): the columns keep their v1 names so the johnny bots stay comparable: **G** Gardener = the Ripe engine, **B** Blight = Harvest, **C** Compost = Compost, **M** Mass = Canopy (docs/v2/graft-design.md §3). Rows are generated from the cards' `engine:*` tags (first tag ●, others ○); Lash and Husk belong to none.
+
 | Card | Rarity | G | B | C | M |
 |---|---|:-:|:-:|:-:|:-:|
-| seed_bite | S | ● | | | |
-| graft_hide | S | ● | | ○ | |
-| thornwhirl | C | ● | | | |
-| barb_flick | C | ● | | | ○ |
-| grafting_cut | C | ● | | ○ | |
-| chitin_ram | C | ● | ○ | | |
-| hivestrike | C | ○ | | | ● |
-| shear | C | ○ | | ● | |
-| spore_lash | C | | ● | | |
-| canker_bite | C | | ● | | |
-| mulch_maul | C | | | ● | |
-| sap_shell | C | ● | ○ | | |
-| blightcap | C | ● | ○ | | |
-| tendril_reach | C | ● | | | ○ |
-| root_mesh | C | | ○ | | ● |
-| deep_graft | C | ● | | ○ | |
-| windblown_seed | C | ● | | | ○ |
-| spore_haze | C | | ● | ○ | |
-| mire_carapace | C | | ● | | |
-| shed_husk | C | ○ | | ● | |
-| sap_drip | C | ● | | | |
-| leaf_litter | C | | ● | ○ | |
-| twin_thorn | U | ● | | | |
-| canopy_crush | U | ○ | | | ● |
-| miasma_sweep | U | ○ | ● | | |
-| uproot | U | ○ | | ● | |
-| prism_thorn | U | | | ● | |
-| pollen_sting | U | ● | | | |
-| thicket_crash | U | | | | ● |
-| patient_thorn | U | ● | | | |
-| burl_wall | U | ● | ○ | | |
-| choking_spores | U | | ● | | |
-| excise | U | | | ● | |
-| propagate | U | ○ | | | ● |
-| seed_rain | U | ● | | | ○ |
-| puffball | U | ● | ○ | | |
-| sporeburst | U | | ● | | |
-| decomposer | U | | ○ | ● | |
-| dusk_pruning | U | ● | | ○ | |
-| living_hedge | U | | ○ | | ● |
-| thorn_halo | U | ● | | | |
-| ripening_rot | U | | ● | | |
-| heartwood_spear | R | ● | | | |
-| death_cap | R | | ● | | |
-| reaping_vine | R | | | ● | |
-| verdant_tide | R | | | | ● |
-| humus_rite | R | ○ | | ● | |
-| crystal_graft | R | ● | | ○ | |
-| transplant | R | ● | | | |
-| chitin_cocoon | R | ○ | ● | | |
-| quickening_sap | R | ● | | | |
-| fungal_aegis | R | | ● | | |
-| thresher | R | ○ | | ● | |
-| hyphal_web | R | | | | ● |
+| seed_bite | S | ● |   | ○ |   |
+| graft_hide | S |   |   | ● |   |
+| thornwhirl | C | ○ |   |   | ● |
+| barb_flick | C | ○ |   |   | ● |
+| grafting_cut | C |   |   | ● | ○ |
+| hivestrike | C |   |   |   | ● |
+| shear | C |   |   | ● |   |
+| spore_lash | C |   | ● |   |   |
+| canker_bite | C |   | ● |   |   |
+| mulch_maul | C |   |   | ● |   |
+| sap_shell | C |   |   |   | ● |
+| blightcap | C |   | ● |   | ○ |
+| tendril_reach | C |   |   |   | ● |
+| root_mesh | C |   |   |   | ● |
+| deep_graft | C | ● |   | ○ |   |
+| spore_haze | C |   | ● |   |   |
+| mire_carapace | C |   | ● |   |   |
+| shed_husk | C |   |   | ● |   |
+| sap_drip | C | ● |   |   |   |
+| leaf_litter | C |   | ○ | ● |   |
+| molt | C |   |   | ● |   |
+| burst_pod | C |   | ● |   |   |
+| twin_thorn | U | ● |   |   | ○ |
+| canopy_crush | U |   |   |   | ● |
+| miasma_sweep | U |   | ● |   |   |
+| uproot | U |   |   | ● |   |
+| pollen_sting | U | ● |   |   |   |
+| patient_thorn | U | ● |   |   |   |
+| burl_wall | U |   |   |   | ● |
+| choking_spores | U |   | ● |   |   |
+| propagate | U | ○ |   |   | ● |
+| seed_rain | U |   |   | ○ | ● |
+| puffball | U |   | ● |   |   |
+| sporeburst | U |   | ● |   |   |
+| decomposer | U |   | ○ | ● |   |
+| dusk_pruning | U |   |   | ● |   |
+| living_hedge | U |   |   |   | ● |
+| thorn_halo | U | ● |   |   | ○ |
+| ripening_rot | U |   | ● |   |   |
+| reap | U |   | ● |   |   |
+| second_flush | U | ● |   |   |   |
+| heartwood_spear | R | ● |   |   |   |
+| death_cap | R |   | ● |   |   |
+| reaping_vine | R |   |   | ● |   |
+| verdant_tide | R |   |   |   | ● |
+| humus_rite | R | ○ |   | ● |   |
+| crystal_graft | R | ● |   |   |   |
+| thresher | U |   |   | ● |   |
+| hyphal_web | R |   |   |   | ● |
+| thornstorm | R |   |   |   | ● |
+| grim_harvest | R |   | ● |   |   |
+| clear_cut | R |   |   | ● |   |
+| deep_rot | R |   | ● |   |   |
+| rootstock | R |   |   |   | ● |
+| perennial | R | ● |   |   |   |
 
 (`lash` and `husk` belong to no archetype.)
 

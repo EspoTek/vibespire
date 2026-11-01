@@ -1,13 +1,18 @@
 /// <reference types="node" />
 // Trace one run: prints every decision (combat turns with hand, intents and the chosen action; map,
 // reward, shop, rest and event picks). For eyeballing what a policy does.
-// Usage: npx tsx sim/trace.ts --seed sim-3-test_class --class test_class --content test [--policy greedy]
-//        [--from-floor 10] [--combat-only]
+// Usage: npx tsx sim/trace.ts --seed sim-3-test_class --class test_class --content test [--policy greedy|spike|timmy|turtle|novice|johnny-<arch>]
+//        [--from-floor 10] [--combat-only] [--max-turns 100] [--set key=value ...] (sim/overrides.ts, as in batches)
+//        [--difficulty standard|heroic] (default standard)
+//        [--grant-relic id] [--grant-card id,id] (counterfactual grant before the Ascent Pact, as sim/counterfactual.ts)
 
 import { useTestPack } from './content';
 import { getCardDef } from '../src/content';
 import { Game, hashString, nextU32, type Action, type RunState } from '../src/engine';
 import { POLICIES } from './batch';
+import { applyGrant } from './run';
+import { policyByName } from './policies/personas';
+import { applyOverrides, describeOverrides, difficultyArg, parseSets } from './overrides';
 
 function arg(name: string): string | null {
   const i = process.argv.indexOf(`--${name}`);
@@ -42,15 +47,33 @@ function main(): void {
   if (content === 'test') useTestPack();
   const seed = arg('seed') ?? 'sim-0';
   const cls = arg('class') ?? 'test_class';
-  const policy = POLICIES[arg('policy') ?? 'greedy'];
-  if (!policy) throw new Error('unknown policy');
+  const pname = arg('policy') ?? 'greedy';
+  // v1 policies by name, else a v2 persona (spike, timmy, turtle, novice, johnny-<arch>).
+  const policy = POLICIES[pname] ?? policyByName(pname, cls);
   const fromFloor = Number(arg('from-floor') ?? '0');
   const combatOnly = process.argv.includes('--combat-only');
-  const g = Game.newRun(seed, cls, { atomic: false });
+  const overrides = parseSets(process.argv);
+  applyOverrides(overrides);
+  if (Object.keys(overrides).length) console.log(`overrides: ${describeOverrides(overrides)}`);
+  const difficulty = difficultyArg(process.argv);
+  console.log(`difficulty: ${difficulty}`);
+  const g = Game.newRun(seed, cls, { atomic: false, difficulty });
+  const grantRelic = arg('grant-relic');
+  const grantCards = arg('grant-card');
+  if (grantRelic !== null || grantCards !== null) {
+    applyGrant(g, { ...(grantRelic !== null ? { relic: grantRelic } : {}), ...(grantCards !== null ? { cards: grantCards.split(',') } : {}) });
+    console.log(`grant: ${grantRelic ?? ''} ${grantCards ?? ''}`.trim());
+  }
   const prng = hashString(`policy:${policy.name}:${seed}`);
   let lastTurn = -1;
+  // Same stalemate guard as runOne (sim/run.ts): stop when one combat passes --max-turns player turns.
+  const maxTurns = Number(arg('max-turns') ?? 100);
   while (g.state.phase !== 'victory' && g.state.phase !== 'defeat') {
     const s = g.state;
+    if (s.combat && s.combat.turn > maxTurns) {
+      console.log(`STALEMATE: ${s.combat.encounterId} passed ${maxTurns} turns on floor ${s.floor}`);
+      break;
+    }
     const legal = g.legalActions();
     const a = policy.choose(g, legal, nextU32(prng));
     const show = s.floor >= fromFloor && (!combatOnly || s.phase === 'combat');

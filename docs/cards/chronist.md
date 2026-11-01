@@ -1,5 +1,7 @@
 # The Chronist — card pool (56)
 
+> **v2 supersedes this file's card list.** The live pool and its design are in `docs/v2/chronist-design.md`; only the §5 archetype matrix below is current (v2).
+
 Status: v1, card designer (Chronist). Source of truth for rules is `docs/GDD.md`; this file only adds card content. Every card is priced against GDD §8.5. Every machine block can be transcribed into a `CardDef` (ENGINE_SPEC §8, `src/engine/types.ts`).
 
 Pool: **4 starters** (GDD §4.1, verbatim) + **20 common** + **20 uncommon** + **12 rare** = 56. Types: **22 Attacks (39%)**, **26 Skills (46%)**, **8 Powers (14%; uncommon/rare only)**. **19 cards cost 0 (34%)**. **16 Delay cards** (Tock + 15; N=1 ×10, N=2 ×3, N=3 ×3; 5 are split cards with an immediate part). 2 Opening (both upgrade-only), 2 Keep, 0 Ethereal, 2 Shard cards. 0 `custom` effects; 2 named fns + 2 code hooks (§8).
@@ -1496,71 +1498,68 @@ note: "Rare 3 × 10 = 30 → 10 d per turn. +1 energy on ~90% of turns (the beat
 ---
 ## 5. Archetype matrix
 
-● = the card is built for the archetype. The Timeline column also marks Delay N.
+**v2 (2026-10-31).** This table follows the v2 pool in `src/content/cards/chronist.ts` and the engines in `docs/v2/chronist-design.md` §2. The sim's johnny bots read it. ● = the card's main engine, ○ = it also serves that engine. K = Clockwork (Cadence: Quicken, Crescendo), J = Conjunction (Timeline width: Chorus, Gather), S = Storm (Augury: Goad and the forecast payoffs), P = Calendar (Timeline depth: Eternal Return), G = Glue. The rest of this file is the v1 pool and is kept for its history and pricing notes.
 
-| id | Rarity | Type | Cost | M Metronome | T Timeline | O Oracle | G Glue |
-|---|---|---|---|---|---|---|---|
-| `pulse_shot` | starter | A | 1 | | | | ● |
-| `ward` | starter | S | 1 | | | | ● |
-| `tick` | starter | A | 0 | ● | | | ● |
-| `tock` | starter | S | 1 | | ● D1 | | |
-| `pinion_jab` | common | A | 0 | ● | | | ● |
-| `gear_train` | common | A | 1 | ● | | | ● |
-| `downbeat` | common | A | 2 | ● | | | |
-| `slack_water` | common | A | 1 | | | ● | ● |
-| `parallax` | common | A | 0 | ● | | | ● |
-| `noon_gun` | common | A | 1 | | ● D2 | | |
-| `afterpeal` | common | A | 1 | ● | ● D1 | | |
-| `spring_tide` | common | A | 1 | | ● D3 | | |
-| `carillon` | common | A | 0 | ● | | | ● |
-| `storm_glass` | common | S | 1 | | ● D1 | ● | |
-| `almanac` | common | S | 0 | | ● D1 | | ● |
-| `ephemeris` | common | S | 1 | ● | | | ● |
-| `upbeat` | common | S | 0 | ● | | | ● |
-| `weather_eye` | common | S | 1 | | | ● | ● |
-| `balance_wheel` | common | S | 1 | ● | | ● | |
-| `detent` | common | S | 0 | ● | | ● | |
-| `dead_reckoning` | common | S | 0 | ● | | | ● |
-| `logbook` | common | S | 1 | | | | ● |
-| `reef_the_sails` | common | S | 1 | | | ● | |
-| `wind_forward` | common | S | 0 | | ● | | ● |
-| `sweep_hand` | uncommon | A | 1 | ● | | | |
-| `fermata` | uncommon | A | 1 | ● | | | |
-| `appointed_hour` | uncommon | A | 2 | | ● D2 | ● | |
-| `knell` | uncommon | A | 1 | | ● D2 | | |
-| `turn_the_tide` | uncommon | A | 1 | | | ● | |
-| `confluence` | uncommon | A | 0 | | ● | | |
-| `second_hand` | uncommon | A | 0 | ● | ● D1 | | |
-| `mainspring` | uncommon | S | 0 | ● | | | |
-| `quarter_chime` | uncommon | S | 0 | ● | | | ● |
-| `hasten` | uncommon | S | 0 | ● | ● | | |
-| `banked_hours` | uncommon | S | 1 | | ● D1 | | ● |
-| `breakwater` | uncommon | S | 2 | | ● D1 | ● | |
-| `heave_to` | uncommon | S | 1 | | | ● | ● |
-| `batten_down` | uncommon | S | 0 | | ● D1 | ● | |
-| `mark_the_lull` | uncommon | S | 0 | | | ● | |
-| `glance_ahead` | uncommon | S | 0 | | ● | | ● |
-| `striking_train` | uncommon | P | 1 | ● | | | |
-| `tide_table` | uncommon | P | 1 | | ● | | ● |
-| `storm_warning` | uncommon | P | 1 | | | ● | |
-| `escapement` | uncommon | P | 1 | ● | ● | | |
-| `zenith` | rare | A | 0 | ● | | | |
-| `syzygy` | rare | A | 3 | | ● D3 | ● | |
-| `culmination` | rare | A | 2 | | | ● | |
-| `toll_the_hours` | rare | A | X | | ● D1 | | ● |
-| `seen_it_coming` | rare | S | 1 | | ● D1 | ● | |
-| `star_tithe` | rare | S | 1 | | ● D3 | | |
-| `tourbillon` | rare | S | 0 | ● | | | |
-| `lighthouse` | rare | S | 2 | | | ● | ● |
-| `polyrhythm` | rare | P | 2 | ● | | | |
-| `portents` | rare | P | 2 | | | ● | ● |
-| `watch_bell` | rare | P | 2 | | ● | ● | |
-| `perpetual_motion` | rare | P | 3 | ● | | | |
-| **Total** | | | | **24** | **23** | **19** | **23** |
-
-- Every archetype has ≥ 10 cards: M 24, T 23 (16 Delay + Wind Forward, Hasten, Confluence, Glance Ahead, Tide Table, Escapement, Watch Bell), O 19, G 23.
-- **Commons that fit two archetypes: 15 of 20 (75%)**, counting Glue as the fourth archetype. Four commons straddle two of M/T/O: Afterpeal (T·M), Storm Glass (O·T), Balance Wheel (M·O), Detent (O·M). Pivot paths: M→T through Afterpeal, Second Hand, Hasten and Escapement; T→O through Storm Glass, Breakwater, Batten Down, Seen It Coming and Watch Bell; O→M through Detent and Balance Wheel.
-- Per-archetype rarity spread: M 11 common / 8 uncommon / 4 rare (+Tick); T 6 / 11 / 5 (+Tock); O 6 / 7 / 6; G 12 / 5 / 3 (+Pulse Shot, Ward, Tick). Each archetype has a common floor, an uncommon definer layer and rare payoffs (commandment 15).
+| id | Rarity | Type | Cost | K Clockwork | J Conjunction | S Storm | P Calendar | G Glue |
+|---|---|---|---|---|---|---|---|---|
+| `pulse_shot` | starter | A | 1 |  |  |  |  | ● |
+| `ward` | starter | S | 1 |  |  |  |  | ● |
+| `tick` | starter | A | 0 | ● |  |  |  | ○ |
+| `tock` | starter | S | 1 |  | ● |  |  |  |
+| `pinion_jab` | common | A | 0 | ● |  |  |  | ○ |
+| `gear_train` | common | A | 1 | ● |  |  |  | ○ |
+| `downbeat` | common | A | 1 | ● |  |  |  |  |
+| `noon_gun` | common | A | 1 |  | ● |  |  |  |
+| `afterpeal` | common | A | 1 |  | ● |  |  |  |
+| `spring_tide` | common | A | 1 |  | ● |  |  |  |
+| `carillon` | common | A | 0 | ● |  |  |  | ○ |
+| `storm_glass` | common | S | 1 |  | ● | ○ |  |  |
+| `almanac` | common | S | 0 |  | ● |  |  | ○ |
+| `ephemeris` | common | S | 1 | ● |  |  |  | ○ |
+| `upbeat` | common | S | 0 | ● |  |  |  | ○ |
+| `weather_eye` | common | S | 1 |  |  | ● |  | ○ |
+| `balance_wheel` | common | S | 1 | ● |  |  |  |  |
+| `dead_reckoning` | common | S | 0 | ● |  |  |  | ○ |
+| `wind_forward` | common | S | 0 |  | ● |  |  | ○ |
+| `hold_the_hour` | common | S | 0 |  | ● |  |  | ○ |
+| `ripple` | common | A | 0 |  | ● |  |  |  |
+| `whistle_for_wind` | common | S | 0 | ○ |  | ● |  |  |
+| `red_sky` | common | S | 1 |  |  | ● |  | ○ |
+| `undertow` | common | A | 1 |  |  | ● |  |  |
+| `fermata` | uncommon | A | 1 | ● |  |  |  |  |
+| `appointed_hour` | uncommon | A | 2 |  |  |  | ● |  |
+| `knell` | uncommon | A | 1 |  | ● |  |  |  |
+| `turn_the_tide` | uncommon | A | 1 |  |  | ● |  |  |
+| `confluence` | uncommon | A | 0 |  | ● |  |  |  |
+| `second_hand` | uncommon | A | 0 | ● | ○ |  |  |  |
+| `mainspring` | uncommon | S | 0 | ● |  |  |  |  |
+| `quarter_chime` | uncommon | S | 0 | ● |  |  |  | ○ |
+| `hasten` | uncommon | S | 0 |  | ● |  |  |  |
+| `banked_hours` | uncommon | S | 1 |  | ○ |  | ● | ○ |
+| `breakwater` | uncommon | S | 2 |  |  |  | ● |  |
+| `heave_to` | uncommon | S | 1 |  |  | ● |  | ○ |
+| `striking_train` | uncommon | P | 1 | ● |  |  |  |  |
+| `tide_table` | uncommon | P | 1 |  | ● |  | ○ | ○ |
+| `escapement` | uncommon | P | 1 | ● | ○ |  |  |  |
+| `accelerando` | uncommon | P | 0 | ● |  |  |  |  |
+| `bell_choir` | uncommon | A | 1 |  | ● |  |  |  |
+| `set_the_hour` | uncommon | S | 1 |  | ● |  | ○ | ○ |
+| `gathering_storm` | uncommon | S | 1 |  |  | ● |  |  |
+| `squall_line` | uncommon | P | 0 |  |  | ● |  |  |
+| `zenith` | rare | A | 0 | ● |  |  |  |  |
+| `syzygy` | rare | A | 2 |  | ● |  |  |  |
+| `culmination` | rare | A | 2 | ● |  |  |  |  |
+| `toll_the_hours` | rare | A | X |  |  |  | ● | ○ |
+| `seen_it_coming` | rare | S | 1 |  |  | ● |  |  |
+| `tourbillon` | rare | S | 0 | ● |  |  |  |  |
+| `lighthouse` | rare | S | 2 |  |  | ● |  | ○ |
+| `polyrhythm` | rare | P | 1 | ● |  |  |  |  |
+| `watch_bell` | rare | P | 2 |  | ● |  | ○ |  |
+| `perpetual_motion` | rare | P | 1 | ● |  |  |  |  |
+| `total_eclipse` | rare | P | 2 |  | ● |  |  |  |
+| `eternal_return` | rare | P | 1 |  |  |  | ● |  |
+| `reckoning` | rare | A | 1 |  |  | ● |  |  |
+| `eye_of_the_storm` | rare | P | 2 |  |  | ● |  |  |
 
 ## 6. Rarity / type / cost histogram
 

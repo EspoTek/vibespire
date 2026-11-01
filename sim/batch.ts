@@ -17,10 +17,16 @@ import { applyOverrides, describeOverrides, parseSets, type Overrides } from './
 import { greedyPolicy } from './policies/greedy';
 import { greedy2Policy } from './policies/greedy2';
 import { randomPolicy } from './policies/random';
+import { policyByName } from './policies/personas';
 import { runOne } from './run';
 import type { Policy, RunResult } from './types';
 
 export const POLICIES: Record<string, Policy> = { random: randomPolicy, greedy: greedyPolicy, greedy2: greedy2Policy };
+
+/** A v1 policy by name, else a v2 persona for the class (spike, timmy, turtle, novice, johnny-<engine>, ...). Throws on an unknown name. */
+export function resolvePolicy(name: string, classId: string): Policy {
+  return POLICIES[name] ?? policyByName(name, classId);
+}
 
 export interface BatchProgress {
   done: number;
@@ -124,10 +130,8 @@ function workerMain(): void {
   const input = workerData as WorkerInput;
   if (input.content === 'test') useTestPack();
   applyOverrides(input.overrides);
-  const policy = POLICIES[input.policy];
-  if (!policy) throw new Error(`unknown policy '${input.policy}'`);
   for (const job of input.jobs) {
-    const msg: WorkerMsg = { kind: 'result', result: runOne(job.seed, job.classId, policy, { strict: input.strict }) };
+    const msg: WorkerMsg = { kind: 'result', result: runOne(job.seed, job.classId, resolvePolicy(input.policy, job.classId), { strict: input.strict }) };
     parentPort?.postMessage(msg);
   }
   parentPort?.postMessage({ kind: 'done' } satisfies WorkerMsg);
@@ -152,8 +156,9 @@ async function main(): Promise<void> {
   const classes = clsArg === null ? allClasses().map((c) => c.id) : clsArg.split(',');
   if (classes.length === 0) throw new Error(`no classes registered for --content ${contentArg} (use --content test until the real packs land)`);
   const policyName = arg('policy') ?? 'random';
-  const policy = POLICIES[policyName];
-  if (!policy) throw new Error(`unknown policy '${policyName}' (have: ${Object.keys(POLICIES).join(', ')})`);
+  const first = classes[0];
+  if (first === undefined) throw new Error('no classes');
+  const policy = resolvePolicy(policyName, first);
   const prefix = arg('seed-prefix') ?? 'sim';
   const out = arg('out');
   const workersArg = arg('workers');

@@ -1,0 +1,6 @@
+{
+  "id": "whetstone",
+  "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic shown as a crisp nearest-neighbour enlarged sprite. Subject whetstone: A large oblong rectangular grey whetstone slab in three-quarter view with a broad silver top plane, dark grey side plane and a small bronze carrying loop. The stone fills the cell, not a tiny chip. Full-cell silhouette 13–14 logical pixels long inside a 16x16 cell, at least 9 pixels body width, one transparent margin pixel. Large simple shapes, flat 2–3 tone shading, no texture noise. Bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Physical modeled game object with broad planes, Phantasy Star/Ys style. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, thin sticks or additional props. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-a890a524-d967-4203-b338-30519d96b303.png"
+}

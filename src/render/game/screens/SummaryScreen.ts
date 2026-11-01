@@ -16,6 +16,7 @@ import { Panel } from '../../ui/Panel.ts';
 import { Z } from '../../ui/Widget.ts';
 import type { RunSession } from '../session.ts';
 import { summarizeRun } from '../summary.ts';
+import { DIFFICULTY_NAMES } from '../difficulty.ts';
 import { cardArtOrNull } from '../view.ts';
 import { DeckTile } from '../widgets.ts';
 import { rasterizePlaceholderArt } from '../../ui/art.ts';
@@ -32,7 +33,7 @@ export class SummaryScreen extends Screen {
     if (s.phase !== 'victory' && s.phase !== 'defeat') throw new Error(`SummaryScreen in phase ${s.phase}`);
     this.add(new Backdrop(app.assets.backdrops, s.phase === 'victory' ? 'title_spire' : actBackdrop(s.act))).setDim(s.phase === 'victory' ? 0 : 2);
     const sum = summarizeRun({
-      phase: s.phase, classId: s.classId, seed: s.seed, act: s.act, floor: s.floor, hp: s.player.hp, maxHp: s.player.maxHp,
+      phase: s.phase, classId: s.classId, tier: DIFFICULTY_NAMES[s.difficulty], seed: s.seed, act: s.act, floor: s.floor, hp: s.player.hp, maxHp: s.player.maxHp,
       gold: s.player.gold, deck: s.player.deck, relics: s.player.relics, floors: s.history.floors,
     }, {
       className: (id) => getClassDef(id).name.toUpperCase(),

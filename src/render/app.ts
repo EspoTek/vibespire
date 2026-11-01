@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import { announce } from './a11y.ts';
 import { ENEMY_SPRITES, loadGameAssets, type GameAssets, type SpriteEntry } from './assets.ts';
-import { Music, Sfx } from './audio.ts';
+import { audioClock, Music, Sfx } from './audio.ts';
 import { BACKDROP_IDS, drawBackdrop, type BackdropId } from './backdrops.ts';
 import { Display } from './display.ts';
 import { initFonts } from './fonts.ts';
@@ -117,6 +117,22 @@ export class App {
     this.settingsStore.set(this.settings);
   }
 
+  /** One simulation step (everything but the render): input, tweens, screens, music, toasts. */
+  tick(dt: number): void {
+    audioClock.frame = this.frames; // SFX / cue logs name the frame they fired on
+    this.input.update(dt);
+    this.tweens.update(dt);
+    this.screens.update(dt);
+    const song = this.screens.top?.music;
+    if (song !== undefined) this.music.want(song);
+    this.music.update();
+    this.toasts.update(dt);
+  }
+
+  /**
+   * Real-time frame loop: one tick per animation frame. The e2e hook (src/render/debug, ?e2e=1 only)
+   * replaces this loop with a fixed-step one that runs N ticks per frame.
+   */
   start(): void {
     let fpsAcc = 0, fpsFrames = 0;
     this.display.renderer.setAnimationLoop((t: number) => {
@@ -125,13 +141,7 @@ export class App {
       const dt = Math.min(raw, MAX_DT_MS);
       fpsAcc += raw; fpsFrames++;
       if (fpsAcc >= 500) { this.fps = Math.round((fpsFrames * 1000) / fpsAcc); fpsAcc = 0; fpsFrames = 0; }
-      this.input.update(dt);
-      this.tweens.update(dt);
-      this.screens.update(dt);
-      const song = this.screens.top?.music;
-      if (song !== undefined) this.music.want(song);
-      this.music.update();
-      this.toasts.update(dt);
+      this.tick(dt);
       this.display.render();
       this.frames++;
     });

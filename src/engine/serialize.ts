@@ -1,7 +1,12 @@
-// Save / load. The save is the RunState as JSON; `version` must match ENGINE_VERSION (older versions
-// with a migration below are upgraded on load).
+// Save / load. The save is the RunState as JSON; `version` must match ENGINE_VERSION, and every id
+// in it must resolve in this build's content (savecheck.ts). The one migration is v3 -> v4 (difficulty
+// tiers: an older v2 run loads as Standard). The v2 content redesign removed cards, relics and statuses,
+// so a save from the v1 build (version 2) is "incompatible" and the renderer discards it with a notice
+// (parseSaveOrIncompatible) instead of crashing.
 
 import { RNG_STREAMS } from './rng';
+import { DIFFICULTIES } from './types';
+import { unresolvedIds } from './savecheck';
 import type { RunState } from './types';
 import { ENGINE_VERSION } from './version';
 
@@ -26,6 +31,7 @@ function problems(v: unknown): string[] {
   if (typeof v.classId !== 'string') p.push('classId');
   if (typeof v.phase !== 'string' || !PHASES.includes(v.phase)) p.push('phase');
   if (typeof v.floor !== 'number') p.push('floor');
+  if (typeof v.difficulty !== 'string' || !(DIFFICULTIES as readonly string[]).includes(v.difficulty)) p.push('difficulty');
   if (v.act !== 1 && v.act !== 2 && v.act !== 3) p.push('act');
   if (typeof v.nextUid !== 'number') p.push('nextUid');
   const rng = v.rng;
@@ -53,28 +59,35 @@ function isRunState(v: unknown): v is RunState {
   return problems(v).length === 0;
 }
 
-/**
- * v1 -> v2: added RunState.mapPath and FloorRecord.damageDealt. A v1 save never recorded either:
- * the path is known only as far as the current node, and v1 floors' damage dealt is unknown (null).
- */
-function migrateV1(raw: Record<string, unknown>): void {
-  const pos = raw.mapPos;
-  raw.mapPath = isObj(pos) ? [{ row: pos.row, col: pos.col }] : [];
-  const history = raw.history;
-  if (!isObj(history) || !Array.isArray(history.floors)) throw new Error('v1 save: malformed history');
-  for (const f of history.floors) {
-    if (!isObj(f)) throw new Error('v1 save: malformed floor record');
-    f.damageDealt = null;
-  }
-  raw.version = 2;
+/** v3 -> v4: runs started before difficulty tiers existed are Standard runs (ruling 71). */
+function migrateV3(raw: Record<string, unknown>): void {
+  if ('difficulty' in raw) throw new Error('v3 save already has a difficulty');
+  raw.difficulty = 'standard';
+  raw.version = 4;
 }
 
-/** Parse a save. Throws on an unknown version or a malformed save (never returns a partial state). */
-export function deserialize(json: string): RunState {
+export type SaveCheck = { ok: true; state: RunState } | { ok: false; reason: string };
+
+/**
+ * Parse a save for loading. "Incompatible" is an expected outcome, not an error: a save written by
+ * another engine version, or naming any card / relic / status / enemy / event... id this build doesn't
+ * register (content removed or renamed since), gives `ok: false` with the reason. A save of this
+ * version that is malformed, or not JSON at all, still throws: that is a bug or corruption.
+ */
+export function parseSaveOrIncompatible(json: string): SaveCheck {
   const raw: unknown = JSON.parse(json);
   if (!isObj(raw)) throw new Error('save is not a JSON object');
-  if (raw.version === 1) migrateV1(raw);
-  if (raw.version !== ENGINE_VERSION) throw new Error(`save version ${String(raw.version)} does not match engine version ${ENGINE_VERSION}`);
+  if (raw.version === 3) migrateV3(raw);
+  if (raw.version !== ENGINE_VERSION) return { ok: false, reason: `saved by engine version ${String(raw.version)}, this build is version ${ENGINE_VERSION}` };
   if (!isRunState(raw)) throw new Error(`malformed save: bad/missing ${problems(raw).join(', ')}`);
-  return raw;
+  const missing = unresolvedIds(raw);
+  if (missing.length) return { ok: false, reason: `${missing.length} id(s) this build doesn't have, e.g. ${missing.slice(0, 3).join('; ')}` };
+  return { ok: true, state: raw };
+}
+
+/** Parse a save that must load (tests, tools): throws on anything parseSaveOrIncompatible rejects. */
+export function deserialize(json: string): RunState {
+  const r = parseSaveOrIncompatible(json);
+  if (!r.ok) throw new Error(`incompatible save: ${r.reason}`);
+  return r.state;
 }

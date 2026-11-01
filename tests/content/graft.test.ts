@@ -14,25 +14,28 @@ import { dispatch, tickEntity } from '../../src/engine/statuses';
 import { validateEffects } from '../../src/engine/validate';
 import { ENGINE_VERSION } from '../../src/engine/version';
 import type { CardInstance, CombatState, Effect, EffectFrame, GameEvent, RunState } from '../../src/engine/types';
+import { answerChoice } from '../answer-choice';
 
 const IDS = [
-  'lash', 'husk', 'seed_bite', 'graft_hide', 'thornwhirl', 'barb_flick', 'grafting_cut', 'chitin_ram',
+  'lash', 'husk', 'seed_bite', 'graft_hide', 'thornwhirl', 'barb_flick', 'grafting_cut',
   'hivestrike', 'shear', 'spore_lash', 'canker_bite', 'mulch_maul', 'sap_shell', 'blightcap',
-  'tendril_reach', 'root_mesh', 'deep_graft', 'windblown_seed', 'spore_haze', 'mire_carapace',
-  'shed_husk', 'sap_drip', 'leaf_litter', 'twin_thorn', 'canopy_crush', 'miasma_sweep', 'uproot',
-  'prism_thorn', 'pollen_sting', 'thicket_crash', 'patient_thorn', 'burl_wall', 'choking_spores',
-  'excise', 'propagate', 'seed_rain', 'puffball', 'sporeburst', 'decomposer', 'dusk_pruning',
-  'living_hedge', 'thorn_halo', 'ripening_rot', 'heartwood_spear', 'death_cap', 'reaping_vine',
-  'verdant_tide', 'humus_rite', 'crystal_graft', 'transplant', 'chitin_cocoon', 'quickening_sap',
-  'fungal_aegis', 'thresher', 'hyphal_web',
+  'tendril_reach', 'root_mesh', 'deep_graft', 'spore_haze', 'mire_carapace',
+  'shed_husk', 'sap_drip', 'leaf_litter', 'molt', 'burst_pod', 'twin_thorn', 'canopy_crush', 'miasma_sweep', 'uproot',
+  'pollen_sting', 'patient_thorn', 'burl_wall', 'choking_spores',
+  'propagate', 'seed_rain', 'puffball', 'sporeburst', 'decomposer', 'dusk_pruning',
+  'living_hedge', 'thorn_halo', 'ripening_rot', 'reap', 'second_flush', 'heartwood_spear', 'death_cap', 'reaping_vine',
+  'verdant_tide', 'humus_rite', 'crystal_graft',
+  'thresher', 'hyphal_web',
+  // Graft v2 (docs/v2/graft-design.md); the v1 cuts wait for the v2 baseline (RULINGS 55).
+  'thornstorm', 'grim_harvest', 'clear_cut', 'deep_rot', 'rootstock', 'perennial', 'chaff',
 ];
 const STATUS_IDS = [
-  'decomposer', 'dusk_pruning', 'living_hedge', 'thorn_halo', 'ripening_rot', 'quickening_sap',
-  'fungal_aegis', 'thresher', 'hyphal_web',
+  'decomposer', 'dusk_pruning', 'living_hedge', 'thorn_halo', 'ripening_rot',
+  'thresher', 'hyphal_web', 'clear_cut', 'deep_rot', 'rootstock', 'perennial',
 ];
 
 // Record execution through the actual definitions, including all serializable
-// Transplant continuations. The final assertion catches an unexercised table entry.
+// custom functions. The final assertion catches an unexercised table entry.
 const expectedFns = new Set<string>();
 const calledFns = new Set<string>();
 for (const def of [...GRAFT_CARDS, ...GRAFT_STATUSES]) {
@@ -67,16 +70,16 @@ function combat(g: Game): CombatState {
 function sandbox(): Game {
   const state: RunState = {
     version: ENGINE_VERSION, seed: 'graft-content', classId: 'graft', rng: createStreams('graft-content'),
-    act: 1, ascent: 0, floor: 1, phase: 'combat',
+    act: 1, ascent: 0, difficulty: 'standard', floor: 1, phase: 'combat',
     player: { hp: 1000, maxHp: 1000, gold: 99, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 5 } },
-    map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, mapPath: [], room: 'monster',
+    map: { act: 1, rows: [], bossEncounter: 'enc_a1_orchid' }, mapPos: null, mapPath: [], room: 'monster',
     combat: null, reward: null, shop: null, event: null, rest: null, treasure: null,
     startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null, history: { floors: [] },
     counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 },
     nextUid: 1,
   };
   state.combat = {
-    encounterId: '', kind: 'monster', isElite: false, isBoss: false, eventId: null, onWin: [],
+    encounterId: 'enc_a1_ram', kind: 'monster', isElite: false, isBoss: false, eventId: null, onWin: [],
     turn: 1, turnPhase: 'player', outcome: null, energy: 30, maxEnergy: 3, drawPerTurn: 5, handLimit: 10,
     hand: [], draw: [], discard: [], exhaust: [], inPlay: [], primed: [], timeline: [],
     player: { block: 0, guard: 0, statuses: {} },
@@ -113,7 +116,7 @@ function play(g: Game, card: CardInstance): GameEvent[] {
   return g.apply(action);
 }
 function choose(g: Game, uid: number): GameEvent[] {
-  return g.apply({ type: 'resolve_choice', uids: [uid] });
+  return answerChoice(g, [uid]);
 }
 function settle(g: Game): GameEvent[] {
   const events: GameEvent[] = [];
@@ -147,12 +150,13 @@ function bloomPayload(effects: readonly Effect[]): { base: number; per: number }
 
 describe('Graft inventory and validation', () => {
   it('contains the full designer id list, rarity/type split, Bloom cards and Power statuses', () => {
-    expect(GRAFT_CARDS).toHaveLength(56);
+    // v2 pool (docs/v2/graft-design.md §5): 57 cards + the Chaff token.
+    expect(GRAFT_CARDS).toHaveLength(58);
     expect(GRAFT_CARDS.map((def) => def.id)).toEqual(IDS);
     expect(GRAFT_STATUSES.map((def) => def.id)).toEqual(STATUS_IDS);
-    expect(['starter', 'common', 'uncommon', 'rare'].map((r) => GRAFT_CARDS.filter((c) => c.rarity === r).length)).toEqual([4, 20, 20, 12]);
-    expect(['attack', 'skill', 'power'].map((t) => GRAFT_CARDS.filter((c) => c.type === t).length)).toEqual([23, 24, 9]);
-    expect(GRAFT_CARDS.filter((c) => c.keywords?.includes('bloom'))).toHaveLength(18);
+    expect(['starter', 'common', 'uncommon', 'rare'].map((r) => GRAFT_CARDS.filter((c) => c.rarity === r).length)).toEqual([4, 20, 20, 13]);
+    expect(['attack', 'skill', 'power', 'status'].map((t) => GRAFT_CARDS.filter((c) => c.type === t).length)).toEqual([22, 24, 11, 1]);
+    expect(GRAFT_CARDS.filter((c) => c.keywords?.includes('bloom'))).toHaveLength(17);
     for (const def of GRAFT_CARDS) expect(getCardDef(def.id)).toBe(def);
     for (const def of GRAFT_STATUSES) expect(getStatusDef(def.id)).toBe(def);
   });
@@ -178,7 +182,7 @@ describe('Graft inventory and validation', () => {
 
   it('matches the four GDD starters exactly and upgrades only Bloom increments', () => {
     for (const [id, type, base, up] of [
-      ['lash', 'damage', 6, 9], ['husk', 'block', 6, 9], ['graft_hide', 'block', 5, 7],
+      ['lash', 'damage', 6, 9], ['husk', 'block', 5, 8], ['graft_hide', 'block', 5, 7],
     ] as const) {
       const a = getCardDef(id), b = getCardDef(id, true);
       expect(a.cost).toBe(1);
@@ -186,7 +190,7 @@ describe('Graft inventory and validation', () => {
       expect(b.effects[0]).toMatchObject({ type, amount: up });
     }
     expect(getCardDef('graft_hide').effects[1]).toEqual({ type: 'prune', bloom: 1, variant: 'standard' });
-    expect(bloomPayload(getCardDef('seed_bite').effects)).toEqual([{ base: 4, per: 2 }]);
+    expect(bloomPayload(getCardDef('seed_bite').effects)).toEqual([{ base: 4, per: 1 }]); // Phase D: +2 -> +1 per Bloom
     for (const def of GRAFT_CARDS.filter((d) => d.keywords?.includes('bloom'))) {
       const base = bloomPayload(def.effects), upgrade = bloomPayload(getCardDef(def.id, true).effects);
       expect(base.length, def.id).toBeGreaterThan(0);
@@ -219,13 +223,14 @@ describe('every Graft card plays base and upgraded', () => {
 });
 
 describe('Prune and Bloom rules', () => {
-  it('standard Prune grows another copy and Shear gets its Attack rider', () => {
+  it('standard Prune grows another copy, and v2 Shear brings its own Chaff to Prune', () => {
     const g = sandbox();
     const shear = addCard(g, 'shear'), scrap = addCard(g, 'lash'), seed = addCard(g, 'seed_bite');
     play(g, shear);
     expect(combat(g).pendingChoice?.choices).not.toContain(shear.uid);
+    expect(combat(g).hand.filter((c) => c.id === 'chaff')).toHaveLength(1);
     choose(g, scrap.uid);
-    expect(inHand(g, seed.uid).vars?.bloom).toBe(2);
+    expect(inHand(g, seed.uid).vars?.bloom).toBe(1);
     expect(combat(g).exhaust.map((x) => x.uid)).toContain(scrap.uid);
     expect(combat(g).counters.prunes).toBe(1);
     expect(g.state.player.deck.find((x) => x.uid === scrap.uid)).toBeDefined();
@@ -236,7 +241,7 @@ describe('Prune and Bloom rules', () => {
     combat(g).player.statuses = { decomposer: 2, thresher: 4 };
     const hide = addCard(g, 'graft_hide'), seed = addCard(g, 'seed_bite');
     play(g, hide);
-    g.apply({ type: 'resolve_choice', uids: [] });
+    answerChoice(g, []);
     expect(combat(g).counters.prunes ?? 0).toBe(0);
     expect(inHand(g, seed.uid).vars?.bloom).toBe(0);
     expect(combat(g).enemies.map((e) => [e.hp, e.statuses.rot ?? 0])).toEqual([[10000, 0], [10000, 0]]);
@@ -245,8 +250,8 @@ describe('Prune and Bloom rules', () => {
     expect(combat(g).pendingChoice).toBeNull();
   });
 
-  it('Prune without a hand Bloom card still Scraps and grows a pile copy (RULINGS 43); Wild Prune too', () => {
-    for (const id of ['graft_hide', 'windblown_seed']) {
+  it('Prune without a hand Bloom card still Scraps and grows a pile copy (RULINGS 43)', () => {
+    for (const id of ['graft_hide']) {
       const g = sandbox();
       const prune = addCard(g, id), scrap = addCard(g, 'lash'), seed = addCard(g, 'seed_bite', 'draw');
       play(g, prune); choose(g, scrap.uid);
@@ -257,7 +262,7 @@ describe('Prune and Bloom rules', () => {
 
   it('Spread Prune fires one Prune payoff and growth hooks for every receiving copy', () => {
     const g = sandbox();
-    combat(g).player.statuses = { decomposer: 1, thresher: 3, quickening_sap: 1 };
+    combat(g).player.statuses = { decomposer: 1, thresher: 3 };
     const rain = addCard(g, 'seed_rain'), scrap = addCard(g, 'lash');
     const a = addCard(g, 'seed_bite'), b = addCard(g, 'sap_shell');
     play(g, rain); choose(g, scrap.uid);
@@ -266,17 +271,16 @@ describe('Prune and Bloom rules', () => {
     expect(combat(g).counters.prunes).toBe(1);
     for (const card of [a, b]) {
       expect(inHand(g, card.uid).vars?.bloom).toBe(1);
-      expect(getCardCost(g.state, inHand(g, card.uid))).toBe(0);
     }
   });
 
   it('Prune away removes the selected deck copy, grows another, and respects the shared cap', () => {
     const g = sandbox();
-    const excise = addCard(g, 'excise'), lash = addCard(g, 'lash'), seed = addCard(g, 'seed_bite');
+    const excise = addCard(g, 'uproot'), lash = addCard(g, 'lash'), seed = addCard(g, 'seed_bite');
     play(g, excise); choose(g, lash.uid);
     expect(g.state.player.deck.some((c) => c.uid === lash.uid)).toBe(false);
     expect(inHand(g, seed.uid).vars?.bloom).toBe(1);
-    const another = addCard(g, 'excise');
+    const another = addCard(g, 'uproot');
     const before = g.state.player.deck.length;
     const events = play(g, another);
     expect(combat(g).pendingChoice).toBeNull();
@@ -288,7 +292,7 @@ describe('Prune and Bloom rules', () => {
   it('Bound cards can be Scrapped by standard Prune but cannot be Pruned away', () => {
     for (const away of [false, true]) {
       const g = sandbox();
-      const prune = addCard(g, away ? 'excise' : 'graft_hide');
+      const prune = addCard(g, away ? 'uproot' : 'graft_hide');
       const burden = addCard(g, 'curse_burden'), seed = addCard(g, 'seed_bite');
       play(g, prune);
       if (away) expect(combat(g).pendingChoice?.choices).not.toContain(burden.uid);
@@ -311,17 +315,19 @@ describe('Prune and Bloom rules', () => {
     if (!target) throw new Error('missing target');
     const before = target.hp;
     play(g, inHand(g, seed.uid));
-    expect(combat(g).enemies[0]?.hp).toBe(before - 24);
+    expect(combat(g).enemies[0]?.hp).toBe(before - 14); // Phase D: 4 + 1 per Bloom at Bloom 10
+    // v2: Seed Bite is Ripe at 10, so its Prune opens; decline it.
+    answerChoice(g, []);
     expect(combat(g).discard.find((c) => c.uid === seed.uid)?.vars?.bloom).toBe(10);
     // Engine deck-count scales use this live combat var before final persistence sync.
     const canopy = addCard(g, 'canopy_crush');
-    expect(renderCardText(canopy, g.state, 1)).toContain('14 damage');
+    expect(renderCardText(canopy, g.state, 1)).toContain('(11)'); // Phase D: 6 + half of 10 Bloom
   });
 });
 
 describe('custom effects and Power hooks', () => {
   for (const upgraded of [false, true]) for (const sourceUpgraded of [false, true]) {
-    it(`Propagate${upgraded ? '+' : ''} copies ${sourceUpgraded ? 'upgraded' : 'base'} Bloom into only the run deck at zero Bloom`, () => {
+    it(`Propagate${upgraded ? '+' : ''} copies ${sourceUpgraded ? 'upgraded' : 'base'} Bloom into only the run deck with half its Bloom`, () => {
       const g = sandbox();
       const propagate = addCard(g, 'propagate', 'hand', upgraded);
       const seed = addCard(g, 'seed_bite', 'hand', sourceUpgraded, 7);
@@ -331,11 +337,11 @@ describe('custom effects and Power hooks', () => {
       expect(g.state.player.deck).toHaveLength(before + 1);
       expect(copy).toMatchObject({ id: 'seed_bite', upgraded: upgraded || sourceUpgraded });
       expect(copy?.uid).not.toBe(seed.uid);
-      expect(copy?.vars?.bloom ?? 0).toBe(0);
+      expect(copy?.vars?.bloom).toBe(3); // v2: half of 7, round down
       const c = combat(g);
       expect([...c.hand, ...c.draw, ...c.discard, ...c.exhaust, ...c.inPlay].some((card) => card.uid === copy?.uid)).toBe(false);
       const hive = addCard(g, 'hivestrike');
-      expect(renderCardText(hive, g.state, 1)).toContain('6 damage');
+      expect(renderCardText(hive, g.state, 1)).toContain('(8)'); // Phase F: 7 + half of 2 Bloom cards
       expect(inHand(g, seed.uid).vars?.bloom).toBe(7);
     });
   }
@@ -348,7 +354,7 @@ describe('custom effects and Power hooks', () => {
     combat(g).hand.push(temp);
     play(g, propagate); settle(g);
     expect(g.state.player.deck.at(-1)).toMatchObject({ id: 'seed_bite', upgraded: false });
-    expect(g.state.player.deck.at(-1)?.vars?.bloom ?? 0).toBe(0);
+    expect(g.state.player.deck.at(-1)?.vars?.bloom).toBe(2); // v2: half of 4
     combat(g).hand = [];
     const empty = addCard(g, 'propagate', 'hand', true);
     const before = g.state.player.deck.length;
@@ -357,62 +363,7 @@ describe('custom effects and Power hooks', () => {
     expect(g.state.player.deck).toHaveLength(before);
   });
 
-  // Model a custom effect resolving from an autoplay with a full hand: all ten
-  // continuations remain legal and serializable, including the rightmost slot.
-  for (let slot = 0; slot < 10; slot++) {
-    it(`Transplant continuation for hand slot ${slot} survives both save/load boundaries`, () => {
-      let g = sandbox();
-      combat(g).player.statuses.quickening_sap = 1;
-      const transplant = makeCard(g.state, 'transplant', slot % 2 === 1);
-      combat(g).inPlay.push(transplant);
-      const seeds = Array.from({ length: 10 }, () => addCard(g, 'seed_bite', 'hand', false, 1));
-      const source = seeds[slot];
-      if (!source) throw new Error('missing source');
-      source.vars = { bloom: 7 };
-      const destination = seeds[slot === 0 ? 1 : 0];
-      if (!destination) throw new Error('missing destination');
-      const env = makeEnv(g.state);
-      combat(g).queue.push(...effectItems(getCardDef('transplant').effects, frame(transplant)));
-      drain(env);
-      g = Game.load(g.save());
-      choose(g, slot);
-      expect(inHand(g, source.uid).vars?.bloom).toBe(0);
-      expect(combat(g).pendingChoice?.choices).not.toContain(source.uid);
-      g = Game.load(g.save());
-      const events = choose(g, destination.uid);
-      expect(inHand(g, destination.uid).vars?.bloom).toBe(10);
-      expect(inHand(g, destination.uid).tempCost).toBe(0);
-      expect(events).toContainEqual({ t: 'bloom', uid: destination.uid, delta: 9, now: 10 });
-      expect(combat(g).pendingChoice).toBeNull();
-    });
-  }
-
-  it('Transplant also works at zero source Bloom and can select a capped destination', () => {
-    const g = sandbox();
-    const transplant = addCard(g, 'transplant', 'hand', true);
-    const source = addCard(g, 'seed_bite');
-    const capped = addCard(g, 'sap_shell', 'hand', false, 10);
-    play(g, transplant); choose(g, 0); choose(g, capped.uid);
-    expect(inHand(g, source.uid).vars?.bloom).toBe(0);
-    expect(inHand(g, capped.uid).vars?.bloom).toBe(10);
-  });
-
-  for (const upgraded of [false, true]) {
-    it(`Transplant${upgraded ? '+' : ''} transfers exactly the source Bloom plus its printed bonus`, () => {
-      const g = sandbox();
-      const transplant = addCard(g, 'transplant', 'hand', upgraded);
-      const source = addCard(g, 'seed_bite', 'hand', false, 2);
-      const destination = addCard(g, 'sap_shell', 'hand', true, 1);
-      play(g, transplant);
-      const lost = choose(g, 0);
-      choose(g, destination.uid);
-      expect(lost).toContainEqual({ t: 'bloom', uid: source.uid, delta: -2, now: 0 });
-      expect(inHand(g, source.uid).vars?.bloom).toBe(0);
-      expect(inHand(g, destination.uid).vars?.bloom).toBe(upgraded ? 6 : 5);
-    });
-  }
-
-  it('Crystal Graft spends exactly one Shard, checks eligible copies, and Transplant requires two', () => {
+  it('Crystal Graft spends exactly one Shard and checks eligible copies', () => {
     const g = sandbox();
     const crystal = addCard(g, 'crystal_graft'), seed = addCard(g, 'seed_bite');
     g.state.player.counters.shards = 0;
@@ -424,28 +375,6 @@ describe('custom effects and Power hooks', () => {
     play(g, crystal); settle(g);
     expect(g.state.player.counters.shards).toBe(1);
     expect(inHand(g, seed.uid).vars?.bloom).toBe(3);
-    const transplant = addCard(g, 'transplant');
-    expect(canPlayCard(g.state, transplant)).toBe('Needs two Bloom cards');
-    addCard(g, 'sap_shell');
-    expect(canPlayCard(g.state, transplant)).toBe(true);
-  });
-
-  it('Quickening applies only to positive growth in hand and respects the once-per-copy cost limit', () => {
-    const g = sandbox();
-    play(g, addCard(g, 'quickening_sap'));
-    const seed = addCard(g, 'seed_bite'), draw = addCard(g, 'sap_shell', 'draw');
-    const env = makeEnv(g.state);
-    addBloom(env, inHand(g, seed.uid), 1);
-    addBloom(env, draw, 1);
-    expect(inHand(g, seed.uid).tempCost).toBe(0);
-    expect(draw.tempCost).toBeUndefined();
-    combat(g).reducedThisTurn.push(seed.uid);
-    expect(getCardCost(g.state, inHand(g, seed.uid))).toBe(1);
-    const other = addCard(g, 'burl_wall', 'hand', false, 3);
-    addBloom(env, other, -1);
-    expect(other.tempCost).toBeUndefined();
-    addBloom(env, other, 0);
-    expect(other.tempCost).toBeUndefined();
   });
 
   it('Ripening Rot grows only living rotting enemies, stacks additively, and obeys the Rot cap', () => {
@@ -461,29 +390,14 @@ describe('custom effects and Power hooks', () => {
     expect(combat(g).enemies.map((enemy) => enemy.statuses.rot ?? 0)).toEqual([15, 0, 4]);
   });
 
-  it('Fungal Aegis reads the greatest living Rot, returns zero for clean enemies, and stacks', () => {
-    const g = sandbox();
-    play(g, addCard(g, 'fungal_aegis'));
-    play(g, addCard(g, 'fungal_aegis', 'hand', true));
-    fire(g, 'onTurnStart');
-    expect(combat(g).player.block).toBe(0);
-    const [a, b] = combat(g).enemies;
-    if (!a || !b) throw new Error('missing enemies');
-    a.statuses.rot = 6; b.statuses.rot = 11;
-    const dead = structuredClone(a); dead.uid = 3; dead.alive = false; dead.statuses.rot = 15;
-    combat(g).enemies.push(dead);
-    fire(g, 'onTurnStart');
-    expect(combat(g).player.block).toBe(22);
-  });
-
   for (const id of ['thorn_halo', 'thresher']) for (const upgraded of [false, true]) {
     it(`${id}${upgraded ? '+' : ''} snapshots Bloom on play and adds another copy's independent snapshot`, () => {
       const g = sandbox();
       const power = addCard(g, id, 'hand', upgraded, 4);
       play(g, power);
-      // Base 4 (Thorn Halo) / 5 (Thresher) at Bloom 4: +1 per Bloom, +2 upgraded. The second copy is Bloom 2.
-      const first = id === 'thresher' ? (upgraded ? 13 : 9) : (upgraded ? 12 : 8);
-      const second = id === 'thresher' ? 7 : 6;
+      // Base 4 (Thorn Halo) / 5 (Thresher, Phase E) at Bloom 4: +1 per Bloom, +2 upgraded. The second copy is Bloom 2.
+      const first = (upgraded ? 12 : 8) + (id === 'thresher' ? 2 : 0); // Thresher base 6 (Phase E2)
+      const second = 6 + (id === 'thresher' ? 2 : 0);
       expect(combat(g).player.statuses[id]).toBe(first);
       // A future deck-copy edit cannot change the already running Power.
       const deckCopy = g.state.player.deck.find((c) => c.uid === power.uid);
@@ -526,15 +440,15 @@ describe('custom effects and Power hooks', () => {
   });
 
   it('Living Hedge and Hyphal Web count Bloom deck copies at zero Bloom and in the Scrapheap', () => {
-    for (const n of [5, 6]) {
+    for (const n of [9, 10]) { // Phase D: Hedge gives half the Bloom cards; Hyphal's wide draw needs 10
       const g = sandbox();
       play(g, addCard(g, 'living_hedge'));
       play(g, addCard(g, 'hyphal_web', 'hand', true));
       for (let i = 0; i < n; i++) addCard(g, 'seed_bite', 'exhaust');
       fire(g, 'onTurnStart');
-      expect(combat(g).player.block).toBe(n);
-      expect(combat(g).hand).toHaveLength(n >= 6 ? 2 : 1);
-      expect(combat(g).counters.effectDraw).toBe(n >= 6 ? 2 : 1);
+      expect(combat(g).player.block).toBe(Math.floor(n / 2));
+      expect(combat(g).hand).toHaveLength(n >= 10 ? 2 : 1);
+      expect(combat(g).counters.effectDraw).toBe(n >= 10 ? 2 : 1);
     }
   });
 
@@ -553,8 +467,8 @@ describe('custom effects and Power hooks', () => {
       combat(g).counters.prunes = 2;
       const vine = addCard(g, 'reaping_vine'), scrap = addCard(g, 'lash');
       play(g, vine);
-      g.apply({ type: 'resolve_choice', uids: accept ? [scrap.uid] : [] });
-      expect(combat(g).enemies[0]?.hp).toBe(10000 - (accept ? 12 : 8));
+      answerChoice(g, accept ? [scrap.uid] : []);
+      expect(combat(g).enemies[0]?.hp).toBe(10000 - (accept ? 15 : 10)); // 5 per Prune (Phase E2)
       expect(combat(g).counters.prunes).toBe(accept ? 3 : 2);
     }
   });
@@ -565,7 +479,7 @@ describe('custom effects and Power hooks', () => {
     combat(g).counters.prunes = 1;
     const shed = addCard(g, 'shed_husk'); addCard(g, 'seed_bite');
     const before = combat(g).draw.length;
-    play(g, shed); g.apply({ type: 'resolve_choice', uids: [] });
+    play(g, shed); answerChoice(g, []);
     expect(combat(g).draw).toHaveLength(before);
   });
 
@@ -576,29 +490,31 @@ describe('custom effects and Power hooks', () => {
       const before = combat(g).draw.length;
       play(g, shed); choose(g, scrap.uid);
       expect(inHand(g, seed.uid).vars?.bloom).toBe(1);
-      expect(combat(g).draw).toHaveLength(before - 2);
+      expect(combat(g).draw).toHaveLength(before - 1); // Phase D: draw 2 -> 1
     });
   }
 });
 
 describe('Rot and deck-scaled effects', () => {
-  it('Sporeburst is HP loss through Block and Guard, then grows Rot', () => {
+  it('v2 Sporeburst Harvests 2 on every enemy through Block and Guard, then re-sows Rot', () => {
     const g = sandbox();
     const target = combat(g).enemies[0];
     if (!target) throw new Error('missing target');
     target.statuses = { rot: 5, exposed: 3 }; target.block = 20; target.guard = 20;
     play(g, addCard(g, 'sporeburst', 'hand', true));
-    expect(combat(g).enemies[0]).toMatchObject({ hp: 9995, block: 20, guard: 20, statuses: { rot: 7 } });
+    // 10 HP lost, Rot 5 -> 2 (halved) -> 5 (+3). The clean enemy is not Harvested, only sown.
+    expect(combat(g).enemies[0]).toMatchObject({ hp: 9990, block: 20, guard: 20, statuses: { rot: 5 } });
+    expect(combat(g).enemies[1]).toMatchObject({ hp: 10000, statuses: { rot: 3 } });
   });
 
-  it('Death Cap needs existing Rot and applies a capped normal status', () => {
+  it('Death Cap applies 15 Rot to a rotting enemy (6 to a clean one), a capped normal status', () => {
     for (const rotting of [false, true]) {
       const g = sandbox();
       const target = combat(g).enemies[0];
       if (!target) throw new Error('missing target');
       if (rotting) target.statuses.rot = 2;
       play(g, addCard(g, 'death_cap'));
-      expect(combat(g).enemies[0]?.statuses.rot ?? 0).toBe(rotting ? 15 : 0);
+      expect(combat(g).enemies[0]?.statuses.rot ?? 0).toBe(rotting ? 15 : 6); // Phase E: a clean enemy gets 6
     }
   });
 
@@ -618,31 +534,13 @@ describe('Rot and deck-scaled effects', () => {
     const g = sandbox();
     addCard(g, 'seed_bite', 'exhaust', false, 4);
     addCard(g, 'sap_shell', 'draw', false, 3);
-    const hive = addCard(g, 'hivestrike'), canopy = addCard(g, 'canopy_crush'), crash = addCard(g, 'thicket_crash');
-    expect(renderCardText(hive, g.state, 1)).toContain('6 damage');
-    expect(renderCardText(canopy, g.state, 1)).toContain('11 damage');
-    expect(renderCardText(crash, g.state, 1)).toContain(`(${g.state.player.deck.length})`);
-    const excise = addCard(g, 'excise'), victim = addCard(g, 'barb_flick');
+    const hive = addCard(g, 'hivestrike'), canopy = addCard(g, 'canopy_crush');
+    expect(renderCardText(hive, g.state, 1)).toContain('(8)'); // Phase F: 7 + half of 2 Bloom cards
+    expect(renderCardText(canopy, g.state, 1)).toContain('(9)'); // Phase D: 6 + half of 7 Bloom
+    const excise = addCard(g, 'uproot'), victim = addCard(g, 'barb_flick');
     const n = g.state.player.deck.length;
     play(g, excise); choose(g, victim.uid); settle(g);
     expect(g.state.player.deck).toHaveLength(n - 1);
-    expect(renderCardText(crash, g.state, 1)).toContain(`(${n - 1})`);
   });
 
-  it('Transplant changes persist into the run deck after combat and through save/load', () => {
-    const g = sandbox();
-    const transplant = addCard(g, 'transplant');
-    const source = addCard(g, 'seed_bite', 'hand', false, 3), destination = addCard(g, 'sap_shell');
-    play(g, transplant); choose(g, 0); choose(g, destination.uid);
-    // An act-three boss victory avoids unrelated reward pools and gated classes.
-    g.state.act = 3;
-    combat(g).kind = 'boss'; combat(g).isBoss = true;
-    for (const enemy of combat(g).enemies) enemy.hp = 1;
-    play(g, addCard(g, 'thornwhirl'));
-    expect(g.state.phase).toBe('victory');
-    expect(g.state.combat).toBeNull();
-    const loaded = Game.load(g.save());
-    expect(loaded.state.player.deck.find((card) => card.uid === source.uid)?.vars?.bloom).toBe(0);
-    expect(loaded.state.player.deck.find((card) => card.uid === destination.uid)?.vars?.bloom).toBe(5);
-  });
 });

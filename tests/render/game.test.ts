@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { deserialize, ENGINE_VERSION } from '../../src/engine/serialize.ts';
+import { deserialize, ENGINE_VERSION, parseSaveOrIncompatible } from '../../src/engine/serialize.ts';
 import { RNG_STREAMS } from '../../src/engine/rng.ts';
 import { formatIntent, hpAfterHits } from '../../src/render/game/intents.ts';
-import { layoutMap, scrollToShow, type MapNodeLike } from '../../src/render/game/mapLayout.ts';
+import { layoutMap, MAP_NODE_BOX, scrollToShow, type MapNodeLike } from '../../src/render/game/mapLayout.ts';
 import { battleScale, enemyCenters, HAND, handSlots, PLATE_W, timelineSlots, TIMELINE } from '../../src/render/game/handLayout.ts';
 import { formatDamageDealt, summarizeRun, type SummaryFloor, type SummaryInput } from '../../src/render/game/summary.ts';
 
@@ -85,7 +85,7 @@ describe('timeline layout (GDD §2.8)', () => {
     const by = new Map(s.map((x) => [x.uid, x]));
     expect(by.get(12)?.col).toBe(0);
     expect(by.get(11)?.col).toBe(0);
-    expect((by.get(12)?.x ?? 0) < (by.get(11)?.x ?? 0)).toBe(true);
+    expect((by.get(12)?.y ?? 0) < (by.get(11)?.y ?? 0)).toBe(true); // one chip per row: seq order runs down the column
     expect(by.get(10)?.col).toBe(2);
     expect(by.get(13)?.col).toBe(2); // clamped to +3
     expect(by.get(12)?.y).toBe(TIMELINE.y + TIMELINE.headerH);
@@ -112,6 +112,14 @@ describe('map layout', () => {
     }
     expect(() => l.at(3, 1)).toThrow();
   });
+  it('every node box, the 28 px boss included, lies inside the content (MapScreen hides nodes that poke out)', () => {
+    const l = layoutMap(grid());
+    for (const n of l.nodes) {
+      const half = (n.row === 15 ? MAP_NODE_BOX.boss : MAP_NODE_BOX.node) / 2;
+      expect(n.y - half).toBeGreaterThanOrEqual(0);
+      expect(n.y + half).toBeLessThanOrEqual(l.height);
+    }
+  });
   it('scrollToShow keeps the focus in view and clamps', () => {
     expect(scrollToShow(0, 300, 200, 400)).toBe(140);
     expect(scrollToShow(140, 160, 200, 400)).toBe(120);
@@ -122,7 +130,7 @@ describe('map layout', () => {
 
 describe('run summary', () => {
   const input: SummaryInput = {
-    phase: 'defeat', classId: 'graft', seed: 'ABC', act: 1, floor: 7, hp: 0, maxHp: 70, gold: 12,
+    phase: 'defeat', classId: 'graft', tier: 'HEROIC', seed: 'ABC', act: 1, floor: 7, hp: 0, maxHp: 70, gold: 12,
     deck: [{ id: 'lash', upgraded: false }, { id: 'lash', upgraded: false }, { id: 'seed_bite', upgraded: true, vars: { bloom: 4 } }],
     relics: [{ id: 'heartseed' }],
     floors: [
@@ -152,29 +160,29 @@ describe('run summary', () => {
     expect(formatDamageDealt([{ ...(f[0] as SummaryFloor), damageDealt: null }, ...f.slice(1)])).toBe('41+');
     expect(formatDamageDealt(f.map((x) => ({ ...x, damageDealt: null })))).toBe('n/a');
   });
+  it('shows the difficulty tier (ruling 71)', () => {
+    expect(summarizeRun(input, names).rows.find((r) => r[0] === 'TIER')?.[1]).toBe('HEROIC');
+  });
   it('victory shows HP left', () => {
     expect(summarizeRun({ ...input, phase: 'victory', hp: 40 }, names).rows.find((r) => r[0] === 'HP LEFT')?.[1]).toBe('40/70');
   });
 });
 
-describe('save migration v1 -> v2 (renderer depends on mapPath / damageDealt)', () => {
-  const v1 = () => ({
-    version: 1, seed: 'S', classId: 'c', phase: 'map', floor: 2, act: 1, nextUid: 1,
+describe('saves from older engine versions (no migrations since v3)', () => {
+  const old = (version: number) => ({
+    version, seed: 'S', classId: 'c', phase: 'map', floor: 2, act: 1, nextUid: 1,
     rng: Object.fromEntries(RNG_STREAMS.map((k) => [k, [1, 2, 3, 4]])),
     player: { hp: 1, maxHp: 1, gold: 0, potionSlots: 3, deck: [], relics: [], potions: [] },
     map: { rows: [] }, history: { floors: [{ floor: 0 }, { floor: 1 }] }, queue: [], counters: {},
     combat: null, reward: null, shop: null, event: null, rest: null, treasure: null, pendingChoice: null,
     mapPos: { row: 1, col: 3 }, startChoices: null, bossRelicChoices: null,
   });
-  it('adds the known path (current node) and marks old floors untracked', () => {
-    const s = deserialize(JSON.stringify(v1()));
-    expect(s.version).toBe(ENGINE_VERSION);
-    expect(s.mapPath).toEqual([{ row: 1, col: 3 }]);
-    expect(s.history.floors.map((f) => f.damageDealt)).toEqual([null, null]);
+  it('v1 and v2 saves are incompatible (reported, not thrown, by parseSaveOrIncompatible)', () => {
+    for (const v of [1, 2]) expect(parseSaveOrIncompatible(JSON.stringify(old(v)))).toMatchObject({ ok: false });
+    expect(() => deserialize(JSON.stringify(old(2)))).toThrow(/incompatible/);
   });
-  it('a v2 save without mapPath is malformed', () => {
-    const raw = { ...v1(), version: ENGINE_VERSION };
-    expect(() => deserialize(JSON.stringify(raw))).toThrow(/mapPath/);
+  it('a current-version save without mapPath is malformed (throws)', () => {
+    expect(() => deserialize(JSON.stringify(old(ENGINE_VERSION)))).toThrow(/mapPath/);
   });
 });
 

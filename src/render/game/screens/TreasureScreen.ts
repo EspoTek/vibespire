@@ -12,6 +12,8 @@ import { Label } from '../../ui/Label.ts';
 import { Panel } from '../../ui/Panel.ts';
 import { Z, type Widget } from '../../ui/Widget.ts';
 import { RunScreen } from '../RunScreen.ts';
+
+import { HintArea } from '../hud.ts';
 import type { RunSession } from '../session.ts';
 
 export class TreasureScreen extends RunScreen {
@@ -33,8 +35,17 @@ export class TreasureScreen extends RunScreen {
       panel.addChild(new Button(rect(W / 2 - 50, 228, 100, 0), 'OPEN CHEST', { onActivate: () => { this.act({ type: 'open_treasure' }); } }), 2);
     } else {
       const relic = t.relic ? `[cyan]${getRelicDef(t.relic).name.toUpperCase()}[/]\n${renderRelicText(t.relic, this.state)}` : 'NO RELIC.';
-      panel.addChild(new Label(W / 2 - 116, 170, `${relic}\n[yellow]+${t.gold} GOLD[/]`, { markup: true, maxWidth: 232, align: 'center', lineHeight: 10 }), 2);
-      panel.addChild(new Button(rect(W / 2 - 40, 234, 80, 0), 'PROCEED', { onActivate: () => { this.act({ type: 'proceed' }); } }), 2);
+      const text = panel.addChild(new Label(W / 2 - 116, 170, `${relic}\n[yellow]+${t.gold} GOLD[/]`, { markup: true, maxWidth: 232, align: 'center', lineHeight: 10 }), 2);
+      if (t.relic) {
+        // hover / focus the relic text (already shown in full): keyword boxes for its terms
+        const area = panel.addChild(new HintArea(rect(text.rect.x - 2, text.rect.y - 2, text.rect.w + 4, text.rect.h + 4)), 3);
+        area.keywordText = renderRelicText(t.relic, this.state);
+        area.label = relic.replace(/\[[^\]]*\]/g, '');
+      }
+      // a long relic text pushes PROCEED (and the panel's bottom) down instead of covering it (BUG-13)
+      const by = Math.max(234, text.rect.y + text.rect.h + 6);
+      panel.addChild(new Button(rect(W / 2 - 40, by, 80, 0), 'PROCEED', { onActivate: () => { this.act({ type: 'proceed' }); } }), 2);
+      panel.resize(260, Math.max(150, by + 26 - 110));
     }
     this.scope.add(panel);
     const btn = panel.descendants().find((w) => w instanceof Button);

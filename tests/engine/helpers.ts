@@ -52,6 +52,12 @@ export function setHand(g: Game, ids: CardId[], upgraded = false): number[] {
   return c.hand.map((x) => x.uid);
 }
 
+/** RULINGS 72: Scrap can't take the combat deck below 8. Tests that Scrap from a small sandbox deck pad the draw pile. */
+export function padDraw(g: Game, n = 10, id: CardId = 'test_block'): void {
+  const c = combatOf(g);
+  for (let i = 0; i < n; i++) c.draw.push(makeCard(g.state, id));
+}
+
 export function enemyUids(g: Game): number[] {
   return combatOf(g).enemies.filter((e) => e.alive).map((e) => e.uid);
 }

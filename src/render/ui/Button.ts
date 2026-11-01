@@ -18,7 +18,6 @@ export interface ButtonOptions {
 export class Button extends Widget {
   private readonly box: Panel;
   private readonly caption: Text;
-  hint: string;
 
   /** `r.w`/`r.h` of 0 = size to the caption (8x8 font: 16px tall). */
   constructor(r: Rect, text: string, opts: ButtonOptions = {}) {

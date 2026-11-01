@@ -4,6 +4,7 @@
  * Groups: resources, intents, statuses (one per status id, GDD §2), map nodes, piles, misc.
  */
 import { C } from '../palette.ts';
+import { STATUS_ICON_ART } from './statusIconArt.ts';
 
 export const ICON_KEYS: Readonly<Record<string, number>> = {
   k: C.black, w: C.white, g: C.grey, d: C.darkGrey, r: C.red, R: C.darkRed, p: C.pink,
@@ -136,6 +137,8 @@ export const ICONS: Readonly<Record<string, readonly string[]>> = {
     '............', '.kkkkkkkkkk.', '.kRRRRRRRRk.', '.kRwRRRRwRk.', '.kwwwRRwwRk.', '.kRwRRRRwRk.',
     '.kRRRRRRwRk.', '.kRRRRRwwwk.', '.kRRRRRRRRk.', '.kkkkkkkkkk.', '............', '............',
   ],
+  // v2 powers, debuffs and enemy passives: hand-authored in statusIconArt.ts
+  ...STATUS_ICON_ART,
   // ---------------------------------------------------------------- map nodes
   node_monster: [
     '.k........k.', 'kuk......kuk', 'kuuk.kk.kuuk', '.kuukuukuuk.', '..kuuuuuuk..', '.kuyuuuuyuk.',

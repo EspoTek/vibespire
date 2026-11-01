@@ -10,14 +10,16 @@
 import type { CombatState, Effect, EnemyAiCtx, EnemyDef, EnemyState, EntityRef, EncounterDef, HookCtx, StatusDef } from '../../engine/types';
 import { getCardDef, getStatusDef } from '../registry';
 
-const RAM = { charge: 30, grow: 6, break1: 22, break2: 26, rage2: 2 };
-const ORCHID = { sow_n: 2, cap: 4, bloom_n: 3, quick: 1, ripen_step: 1 };
-const ASSEMBLER = { lay_n: 2, cap: 3, weld1: 1, weld2: 2, ready: 3 };
-const FURNACE = { heat1: 2, heat2: 4, heat_max: 15, bellows_heat: 2, melt_per: 3, vent: 1 };
+const RAM = { charge: 27, grow: 4, break1: 20, break2: 24, rage2: 2 };
+const ORCHID = { sow_n: 2, cap: 4, bloom_n: 3, quick: 1, ripen_step: 1, seeds: 10, nectar: 10, wilt: 3 };
+const ASSEMBLER = { lay_n: 2, cap: 3, weld1: 1, weld2: 2, ready: 3, self: 1 };
+const FURNACE = { heat1: 2, heat2: 3, heat_max: 15, bellows_heat: 2, melt_per: 3, vent: 1 };
 const TRI = { brace: 8, overtime_might: 1 };
-const SOV = { line: 60, line3: 40 };
-const ARCH = { cap1: 6, cap2: 8, base_hits: 2 };
-const LEUK = { p2_hp: 320, p3_hp: 160, fever_per_ab: 2, strip: 4 };
+const SOV = { line: 60, line3: 40, crown: 3, anchor_rage: 2, rage_max: 12 };
+const ARCH = { cap1: 6, cap2: 8, base_hits: 2, redact_pages: 1 };
+const LEUK = { p2_hp: 320, p3_hp: 160, fever_per_ab: 2, strip: 4, seethe: 12, pitch: 3, fever_max: 9 };
+/** Seething (shared anti-stall passive): Might gained per calm turn. The threshold is the status's stacks. */
+const SEETHE = { might: 1 };
 
 // ---------------------------------------------------------------------------
 // helpers
@@ -147,27 +149,42 @@ export const BOSSES: EnemyDef[] = [
   },
   {
     id: 'mother_orchid', name: 'Mother Orchid', boss: true, hp: [165, 175], icon: 'enemy_mother_orchid', values: ORCHID,
+    // Phase D stall breaker: a finite Seed Bank (visible stacks) and a Nectar Feast that wilts with each use.
+    spawnStatuses: { seed_bank: ORCHID.seeds },
     hooks: { onHpLost: phaseHook([halfHp]) },
+    amounts: {
+      nectar_heal: (ctx) => {
+        const e = enemyByUid(requireCombat(ctx, 'Nectar Feast'), ctx.frame.self, 'Nectar Feast');
+        return Math.max(0, ORCHID.nectar - ORCHID.wilt * (e.aiState.feasts ?? 0)); // never-set aiState is 0
+      },
+    },
     moves: {
-      sow: { name: 'Sow', intent: 'special', text: 'Summons {summon} Orchid Buds (at most {cap} alive). They die with her.',
-        effects: [{ type: 'summon', enemy: 'orchid_bud', n: ORCHID.sow_n, cap: ORCHID.cap, withLeader: 'die' }] },
-      vine_crush: { name: 'Vine Crush', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 15, target: 'target' }] },
+      sow: { name: 'Sow', intent: 'special', text: 'Summons {sow_n} Orchid Buds from its Seed Bank (at most {cap} alive). They die with her.',
+        effects: [{ type: 'custom', fn: 'sow' }] },
+      // v2 scaling attack (stall breaker that does not punish mowing Buds): +1 per Vine Crush already used.
+      vine_crush: { name: 'Vine Crush', intent: 'attack', text: 'Deal {damage} damage (+{damage_per} each use).',
+        effects: [{ type: 'damage', amount: { base: 15, per: 1, scale: { ai: 'crushes' } }, target: 'target' }, { type: 'ai_state', key: 'crushes', delta: 1 }] },
       pollen_storm: { name: 'Pollen Storm', intent: 'attack_debuff', text: 'Deal {damage} damage {times} times. Apply {status} Stagger to you.',
         effects: [{ type: 'damage', amount: 6, times: 2, target: 'target' }, { type: 'status', target: 'target', id: 'stagger', amount: 2 }] },
-      nectar: { name: 'Nectar Feast', intent: 'buff', text: 'Heal {heal} HP. Every Bud is {ripen_step} turn closer to ripe.',
-        effects: [{ type: 'heal', amount: 10 }, { type: 'custom', fn: 'ripen_buds' }] },
-      full_bloom: { name: 'Full Bloom', intent: 'special', text: 'Summons {bloom_n} Orchid Buds that ripen after {quick} turn (at most {cap} alive).',
+      nectar: { name: 'Nectar Feast', intent: 'buff', text: 'Heal {heal} HP ({wilt} less each Feast). Every Bud is {ripen_step} turn closer to ripe.',
+        effects: [{ type: 'heal', amount: { scale: { fn: 'nectar_heal' } } }, { type: 'ai_state', key: 'feasts', delta: 1 }, { type: 'custom', fn: 'ripen_buds' }] },
+      full_bloom: { name: 'Full Bloom', intent: 'special', text: 'Summons {bloom_n} Orchid Buds from its Seed Bank that ripen after {quick} turn (at most {cap} alive).',
         effects: [{ type: 'custom', fn: 'full_bloom' }] },
     },
     chooseMove: (c) => {
       const buds = c.alliesAlive('orchid_bud');
+      // Its own Seed Bank (an absent status is 0 stacks). Every rule that reads it follows a move that never sows,
+      // so a planned-but-unresolved Sow can't make a forecast stale at Augury depth 3 or less.
+      const seeds = (c.self.statuses.seed_bank ?? 0) > 0;
+      const resow = buds <= 2 && seeds ? 'sow' : 'vine_crush';
       if (phaseOf(c) === 1) {
-        return byLast(c, { '': 'sow', sow: 'vine_crush', vine_crush: 'pollen_storm', pollen_storm: 'nectar', nectar: buds <= 2 ? 'sow' : 'vine_crush' }, 'vine_crush');
+        return byLast(c, { '': seeds ? 'sow' : 'vine_crush', sow: 'vine_crush', vine_crush: 'pollen_storm', pollen_storm: 'nectar', nectar: resow }, 'vine_crush');
       }
-      if (!c.history.includes('full_bloom')) return 'full_bloom';
-      return byLast(c, { full_bloom: 'vine_crush', sow: 'vine_crush', vine_crush: 'pollen_storm', pollen_storm: buds <= 2 ? 'sow' : 'vine_crush' }, 'vine_crush');
+      if (!c.history.includes('full_bloom') && seeds) return 'full_bloom';
+      return byLast(c, { full_bloom: 'vine_crush', sow: 'vine_crush', vine_crush: 'pollen_storm', pollen_storm: resow }, 'vine_crush');
     },
     custom: {
+      sow: (ctx) => sowFromBank(ctx, ORCHID.sow_n),
       ripen_buds: (ctx) => {
         for (const b of living(requireCombat(ctx, 'Nectar Feast'), 'orchid_bud')) {
           ctx.now([{ type: 'status', target: 'target', id: 'ripening', amount: -ORCHID.ripen_step }], { target: b.uid });
@@ -176,7 +193,7 @@ export const BOSSES: EnemyDef[] = [
       full_bloom: (ctx) => {
         const combat = requireCombat(ctx, 'Full Bloom');
         const before = new Set(combat.enemies.map((e) => e.uid));
-        ctx.now([{ type: 'summon', enemy: 'orchid_bud', n: ORCHID.bloom_n, cap: ORCHID.cap, withLeader: 'die' }]);
+        sowFromBank(ctx, ORCHID.bloom_n);
         for (const b of combat.enemies.filter((e) => !before.has(e.uid))) {
           const left = (b.statuses.ripening ?? 0) - ORCHID.quick;
           ctx.now([{ type: 'status', target: 'target', id: 'ripening', amount: -left }], { target: b.uid });
@@ -200,17 +217,18 @@ export const BOSSES: EnemyDef[] = [
     },
   },
   {
-    id: 'gloam_empress', name: 'Gloam Empress', boss: true, hp: [195, 205], icon: 'enemy_gloam_empress',
+    id: 'gloam_empress', name: 'Gloam Empress', boss: true, hp: [205, 215], icon: 'enemy_gloam_empress',
     hooks: { onHpLost: phaseHook([halfHp]) },
     moves: {
       scale_dust: { name: 'Scale Dust', intent: 'debuff', text: 'Apply {status} Stagger to you. Gain {block} Block.',
         effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 2 }, { type: 'block', amount: 12 }] },
-      wing_buffet: { name: 'Wing Buffet', intent: 'attack', text: 'Deal {damage} damage {times} times (+{times_per} hit after Silk Cocoon).',
-        effects: [{ type: 'damage', amount: 5, times: { base: 3, scale: { ai: 'cocooned' } }, target: 'target' }, { type: 'ai_state', key: 'cocooned', set: 0 }] },
+      // Scaling attack: every Silk Cocoon adds a Wing Buffet hit for the rest of the fight.
+      wing_buffet: { name: 'Wing Buffet', intent: 'attack', text: 'Deal {damage} damage {times} times (+{times_per} hit per Silk Cocoon so far).',
+        effects: [{ type: 'damage', amount: 5, times: { base: 3, scale: { ai: 'cocooned' } }, target: 'target' }] },
       mothlight: { name: 'Mothlight', intent: 'attack_debuff', text: 'Deal {damage} damage. Apply {status} Exposed to you.',
-        effects: [{ type: 'damage', amount: 13, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
-      silk_cocoon: { name: 'Silk Cocoon', intent: 'defend_buff', text: 'Gain {block} Block. Its next Wing Buffet hits {ai_state} more time.',
-        effects: [{ type: 'block', amount: 18 }, { type: 'ai_state', key: 'cocooned', set: 1 }] },
+        effects: [{ type: 'damage', amount: 14, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
+      silk_cocoon: { name: 'Silk Cocoon', intent: 'defend_buff', text: 'Gain {block} Block. Wing Buffet hits {ai_state} more time for the rest of the fight.',
+        effects: [{ type: 'block', amount: 18 }, { type: 'ai_state', key: 'cocooned', delta: 1 }] },
       dust_storm: { name: 'Dust Storm', intent: 'attack_debuff', text: 'Deal {damage} damage {times} times. Apply {status} Stagger to you.',
         effects: [{ type: 'damage', amount: 4, times: 3, target: 'target' }, { type: 'status', target: 'target', id: 'stagger', amount: 2 }] },
     },
@@ -257,8 +275,9 @@ export const BOSSES: EnemyDef[] = [
     },
   },
   {
-    id: 'assembly_frame', name: 'Assembly Frame', hp: [18, 22], icon: 'enemy_assembly_frame', onLeaderDeath: 'die', spawnStatuses: { assembly_line: 1 },
-    moves: { idle: { name: 'Assembling', intent: 'sleep', text: 'It is being assembled and does nothing.', effects: [] } },
+    id: 'assembly_frame', name: 'Assembly Frame', hp: [18, 22], icon: 'enemy_assembly_frame', onLeaderDeath: 'die', spawnStatuses: { assembly_line: 1 }, values: ASSEMBLER,
+    // A timer: it builds itself, so a Frame left alone is a Welded Horror in a few turns (Progress shows the count).
+    moves: { idle: { name: 'Assembling', intent: 'buff', text: 'It assembles itself: +{status} Progress.', effects: [{ type: 'status', target: 'self', id: 'progress', amount: ASSEMBLER.self }] } },
     chooseMove: () => 'idle',
   },
   {
@@ -271,7 +290,7 @@ export const BOSSES: EnemyDef[] = [
     chooseMove: (c) => (c.lastMove() === 'weld_claw' ? 'sear' : 'weld_claw'),
   },
   {
-    id: 'furnace_heart', name: 'Furnace Heart', boss: true, hp: [370, 390], icon: 'enemy_furnace_heart', values: FURNACE,
+    id: 'furnace_heart', name: 'Furnace Heart', boss: true, hp: [340, 360], icon: 'enemy_furnace_heart', values: FURNACE,
     spawnStatuses: { furnace_core: 1 },
     onSpawn: watchPlayer('furnace_vent'),
     hooks: { onHpLost: phaseHook([halfHp]) },
@@ -279,7 +298,7 @@ export const BOSSES: EnemyDef[] = [
       slag_tide: { name: 'Slag Tide', intent: 'debuff', text: 'Shuffle {add_card} Backlash into your draw pile and add {add_card2} Jitter to your hand.',
         effects: [{ type: 'add_card', card: 'status_backlash', to: 'draw', n: { base: 2, scale: { ai: 'p2' } } }, { type: 'add_card', card: 'status_jitter', to: 'hand', n: 1 }] },
       crucible_swing: { name: 'Crucible Swing', intent: 'attack', text: 'Deal {damage} damage {times} times.',
-        effects: [{ type: 'damage', amount: { base: 10, per: 2, scale: { ai: 'p2' } }, times: 2, target: 'target' }] },
+        effects: [{ type: 'damage', amount: { base: 9, per: 2, scale: { ai: 'p2' } }, times: 2, target: 'target' }] },
       bellows_blast: { name: 'Bellows Blast', intent: 'attack_defend', text: 'Deal {damage} damage. Gain {block} Block. Heat +{bellows_heat}.',
         effects: [{ type: 'damage', amount: 14, target: 'target' }, { type: 'block', amount: 15 }, { type: 'custom', fn: 'bellows_heat' }] },
       meltdown: { name: 'Meltdown', intent: 'attack', text: 'Deal {damage} damage ({melt_per} per Heat). Then Heat drops to 0.',
@@ -351,22 +370,23 @@ export const BOSSES: EnemyDef[] = [
 
   // ======================= Act 3 =======================
   {
-    id: 'tether_sovereign', name: 'Tether Sovereign', boss: true, hp: [550, 570], icon: 'enemy_tether_sovereign', values: SOV,
+    id: 'tether_sovereign', name: 'Tether Sovereign', boss: true, hp: [530, 550], icon: 'enemy_tether_sovereign', values: SOV,
     spawnStatuses: { overflow: 1 },
+    // Phase D: Rage is a visible status (Crown Rage, capped at rage_max) instead of hidden aiState.
     moves: {
       decree: { name: 'Decree of Gravity', intent: 'debuff', text: 'Apply {status} Exposed and {status2} Stagger to you. Gain {block} Block.',
         effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'status', target: 'target', id: 'stagger', amount: 2 }, { type: 'block', amount: 25 }] },
       tether_lash: { name: 'Tether Lash', intent: 'attack', text: 'Deal {damage} damage {times} times.',
-        effects: [{ type: 'damage', amount: { base: 6, scale: { ai: 'rage' } }, times: 4, target: 'target' }] },
-      anchor_drop: { name: 'Anchor Drop', intent: 'attack', text: 'Deal {damage} damage. In phase 3 its Rage then rises by {ai_state}.',
+        effects: [{ type: 'damage', amount: { base: 6, scale: { status: 'crown_rage', of: 'self' } }, times: 4, target: 'target' }] },
+      anchor_drop: { name: 'Anchor Drop', intent: 'attack', text: 'Deal {damage} damage. In phase 3 its Crown Rage then rises by {anchor_rage} (at most {rage_max}).',
         effects: [
-          { type: 'damage', amount: { base: 28, scale: { ai: 'rage' } }, target: 'target' },
-          { type: 'conditional', if: { type: 'compare', left: { scale: { ai: 'p3' } }, op: '>=', right: 1 }, then: [{ type: 'ai_state', key: 'rage', delta: 2 }] },
+          { type: 'damage', amount: { base: 25, scale: { status: 'crown_rage', of: 'self' } }, target: 'target' },
+          { type: 'conditional', if: { type: 'compare', left: { scale: { ai: 'p3' } }, op: '>=', right: 1 }, then: [{ type: 'status', target: 'self', id: 'crown_rage', amount: SOV.anchor_rage }] },
         ] },
-      crownlight: { name: 'Crownlight', intent: 'buff', text: 'Rage +{ai_state}: every hit of its attacks deals that much more.',
-        effects: [{ type: 'ai_state', key: 'rage', delta: 3 }] },
+      crownlight: { name: 'Crownlight', intent: 'buff', text: 'Crown Rage +{status} (at most {rage_max}): every hit of its attacks deals that much more.',
+        effects: [{ type: 'status', target: 'self', id: 'crown_rage', amount: SOV.crown }] },
       starfall: { name: 'Starfall', intent: 'attack_debuff', text: 'Deal {damage} damage {times} times. Apply {status} Exposed to you.',
-        effects: [{ type: 'damage', amount: { base: 9, scale: { ai: 'rage' } }, times: 3, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
+        effects: [{ type: 'damage', amount: { base: 9, scale: { status: 'crown_rage', of: 'self' } }, times: 3, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
     },
     chooseMove: (c) => {
       const phase = phaseOf(c);
@@ -381,20 +401,29 @@ export const BOSSES: EnemyDef[] = [
     onSpawn: watchPlayer('catalogue_watch'),
     hooks: { onHpLost: phaseHook([halfHp]) },
     moves: {
-      redact: { name: 'Redact', intent: 'debuff', text: 'Apply {status} Exposed to you. Gain {block} Block.',
-        effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'block', amount: 20 }] },
+      // Scaling attack: every Redact writes a Page, so Index Barrage grows even if you never reshuffle.
+      redact: { name: 'Redact', intent: 'debuff', text: 'Apply {status} Exposed to you. Gain {block} Block. Write {redact_pages} Page.',
+        effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'block', amount: 20 }, { type: 'custom', fn: 'write_page' }] },
       index_barrage: { name: 'Index Barrage', intent: 'attack', text: 'Deal {damage} damage {times} times ({base_hits} + one per Page).',
         effects: [{ type: 'damage', amount: 5, times: { base: ARCH.base_hits, scale: { status: 'archive_page', of: 'self' } }, target: 'target' }] },
-      footnote: { name: 'Footnote', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 18, target: 'target' }] },
+      footnote: { name: 'Footnote', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 20, target: 'target' }] },
       errata: { name: 'Errata', intent: 'attack', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 12, times: 2, target: 'target' }] },
     },
     chooseMove: (c) => {
       if (phaseOf(c) === 1) return byLast(c, { '': 'redact', footnote: 'redact', redact: 'index_barrage', index_barrage: 'footnote' }, 'redact');
       return cycleAt(c, ['redact', 'index_barrage', 'errata', 'index_barrage'], phaseTurn(c, 2));
     },
+    custom: {
+      write_page: (ctx) => {
+        const a = ownEnemy(ctx, 'Redact');
+        writePages(ctx, a, ARCH.redact_pages);
+      },
+    },
   },
   {
-    id: 'leukarch', name: 'Leukarch, the White Throne', boss: true, hp: [470, 490], icon: 'enemy_leukarch', values: LEUK,
+    id: 'leukarch', name: 'Leukarch, the White Throne', boss: true, hp: [450, 470], icon: 'enemy_leukarch', values: LEUK,
+    // Stall breaker (v2): a turtle that never makes it lose HP feeds its Might every turn.
+    spawnStatuses: { seething: LEUK.seethe },
     hooks: { onHpLost: phaseHook([(e) => e.hp <= LEUK.p2_hp, (e) => e.hp <= LEUK.p3_hp]) },
     amounts: {
       // Cilia Storm hits 3 + phase times.
@@ -409,14 +438,14 @@ export const BOSSES: EnemyDef[] = [
           then: [{ type: 'summon', enemy: 'antibody', fillTo: 3, cap: 3, withLeader: 'die' }],
           else: [{ type: 'summon', enemy: 'antibody', fillTo: 2, cap: 2, withLeader: 'die' }] }] },
       cilia_storm: { name: 'Cilia Storm', intent: 'attack', text: 'Deal {damage} damage {times} times (more hits each phase).',
-        effects: [{ type: 'damage', amount: { base: 4, scale: { ai: 'fever' } }, times: { scale: { fn: 'storm_hits' } }, target: 'target' }] },
-      engulf: { name: 'Engulf', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: { base: 24, scale: { ai: 'fever' } }, target: 'target' }] },
+        effects: [{ type: 'damage', amount: { base: 4, scale: { status: 'white_fever', of: 'self' } }, times: { scale: { fn: 'storm_hits' } }, target: 'target' }] },
+      engulf: { name: 'Engulf', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: { base: 24, scale: { status: 'white_fever', of: 'self' } }, target: 'target' }] },
       calcify: { name: 'Calcify', intent: 'defend', text: 'Gain {guard} Guard (+{guard_per} each use).',
-        effects: [{ type: 'guard', amount: { base: 20, per: 10, scale: { ai: 'calcifies' } } }, { type: 'ai_state', key: 'calcifies', delta: 1 }] },
-      consume: { name: 'Consume', intent: 'buff', text: 'Every Antibody dies. It gains {fever_per_ab} Fever per Antibody consumed; every Fever adds damage to each hit.',
+        effects: [{ type: 'guard', amount: { base: 20, per: 5, scale: { ai: 'calcifies' } } }, { type: 'ai_state', key: 'calcifies', delta: 1 }] },
+      consume: { name: 'Consume', intent: 'buff', text: 'Every Antibody dies. It gains {fever_per_ab} Fever per Antibody consumed (at most {fever_max}); every Fever adds damage to each hit.',
         effects: [{ type: 'custom', fn: 'consume' }] },
-      fever_pitch: { name: 'Fever Pitch', intent: 'defend_buff', text: 'Fever +{ai_state}. Gain {block} Block.',
-        effects: [{ type: 'ai_state', key: 'fever', delta: 3 }, { type: 'block', amount: 20 }] },
+      fever_pitch: { name: 'Fever Pitch', intent: 'defend_buff', text: 'Fever +{status} (at most {fever_max}). Gain {block} Block.',
+        effects: [{ type: 'status', target: 'self', id: 'white_fever', amount: LEUK.pitch }, { type: 'block', amount: 20 }] },
     },
     chooseMove: (c) => {
       const phase = phaseOf(c);
@@ -431,7 +460,7 @@ export const BOSSES: EnemyDef[] = [
         const abs = living(requireCombat(ctx, 'Consume'), 'antibody').filter((a) => a.leaderUid === ctx.owner);
         // A real death (Rot spreads, on-kill effects fire), like dies_with_leader.
         for (const a of abs) ctx.now([{ type: 'lose_hp', amount: a.hp, target: 'target' }], { target: a.uid });
-        if (abs.length > 0) ctx.now([{ type: 'ai_state', key: 'fever', delta: LEUK.fever_per_ab * abs.length }]);
+        if (abs.length > 0) ctx.now([{ type: 'status', target: 'self', id: 'white_fever', amount: LEUK.fever_per_ab * abs.length }]);
       },
     },
   },
@@ -462,6 +491,17 @@ export const BOSSES: EnemyDef[] = [
   },
 ];
 
+/** Summon up to n Orchid Buds, paid from the owner's Seed Bank (the cap of 4 living Buds still applies). */
+function sowFromBank(ctx: HookCtx, n: number): void {
+  const combat = requireCombat(ctx, 'Seed Bank');
+  const o = ownEnemy(ctx, 'Seed Bank');
+  const bank = o.statuses.seed_bank ?? 0; // an absent status is 0 stacks
+  const before = combat.enemies.length;
+  ctx.now([{ type: 'summon', enemy: 'orchid_bud', n: Math.min(n, bank), cap: ORCHID.cap, withLeader: 'die' }]);
+  const sown = combat.enemies.length - before;
+  if (sown > 0) ctx.now([{ type: 'status', target: 'self', id: 'seed_bank', amount: -sown }]);
+}
+
 /** Heat on the Furnace Heart, clamped to its gauge (FURNACE.heat_max). */
 function addHeat(ctx: HookCtx, furnace: EnemyState, n: number): void {
   const cur = furnace.statuses.heat ?? 0; // an absent status is 0 stacks
@@ -470,6 +510,31 @@ function addHeat(ctx: HookCtx, furnace: EnemyState, n: number): void {
 }
 
 export const BOSS_STATUSES: StatusDef[] = [
+  // --- Leukarch (Phase D: Fever made visible and capped)
+  {
+    id: 'white_fever', name: 'Fever', stacks: 'amount', decay: 'never', tick: 'never', isDebuff: false, values: LEUK, maxStacks: LEUK.fever_max,
+    text: 'Each hit of its attacks deals {stacks} more damage. It rises {fever_per_ab} per Antibody consumed and {pitch} per pitch. At most {fever_max}.',
+    icon: 'status_white_fever',
+  },
+  // --- Shared anti-stall passive (bosses and elites of every act): the stacks are the HP threshold.
+  {
+    id: 'seething', name: 'Seething', stacks: 'amount', decay: 'never', tick: 'end_own_turn', isDebuff: false, values: SEETHE,
+    text: 'At the end of its turn, if it took less than {stacks} damage since its last turn, it gains {might} Might. Hits soaked by its Block or Guard still count.',
+    hooks: {
+      // Phase D fairness: count every hit in full (its own Block turns no longer feed it), plus non-hit HP loss (Rot).
+      onDamageTaken: (ctx, info) => ctx.now([{ type: 'ai_state', key: 'seethe_lost', delta: info.amount }]),
+      onHpLost: (ctx, info) => {
+        if (!info.fromHit) ctx.now([{ type: 'ai_state', key: 'seethe_lost', delta: info.amount }]);
+      },
+      onTick: (ctx) => {
+        const e = ownEnemy(ctx, 'Seething');
+        const lost = e.aiState.seethe_lost ?? 0; // never-set aiState is 0 (engine convention)
+        ctx.now([{ type: 'ai_state', key: 'seethe_lost', set: 0 }]);
+        if (lost < ctx.stacks) ctx.now([{ type: 'status', target: 'self', id: 'might', amount: SEETHE.might }]);
+      },
+    },
+    icon: 'status_seething',
+  },
   // --- Bramble Ram
   {
     id: 'charge_meter', name: 'Charge Meter', stacks: 'flag', decay: 'never', tick: 'start_player_turn', isDebuff: false, values: RAM,
@@ -497,6 +562,12 @@ export const BOSS_STATUSES: StatusDef[] = [
   },
   // --- Mother Orchid
   {
+    // Phase D stall breaker: Sow and Full Bloom draw on a finite bank.
+    id: 'seed_bank', name: 'Seed Bank', stacks: 'amount', decay: 'never', tick: 'never', isDebuff: false, values: ORCHID,
+    text: '{stacks} Buds left to sow. Each Bud she summons spends one; once the bank is empty she sows no more. Each Nectar Feast heals {wilt} less.',
+    icon: 'status_seed_bank',
+  },
+  {
     id: 'ripening', name: 'Ripening', stacks: 'amount', decay: 'never', tick: 'never', isDebuff: false,
     text: 'Ripe in {stacks} turn(s). Then it attacks every turn.',
     icon: 'status_ripening',
@@ -504,11 +575,11 @@ export const BOSS_STATUSES: StatusDef[] = [
   // --- Grand Assembler
   {
     id: 'assembly_line', name: 'Assembly Line', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false, values: ASSEMBLER,
-    text: 'Weld adds Progress. At {ready} Progress it becomes a Welded Horror at full HP when the Weld ends.',
+    text: 'It gains {self} Progress on each of its turns, and Weld adds more. At {ready} Progress it becomes a Welded Horror at full HP, at the end of that move.',
     hooks: {
       onEnemyMoveEnd: (ctx, info) => {
         const frame = ownEnemy(ctx, 'Assembly Line');
-        if (info.uid !== frame.leaderUid || (frame.statuses.progress ?? 0) < ASSEMBLER.ready) return;
+        if ((info.uid !== frame.leaderUid && info.uid !== frame.uid) || (frame.statuses.progress ?? 0) < ASSEMBLER.ready) return;
         ctx.now([
           { type: 'status', target: 'self', id: 'progress', amount: -ASSEMBLER.ready },
           { type: 'status', target: 'self', id: 'assembly_line', amount: -1 },
@@ -568,6 +639,11 @@ export const BOSS_STATUSES: StatusDef[] = [
   },
   // --- Tether Sovereign
   {
+    id: 'crown_rage', name: 'Crown Rage', stacks: 'amount', decay: 'never', tick: 'never', isDebuff: false, values: SOV, maxStacks: SOV.rage_max,
+    text: 'Each hit of its attacks deals {stacks} more damage. Crownlight adds {crown} (phase 1); in phase 3 each Anchor Drop adds {anchor_rage}. At most {rage_max}.',
+    icon: 'status_crown_rage',
+  },
+  {
     id: 'overflow', name: 'Overflow', stacks: 'flag', decay: 'never', tick: 'start_player_turn', isDebuff: false, values: SOV,
     text: 'During your turn it loses at most {line} HP ({line3} in phase 3). The rest is stored as Overflow and lost at the end of its next turn, after its move and Rot.',
     hooks: {
@@ -607,7 +683,7 @@ export const BOSS_STATUSES: StatusDef[] = [
   // --- Star Archivist
   {
     id: 'catalogue', name: 'Catalogue', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false, values: ARCH,
-    text: 'Each time your discard pile is shuffled into your draw pile, it writes a Page (at most {cap1}; {cap2} in phase 2). Index Barrage hits {base_hits} + Pages times.',
+    text: 'Each time your discard pile is shuffled into your draw pile, and each time it Redacts, it writes a Page (at most {cap1}; {cap2} in phase 2). Index Barrage hits {base_hits} + Pages times.',
     icon: 'status_catalogue',
   },
   {
@@ -621,15 +697,19 @@ export const BOSS_STATUSES: StatusDef[] = [
     text: 'The Star Archivist writes a Page whenever your discard pile is shuffled into your draw pile.',
     hooks: {
       onShuffle: (ctx) => {
-        for (const a of living(requireCombat(ctx, 'Catalogued'), 'star_archivist')) {
-          const cap = (a.aiState.p2 ?? 0) > 0 ? ARCH.cap2 : ARCH.cap1;
-          if ((a.statuses.archive_page ?? 0) < cap) ctx.now([{ type: 'status', target: 'target', id: 'archive_page', amount: 1 }], { target: a.uid });
-        }
+        for (const a of living(requireCombat(ctx, 'Catalogued'), 'star_archivist')) writePages(ctx, a, 1);
       },
     },
     icon: 'status_catalogue_watch',
   },
 ];
+
+/** Add Pages to a Star Archivist, up to its phase cap. */
+function writePages(ctx: HookCtx, a: EnemyState, n: number): void {
+  const cap = (a.aiState.p2 ?? 0) > 0 ? ARCH.cap2 : ARCH.cap1;
+  const add = Math.min(n, cap - (a.statuses.archive_page ?? 0)); // an absent status is 0 stacks
+  if (add > 0) ctx.now([{ type: 'status', target: 'target', id: 'archive_page', amount: add }], { target: a.uid });
+}
 
 function vent(ctx: HookCtx, uid: number): void {
   const combat = requireCombat(ctx, 'Venting');

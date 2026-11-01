@@ -12,6 +12,8 @@ export const ACTIONS = [
   'confirm', 'cancel', 'endTurn', 'menu',
   'nextTarget', 'prevTarget', 'info',
   'help', 'deck', 'copy',
+  /** VIEW UPGRADE toggle (rewards, shop, deck view, Compendium). */
+  'upgradeView',
   ...CARD_SLOTS,
 ] as const;
 
@@ -35,6 +37,7 @@ export const KEY_BINDINGS: Readonly<Record<string, Action>> = {
   Slash: 'help', F1: 'help',
   KeyV: 'deck',
   KeyC: 'copy', // run summary: copy the seed
+  KeyU: 'upgradeView',
   Digit1: 'cardSlot1', Digit2: 'cardSlot2', Digit3: 'cardSlot3', Digit4: 'cardSlot4', Digit5: 'cardSlot5',
   Digit6: 'cardSlot6', Digit7: 'cardSlot7', Digit8: 'cardSlot8', Digit9: 'cardSlot9', Digit0: 'cardSlot10',
   Numpad1: 'cardSlot1', Numpad2: 'cardSlot2', Numpad3: 'cardSlot3', Numpad4: 'cardSlot4', Numpad5: 'cardSlot5',
@@ -51,17 +54,18 @@ export const PAD_BINDINGS: Readonly<Record<number, Action>> = {
   5: 'nextTarget', // RB
   8: 'help', // Back / Select
   9: 'menu', // Start
+  7: 'upgradeView', // RT
   10: 'deck', // left-stick press (L3)
   12: 'up', 13: 'down', 14: 'left', 15: 'right', // D-pad
 };
 
-export type PromptAction = 'confirm' | 'cancel' | 'endTurn' | 'menu' | 'nextTarget' | 'prevTarget' | 'info' | 'help' | 'deck';
+export type PromptAction = 'confirm' | 'cancel' | 'endTurn' | 'menu' | 'nextTarget' | 'prevTarget' | 'info' | 'help' | 'deck' | 'upgradeView';
 
 /** Human-readable prompt for an action per device (button glyph swapping in phase 2). */
 export const PROMPTS: Readonly<Record<Device, Readonly<Record<PromptAction, string>>>> = {
-  keyboard: { confirm: 'ENTER', cancel: 'ESC', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V' },
-  mouse: { confirm: 'CLICK', cancel: 'R-CLICK', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V' },
-  gamepad: { confirm: 'A', cancel: 'B', endTurn: 'X', menu: 'START', nextTarget: 'RB', prevTarget: 'LB', info: 'Y', help: 'BACK', deck: 'L3' },
+  keyboard: { confirm: 'ENTER', cancel: 'ESC', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V', upgradeView: 'U' },
+  mouse: { confirm: 'CLICK', cancel: 'R-CLICK', endTurn: 'E', menu: 'M', nextTarget: 'TAB', prevTarget: 'Q', info: 'I', help: '?', deck: 'V', upgradeView: 'U' },
+  gamepad: { confirm: 'A', cancel: 'B', endTurn: 'X', menu: 'START', nextTarget: 'RB', prevTarget: 'LB', info: 'Y', help: 'BACK', deck: 'L3', upgradeView: 'RT' },
 };
 
 /** Face-button colours (the standard-mapping layout's A/B/X/Y), as palette names for markup. */

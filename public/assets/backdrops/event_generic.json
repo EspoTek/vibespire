@@ -1,30 +1,39 @@
 {
-  "source": "raw/backdrops/event_generic-v1.png",
+  "source": "/Users/chrises/.codex/generated_images/01a189d9-b462-7220-8830-e662faedfd2e/exec-c2c5f7d7-2bb6-4367-89d8-e0ad1fa1fb08.png",
   "source_size": [
-    1536,
-    1024
+    1672,
+    941
   ],
   "crop": [
     0,
-    80,
-    1536,
-    944
+    0,
+    1672,
+    940
   ],
-  "pitch": 5.33,
+  "pitch": 6.49,
   "phase": [
-    0.511,
-    0.645
+    5.94,
+    1.687
   ],
-  "grid_score": 0.36474327868440437,
+  "grid_score": 0.25274185256307946,
   "recovered_size": [
-    288,
-    162
+    258,
+    145
   ],
   "size": [
     640,
     360
   ],
-  "colors": 17,
-  "output": "../../public/assets/backdrops/event_generic.png",
-  "preview": "../../public/assets/backdrops/event_generic@2x.png"
+  "colors": 16,
+  "output": "/Users/chrises/git/vibespire/public/assets/backdrops/event_generic.png",
+  "preview": "/Users/chrises/git/vibespire/public/assets/backdrops/event_generic@2x.png",
+  "final_cleanup": "ui_revision.py: original floor seams restored at low contrast; two distant courses; aligned perspective joints; accepted walls and calm centre preserved",
+  "recovered_size_before_cleanup": [
+    258,
+    145
+  ],
+  "construction_grid": [
+    320,
+    180
+  ]
 }

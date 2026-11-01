@@ -10,13 +10,61 @@ import {
   restOptionShardCost,
   type Action,
   type Amount,
+  type CardOffer,
   type Effect,
   type MapNode,
   type RunState,
   type SingleRng,
 } from '../../../src/engine';
 import { bestOffer, deckProfile, offerScore, skipThreshold } from './archetype';
+import { relicPriorOrNull } from './priors';
 import { effectsValue, estAmount, keepValue, upgradeGain, worstDeckCard } from './cards';
+
+/**
+ * Out-of-combat personality (sim/policies/personas.ts). GREEDY_RUN reproduces the v1 greedy bot.
+ * `draft` returns the offer index to take, or null to skip (Shard). `shopCard` values a shop card
+ * net of its price (the best one above 0 is bought).
+ */
+export interface RunPersona {
+  /** `canSkip` is false when skipping is illegal (Binding Contract). */
+  draft: (s: RunState, offers: readonly CardOffer[], canSkip: boolean) => number | null;
+  shopCard: (s: RunState, offer: CardOffer, price: number) => number;
+  /** Buy removals at shops and take removal rest options. */
+  removes: boolean;
+  /** Path model: elites are worth eliteValue at HP fraction >= eliteHp with a strong deck. */
+  eliteHp: number;
+  eliteValue: number;
+  /** Rest-site heal when the HP fraction is below this. */
+  restBelow: number;
+  /**
+   * Boss relics: 'value' (drawback model), 'always' (take the first offered), 'safe' (no drawback
+   * relics), 'measured' (the baseline counterfactual where the relic is unchanged, else the model).
+   */
+  bossRelic: 'value' | 'always' | 'safe' | 'measured';
+  /** Shop relics: 'rarity' (v1: rarest first, always buy) or 'measured' (best measured first, never a measured trap). */
+  shopRelic?: 'rarity' | 'measured';
+  /** Extra value (floors) of a relic for this persona (an engine bot's own relics), boss and shop. */
+  relicBonus?: (s: RunState, id: string) => number;
+  /** Map: pick a random next node instead of planning a path. */
+  randomPath: boolean;
+  /** Shops: relic purchases before cards. */
+  relicsFirst: boolean;
+}
+
+export const GREEDY_RUN: RunPersona = {
+  draft: (s, offers) => {
+    const { index, score } = bestOffer(s, offers);
+    return score >= skipThreshold(s) ? index : null;
+  },
+  shopCard: (s, offer, price) => offerScore(s, offer, deckProfile(s)) - price / 60 - (skipThreshold(s) + 1),
+  removes: true,
+  eliteHp: 0.7,
+  eliteValue: 10,
+  restBelow: 0.5,
+  bossRelic: 'value',
+  randomPath: false,
+  relicsFirst: true,
+};
 
 const of = <T extends Action['type']>(legal: readonly Action[], t: T): Extract<Action, { type: T }>[] =>
   legal.filter((a): a is Extract<Action, { type: T }> => a.type === t);
@@ -106,7 +154,10 @@ export function runEffectsValue(s: RunState, effects: readonly Effect[]): number
         v += e.where === 'deck' ? (3 + 1.5 * Math.min(bestUpgrade(s)?.gain ?? 0, 5)) * runAmount(s, e.n) : 2;
         break;
       case 'gain_relic':
-        v += 15;
+        // A held relic cannot be gained again (gainRelic throws). Unreachable in play for event
+        // relics, but a counterfactual grant can hold one before its event: never pick that option.
+        if (e.id !== undefined && s.player.relics.some((r) => r.id === e.id)) v -= 1000;
+        else v += 15;
         break;
       case 'gain_potion':
         v += s.player.potions.length < s.player.potionSlots ? 5 : 1;
@@ -169,7 +220,7 @@ interface PathModel {
   v: number;
 }
 
-function nodeStep(s: RunState, m: PathModel, n: MapNode, strong: boolean): void {
+function nodeStep(s: RunState, m: PathModel, n: MapNode, strong: boolean, P: RunPersona): void {
   const dmg = 0.07 + 0.02 * (s.act - 1);
   switch (n.type) {
     case 'monster':
@@ -178,14 +229,14 @@ function nodeStep(s: RunState, m: PathModel, n: MapNode, strong: boolean): void 
       m.gold += 15;
       break;
     case 'elite':
-      if (m.h >= 0.7 && strong) m.v += 10;
+      if (m.h >= P.eliteHp && strong) m.v += P.eliteValue;
       else if (m.h >= 0.5) m.v += 2;
       else m.v -= 12;
       m.h -= 0.22 + 0.02 * s.act;
       m.gold += 30;
       break;
     case 'rest':
-      if (m.h < 0.55) {
+      if (m.h < P.restBelow + 0.05) {
         m.v += 8;
         m.h += 0.3;
       } else m.v += 4;
@@ -209,22 +260,23 @@ function nodeStep(s: RunState, m: PathModel, n: MapNode, strong: boolean): void 
   if (m.h < 0.25) m.v -= (0.25 - m.h) * 60;
 }
 
-function bestPathValue(s: RunState, n: MapNode, m: PathModel, strong: boolean, depth: number): number {
+function bestPathValue(s: RunState, n: MapNode, m: PathModel, strong: boolean, depth: number, P: RunPersona): number {
   const next: PathModel = { ...m };
-  nodeStep(s, next, n, strong);
+  nodeStep(s, next, n, strong, P);
   if (n.edges.length === 0 || n.row >= 14 || depth > 16) return next.v;
   let best = -Infinity;
   for (const col of n.edges) {
     const child = getNode(s.map, { row: n.row + 1, col });
     if (child.type === 'boss') return next.v;
-    best = Math.max(best, bestPathValue(s, child, next, strong, depth + 1));
+    best = Math.max(best, bestPathValue(s, child, next, strong, depth + 1, P));
   }
   return best;
 }
 
-function chooseTravel(s: RunState, legal: readonly Action[], rng: SingleRng): Action {
+function chooseTravel(s: RunState, legal: readonly Action[], rng: SingleRng, P: RunPersona): Action {
   const travels = of(legal, 'travel');
   if (travels.length === 1) return need(travels[0], 'travel');
+  if (P.randomPath) return rng.pick(travels);
   const p = deckProfile(s);
   const strong = p.nonStarter >= 2 || s.act >= 2;
   const nodes = nextNodes(s.map, s.mapPos);
@@ -233,7 +285,7 @@ function chooseTravel(s: RunState, legal: readonly Action[], rng: SingleRng): Ac
   for (const a of travels) {
     const n = nodes.find((x) => x.row === a.to.row && x.col === a.to.col);
     if (!n) throw new Error('travel target not among next nodes');
-    const v = bestPathValue(s, n, { h: hpFrac(s), gold: s.player.gold, v: 0 }, strong, 0);
+    const v = bestPathValue(s, n, { h: hpFrac(s), gold: s.player.gold, v: 0 }, strong, 0, P);
     if (v > bestV + 1e-9) {
       bestV = v;
       best = [a];
@@ -245,7 +297,7 @@ function chooseTravel(s: RunState, legal: readonly Action[], rng: SingleRng): Ac
 // ---------------------------------------------------------------------------
 // Rooms
 
-function chooseReward(s: RunState, legal: readonly Action[]): Action {
+function chooseReward(s: RunState, legal: readonly Action[], P: RunPersona): Action {
   const r = s.reward;
   if (!r) throw new Error('reward phase without reward');
   for (const kind of ['gold', 'relic'] as const) {
@@ -255,22 +307,24 @@ function chooseReward(s: RunState, legal: readonly Action[]): Action {
   const pot = legal.find((x) => x.type === 'pick_reward' && x.kind === 'potion');
   if (pot && s.player.potions.length < s.player.potionSlots) return pot;
   if (r.cardStatus === 'pending' && r.cards.length > 0) {
-    const { index, score } = bestOffer(s, r.cards);
-    const pick = legal.find((x) => x.type === 'pick_reward' && x.kind === 'card' && x.index === index);
     const skip = legal.find((x) => x.type === 'skip_reward');
-    if (pick && (score >= skipThreshold(s) || !skip)) return pick;
+    let index = P.draft(s, r.cards, skip !== undefined);
+    if (index === null && !skip) index = bestOffer(s, r.cards).index;
+    if (index === null && skip) return skip;
+    const pick = legal.find((x) => x.type === 'pick_reward' && x.kind === 'card' && x.index === index);
+    if (pick) return pick;
     if (skip) return skip;
   }
   return need(of(legal, 'proceed')[0], 'proceed');
 }
 
-function chooseShop(s: RunState, legal: readonly Action[]): Action {
+function chooseShop(s: RunState, legal: readonly Action[], P: RunPersona): Action {
   const sh = s.shop;
   if (!sh) throw new Error('shop phase without shop');
   const deck = s.player.deck;
   const junk = deck.filter((c) => keepValue(c) < 4).length;
   const removes = of(legal, 'shop_remove');
-  if (removes.length && junk >= 2) {
+  if (P.removes && removes.length && junk >= 2) {
     const target = worstDeckCard(s, deck.filter((c) => removes.some((a) => a.uid === c.uid)));
     const shards = s.player.counters.shards ?? 0;
     const viaShard = removes.find((a) => a.uid === target.uid && a.pay === 'shard');
@@ -287,27 +341,35 @@ function chooseShop(s: RunState, legal: readonly Action[]): Action {
     if (a.kind !== 'relic') continue;
     const it = sh.relics[a.index];
     if (!it) throw new Error('shop relic index');
-    const v = rank[getRelicDef(it.id).rarity] ?? 1;
+    let v = rank[getRelicDef(it.id).rarity] ?? 1;
+    if (P.shopRelic === 'measured') {
+      const prior = relicPriorOrNull(s.classId, it.id);
+      if (prior && prior.prog < 0) continue; // a measured trap
+      v = prior ? 2 + prior.prog : v;
+    }
+    v += P.relicBonus?.(s, it.id) ?? 0;
     if (v > relicV) {
       relicV = v;
       relicBuy = a;
     }
   }
-  if (relicBuy) return relicBuy;
-  const p = deckProfile(s);
+  // An engine bot's own relic (relicBonus) is bought before cards even when relicsFirst is off.
+  const relicBuyId = relicBuy && relicBuy.type === 'shop_buy' ? sh.relics[relicBuy.index]?.id : undefined;
+  if (relicBuy && (P.relicsFirst || (relicBuyId !== undefined && (P.relicBonus?.(s, relicBuyId) ?? 0) > 0))) return relicBuy;
   let cardBuy: Action | null = null;
-  let cardV = skipThreshold(s) + 1;
+  let cardV = 0;
   for (const a of of(legal, 'shop_buy')) {
     if (a.kind !== 'card') continue;
     const it = sh.cards[a.index];
     if (!it) throw new Error('shop card index');
-    const v = offerScore(s, { id: it.id, upgraded: it.upgraded }, p) - it.price / 60;
+    const v = P.shopCard(s, { id: it.id, upgraded: it.upgraded }, it.price);
     if (v > cardV) {
       cardV = v;
       cardBuy = a;
     }
   }
   if (cardBuy) return cardBuy;
+  if (relicBuy) return relicBuy;
   if (s.player.potions.length < s.player.potionSlots) {
     const pot = of(legal, 'shop_buy').find((a) => a.kind === 'potion');
     if (pot) return pot;
@@ -315,7 +377,7 @@ function chooseShop(s: RunState, legal: readonly Action[]): Action {
   return need(of(legal, 'proceed')[0], 'proceed');
 }
 
-function chooseRest(s: RunState, legal: readonly Action[]): Action {
+function chooseRest(s: RunState, legal: readonly Action[], P: RunPersona): Action {
   const r = s.rest;
   if (!r) throw new Error('rest phase without rest');
   const frac = hpFrac(s);
@@ -327,7 +389,7 @@ function chooseRest(s: RunState, legal: readonly Action[]): Action {
   if (restA) {
     const heal = Math.min(Math.floor((s.player.maxHp * 30) / 100), s.player.maxHp - s.player.hp);
     let v = heal * 0.45;
-    if (frac < 0.5) v += 20;
+    if (frac < P.restBelow) v += 20;
     else if (bossNext && frac < 0.75) v += 15;
     options.push({ a: restA, v });
   }
@@ -340,6 +402,7 @@ function chooseRest(s: RunState, legal: readonly Action[]): Action {
     const id = r.specials[a.index];
     if (id === undefined) throw new Error('rest special index');
     const { def } = restOptionFor(s, id);
+    if (!P.removes && def.effects.some((e) => e.type === 'remove_card' || e.type === 'transmute')) continue;
     const v = runEffectsValue(s, def.effects) - shardCost * restOptionShardCost(s, def);
     options.push({ a, v });
   }
@@ -413,14 +476,32 @@ function bossRelicValue(s: RunState, id: string): number {
   return v;
 }
 
-function chooseBossRelic(s: RunState, legal: readonly Action[]): Action {
+function chooseBossRelic(s: RunState, legal: readonly Action[], P: RunPersona): Action {
   const choices = s.bossRelicChoices ?? [];
+  // 'always' takes the first relic offered; an empty offer (exhausted pool) falls through to the skip.
+  const first = of(legal, 'choose_boss_relic')[0];
+  if (P.bossRelic === 'always' && first) return first;
   let best: Action = need(of(legal, 'skip_boss_relic')[0], 'skip_boss_relic');
   let bestV = 5; // 2 Shards
+  /** 'measured': the skip (2 Shards) in floors. */
+  let bestM = 0.5;
   for (const a of of(legal, 'choose_boss_relic')) {
     const id = choices[a.index];
     if (id === undefined) throw new Error('boss relic index');
-    const v = bossRelicValue(s, id);
+    if (P.bossRelic === 'measured') {
+      // Floors of progress: the measured floor-1 counterfactual, else the drawback model rescaled.
+      const prior = relicPriorOrNull(s.classId, id);
+      const v = (prior ? prior.prog : (bossRelicValue(s, id) - 5) / 4) + (P.relicBonus?.(s, id) ?? 0);
+      if (v > bestM) {
+        bestM = v;
+        best = a;
+      }
+      continue;
+    }
+    const base = bossRelicValue(s, id);
+    // 'safe': a relic whose value the drawback model lowered is not taken.
+    const plain = getRelicDef(id).tags?.includes('energy') || getRelicDef(id).hooks?.maxEnergy !== undefined ? 12 : 6;
+    const v = P.bossRelic === 'safe' && base < plain ? -1 : base;
     if (v > bestV) {
       bestV = v;
       best = a;
@@ -458,26 +539,26 @@ function mapPotion(s: RunState, legal: readonly Action[]): Action | null {
   return null;
 }
 
-export function chooseRun(s: RunState, legal: readonly Action[], rng: SingleRng): Action {
+export function chooseRun(s: RunState, legal: readonly Action[], rng: SingleRng, P: RunPersona = GREEDY_RUN): Action {
   const pot = mapPotion(s, legal);
   if (pot) return pot;
   switch (s.phase) {
     case 'start':
       return chooseStart(s, legal);
     case 'map':
-      return chooseTravel(s, legal, rng);
+      return chooseTravel(s, legal, rng, P);
     case 'reward':
-      return chooseReward(s, legal);
+      return chooseReward(s, legal, P);
     case 'shop':
-      return chooseShop(s, legal);
+      return chooseShop(s, legal, P);
     case 'rest':
-      return chooseRest(s, legal);
+      return chooseRest(s, legal, P);
     case 'event':
       return chooseEvent(s, legal);
     case 'treasure':
       return need(of(legal, 'open_treasure')[0] ?? of(legal, 'proceed')[0], 'treasure action');
     case 'boss_reward':
-      return chooseBossRelic(s, legal);
+      return chooseBossRelic(s, legal, P);
     case 'combat':
     case 'victory':
     case 'defeat':

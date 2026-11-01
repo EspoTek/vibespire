@@ -2,13 +2,14 @@
 
 import { getCardDef } from '../content';
 import { capHit, takeBudget } from './caps';
-import { allCombatCards, emit, requireCombat, type Env } from './core';
+import { allCombatCards, emit, enqueue, liveDeckCards, requireCombat, type Env } from './core';
+import { effectItems } from './ctx';
 import { makeEffectCtx } from './ctx';
 import { nextInt, shuffleInPlace } from './rng';
 import { dispatch, foldCardCost, playerRule } from './statuses';
 import { TUNING } from './tuning';
 import { nextBeat } from './combat';
-import type { CardDef, CardFilter, CardHooks, CardId, CardInstance, CardReadCtx, CombatState, Effect, EffectCtx, ReadCtx, RunState } from './types';
+import type { CardDef, CardFilter, CardHooks, CardId, CardInstance, CardReadCtx, EffectFrame, CombatState, Effect, EffectCtx, ReadCtx, RunState } from './types';
 
 export function cardDef(card: Pick<CardInstance, 'id' | 'upgraded'>): CardDef {
   return getCardDef(card.id, card.upgraded);
@@ -38,6 +39,28 @@ export function bloomOf(card: CardInstance): number {
   return card.vars?.bloom ?? 0;
 }
 
+/** Highest real Bloom among Bloom cards in your deck (live combat copies in combat). */
+export function deckMaxBloom(state: RunState): number {
+  return Math.max(0, ...liveDeckCards(state).filter(isBloomCard).map(bloomOf));
+}
+
+/** Bloom a card's numbers and Ripe read (Rootstock: effectiveBloom hooks). Growth and caps use bloomOf. */
+export function effectiveBloomOf(state: RunState, card: CardInstance): number {
+  const own = bloomOf(card);
+  if (!state.combat || !isBloomCard(card)) return own;
+  let deckMax: number | null = null;
+  return playerRule(state, own, (m, c, a) => {
+    if (!m.effectiveBloom) return a;
+    if (deckMax === null) deckMax = deckMaxBloom(state);
+    return Math.max(a, m.effectiveBloom(c, card, own, deckMax));
+  });
+}
+
+/** Graft v2 Ripe: a Bloom card whose effective Bloom is at least TUNING.bloomRipe. */
+export function isRipe(state: RunState, card: CardInstance): boolean {
+  return isBloomCard(card) && effectiveBloomOf(state, card) >= TUNING.bloomRipe;
+}
+
 export function bloomCapFor(state: RunState, card: CardInstance): number {
   return playerRule(state, TUNING.caps.bloom, (m, c, a) => (m.bloomCap ? m.bloomCap(c, card, a) : a));
 }
@@ -55,6 +78,12 @@ export function matchesFilter(def: CardDef, f: CardFilter | undefined): boolean 
   if (f.tag !== undefined && !(def.tags ?? []).includes(f.tag)) return false;
   if (f.delay !== undefined && (def.delay !== undefined) !== f.delay) return false;
   if (f.riposte !== undefined && (def.riposte !== undefined) !== f.riposte) return false;
+  if (f.notKeyword !== undefined) {
+    const kws = Array.isArray(f.notKeyword) ? f.notKeyword : [f.notKeyword];
+    if (kws.some((k) => hasKeyword(def, k))) return false;
+  }
+  // Ripe needs the card instance; only fetch_card resolves it (it strips the field before calling here).
+  if (f.ripe !== undefined) throw new Error(`card filter 'ripe' used where only a card definition is known (${def.id})`);
   return true;
 }
 
@@ -78,11 +107,11 @@ export function getCardCost(state: RunState, card: CardInstance): number | 'X' |
 }
 
 function cardReadCtx(state: RunState, card: CardInstance): CardReadCtx {
-  return { state, combat: state.combat, card, nextBeat: () => nextBeat(state) };
+  return { state, combat: state.combat, card, nextBeat: () => nextBeat(state), isRipe: () => isRipe(state, card) };
 }
 
-/** Shards a card's top-level effects spend (negative literal `shards` amounts). */
-function shardsNeeded(effects: readonly Effect[]): number {
+/** Shards a card's top-level effects spend (negative literal `shards` amounts). Exported for RULINGS 66. */
+export function shardsNeeded(effects: readonly Effect[]): number {
   let need = 0;
   for (const e of effects) {
     if (e.type === 'shards' && typeof e.amount === 'number' && e.amount < 0) need += -e.amount;
@@ -115,6 +144,32 @@ export function canPlayCard(state: RunState, card: CardInstance): true | string 
     if (typeof r === 'string') return r;
   }
   return true;
+}
+
+/**
+ * RULINGS 66 / 73: run a non-play resolution of a card's effect list (Timeline and Schedule, Delay,
+ * autoplay, Riposte, Reprise, Total Eclipse's second run, Answer in Kind) if its Shard cost can be paid
+ * now, as the resolution starts (it is paid by the list's own `shards` effects). Otherwise nothing
+ * resolves and nothing is paid, and a text event says why. Other canPlay conditions are not re-checked:
+ * they gate playing the card from hand, not effects already under way. Every such resolution is queued as
+ * a `repeat_resolution` step so the gate sees the Shards left by everything before it.
+ * Spend N, Shed N and Strain need no gate: they never throw (ruling 33 / 48 / 62).
+ */
+export function runRepeatResolution(env: Env, st: { uid: number; list: 'effects' | 'delay' | 'riposte'; frame: EffectFrame; why: string }): void {
+  const combat = requireCombat(env.state, 'repeat resolution');
+  if (combat.outcome !== null) return;
+  const card = findCombatCard(combat, st.uid);
+  if (!card) throw new Error(`${st.why}: card ${st.uid} is nowhere in combat`);
+  const def = cardDef(card);
+  const effects = st.list === 'effects' ? def.effects : st.list === 'delay' ? def.delay?.effects : def.riposte;
+  if (!effects) throw new Error(`${st.why}: ${card.id} has no ${st.list} list`);
+  const need = shardsNeeded(effects);
+  const have = env.state.player.counters.shards ?? 0; // the engine keeps the counter; 0 before any Shard
+  if (need > have) {
+    emit(env, { t: 'text', text: `${def.name}: ${st.why} skipped (needs ${need} Shard${need === 1 ? '' : 's'}).` });
+    return;
+  }
+  enqueue(env, effectItems(effects, st.frame));
 }
 
 /** uids of cards in hand that can be played right now. */
@@ -200,17 +255,61 @@ export function discardFromHand(env: Env, uids: readonly number[]): void {
   for (const c of cards) runCardHook(env, c, 'onDiscard');
 }
 
-export function exhaustCards(env: Env, from: 'hand' | 'discard' | 'draw' | 'inPlay', uids: readonly number[]): void {
+/**
+ * Scrap cards. RULINGS 72: Scrap never takes your combat deck (draw + discard + hand, plus cards in play,
+ * which would return to the discard pile) below TUNING.caps.scrapFloor. Cards past the floor are not
+ * Scrapped: they stay where they are (a resolving card goes to the discard pile instead) and a text event
+ * says why. Returns the uids actually Scrapped, in order.
+ */
+export function exhaustCards(env: Env, from: 'hand' | 'discard' | 'draw' | 'inPlay', uids: readonly number[]): number[] {
   const combat = requireCombat(env.state, 'exhaust');
-  if (uids.length === 0) return;
+  if (uids.length === 0) return [];
   const pile = pileOf(combat, from);
-  const cards = uids.map((uid) => takeFrom(pile, uid, from));
+  const deckNow = combat.draw.length + combat.discard.length + combat.hand.length + combat.inPlay.length;
+  const room = Math.max(0, deckNow - TUNING.caps.scrapFloor);
+  const allowed = uids.slice(0, room);
+  const blocked = uids.slice(room);
+  if (blocked.length > 0) {
+    const kept = blocked.map((uid) => {
+      const card = pile.find((c) => c.uid === uid);
+      if (!card) throw new Error(`scrap floor: card ${uid} not in ${from}`);
+      return card;
+    });
+    if (from === 'inPlay') {
+      for (const uid of blocked) combat.discard.push(takeFrom(pile, uid, from));
+      emit(env, { t: 'discard', uids: [...blocked] });
+    }
+    emit(env, { t: 'text', text: `Scrap floor: your combat deck can't go below ${TUNING.caps.scrapFloor} cards (${kept.map((c) => cardDef(c).name).join(', ')} not Scrapped).` });
+    // Phase F: a card the floor keeps still Salvages (it was spent; it just isn't removed). No onExhaust /
+    // onCardExhausted: Scrap payoffs (Salvage Kiln, Ash Wick, ...) count only real Scraps.
+    for (const c of kept) queueSalvage(env, c);
+  }
+  if (allowed.length === 0) return [];
+  const cards = allowed.map((uid) => takeFrom(pile, uid, from));
   combat.exhaust.push(...cards);
-  emit(env, { t: 'exhaust', uids: [...uids] });
+  emit(env, { t: 'exhaust', uids: [...allowed] });
   for (const c of cards) {
     runCardHook(env, c, 'onExhaust');
     dispatch(env, 'onCardExhausted', 'player', { card: c });
+    queueSalvage(env, c);
   }
+  return allowed;
+}
+
+/**
+ * Salvage (shared v2 H2): a Scrapped card runs its `salvage` list (not a play). During your turn-end steps
+ * its draw / energy go to the next-turn bank (RULINGS 63); in the enemy phase the draw / energy effects bank
+ * by themselves. Combat-end Scraps don't happen (cards just return with the deck).
+ */
+function queueSalvage(env: Env, card: CardInstance): void {
+  const combat = requireCombat(env.state, 'salvage');
+  const list = cardDef(card).salvage;
+  if (!list || list.length === 0 || combat.outcome !== null) return;
+  const offTurn = combat.counters.turnEnding === 1;
+  const effects = offTurn ? list.map((e): Effect => (e.type === 'draw' || e.type === 'energy' ? { ...e, nextTurn: true } : e)) : list;
+  emit(env, { t: 'salvage', cardUid: card.uid });
+  emit(env, { t: 'text', text: `${cardDef(card).name}: Salvage.` });
+  enqueue(env, effects.map((effect) => ({ kind: 'effect' as const, effect, frame: { src: { kind: 'card' as const, uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player' as const, target: null, x: 0 } })));
 }
 
 export function pileOf(combat: CombatState, from: 'hand' | 'discard' | 'draw' | 'exhaust' | 'inPlay'): CardInstance[] {

@@ -24,6 +24,8 @@ export interface ChoiceRowOptions {
   /** Icon centred at the top with the text below it (narrow shop boxes); default: icon at the left. */
   iconTop?: boolean;
   font?: 'ui' | 'small';
+  /** Integer scale of the icon (boss relics: 2). */
+  iconScale?: 1 | 2;
 }
 
 /** A focusable PS box with wrapped text: pacts, rest options, event options, shop services. */
@@ -37,12 +39,14 @@ export class ChoiceRow extends Widget {
     this.focusable = true;
     this.disabledReason = opts.reason ?? null;
     this.panel = this.addChild(new Panel(rect(r.x, r.y, r.w, r.h)), 0);
-    const iconF = opts.icon ? opts.icon.atlas.frame(opts.icon.frame) : null;
+    const sc = opts.iconScale ?? 1;
+    const raw = opts.icon ? opts.icon.atlas.frame(opts.icon.frame) : null;
+    const iconF = raw ? { w: raw.w * sc, h: raw.h * sc } : null;
     const top = opts.iconTop === true && iconF !== null;
     const ix = iconF && !top ? r.x + 12 + iconF.w : top ? r.x + 5 : r.x + 8;
     if (opts.icon && iconF) {
       const at = top ? { x: r.x + Math.floor((r.w - iconF.w) / 2), y: r.y + 4 } : { x: r.x + 7, y: r.y + Math.floor((r.h - iconF.h) / 2) };
-      this.addChild(new Icon(at.x, at.y, opts.icon.atlas, opts.icon.frame), 2);
+      this.addChild(new Icon(at.x, at.y, opts.icon.atlas, opts.icon.frame, sc), 2);
     }
     const font = opts.font === 'small' ? fonts.small : fonts.ui;
     this.body = this.addChild(new Label(ix, top && iconF ? r.y + 7 + iconF.h : r.y + 6, opts.text, {
@@ -53,6 +57,7 @@ export class ChoiceRow extends Widget {
     if (this.disabledReason) this.addChild(new Label(ix, r.y + r.h - 11, this.disabledReason, { font: fonts.small, color: C.pink, maxWidth: r.w - 16 }), 2);
     const plain = opts.text.replace(/\[[^\]]*\]/g, '');
     this.label = this.disabledReason ? `${plain.replace(/\.\s*$/, '')}. Unavailable: ${this.disabledReason}` : plain;
+    this.keywordText = opts.text; // InfoLayer boxes the glossary terms the row uses
   }
 
   /** Height needed for `text` in a row of width `w`. */

@@ -74,6 +74,10 @@ export type Phase =
   | 'victory'
   | 'defeat';
 
+/** Ruling 71: Standard (default) and Heroic (enemies have more HP). */
+export type Difficulty = 'standard' | 'heroic';
+export const DIFFICULTIES: readonly Difficulty[] = ['standard', 'heroic'];
+
 export interface RunState {
   version: number;
   seed: string;
@@ -82,6 +86,8 @@ export interface RunState {
   act: Act;
   /** Ascent level 0-10 (GDD §4.12). Levers are data in TUNING.ascent; only 0 is played today. */
   ascent: number;
+  /** Difficulty tier chosen at run start (ruling 71): its levers are TUNING.difficulty[tier]. */
+  difficulty: Difficulty;
   /** Counts up across the whole run. 0 = before the first node. */
   floor: number;
   phase: Phase;
@@ -239,6 +245,10 @@ export interface TimelineEntry {
   target: EntityRef | null;
   x: number;
   advancedThisTurn: boolean;
+  /** Chronist v2 Schedule: a non-Delay card put here by `schedule`; it resolves its `effects` (not `delay.effects`). */
+  scheduled?: boolean;
+  /** Chronist v2: 1-based beat index stamped at play time (0/absent = not on the beat). Scale 'beat_index'. */
+  beatIndex?: number;
 }
 
 export type CombatKind = 'monster' | 'elite' | 'boss' | 'event';
@@ -264,7 +274,12 @@ export type CombatCounterKey =
   | 'plays'
   | 'bestCardDamage'
   | 'riposteThisMove'
-  | 'moveDamageStart';
+  | 'moveDamageStart'
+  /** Chronist v2 (per turn): Timeline cards re-added by the recurDelay modifier this turn (Eternal Return). */
+  | 'recurs'
+  /** Next-turn bank (Breaker v2): cards drawn / energy gained at the start of the player's next turn. */
+  | 'bankDraw'
+  | 'bankEnergy';
 
 export interface CombatState {
   encounterId: EncounterId;
@@ -307,8 +322,11 @@ export interface CombatState {
   reducedThisTurn: number[];
   /** cap_relay: uids that resolved from the Timeline this turn. */
   resolvedThisTurn: number[];
-  /** The last Prune that Scrapped a card (pruned_type condition). */
-  lastPrune: { uid: number; cardId: CardId; type: CardType } | null;
+  /**
+   * The last Prune that Scrapped a card (pruned_type condition). `types`: every card type that Prune
+   * Scrapped (Clear-Cut lets one Prune Scrap several; absent = just `type`).
+   */
+  lastPrune: { uid: number; cardId: CardId; type: CardType; types?: CardType[] } | null;
   /** HP the player lost this combat. */
   damageTaken: number;
   /** Engine-owned keys: see CombatCounterKey. Content may add its own keys. */
@@ -394,6 +412,10 @@ export interface EffectFrame {
   hits?: number;
   /** spend_status: stacks spent (scale 'spent'). */
   spent?: number;
+  /** shed: Guard Shed (scale 'shed'). */
+  shed?: number;
+  /** Shared v2: exhaust `then` list: cards actually Scrapped (scale 'scrapped'). */
+  scrapped?: number;
   /** The play (or stamped Timeline entry) is on the beat. */
   onBeat?: boolean;
   /** Resolving from the Timeline (damage/block info gets tag 'delayed'). */
@@ -402,6 +424,10 @@ export interface EffectFrame {
   riposte?: boolean;
   /** Play depth: 0 = played from hand by the player, 1 = played by a depth-0 card's effect, ... */
   depth?: number;
+  /** Chronist v2: 1-based index of this play's beat among the beat positions (scale 'beat_index'; Crescendo). */
+  beatIndex?: number;
+  /** Chronist v2: other cards resolving from the Timeline in the same batch (scale 'chorus'). */
+  chorus?: number;
 }
 
 export type TurnStep =
@@ -409,7 +435,8 @@ export type TurnStep =
   | { op: 'combat_intents' }
   | { op: 'player_turn_start' }
   | { op: 'timeline_resolve' }
-  | { op: 'timeline_entry'; seq: number }
+  /** batch = entries made due by the same dueEntrySteps call (Chorus counts the others). */
+  | { op: 'timeline_entry'; seq: number; batch?: number }
   | { op: 'player_draw' }
   | { op: 'player_turn_end' }
   | { op: 'prime' }
@@ -434,12 +461,42 @@ export type TurnStep =
   | { op: 'next_act' }
   | { op: 'start_boon_done' }
   | { op: 'event_option_done'; next: string | null }
-  | { op: 'transmute_offer'; uid: number; offers: number; rarity: CardRarity | null; upgrade: boolean };
+  | { op: 'transmute_offer'; uid: number; offers: number; rarity: CardRarity | null; upgrade: boolean }
+  /** Shared v2 H4 Reprise: run a played card's effects a second time (dead target → leftmost living enemy). */
+  | { op: 'reprise_card'; uid: number; target: EntityRef | null; x: number; onBeat: boolean; depth: number; beatIndex: number }
+  /**
+   * RULINGS 66: a repeat (or non-play) resolution of a card's effect list (Reprise, Total Eclipse's second
+   * run, Answer in Kind's played list). It pays the list's Shard cost again; if that can't be paid in full
+   * when the step runs, the whole resolution is skipped (text event). list: 'effects' = def.effects,
+   * 'delay' = def.delay.effects.
+   */
+  /** RULINGS 66/73: every non-play resolution of a card's list (Timeline, Schedule, autoplay, Riposte, repeats) goes through the Shard gate here. */
+  | { op: 'repeat_resolution'; uid: number; list: 'effects' | 'delay' | 'riposte'; frame: EffectFrame; why: string }
+  /** Shared v2 H6: onHandEndOfTurn listeners (between the in-hand card hooks and the discard). */
+  | { op: 'hand_end_relics' };
 
 export type QueueItem =
   | { kind: 'effect'; effect: Effect; frame: EffectFrame }
   /** Moves a resolving card on: played → discard/Scrapheap/Timeline; riposte → discard/Scrapheap/back to rack; timeline → discard/Scrapheap. */
-  | { kind: 'finish_card'; uid: number; target: EntityRef | null; via: 'play' | 'riposte' | 'timeline'; onBeat: boolean; depth: number; x: number }
+  | {
+      kind: 'finish_card';
+      uid: number;
+      target: EntityRef | null;
+      via: 'play' | 'riposte' | 'timeline';
+      onBeat: boolean;
+      depth: number;
+      x: number;
+      /** Chronist v2: beat index of the play (stamped onto the Timeline entry). */
+      beatIndex?: number;
+      /** Chronist v2: via 'timeline' only: the entry was Scheduled (kept if it recurs). */
+      scheduled?: boolean;
+      /** Chronist v2: via 'timeline' only: how many times it resolved (onDelayResolved fires once per run). Default 1. */
+      runs?: number;
+      /** Shared v2: via 'timeline' only: the size of the batch it resolved in (onDelayResolved info). */
+      batch?: number;
+      /** Shared v2 H7: via 'play' only: the effects were not run; the card goes on the Timeline as a scheduled entry with this Delay. */
+      delayPlay?: number;
+    }
   | { kind: 'step'; step: TurnStep };
 
 export interface PruneSpec {
@@ -471,7 +528,15 @@ export type ChoiceResume =
   | { op: 'lose_potion' }
   | { op: 'lose_relic'; ids: RelicId[] }
   /** Full potion slots: choose a held potion to discard for `potion`, or the last option to leave it. */
-  | { op: 'potion_swap'; potion: PotionId };
+  | { op: 'potion_swap'; potion: PotionId }
+  /** Chronist v2 Schedule: the chosen hand card goes on the Timeline (stamped target). */
+  | { op: 'schedule'; turns: number; target: EntityRef | null }
+  /** Shared v2: exhaust with a `then` list (scale 'scrapped'). */
+  | { op: 'exhaust_then'; from: 'hand' | 'discard'; then: Effect[]; frame: EffectFrame }
+  /** Shared v2 Triage: the chosen hand cards are kept this turn; every other non-Keep hand card is Scrapped. */
+  | { op: 'triage' }
+  /** Shared v2 copy_card: a copy of the chosen hand card is added to the hand. */
+  | { op: 'copy_card'; costThisTurn: number | null };
 
 export interface PendingChoice {
   /** cards: pick card uids; options: pick an option index; offers: pick an index into `offers`. */
@@ -485,9 +550,15 @@ export interface PendingChoice {
   labels: string[];
   /** For 'offers': the cards on offer (choices are indices into this). */
   offers: CardOffer[];
-  /** resolve_choice.uids must be a subset of `choices`, in `choices` order, of size min..max. */
+  /**
+   * Single-pick (max <= 1): resolve_choice.uids is [] or one choice. Multi-pick (max > 1): the answer is
+   * built one choice at a time with choice_toggle (into `picked`), then resolve_choice confirms it with
+   * uids = picked. Enumerating every subset exploded (e.g. 3 of 33 cards is 5,456 answers).
+   */
   min: number;
   max: number;
+  /** Multi-pick selection so far, in `choices` order (always [] for single-pick choices). */
+  picked: number[];
   resume: ChoiceResume;
 }
 
@@ -606,6 +677,8 @@ export type Action =
   | { type: 'use_potion'; index: number; target?: number }
   | { type: 'end_turn' }
   | { type: 'resolve_choice'; uids: number[] }
+  /** Multi-pick choices (max > 1): select / deselect one choice; resolve_choice then confirms `picked`. */
+  | { type: 'choice_toggle'; uid: number }
   | { type: 'pick_reward'; kind: 'card' | 'gold' | 'potion' | 'relic'; index?: number }
   | { type: 'skip_reward'; kind: 'card' }
   | { type: 'proceed' }
@@ -647,6 +720,10 @@ export type GameEvent =
   | { t: 'block'; target: EntityRef; amount: number; pool: 'block' | 'guard' }
   | { t: 'block_lost'; target: EntityRef; amount: number }
   | { t: 'guard_decay'; target: EntityRef; lost: number; now: number }
+  /** Breaker v2: Guard spent by a Shed clause (not damage, not halving). */
+  | { t: 'guard_shed'; target: EntityRef; amount: number; now: number }
+  /** Draw / energy banked for the start of the player's next turn (totals now banked). */
+  | { t: 'next_turn_bank'; draw: number; energy: number }
   | { t: 'heal'; target: EntityRef; amount: number }
   | { t: 'max_hp'; delta: number; now: number }
   | { t: 'status'; target: EntityRef; status: StatusId; delta: number; now: number }
@@ -669,7 +746,20 @@ export type GameEvent =
   | { t: 'timeline_added'; uid: number; dueTurn: number; onBeat: boolean }
   | { t: 'timeline_shifted'; delta: number }
   | { t: 'timeline_resolved'; uid: number }
-  | { t: 'bloom'; uid: number; delta: number; now: number }
+  /** Chronist v2 Gather: every Timeline entry now resolves on dueTurn. */
+  | { t: 'timeline_gathered'; dueTurn: number }
+  /** Chronist v2 Quicken: the beat count jumped by delta (now = the beat count after it). */
+  | { t: 'beat_shift'; delta: number; now: number }
+  /** spill: Graft v2 Spill (RULINGS 51) moved this Bloom here from a card that couldn't hold it. */
+  | { t: 'bloom'; uid: number; delta: number; now: number; spill?: true }
+  /** Breaker v2: Embers converted at the player's turn start (the Onslaught gain follows as a status event). */
+  | { t: 'embers_converted'; amount: number }
+  /** Graft v2 Harvest: `rot` Rot was harvested from enemyUid for `loss` HP (emitted after the HP loss). */
+  | { t: 'harvest'; enemyUid: number; rot: number; loss: number }
+  /** Shared v2 Salvage: a Scrapped card's Salvage is about to resolve. */
+  | { t: 'salvage'; cardUid: number }
+  /** Shared v2 Reprise: a played card's effects are about to resolve a second time. */
+  | { t: 'reprise'; cardUid: number }
   | { t: 'shards'; delta: number; now: number }
   | { t: 'cap_hit'; cap: string }
   | { t: 'relic_trigger'; relic: RelicId }
@@ -735,11 +825,23 @@ export type AmountScale =
   /** Run deck size (incl. cards on the Timeline / primed rack / Scrapheap). */
   | 'deck_size'
   | 'timeline_count'
+  /** Chronist v2 Chorus: other cards resolving in the same Timeline batch (preview: entries due on the same turn). */
+  | 'chorus'
+  /** Chronist v2 Crescendo: which beat this play is (1st/2nd/3rd...), 0 when not on the beat. */
+  | 'beat_index'
   | 'primed_count'
   /** Riposte: hits of the triggering attack. */
   | 'trigger_hits'
   /** spend_status: stacks spent. */
   | 'spent'
+  /** shed: Guard Shed. */
+  | 'shed'
+  /** Shared v2: inside an exhaust `then` list: cards actually Scrapped. */
+  | 'scrapped'
+  /** Shared v2: HP you have Strained this combat (combat.counters.strained). */
+  | 'strained_this_combat'
+  /** The player's unspent energy right now. */
+  | 'energy'
   | 'bloom_cards_in_deck'
   | 'bloom_total_in_deck'
   | 'bloom_max_in_deck'
@@ -794,6 +896,8 @@ export type Condition =
   /** The source card's run-deck copy is gone (after `remove_card {self}`; false if a cap stopped the removal). */
   | { type: 'removed_self' }
   | { type: 'is_class'; cls: ClassId }
+  /** Graft v2: the source card is Ripe (effective Bloom >= TUNING.bloomRipe). */
+  | { type: 'ripe' }
   | { type: 'not'; cond: Condition }
   | { type: 'all'; conds: Condition[] }
   | { type: 'any'; conds: Condition[] }
@@ -816,6 +920,10 @@ export interface CardFilter {
   /** Has a `delay` block / a `riposte` list. */
   delay?: boolean;
   riposte?: boolean;
+  /** Shared v2: has none of these keywords (e.g. not Keep cards). */
+  notKeyword?: Keyword | Keyword[];
+  /** Shared v2 (Trellis): is Ripe. Needs the card instance, so only fetch_card honours it; matchesFilter throws. */
+  ripe?: boolean;
 }
 
 export interface GambleOutcome {
@@ -827,16 +935,35 @@ export interface GambleOutcome {
 
 /** `key` overrides the text placeholder name for the effect's value (see text.ts). */
 export type Effect =
-  | { type: 'damage'; amount: Amount; times?: Amount; target: TargetSpec; ignoreBlock?: boolean; tags?: string[]; key?: string }
+  /** perTarget (Chronist v2): with several targets, resolve `amount` once per hit enemy, with it as the frame target. */
+  | { type: 'damage'; amount: Amount; times?: Amount; target: TargetSpec; ignoreBlock?: boolean; tags?: string[]; key?: string; perTarget?: boolean }
   | { type: 'block'; amount: Amount; target?: 'self' | 'all_allies'; key?: string }
   | { type: 'guard'; amount: Amount; target?: 'self' | 'all_allies'; key?: string }
-  | { type: 'draw'; n: Amount; key?: string }
+  /** nextTurn: bank the draw for the start of the player's next turn (draws outside the player's turn always bank). */
+  | { type: 'draw'; n: Amount; nextTurn?: boolean; key?: string }
   /** Exactly one of random / choose / all. */
   | { type: 'discard'; n?: Amount; random?: boolean; choose?: boolean; all?: boolean; key?: string }
   /** Exactly one of random / choose / all / self (self = this card from hand, e.g. a status card's own hook). */
-  | { type: 'exhaust'; n?: Amount; from: 'hand' | 'discard'; random?: boolean; choose?: boolean; all?: boolean; self?: boolean; key?: string }
-  | { type: 'energy'; n: Amount; key?: string }
-  | { type: 'status'; target: TargetSpec; id: StatusId; amount: Amount; key?: string }
+  | {
+      type: 'exhaust';
+      n?: Amount;
+      from: 'hand' | 'discard';
+      random?: boolean;
+      choose?: boolean;
+      all?: boolean;
+      self?: boolean;
+      /** Shared v2: only cards matching this filter are candidates (random / choose / all). */
+      filter?: CardFilter;
+      /** Shared v2: with choose, the player may Scrap fewer (min 0). */
+      upTo?: boolean;
+      /** Shared v2: run after the Scrap with scale 'scrapped' = cards actually Scrapped (Strip for Parts, Kiln Salts). */
+      then?: Effect[];
+      key?: string;
+    }
+  /** nextTurn: bank the energy for the player's next turn (gains outside the player's turn always bank). */
+  | { type: 'energy'; n: Amount; nextTurn?: boolean; key?: string }
+  /** perTarget (shared v2, like damage's): with several targets, resolve `amount` once per target, with it as the frame target. */
+  | { type: 'status'; target: TargetSpec; id: StatusId; amount: Amount; key?: string; perTarget?: boolean }
   | { type: 'heal'; amount: Amount; target?: TargetSpec; key?: string }
   | { type: 'lose_hp'; amount: Amount; target?: TargetSpec; key?: string }
   | { type: 'max_hp'; amount: Amount; key?: string }
@@ -849,6 +976,8 @@ export type Effect =
       costThisTurn?: number;
       /** For 'draw': default 'random'. */
       position?: 'top' | 'random';
+      /** Graft v2 (Propagate): only with to 'deck': the new deck copy starts with this much Bloom (clamped to its cap). */
+      bloom?: Amount;
       key?: string;
     }
   /** 'hand' + choose: pick; 'hand' without choose: random upgradable; 'all_hand': all; 'deck' (permanent): choose or random. */
@@ -888,6 +1017,12 @@ export type Effect =
   // --- GDD §9.8
   /** n: if self has >= n stacks, lose n and run effects (else skip). 'all': lose all and run effects, even with 0 (RULINGS 33). Scale 'spent' = stacks lost. */
   | { type: 'spend_status'; id: StatusId; n: number | 'all'; effects: Effect[]; key?: string }
+  /**
+   * Breaker v2 Shed (player only). n: if your Guard >= n, lose n Guard and run effects, else skip.
+   * 'all': lose all your Guard and run effects, even with 0. Scale 'shed' = Guard lost. A Shed of
+   * more than 0 emits guard_shed and fires onGuardShed. Not damage and not halving.
+   */
+  | { type: 'shed'; n: number | 'all'; effects: Effect[]; key?: string }
   /** Bloom (GDD §2.4): grow Bloom cards. Capped per copy (TUNING.caps.bloom, bloomCap modifier). */
   | {
       type: 'bloom';
@@ -907,7 +1042,8 @@ export type Effect =
   | {
       type: 'fetch_card';
       from: 'draw' | 'discard' | 'exhaust';
-      select: 'top' | 'random' | 'choose' | 'max_bloom' | 'min_bloom';
+      /** max_cost (shared v2): highest printed numeric cost (X and unplayable count as 0); ties random ('misc'). */
+      select: 'top' | 'random' | 'choose' | 'max_bloom' | 'min_bloom' | 'max_cost';
       to: 'hand' | 'draw_top' | 'primed';
       n?: Amount;
       /** With select 'choose': allow choosing fewer (min 0). */
@@ -916,8 +1052,15 @@ export type Effect =
       costThisTurn?: number;
       /** Counts toward cap_draw instead of cap_to_hand. */
       countsAsDraw?: boolean;
+      /** Graft v2: only this card instance is a candidate (Perennial, Second Flush). */
+      uid?: number;
       key?: string;
     }
+  /**
+   * Graft v2 Harvest N: each target loses HP equal to mult × its Rot, then (if alive) its Rot is halved,
+   * round down. HP loss: no hit, Block/Guard don't help. A kill spreads the full stack (RULINGS 53).
+   */
+  | { type: 'harvest'; mult: Amount; target: TargetSpec; key?: string }
   /** Shards (run currency, cap TUNING.shards.cap). Negative spends; going below 0 throws (gate with `available`). */
   | { type: 'shards'; amount: Amount; key?: string }
   /** Transmute (GDD §4.8): choose deck card(s), then pick 1 of `offers` same-rarity class cards for each. */
@@ -943,6 +1086,18 @@ export type Effect =
   | { type: 'run_flag'; key: string; delta: number }
   /** Play cards for free at depth + 1 (from the top of the draw pile, or a random hand card). */
   | { type: 'autoplay'; from: 'draw' | 'hand'; n?: Amount; key?: string }
+  // --- Shared v2 (docs/v2/shared-design.md §7)
+  /**
+   * Strain N (H1): the player loses N HP (not a hit; Block and Guard don't help), but never below 1 HP
+   * (RULINGS 62). Adds the HP actually lost to combat.counters.strained and fires onStrain when > 0.
+   */
+  | { type: 'strain'; amount: Amount; key?: string }
+  /** Triage (H6): choose up to `keep` hand cards (not Keep cards) to keep this turn; every other non-Keep hand card is Scrapped. */
+  | { type: 'triage'; keep: number; key?: string }
+  /** H17: choose a card in hand; a combat-only copy of it is added to your hand (cap_to_hand), costing costThisTurn this turn. */
+  | { type: 'copy_card'; costThisTurn?: number; key?: string }
+  /** H19: n random cards from the class (or colourless) reward pool, filtered; combat-only created cards (to hand: cap_to_hand). */
+  | { type: 'add_random_card'; pool: 'class' | 'colorless'; filter?: CardFilter; to: 'hand' | 'draw' | 'discard'; n?: Amount; costThisTurn?: number; key?: string }
   // --- ENEMIES §5
   /** Summon minions led by self (appended; they act from the next enemy phase). n, or fillTo living of this id; cap = max living minions of self. */
   | { type: 'summon'; enemy: EnemyId; n?: number; fillTo?: number; cap?: number; withLeader?: 'die' | 'flee' }
@@ -961,7 +1116,14 @@ export type Effect =
   /** Prime up to n Riposte cards from hand now, beyond this turn's capacity (choice, min 0, when more than n are in hand; the rack holds at most TUNING.caps.primeCapacity). */
   | { type: 'prime'; n?: number }
   /** Cancel the enemy attack currently being declared (Riposte lists / onEnemyAttackDeclared only). */
-  | { type: 'cancel_attack' };
+  | { type: 'cancel_attack' }
+  // --- Chronist v2
+  /** Gather: every Timeline entry's dueTurn becomes the latest dueTurn (only ever delays). */
+  | { type: 'gather' }
+  /** Quicken n: add n (>= 1) to this turn's beat count (combat.counters.beatOffset). Not a play. */
+  | { type: 'quicken'; n: number; key?: string }
+  /** Schedule: choose a hand Attack/Skill without Delay (numeric cost, playable) and put it on the Timeline for `turns`; it resolves its `effects` for free. */
+  | { type: 'schedule'; turns: number; key?: string };
 
 export type EffectType = Effect['type'];
 
@@ -1013,6 +1175,8 @@ export interface HookCtx extends ReadCtx {
    * Throws if the owner is not a living enemy or the move does not exist.
    */
   setIntent(moveId: string): void;
+  /** Graft v2: is this Bloom card Ripe right now (effective Bloom >= TUNING.bloomRipe)? */
+  isRipe(card: CardInstance): boolean;
 }
 
 /** Context for `custom` effect functions. */
@@ -1060,6 +1224,8 @@ export interface EnemyAiCtx {
 export interface CardReadCtx extends ReadCtx {
   readonly card: CardInstance;
   nextBeat(): BeatInfo;
+  /** Graft v2: is this card Ripe right now (effective Bloom >= TUNING.bloomRipe)? */
+  isRipe(): boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -1087,6 +1253,8 @@ export interface DamageResult {
   readonly blocked: number;
   readonly guarded: number;
   readonly hpLost: number;
+  /** Shared v2 H5: damage the attacker's Stagger removed from this hit (pipeline step 4). */
+  readonly staggerPrevented: number;
 }
 
 export interface CardPlayedInfo {
@@ -1095,6 +1263,16 @@ export interface CardPlayedInfo {
   readonly target: EntityRef | null;
   readonly onBeat: boolean;
   readonly depth: number;
+  /** X of the play (X-cost cards: energy spent + Reserve; others 0). Shared v2 H12. */
+  readonly x: number;
+}
+
+/** Shared v2 H4: what grantsReprise sees about a play (at pay-cost time, before its effects). */
+export interface RepriseInfo extends CardPlayedInfo {
+  /** Energy actually paid (X cards: X). Free plays: 0. */
+  readonly costPaid: number;
+  /** The hand was empty once this card left it (Echo Bell). */
+  readonly handEmpty: boolean;
 }
 
 export type NoInfo = Record<string, never>;
@@ -1124,6 +1302,8 @@ export interface HookInfoMap {
   onDeath: NoInfo;
   /** Any stack change on the entity (apply, decay, removal); delta may be negative. */
   onStatusChanged: { readonly target: EntityRef; readonly id: StatusId; readonly delta: number };
+  /** Chronist v2 (player-scoped): a player-sourced `status` effect raised an enemy's stacks by `amount` (> 0). Trigger target = that enemy. */
+  onStatusInflicted: { readonly target: number; readonly id: StatusId; readonly amount: number };
   onEnemySpawn: { readonly uid: number };
   onEnemyAttackDeclared: { readonly uid: number; readonly intent: Intent };
   onRiposteTriggered: { readonly card: CardInstance; readonly attacker: number };
@@ -1131,10 +1311,32 @@ export interface HookInfoMap {
   onEnemyMoveEnd: { readonly uid: number; readonly moveId: string; readonly wasAttack: boolean; readonly hpLostThisMove: number };
   onPrune: { readonly scrapped: CardInstance };
   onBloomGained: { readonly card: CardInstance; readonly delta: number };
-  onDelayResolved: { readonly card: CardInstance };
+  /** Graft v2: a copy's real Bloom reached TUNING.bloomRipe (fires once per crossing). */
+  onRipe: { readonly card: CardInstance };
+  /** Graft v2: a Harvest resolved on an enemy that had Rot. rot = the stack before halving. */
+  onHarvest: { readonly uid: number; readonly rot: number; readonly hpLost: number };
+  /** batch = entries resolving in the same Timeline batch (turn start, or one Advance); shared v2 Astrolabe. */
+  onDelayResolved: { readonly card: CardInstance; readonly batch: number };
+  // --- Shared v2 (docs/v2/shared-design.md §7)
+  /** H1: the player Strained (amount = HP actually lost, > 0). */
+  onStrain: { readonly amount: number };
+  /** H10: a primed card fizzled at player turn start step 2. */
+  onPrimeFizzled: { readonly card: CardInstance };
+  /** H9: the player's Block reset at turn start (lost = Block removed, > 0). */
+  onBlockReset: { readonly lost: number };
+  /** H6: player turn end, after the prime step and the in-hand card hooks, before the hand is discarded. */
+  onHandEndOfTurn: NoInfo;
+  /** H20: an enemy's attack was cancelled (it died to a Riposte, or cancel_attack). */
+  onAttackCancelled: { readonly uid: number };
+  /** H20: a halted enemy skipped its move. */
+  onMoveSkipped: { readonly uid: number };
   /** onBeat = the entry's stamped on-beat flag (also stamped on trigger frames, so `on_beat` works). */
   onTimelineAdd: { readonly entry: TimelineEntry; readonly onBeat: boolean };
   onPotionUsed: { readonly potion: PotionId };
+  /** Breaker v2: a spend_status removed `amount` (> 0) stacks of `id` from this entity. */
+  onStatusSpent: { readonly id: StatusId; readonly amount: number };
+  /** Breaker v2: the player Shed `amount` (> 0) Guard. */
+  onGuardShed: { readonly amount: number };
   // run-level (relics; player statuses only exist in combat)
   onPickup: NoInfo;
   onRest: { readonly action: 'rest' | 'smith' | RestOptionId; readonly uid: number | null };
@@ -1195,10 +1397,25 @@ export interface ModifierHooks {
   // player-side rules
   bloomCap?(ctx: ModifierCtx, card: CardInstance, cap: number): number;
   modifyPruneBloom?(ctx: ModifierCtx, amount: number, scrapped: CardInstance): number;
+  /** Graft v2 (Clear-Cut): how many cards one Prune may Scrap (max over hooks; default 1). */
+  pruneScrapMax?(ctx: ModifierCtx, max: number): number;
+  /**
+   * Graft v2 (Rootstock): the Bloom a card's numbers and Ripe use (max over hooks; default its own Bloom).
+   * deckMax = the highest real Bloom in your deck. Growth, caps, Spill and deck counts always use real Bloom.
+   */
+  effectiveBloom?(ctx: ModifierCtx, card: CardInstance, bloom: number, deckMax: number): number;
   beatPositions?(ctx: ModifierCtx, positions: readonly number[]): number[];
   onBeatRepeats?(ctx: ModifierCtx, card: CardInstance | null, repeats: number): number;
+  /** Chronist v2: how many times a Timeline entry resolves, given its batch size (default 1; the engine clamps to 1..2). Total Eclipse. */
+  timelineResolutions?(ctx: ModifierCtx, batch: number, entry: TimelineEntry, runs: number): number;
+  /** Chronist v2: a non-Scrap card that just resolved from the Timeline goes back on it with this Delay instead of to its pile (null = no). First non-null wins. Eternal Return. */
+  recurDelay?(ctx: ModifierCtx, card: CardInstance, recursThisTurn: number): number | null;
   primeCapacity?(ctx: ModifierCtx, capacity: number): number;
   primeCharges?(ctx: ModifierCtx, card: CardInstance, charges: number): number;
+  /** Breaker v2 (Answer in Kind): when this primed card fires, also resolve its played `effects` (true from any hook). */
+  riposteResolvesPlayed?(ctx: ModifierCtx, card: CardInstance): boolean;
+  /** Breaker v2 (Crazing): stacks an enemy keeps when its status decays (player listeners; max with the enemy's keepStatus). */
+  keepEnemyStatus?(ctx: ModifierCtx, enemyUid: number, id: StatusId, stacks: number): number;
   forecastDepth?(ctx: ModifierCtx, depth: number): number;
   maxEnergy?(ctx: ModifierCtx, energy: number): number;
   drawPerTurn?(ctx: ModifierCtx, n: number): number;
@@ -1216,6 +1433,25 @@ export interface ModifierHooks {
   restOptionCost?(ctx: ModifierCtx, id: RestOptionId, shards: number): number;
   /** true: this rest option does not use the rest action (once per visit; Shard Crucible). */
   restSideAction?(ctx: ModifierCtx, id: RestOptionId): boolean;
+  // --- Shared v2 (docs/v2/shared-design.md §7)
+  /** H4: this play has Reprise (its effects resolve twice). OR over listeners. */
+  grantsReprise?(ctx: ModifierCtx, info: RepriseInfo): boolean;
+  /**
+   * H7: turns to Delay this play's effects onto the Timeline as a scheduled entry (0 = resolve now; max over
+   * listeners). Asked only for non-Power, non-Delay cards played from hand; eligibleIndex = how many such
+   * plays came before it this turn (Cracked Hourglass uses 0).
+   */
+  delayPlay?(ctx: ModifierCtx, info: CardPlayedInfo, eligibleIndex: number): number;
+  /** H8: card rewards offer one card from each listed class instead of the class pool (first non-null wins). */
+  cardRewardClasses?(ctx: ModifierCtx, kind: CombatKind): ClassId[] | null;
+  /** H8: this card reward also offers one colourless card. */
+  extraColorlessOffer?(ctx: ModifierCtx, kind: CombatKind): boolean;
+  /** H13: a reason string makes this rest option unavailable (null = no objection). */
+  restOptionBlocked?(ctx: ModifierCtx, id: RestOptionId): string | null;
+  /** H21: added to the 'beat_index' scale when the play is on the beat (Conductor's Baton). Summed. */
+  beatIndexBonus?(ctx: ModifierCtx): number;
+  /** H22: where a card that resolved from the Timeline goes instead of the discard pile (null = no change; first non-null wins). */
+  timelineDestination?(ctx: ModifierCtx, card: CardInstance): 'draw_bottom' | null;
 }
 
 export type Hooks = EventHooks & ModifierHooks;
@@ -1270,10 +1506,12 @@ export interface CardDef extends DslTables {
   riposte?: Effect[];
   /** Delay (GDD §2.8): after `effects`, the card goes onto the Timeline; `delay.effects` resolve `turns` later. */
   delay?: { turns: 1 | 2 | 3; effects: Effect[] };
+  /** Salvage (shared v2 H2): effects that run whenever this card is Scrapped in combat, from any source (not a play). */
+  salvage?: Effect[];
   /** Bound (Burden): never removed except by effects with allowBound; cannot be Transmuted or Pruned away. */
   bound?: boolean;
   /** Applied when upgraded. Empty object = cannot be upgraded. */
-  upgrade: Partial<Pick<CardDef, 'cost' | 'text' | 'effects' | 'keywords' | 'name' | 'target' | 'riposte' | 'delay'>>;
+  upgrade: Partial<Pick<CardDef, 'cost' | 'text' | 'effects' | 'keywords' | 'name' | 'target' | 'riposte' | 'delay' | 'salvage'>>;
   hooks?: CardHooks;
   icon: string;
   tags?: string[];

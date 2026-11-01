@@ -1,9 +1,10 @@
 import type { EffectCtx, EnemyDef, HookCtx, StatusDef, EncounterDef } from '../../engine/types';
 
 const OVERCLOCK = { might: 2 };
-const ANOINT = { heal: 8 };
-const INVENTORY = { perCards: 4, minHits: 1, maxHits: 8 };
-const PRESSURE = { threshold: 25 };
+const ANOINT = { heal: 6, scour: 4 };
+const LOOM = { ward: 6, thread: 2 };
+const INVENTORY = { perCards: 4, minHits: 2, maxHits: 8 };
+const PRESSURE = { threshold: 30 };
 
 function ownEnemy(ctx: HookCtx) {
   const enemy = ctx.combat?.enemies.find((e) => e.uid === ctx.owner);
@@ -30,7 +31,7 @@ export const ACT2_ENEMIES: EnemyDef[] = [
     },
     moves: {
       scorch: { name: 'Scorch', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 10, target: 'target' }] },
-      target_lock: { name: 'Target Lock', intent: 'debuff', text: 'Apply {status} Exposed.', effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 3 }] },
+      target_lock: { name: 'Target Lock', intent: 'debuff', text: 'Apply {status} Exposed.', effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
       overclock: { name: 'Overclock', intent: 'buff', text: 'The other living enemy with the highest HP gains {might} Might.', effects: [{ type: 'custom', fn: 'buff_highest_ally' }] },
     },
     chooseMove: (c) => {
@@ -46,10 +47,10 @@ export const ACT2_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'rivet_gnasher', name: 'Rivet Gnasher', hp: [30, 34], icon: 'enemy_rivet_gnasher',
+    id: 'rivet_gnasher', name: 'Rivet Gnasher', hp: [28, 32], icon: 'enemy_rivet_gnasher',
     moves: {
       nip: { name: 'Nip', intent: 'attack', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 3, times: 3, target: 'target' }] },
-      lunge: { name: 'Lunge', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 10, target: 'target' }] },
+      lunge: { name: 'Lunge', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 9, target: 'target' }] },
     },
     chooseMove: (c) => {
       if (c.timesInARow('nip') >= 2) return 'lunge';
@@ -58,19 +59,22 @@ export const ACT2_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'cog_acolyte', name: 'Cog Acolyte', hp: [46, 52], icon: 'enemy_cog_acolyte',
+    id: 'cog_acolyte', name: 'Cog Acolyte', hp: [46, 52], icon: 'enemy_cog_acolyte', spawnStatuses: { scour_rite: 1 },
     values: { ...OVERCLOCK, ...ANOINT },
     custom: {
       buff_highest_ally: buffHighestAlly,
       heal_other_allies: (ctx) => {
         if (!ctx.combat) throw new Error('Anoint requires combat');
         for (const e of ctx.combat.enemies.filter((a) => a.alive && a.uid !== ctx.owner)) {
+          // An absent status is 0 stacks. The Acolyte never scours itself (Scour Rite says so).
+          const rot = e.statuses.rot ?? 0;
+          if (rot > 0) ctx.now([{ type: 'status', target: 'target', id: 'rot', amount: -Math.min(rot, ANOINT.scour) }], { target: e.uid });
           ctx.now([{ type: 'heal', amount: ANOINT.heal, target: 'target' }], { target: e.uid });
         }
       },
     },
     moves: {
-      anoint: { name: 'Anoint', intent: 'buff', text: 'Heal every other living enemy {heal} HP.', effects: [{ type: 'custom', fn: 'heal_other_allies' }] },
+      anoint: { name: 'Anoint', intent: 'buff', text: 'Every other living enemy loses up to {scour} Rot and heals {heal} HP.', effects: [{ type: 'custom', fn: 'heal_other_allies' }] },
       litany: { name: 'Litany of Iron', intent: 'defend', text: 'Every living enemy gains {block} Block.', effects: [{ type: 'block', amount: 9, target: 'all_allies' }] },
       zeal: { name: 'Zeal', intent: 'buff', text: 'The other living enemy with the highest HP gains {might} Might.', effects: [{ type: 'custom', fn: 'buff_highest_ally' }] },
       censer: { name: 'Censer Swing', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 9, target: 'target' }] },
@@ -86,9 +90,9 @@ export const ACT2_ENEMIES: EnemyDef[] = [
   {
     id: 'riveter', name: 'Riveter', hp: [64, 70], icon: 'enemy_riveter',
     moves: {
-      // Roster formula: 3 damage x (5 + loaded) hits; Reload adds two hits, not damage.
+      // Roster formula: 3 damage x (4 + loaded) hits; Reload adds two hits, not damage.
       rivet_burst: { name: 'Rivet Burst', intent: 'attack', text: 'Deal {damage} damage {times} times. Unload.', effects: [
-        { type: 'damage', amount: 3, times: { base: 5, scale: { ai: 'loaded' } }, target: 'target' },
+        { type: 'damage', amount: 3, times: { base: 4, scale: { ai: 'loaded' } }, target: 'target' },
         { type: 'ai_state', key: 'loaded', set: 0 },
       ] },
       reload: { name: 'Reload', intent: 'defend_buff', text: 'Gain {block} Block. Load {ai_state} extra hits for the next Rivet Burst.', effects: [
@@ -111,7 +115,7 @@ export const ACT2_ENEMIES: EnemyDef[] = [
       pour_slag: { name: 'Pour Slag', intent: 'debuff', text: 'Shuffle {add_card} Backlash into your draw pile. Gain {block} Block.', effects: [
         { type: 'add_card', card: 'status_backlash', to: 'draw', n: 2 }, { type: 'block', amount: 8 },
       ] },
-      ingot_slam: { name: 'Ingot Slam', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 17, target: 'target' }] },
+      ingot_slam: { name: 'Ingot Slam', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 15, target: 'target' }] },
       cool_harden: { name: 'Cool and Harden', intent: 'defend', text: 'Gain {block} Block.', effects: [{ type: 'block', amount: 18 }] },
       spatter: { name: 'Spatter', intent: 'attack_debuff', text: 'Deal {damage} damage {times} times. Add {add_card} Jitter to your discard pile.', effects: [
         { type: 'damage', amount: 6, times: 2, target: 'target' }, { type: 'add_card', card: 'status_jitter', to: 'discard', n: 1 },
@@ -125,11 +129,12 @@ export const ACT2_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'loom_oracle', name: 'Loom Oracle', hp: [58, 64], icon: 'enemy_loom_oracle', spawnStatuses: { sealed_pattern: 1 },
+    id: 'loom_oracle', name: 'Loom Oracle', hp: [58, 64], icon: 'enemy_loom_oracle', spawnStatuses: { sealed_pattern: 1 }, values: LOOM,
     moves: {
       shuttle_strike: { name: 'Shuttle Strike', intent: 'attack', augury: 'hidden', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 6, times: 2, target: 'target' }] },
-      unravel: { name: 'Unravel', intent: 'attack', augury: 'hidden', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 16, target: 'target' }] },
-      weave_ward: { name: 'Weave Ward', intent: 'defend', augury: 'hidden', text: 'Every living enemy gains {block} Block.', effects: [{ type: 'block', amount: 8, target: 'all_allies' }] },
+      unravel: { name: 'Unravel', intent: 'attack', augury: 'hidden', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: 14, target: 'target' }] },
+      // Reacts to the Timeline: each card waiting on it is a thread the Oracle pulls into the Ward.
+      weave_ward: { name: 'Weave Ward', intent: 'defend', augury: 'hidden', text: 'Every living enemy gains {block} Block ({block_base} + {block_per} per card on your Timeline).', effects: [{ type: 'block', amount: { base: LOOM.ward, per: LOOM.thread, scale: 'timeline_count' }, target: 'all_allies' }] },
       thread_snare: { name: 'Thread Snare', intent: 'debuff', augury: 'hidden', text: 'Apply {status} Stagger and {status2} Exposed.', effects: [
         { type: 'status', target: 'target', id: 'stagger', amount: 2 }, { type: 'status', target: 'target', id: 'exposed', amount: 2 },
       ] },
@@ -139,16 +144,16 @@ export const ACT2_ENEMIES: EnemyDef[] = [
       : c.rng.weighted([['weave_ward', 50], ['thread_snare', 50]]),
   },
   {
-    id: 'the_auditor', name: 'The Auditor', hp: [140, 148], icon: 'enemy_the_auditor', spawnStatuses: { inventory: 1 },
+    id: 'the_auditor', name: 'The Auditor', hp: [150, 158], icon: 'enemy_the_auditor', spawnStatuses: { inventory: 1, seething: 15 },
     amounts: { ledger_hits: (ctx) => {
       if (!ctx.combat) throw new Error('Ledger Lash requires combat');
       return Math.max(INVENTORY.minHits, Math.min(INVENTORY.maxHits, Math.floor(ctx.combat.draw.length / INVENTORY.perCards)));
     } },
     moves: {
-      ledger_lash: { name: 'Ledger Lash', intent: 'attack', text: 'Deal {damage} damage {times} times, based on your draw pile.', effects: [{ type: 'damage', amount: 4, times: { scale: { fn: 'ledger_hits' } }, target: 'target' }] },
+      ledger_lash: { name: 'Ledger Lash', intent: 'attack', text: 'Deal {damage} damage {times} times, based on your draw pile.', effects: [{ type: 'damage', amount: 5, times: { scale: { fn: 'ledger_hits' } }, target: 'target' }] },
       requisition: { name: 'Requisition', intent: 'debuff', text: 'Shuffle {add_card} Jitter into your draw pile.', effects: [{ type: 'add_card', card: 'status_jitter', to: 'draw', n: 3 }] },
       stamp: { name: 'Stamp', intent: 'attack_debuff', text: 'Deal {damage} damage. Apply {status} Exposed.', effects: [
-        { type: 'damage', amount: 15, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 },
+        { type: 'damage', amount: 16, target: 'target' }, { type: 'status', target: 'target', id: 'exposed', amount: 2 },
       ] },
       recount: { name: 'Recount', intent: 'defend', text: 'Gain {block} Block.', effects: [{ type: 'block', amount: 20 }] },
     },
@@ -196,7 +201,7 @@ export const ACT2_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'boiler_tyrant', name: 'Boiler Tyrant', hp: [150, 158], icon: 'enemy_boiler_tyrant', spawnStatuses: { overpressure: 1 },
+    id: 'boiler_tyrant', name: 'Boiler Tyrant', hp: [150, 158], icon: 'enemy_boiler_tyrant', spawnStatuses: { overpressure: 1, seething: 12 },
     moves: {
       piston_punch: { name: 'Piston Punch', intent: 'attack', text: 'Deal {damage} damage.', effects: [{ type: 'damage', amount: { base: 14, scale: { ai: 'rage' } }, target: 'target' }] },
       steam_jet: { name: 'Steam Jet', intent: 'attack', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: { base: 5, scale: { ai: 'rage' } }, times: 3, target: 'target' }] },
@@ -213,8 +218,11 @@ export const ACT2_ENEMIES: EnemyDef[] = [
 ];
 
 export const ACT2_STATUSES: StatusDef[] = [
+  { id: 'scour_rite', name: 'Scour Rite', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false, values: ANOINT,
+    text: 'Its Anoint washes up to {scour} Rot off every other enemy. It never scours itself: Rot it first.', icon: 'status_scour_rite' },
   { id: 'sealed_pattern', name: 'Sealed Pattern', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false,
-    text: 'Its forecast is always hidden. It alternates attacks on odd turns with non-attacks on even turns.', icon: 'status_sealed_pattern' },
+    values: LOOM,
+    text: 'Its forecast is always hidden. It alternates attacks on odd turns with non-attacks on even turns. Weave Ward gives {thread} more Block per card on your Timeline.', icon: 'status_sealed_pattern' },
   { id: 'inventory', name: 'Inventory', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false, values: INVENTORY,
     text: 'Ledger Lash hits once per {perCards} cards in your draw pile, rounded down; minimum {minHits}, maximum {maxHits}. Counted when it resolves.', icon: 'status_inventory' },
   { id: 'bonded', name: 'Bonded', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false,
@@ -240,13 +248,13 @@ export const ACT2_ENCOUNTERS: EncounterDef[] = [
   { id: 'enc_a2_rivet_pair', name: 'Rivet Pair', acts: [2], pool: 'easy', weight: 1, enemies: ['rivet_gnasher', 'rivet_gnasher'] },
   { id: 'enc_a2_drone_gnasher', name: 'Drone and Gnasher', acts: [2], pool: 'easy', weight: 1, enemies: ['furnace_drone', 'rivet_gnasher'] },
   { id: 'enc_a2_riveter', name: 'Riveter', acts: [2], pool: 'easy', weight: 1, enemies: ['riveter'] },
-  { id: 'enc_a2_drone_riveter', name: 'Drone and Riveter', acts: [2], pool: 'hard', weight: 15, enemies: ['furnace_drone', 'riveter'] },
-  { id: 'enc_a2_acolyte_golem', name: 'Acolyte and Golem', acts: [2], pool: 'hard', weight: 14, enemies: ['cog_acolyte', 'slag_golem'] },
-  { id: 'enc_a2_oracle_pack', name: 'Oracle Pack', acts: [2], pool: 'hard', weight: 15, enemies: ['loom_oracle', 'rivet_gnasher', 'rivet_gnasher'] },
-  { id: 'enc_a2_drone_trio', name: 'Furnace Drone Trio', acts: [2], pool: 'hard', weight: 13, enemies: ['furnace_drone', 'furnace_drone', 'furnace_drone'] },
-  { id: 'enc_a2_acolyte_pack', name: 'Acolyte Pack', acts: [2], pool: 'hard', weight: 14, enemies: ['cog_acolyte', 'rivet_gnasher', 'rivet_gnasher'] },
+  { id: 'enc_a2_drone_riveter', name: 'Drone and Riveter', acts: [2], pool: 'hard', weight: 14, enemies: ['furnace_drone', 'riveter'] },
+  { id: 'enc_a2_acolyte_golem', name: 'Acolyte and Golem', acts: [2], pool: 'hard', weight: 16, enemies: ['cog_acolyte', 'slag_golem'] },
+  { id: 'enc_a2_oracle_pack', name: 'Oracle Pack', acts: [2], pool: 'hard', weight: 11, enemies: ['loom_oracle', 'rivet_gnasher', 'rivet_gnasher'] },
+  { id: 'enc_a2_drone_trio', name: 'Furnace Drone Trio', acts: [2], pool: 'hard', weight: 16, enemies: ['furnace_drone', 'furnace_drone', 'furnace_drone'] },
+  { id: 'enc_a2_acolyte_pack', name: 'Acolyte Pack', acts: [2], pool: 'hard', weight: 16, enemies: ['cog_acolyte', 'rivet_gnasher', 'rivet_gnasher'] },
   { id: 'enc_a2_golem_riveter', name: 'Golem and Riveter', acts: [2], pool: 'hard', weight: 14, enemies: ['slag_golem', 'riveter'] },
-  { id: 'enc_a2_oracle_golem', name: 'Oracle and Golem', acts: [2], pool: 'hard', weight: 15, enemies: ['loom_oracle', 'slag_golem'] },
+  { id: 'enc_a2_oracle_golem', name: 'Oracle and Golem', acts: [2], pool: 'hard', weight: 13, enemies: ['loom_oracle', 'slag_golem'] },
   { id: 'enc_a2_auditor', name: 'The Auditor', acts: [2], pool: 'elite', weight: 1, enemies: ['the_auditor'] },
   { id: 'enc_a2_anvil_hammer', name: 'Anvil and Hammer', acts: [2], pool: 'elite', weight: 1, enemies: ['anvil_warden', 'hammer_warden'] },
   { id: 'enc_a2_boiler', name: 'Boiler Tyrant', acts: [2], pool: 'elite', weight: 1, enemies: ['boiler_tyrant'] },

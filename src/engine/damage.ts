@@ -1,7 +1,7 @@
 // Damage / block / hp pipeline (GDD §2.15, authoritative). Per hit from attacker A to target T:
 //   1. base (the resolved amount)
 //   2. + A's damageDealtFlat
-//   3. x A's damageDealtMult x T's damageTakenMult (x TUNING.enemyDamagePct[act] for enemy hits), floor
+//   3. x A's damageDealtMult x T's damageTakenMult (x TUNING.difficulty[tier].enemyDamagePct[act] for enemy hits), floor
 //   4. max(0, d - A.stagger + T.exposed * exposedPerStack(A) + T.backlash_primed * 4 (enemy hits on the
 //      player) + T's damageTakenFlat)
 //   5. T's modifyDamageTaken
@@ -43,19 +43,20 @@ function backlashBonus(state: RunState, info: DamageInfo): number {
   return stacksOf(state, 'player', STATUS_BACKLASH) * TUNING.backlashPerStack;
 }
 
-export function computeDamage(state: RunState, info: DamageInfo, base: number, preview: boolean): number {
+/** ignoreStagger (shared v2 H5): leave the attacker's Stagger out of step 4, to measure what it prevented. */
+export function computeDamage(state: RunState, info: DamageInfo, base: number, preview: boolean, ignoreStagger = false): number {
   let dmg = base;
   if (info.source !== null) dmg += sumDamageDealtFlat(state, info.source, info, preview);
   const pcts: number[] = [];
   if (info.source !== null) pcts.push(...damageDealtPcts(state, info.source, info, preview));
   if (info.target !== null) pcts.push(...damageTakenPcts(state, info.target, info, preview));
   if (typeof info.source === 'number') {
-    const pct = TUNING.enemyDamagePct[state.act];
+    const pct = TUNING.difficulty[state.difficulty].enemyDamagePct[state.act]; // tier lever (ruling 74)
     if (pct !== 100) pcts.push(pct);
   }
   dmg = applyPcts(dmg, pcts);
   // step 4
-  const stagger = info.source !== null ? stacksOf(state, info.source, STATUS_STAGGER) : 0;
+  const stagger = info.source !== null && !ignoreStagger ? stacksOf(state, info.source, STATUS_STAGGER) : 0;
   let step4 = -stagger;
   if (info.target !== null) {
     const per = info.source !== null ? exposedPerStack(state, info.source, info, preview) : 1;
@@ -96,6 +97,8 @@ export function dealDamage(env: Env, a: DealDamageArgs): void {
   if (!isAlive(state, a.target)) return;
   const info: DamageInfo = { source: a.source, target: a.target, card: a.card, tags: a.tags };
   const amount = computeDamage(state, info, a.base, false);
+  // Shared v2 H5: what the attacker's Stagger removed from this hit (Kickback Governor).
+  const staggerPrevented = a.source !== null && stacksOf(state, a.source, STATUS_STAGGER) > 0 ? Math.max(0, computeDamage(state, info, a.base, false, true) - amount) : 0;
   const usedBacklash = backlashBonus(state, info) > 0;
   const block = blockOf(state, a.target);
   const blocked = a.ignoreBlock ? 0 : Math.min(block, amount);
@@ -116,7 +119,7 @@ export function dealDamage(env: Env, a: DealDamageArgs): void {
   }
   emit(env, { t: 'damage', kind: 'attack', source: a.source, target: a.target, amount, blocked, guarded, hpLost });
   if (usedBacklash) setStatusStacks(env, 'player', STATUS_BACKLASH, 0);
-  const result: DamageResult = { ...info, target: a.target, amount, blocked, guarded, hpLost };
+  const result: DamageResult = { ...info, target: a.target, amount, blocked, guarded, hpLost, staggerPrevented };
   if (a.source !== null) dispatch(env, 'onDamageDealt', a.source, result, a.target);
   dispatch(env, 'onDamageTaken', a.target, result, a.source);
   if (guarded > 0) dispatch(env, 'onGuardAbsorbed', a.target, { amount: guarded, source: a.source }, a.source);
@@ -187,6 +190,7 @@ export function checkEnemyDeath(env: Env, target: EntityRef): void {
   if (combat.counters.declaringUid === e.uid) {
     delete combat.counters.declaringUid;
     emit(env, { t: 'attack_cancelled', uid: e.uid });
+    dispatch(env, 'onAttackCancelled', 'player', { uid: e.uid });
   }
   dispatch(env, 'onDeath', e.uid, {});
   dispatch(env, 'onEnemyDied', 'global', { uid: e.uid, enemyId: e.id, statuses: { ...e.statuses } });

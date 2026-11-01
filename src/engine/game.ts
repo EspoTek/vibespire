@@ -6,9 +6,9 @@ import { usePotion, potionActions, runLegalActions, applyRunAction, createRun } 
 import { combatLegalActions, endTurn, playCard, refreshIntents } from './combat';
 import { makeEnv, queueHost, type Env } from './core';
 import { syncFloorRecord } from './history';
-import { drain, resolveChoice } from './queue';
+import { drain, resolveChoice, toggleChoice } from './queue';
 import { deserialize, serialize } from './serialize';
-import type { Action, GameEvent, RunState } from './types';
+import type { Action, Difficulty, GameEvent, RunState } from './types';
 
 export class IllegalActionError extends Error {
   readonly action: Action;
@@ -39,8 +39,9 @@ export class Game {
     this.initialEvents = initialEvents;
   }
 
-  static newRun(seed: string, classId: string, opts: GameOptions = {}): Game {
-    const { state, events } = createRun(seed, classId);
+  /** A new run. `opts.difficulty` is the tier chosen at run start; absent = 'standard', the default tier (ruling 71). */
+  static newRun(seed: string, classId: string, opts: GameOptions & { difficulty?: Difficulty } = {}): Game {
+    const { state, events } = createRun(seed, classId, opts.difficulty ?? 'standard');
     return new Game(state, opts, events);
   }
 
@@ -88,6 +89,9 @@ function handleAction(env: Env, a: Action): void {
   switch (a.type) {
     case 'resolve_choice':
       resolveChoice(env, a.uids);
+      return;
+    case 'choice_toggle':
+      toggleChoice(env, a.uid);
       return;
     case 'use_potion':
       usePotion(env, a.index, a.target ?? null);

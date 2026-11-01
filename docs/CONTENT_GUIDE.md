@@ -179,3 +179,18 @@ const RIVETS = { guard: 1 };
 - Set `bound: true` on Burden: only `allowBound` removal (Purge) takes it, and it can't be Transmuted or Pruned away.
 - Status ids `onslaught`, `exposed`, `stagger`, `rot`, `augury`, `halted`, `might`, `riposte_capacity`, `onslaught_keep`, `elite_hunted`, `backlash_primed` and `cost_tax` already exist; don't redefine them.
 - The move id `__flee` is reserved.
+
+## Keywords (the glossary)
+
+Every rules term a player reads (Riposte, Guard, Prune, On beat, Exposed, ...) has one entry in `src/content/keywords.ts`. The game shows those entries as keyword boxes beside any card the player inspects, in status and intent tooltips, and in the Compendium. Keep card text short: the keyword carries the rules, the card carries the numbers.
+
+**How a card's keywords are found** (`keywordsFor(def, upgraded)`): the entry `terms` that appear in the card's text, in reading order; then keywords implied by the card's structure (`keywords: ['exhaust']` → Scrap, cost `'X'`, `riposte`/`delay` lists, `guard`/`prune`/`advance`/`on_beat` effects, status ids with an entry, `forecast_is_attack` conditions); then Status/Curse cards it adds (`card:<id>`, shown with that card's own text). You don't tag cards by hand.
+
+**To add a keyword:**
+1. Add an entry to `KEYWORDS`: `{ id, name, group, text, terms? }`. If the term is a status, use the status id as the keyword id (`rot`, `exposed`), so its icon tooltip and keyword box agree.
+2. `terms` lists every spelling the card text uses (`['Prune', 'Pruned']`), matched as whole words, case-sensitively. Leave it out when the name is the only spelling. A longer term wins over a shorter one ("Wild Prune" over "Prune").
+3. `text` is a template. Never type a rule number: use a placeholder from `keywordTextValues()` in `src/engine/text.ts` (`{guard_cap}`, `{beats}`, `{bloom_cap}`, `{prime_cap}`, `{timeline_cap}`, ...). If you need a new number, add it there, read from `TUNING` or the content table that owns it.
+4. If an effect type or condition implies the keyword without the text naming it, map it in `effectKeywords` / `conditionKeywords` / `amountKeywords` in `keywords.ts`.
+5. Run `npx vitest run tests/content/keywords.test.ts`. It fails when any card, relic, potion or status text has a capitalised term that is neither a glossary term, a content name (card, relic, potion, status, enemy, move or event), nor a plain word in its `PLAIN` list. Fix it by adding the entry, not by adding jargon to `PLAIN`.
+
+`getKeyword(id)` throws on an unknown id; `renderKeywordText(id)` (engine) renders the text with live numbers.

@@ -45,6 +45,13 @@ export abstract class Widget implements NavNode {
   list?: ListMembership | undefined;
   /** Spoken by screen readers when focused. */
   label = '';
+  /**
+   * Tooltip text (markup) shown beside this widget while it is focused or hovered, on every screen
+   * (InfoLayer). Keyword terms in it get glossary boxes too. '' = no tooltip.
+   */
+  hint = '';
+  /** Text whose glossary keywords are boxed beside this widget when focused (no tooltip). '' = none. */
+  keywordText = '';
   onFocus: (() => void) | null = null;
   onBlur: (() => void) | null = null;
   onActivate: (() => void) | null = null;

@@ -1,0 +1,108 @@
+- `stoke` (breaker): card icon 32x24. A gauntleted fist pumping a small forge bellows, orange sparks rising.
+- `hair_trigger` (breaker): card icon 32x24. A thin blade balanced on one fingertip, a red tension spark at the point.
+- `loosen_straps` (breaker): card icon 32x24. A gold shoulder plate dropping loose as a buckle snaps open.
+- `kindle` (breaker): card icon 32x24. A red Onslaught chevron burning down into a single glowing ember in a cupped hand.
+- `spark_gap` (breaker): card icon 32x24. A blue-white arc jumping between two gold plate edges.
+- `iron_patience` (breaker): card icon 32x24. A seated armoured figure, sword point down, gold shield glow building around it.
+- `worldbreaker` (breaker): card icon 32x24. A huge two-handed hammer coming down, the ground below cracking into a star.
+- `turnabout` (breaker): card icon 32x24. A shield turning a red incoming blow back along its own path toward the attacker.
+- `bellows` (breaker): card icon 32x24. A big leather forge bellows blasting a coal heap to white-hot.
+- `crazing` (breaker): card icon 32x24. A plate of armour covered in a fine white web of cracks that glows at the seams.
+- `answer_in_kind` (breaker): card icon 32x24. Two crossed blades, one mirroring the other in a ghostly afterimage.
+- `molten_shell` (breaker): card icon 32x24. Gold armour plates melting off in drips that fly as burning shards toward an enemy.
+- `embers` (breaker, status icon 16x16): a small orange coal with two sparks.
+- `bellows`, `crazing`, `answer_in_kind`, `molten_shell`, `spark_gap`, `iron_patience` (breaker, status icons 16x16): simplified versions of the card icons above.
+- `molt` (graft): card icon 32x24. A green-brown insect husk splitting down the back, two papery flakes peeling away.
+- `burst_pod` (graft): card icon 32x24. A swollen purple seed pod bursting, a puff of rot-green spores spraying out.
+- `reap` (graft): card icon 32x24. A curved bone-and-vine sickle mid-swing, leaving a purple-green arc.
+- `second_flush` (graft): card icon 32x24. A cut stem with a fresh bright-green shoot sprouting again from the stump.
+- `thornstorm` (graft): card icon 32x24. A whirlwind of brown thorns and leaves spiralling across the frame.
+- `grim_harvest` (graft): card icon 32x24. A skull-faced mushroom cap being sliced open, purple rot pouring out like grain.
+- `clear_cut` (graft): card icon 32x24. A row of stumps cut flat, wood chips flying, an axe-like claw above them.
+- `deep_rot` (graft): card icon 32x24. A rot skull sinking into black soil, glowing purple roots spreading downward without end.
+- `rootstock` (graft): card icon 32x24. A thick gnarled root trunk with several small grafted branches all glowing the same gold.
+- `perennial` (graft): card icon 32x24. A gold-leafed flower curling back into a seed and blooming again (a circular arrow of petals).
+- `chaff` (graft token, Status card): card icon 32x24. A loose pale-yellow tuft of dry husks and stalk fragments.
+- `clear_cut`, `deep_rot`, `rootstock`, `perennial` (graft, status icons 16x16): simplified versions of the card icons above.
+- Ripe (graft, UI): a gold leaf variant of the ✿ Bloom counter for copies at Ripe; a root glyph for Rootstock-lifted Bloom.
+- `hold_the_hour` (chronist): card icon 32x24. A gloved hand pressing a pocket-watch's hands still, small clock shards gathering into one point.
+- `ripple` (chronist): card icon 32x24. A single blue drop hitting still water, three concentric rings spreading.
+- `whistle_for_wind` (chronist): card icon 32x24. A sailor's lips whistling, a thin storm-grey gust curling toward a red-eyed silhouette.
+- `red_sky` (chronist): card icon 32x24. A blood-red dawn sky over a dark sea, a small lantern-lit shield in the foreground.
+- `undertow` (chronist): card icon 32x24. A deep blue current dragging a falling figure down, a white spiral at the centre.
+- `accelerando` (chronist): card icon 32x24. A brass metronome arm swinging fast, motion streaks, the beat pip glowing gold early.
+- `bell_choir` (chronist): card icon 32x24. A row of five bronze bells ringing at once, gold sound arcs overlapping.
+- `set_the_hour` (chronist): card icon 32x24. A hand turning a clock dial to a gold mark, a card silhouette slotting into the dial.
+- `gathering_storm` (chronist): card icon 32x24. Thunderheads swirling above a raised blue ward, lightning about to fall.
+- `squall_line` (chronist): card icon 32x24. A hard grey line of rain and wind sweeping across the frame, a red enemy shape caught in it.
+- `total_eclipse` (chronist): card icon 32x24. A black moon fully covering a gold sun, a white corona ring flaring around it.
+- `eternal_return` (chronist): card icon 32x24. An ouroboros of clock hands, a card circling back into a gold timeline groove.
+- `reckoning` (chronist): card icon 32x24. A great brass clock striking twelve, a doubled red strike reflected back at the striker.
+- `eye_of_the_storm` (chronist): card icon 32x24. A calm blue eye at the centre of a spiralling storm, lightning bolts pointing outward.
+- `goaded` (chronist, status icon 16x16): a red angry brow with a small upward arrow.
+- `accelerando`, `squall_line`, `total_eclipse`, `eternal_return`, `eye_of_the_storm` (chronist, status icons 16x16): simplified versions of the card icons above.
+- Chorus / Gather / Quicken (chronist, UI): a live "+N" Chorus number on Timeline-strip entries, a short "GATHER" slide when entries align (`timeline_gathered`), and a metronome pip jump on `beat_shift`.
+- `spare_fuse` (relic, shared): relic icon 16x16. A short copper cartridge fuse with a glowing orange filament inside its glass window.
+- `antenna_wire` (relic, shared): relic icon 16x16. A coil of silver wire wound around a small whip antenna, a cyan signal tick at the tip.
+- `slag_bucket` (relic, breaker): relic icon 16x16. An iron bucket brimming with glowing orange slag, a gold plate edge sticking out.
+- `storm_lantern` (relic, chronist): relic icon 16x16. A brass ship's lantern with a tiny grey storm cloud and lightning trapped inside the glass.
+- `scar_engine` (relic, shared): relic icon 16x16. A small red piston engine with stitched-scar seams along its casing, a crack of white light at one seam.
+- `static_choir` (relic, shared): relic icon 16x16. Three tiny tuning-fork pylons with yellow static arcs jumping between them.
+- `whetstone` (relic, shared): relic icon 16x16. A grey sharpening stone with a bright blade edge sliding across it, a spark at the contact.
+- `ash_wick` (relic, shared): relic icon 16x16. A candle stub whose wick burns with three tiny flames stacked one above another.
+- `overture_engine` (relic, shared): relic icon 16x16. A brass music-box cylinder with a gold pin raised, a glowing card rising from its lid.
+- `blood_rivets` (relic, breaker): relic icon 16x16. Three steel rivets set in a gold plate, each with a drop of red at its head.
+- `blood_mulch` (relic, graft): relic icon 16x16. A clay pot of dark soil with a green shoot rising from a red-stained patch.
+- `borrowed_time` (relic, chronist): relic icon 16x16. A cracked hourglass whose falling sand is red instead of gold.
+- `coal_scuttle` (relic, breaker): relic icon 16x16. A small black coal scuttle with one glowing ember on top.
+- `husk_sac` (relic, graft): relic icon 16x16. A papery pale-yellow seed sac bulging with dry husks, tied at the neck with a vine.
+- `reapers_sickle` (relic, graft): relic icon 16x16. A small bone-handled sickle with a purple-green rot drip on its blade.
+- `astrolabe` (relic, chronist): relic icon 16x16. A brass astrolabe with three rings aligned in a row, a gold star where they cross.
+- `reserve_coil` (relic, shared): relic icon 16x16. A squat copper capacitor coil with a blue charge-level bar half full on its side.
+- `echo_bell` (relic, shared): relic icon 16x16. A small silver handbell with two faint ghost outlines of itself ringing beside it.
+- `undertow_reliquary` (relic, shared): relic icon 16x16. A dark reliquary box with its lid open and a blue whirlpool pulling scrap metal back inside.
+- `kickback_governor` (relic, shared): relic icon 16x16. A brass spinning governor with two weights, a red arrow bouncing off it back the way it came.
+- `orbital_hammer` (relic, shared): relic icon 16x16. A heavy warhammer head with a tiny ring of orbiting lights around it.
+- `momentum_flywheel` (relic, breaker): relic icon 16x16. A spoked iron flywheel spinning, red chevron motion marks trailing it.
+- `refrain_pin` (relic, chronist): relic icon 16x16. A gold brooch shaped like a repeat sign (two dots and a double bar).
+- `twin_scabbard` (relic, breaker): relic icon 16x16. A leather scabbard holding two crossed sword hilts.
+- `recoil_coil` (relic, shared): relic icon 16x16. A compressed steel spring with a blue energy spark at its tip.
+- `trellis` (relic, graft): relic icon 16x16. A small wooden lattice with one gold-leafed vine climbing it.
+- `festering_lens` (relic, graft): relic icon 16x16. A round monocle lens with a cracked purple-green rot bloom seen through the glass.
+- `conductors_baton` (relic, chronist): relic icon 16x16. A white conductor's baton with a gold tip and three small music-note sparks.
+- `triage_locker` (relic, boss): relic icon 16x16. A green field-medic locker with two compartments lit and the rest of its drawers smoking.
+- `wanderers_compact` (relic, boss): relic icon 16x16. A worn leather wallet-compass with three coloured pins (red, green, blue) on its dial.
+- `furnace_mantle` (relic, boss, breaker): relic icon 16x16. A gold shoulder mantle glowing red-hot at the edges, plates peeling off as sparks.
+- `perpetual_calendar` (relic, boss, chronist): relic icon 16x16. A brass desk calendar with a loop arrow around its dial of turning pages.
+- `salvagers_licence` (relic, shop): relic icon 16x16. A small stamped metal tag on a chain with a gear-and-wrench emblem.
+- `bulwark_rivets` (relic rework, shared): existing icon still fits (rivets); optional: add a faint blue Block edge turning gold.
+- `gravity_loom`, `cracked_hourglass`, `ascendant_prism`, `field_dressing`, `seers_veil` (relic reworks): existing icons still fit; no new art needed.
+- `pot_echo_draught` (potion, rare): potion icon 16x16. A tall cyan flask whose liquid shows a doubled ghost image of the bottle.
+- `pot_surge_flask` (potion): potion icon 16x16. A squat flask of crackling electric-blue liquid with a battery-style cap.
+- `pot_blood_ampoule` (potion): potion icon 16x16. A thin glass ampoule of bright red liquid with a yellow lightning-bolt label.
+- `pot_kiln_salts` (potion): potion icon 16x16. A small corked jar of glowing orange-white crystals, wisps of smoke rising.
+- `pot_fracture_serum` (potion): potion icon 16x16. A round flask of pale liquid with a white crack pattern etched across the glass.
+- `pot_mimic_gel` (potion, rare): potion icon 16x16. A wobbling green gel blob in a beaker with two little copies of itself budding off.
+- `pot_riposte_salts` (potion, breaker): potion icon 16x16. A tin of grey salts with two crossed blades stamped on the lid.
+- `pot_ember_tonic` (potion, breaker): potion icon 16x16. A dark bottle with a single glowing coal floating in amber liquid.
+- `pot_fester_draught` (potion, graft): potion icon 16x16. A murky purple-green vial bubbling, a tiny rot skull on the label.
+- `pot_hourglass_tonic` (potion, chronist): potion icon 16x16. An hourglass-shaped vial with gold sand pooled in one bulb.
+- `blood_tithe` (card, colourless): card icon 32x24. A gloved hand dropping red drops into an offering bowl, two cards rising from it.
+- `vent_plasma` (card, colourless): card icon 32x24. A cracked chest-plate venting a ring of white-hot plasma outward in all directions.
+- `scar_tissue` (card, colourless): card icon 32x24. A forearm with a long stitched scar glowing faint gold like armour.
+- `last_light` (card, colourless): card icon 32x24. A kneeling figure raising a sword that blazes with a single huge white beam.
+- `spare_capacitor` (card, colourless): card icon 32x24. A small cylindrical capacitor with a blue spark leaping from its terminal.
+- `shrapnel_charge` (card, colourless): card icon 32x24. A round grenade-like charge bursting into a ring of metal fragments.
+- `black_box` (card, colourless): card icon 32x24. A scorched black flight-recorder box, its seams leaking cyan light.
+- `strip_for_parts` (card, colourless): card icon 32x24. A wrench prying plates off a machine, bolts and gold Guard plates falling loose.
+- `scrapheap_colossus` (card, colourless): card icon 32x24. A giant fist built from piled scrap metal punching forward.
+- `burn_bright` (card, colourless): card icon 32x24. A card held over a flame, burning bright orange from the bottom edge up.
+- `arc_discharge` (card, colourless): card icon 32x24. A coil pylon firing several jagged blue lightning bolts in different directions.
+- `capacitor_bank` (card, colourless): card icon 32x24. A rack of three glass capacitor tubes, two filled with glowing blue charge.
+- `starfall_lance` (card, colourless): card icon 32x24. A lance of white light falling from a starry sky, scattering into many falling stars.
+- `stasis_bolt` (card, colourless): card icon 32x24. A crossbow bolt frozen mid-air inside a pale clock-face ring.
+- `encore` (card, colourless): card icon 32x24. A spotlight on an empty stage with a bowing silhouette and a repeat sign above it.
+- `bait_flare` (card, colourless): card icon 32x24. A red signal flare burning on the ground, a hulking red-eyed silhouette turning toward it.
+- `fuse` (card, colourless token): card icon 32x24. A short burning fuse cord with an orange spark at the end.
+- `reserve`, `reprise`, `scar_tissue`, `burn_bright` (shared statuses, status icons 16x16): a blue battery bar; a repeat sign; a stitched scar; a small flame on a card corner.
+- `seething`, `facets`, `frenzy`, `scour_rite` (enemy passives from the v2 encounter pass, status icons; placeholder 12x12 art is in `src/render/ui/statusIconArt.ts`): a red scowling face venting steam; a cracked ice-blue crystal shedding one shard; three red claw slashes with a growing pip; an amber oil drop washing a green blob clean. No new enemy sprites: the pass reworked behaviour only.

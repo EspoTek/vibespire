@@ -9,8 +9,14 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.engine.json",
-    "deploy": "npm run build && wrangler deploy",
-    "sim": "tsx sim/batch.ts"
+    "deploy": "npm run build && sh scripts/build-v1.sh && wrangler deploy",
+    "sim": "tsx sim/batch.ts",
+    "e2e": "tsx tests/e2e/cli.ts full",
+    "e2e:smoke": "tsx tests/e2e/cli.ts smoke",
+    "e2e:actions": "tsx tests/e2e/cli.ts actions",
+    "e2e:input": "tsx tests/e2e/cli.ts input",
+    "e2e:bosses": "tsx tests/e2e/cli.ts bosses",
+    "e2e:scenarios": "tsx tests/e2e/cli.ts scenarios"
   },
   "dependencies": {
     "three": "0.186.1"
@@ -18,6 +24,7 @@
   "devDependencies": {
     "@types/node": "26.6.4",
     "@types/three": "0.186.0",
+    "playwright": "1.64.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
     "vite": "8.3.5",

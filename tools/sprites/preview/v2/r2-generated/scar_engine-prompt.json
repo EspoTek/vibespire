@@ -1,0 +1,6 @@
+{
+  "id": "scar_engine",
+  "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic shown as a crisp nearest-neighbour enlarged sprite. Subject scar_engine: A solid steel engine block in three-quarter view with a large red scar-shaped seam across its broad front plate and a heavy silver cylinder on its left. An engine, not a small red badge. Full-cell silhouette 13–14 logical pixels long inside a 16x16 cell, at least 9 pixels body width, one transparent margin pixel. Large simple shapes, flat 2–3 tone shading, no texture noise. Bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Physical modeled game object with broad planes, Phantasy Star/Ys style. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, thin sticks or additional props. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-2bed39b5-8bee-47c0-8b24-38c911b50103.png"
+}

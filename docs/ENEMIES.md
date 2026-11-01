@@ -1,6 +1,6 @@
-# Vibespire — Enemies and encounters (v1)
+# Vibespire — Enemies and encounters (v2)
 
-Status: v1, encounter designer. This file owns every enemy, minion, encounter and encounter pool. Mechanic rules (Exposed, Stagger, Rot, Riposte, Guard, Augury, the damage pipeline, the turn order) are owned by `docs/GDD.md`; where this file needs a rule, it cites the GDD section and does not restate it differently. The engine contract is `docs/ENGINE_SPEC.md`; the few additions this roster needs are collected in §5.
+Status: v2 encounter pass (2026-10-31) on top of v1. Every v2 change is marked "(v2; was …)" in place, and §4.5 explains the new shared mechanics and the data behind them. Encounter designer. This file owns every enemy, minion, encounter and encounter pool. Mechanic rules (Exposed, Stagger, Rot, Riposte, Guard, Augury, the damage pipeline, the turn order) are owned by `docs/GDD.md`; where this file needs a rule, it cites the GDD section and does not restate it differently. The engine contract is `docs/ENGINE_SPEC.md`; the few additions this roster needs are collected in §5.
 
 Numbers follow STS1's A0 skeleton (`docs/research/sts-design.md` §2.9): Act 1 normals 10–55 HP with 5–14 single hits; Act 2 about ×2–2.5 HP and ×1.5–2 damage; Act 3 again. Everything here is a starting point for the simulator, not a final tune.
 
@@ -86,12 +86,12 @@ Summoning caps are listed per enemy and count only living minions.
 
 #### `gnasher` — Gnasher (GNASHER)
 - **Visual**: a knee-high cyan lizard-pup with an oversized purple-gummed jaw, a green neck frill and stubby claws.
-- **HP** 13–17. **Spawn**: none.
+- **HP** 15–19 (v2; was 13–17). **Spawn**: none.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `nip` | Nip | attack | 3×2 |
-| `lunge` | Lunge | attack | 7 |
+| `lunge` | Lunge | attack | 8 (v2; was 7) |
 
 - **AI**: `T == 1: pick({nip: 50, lunge: 50})`; else `pick({nip: 55, lunge: 45})`, at most 2 in a row of either.
 - **Question**: none on its own (a weak-pool body). In packs it teaches that Stagger 1 removes a third of a Nip, and that a 3-hit Exposed stack on you turns a 3×2 into a 5×2.
@@ -99,28 +99,29 @@ Summoning caps are listed per enemy and count only living minions.
 
 #### `sporepuff` — Sporepuff (SPOREPUF)
 - **Visual**: a floating violet puffball with cyan spots, two stubby leaf-fins and one sleepy half-lidded eye.
-- **HP** 10–13. **Spawn**: none. `aiState.slot` = how many Sporepuffs spawned before it.
+- **HP** 14–17 (v2; was 10–13). **Spawn**: none. `aiState.slot` = how many Sporepuffs spawned before it.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `puff` | Puff | debuff | Shuffle 1 `status_tangle` into your draw pile. |
-| `sting` | Sting | attack | 5 |
-| `dust` | Spore Dust | debuff | Apply 2 Stagger to you. |
+| `sting` | Sting | attack | 7 (v2; was 5) |
+| `dust` | Spore Dust | debuff | Apply 2 Stagger to you, unless you already have 2 or more (v2). |
 
-- **AI**: `T == 1`: if `allies('sporepuff') ≥ 1` then `[puff, sting, dust][slot % 3]`, else `puff`. Afterwards `pick({sting: 50, dust: 25, puff: 25})`, never the same twice in a row.
+- **AI**: `T == 1`: if `allies('sporepuff') ≥ 1` then `[sting, dust, sting][slot % 3]` (v2; was `[puff, sting, dust]`); else `sting` if any other enemy is alive (v2), `puff` if it is truly alone. Afterwards `pick({sting: 50, dust: 25, puff: 25})`, never the same twice in a row.
 - **Question**: (weak) "Do you notice what Stagger does to your hits?" It is the first enemy that blunts you.
+- **v2 cap**: in v1 a Spore Cluster could stack your Stagger to 20 while its Puffs buried your deck in Tangles: a Block-only Breaker turtle stalemated it for 3,000+ turns (seed `v2-67-breaker`). Dust now tops you up to 2 and no further.
 - **Answers**: kill it first (11 HP); or ignore the Stagger and play Skills that turn. **Difficulty**: trivial; in a trio it is a mini AoE check.
 
 #### `scrap_drone` — Scrap Drone (S.DRONE)
 - **Visual**: a hovering salvaged drone in cyan and green plating with a single red lens, a rotor ring on top and two dangling manipulator claws.
-- **HP** 15–19. **Spawn**: none.
+- **HP** 19–23 (v2; was 15–19). **Spawn**: none.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `zap` | Zap | attack | 6 |
+| `zap` | Zap | attack | 7 (v2; was 6) |
 | `target_lock` | Target Lock | debuff | Apply 2 Exposed to you. |
 
-- **AI**: `T == 1`: `target_lock` if any ally is alive, else `zap`. Afterwards `pick({zap: 60, target_lock: 40})`, never `target_lock` twice in a row.
+- **AI**: `T == 1`: `target_lock` if two or more allies are alive (v2; was any ally), else `zap`. Afterwards `pick({zap: 60, target_lock: 40})`, never `target_lock` twice in a row.
 - **Question**: "Do you kill the marker before it marks?" You act first, so 17 damage on turn 1 erases the turn-1 lock entirely. Encounters list it **first**, so its lock boosts every ally that phase.
 - **Answers**: turn-1 front-load on the drone, or Block heavily on lock turns (Exposed adds per hit, so it punishes the multi-hitters it travels with). **Difficulty**: low; it is a priority lesson.
 - **Tiering**: returns in Act 2 as `furnace_drone` (§2.1).
@@ -131,17 +132,17 @@ Summoning caps are listed per enemy and count only living minions.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `gore` | Gore | attack | 13 + `aiState.bristle`; then `bristle = 0`. |
-| `bristle` | Bristle | defend_buff | Gain 9 Block. `aiState.bristle = 5` (its next Gore deals 18). |
+| `gore` | Gore | attack | 11 + `aiState.bristle`; then `bristle = 0`. (v2; was 13: Gore alone dealt 9.7% of all HP lost in the v1 sim.) |
+| `bristle` | Bristle | defend_buff | Gain 9 Block. `aiState.bristle = 4` (its next Gore deals 15). |
 | `trample` | Trample | attack | 5×2 |
 
 - **AI**: `T == 1: gore`. If `last == bristle`: `gore`. Otherwise `pick({gore: 40, bristle: 30, trample: 30})`, never `gore` twice in a row and never `bristle` twice in a row.
-- **Question**: "Can you put 44 damage in before the 18-damage Gore lands?" The Bristle → Gore pair is always visible one turn ahead (two with Augury).
+- **Question**: "Can you put 44 damage in before the 15-damage Gore lands?" The Bristle → Gore pair is always visible one turn ahead (two with Augury).
 - **Answers**: front-loaded Attacks (two good turns kill it), or a Block/Guard turn timed to the boosted Gore. Riposte loves it: every move is a single attack. **Difficulty**: the Act 1 "Jaw Worm" slot. It is an easy-pool body and a hard-pool anchor.
 
 #### `vinelash` — Vinelash (VINELASH)
 - **Visual**: a rooted green pitcher-plant with three whip vines, a purple fanged maw and cyan bioluminescent buds along its stem.
-- **HP** 48–54. **Spawn**: none.
+- **HP** 44–50 (v2; was 48–54). **Spawn** (v2): passive `facets` 2: *Each hit on it deals 1 less damage per Facet. A hit of yours that still deals 10 or more shatters a Facet, and you gain 1 Shard.* Armour that Shards off: it blunts many small hits and pays big hits in the shared Shard currency. **Spawn**: none.
 
 | move | name | intent | effect |
 |---|---|---|---|
@@ -153,20 +154,22 @@ Summoning caps are listed per enemy and count only living minions.
 - **Question**: "Can your offence work while blunted, and can you blunt it back?" This is a hallway rehearsal for the Gloam Empress.
 - **Answers**: big single hits (Stagger 2 takes 2 off a 14-damage hit, but 4 off two 6s); applying Stagger yourself (Stagger 2 turns Lash into 2×3); Rot (unaffected by Stagger). **Difficulty**: medium; the longest Act 1 hallway fight.
 
-#### `flitterfang` — Flitterfang (FLITTER) — *clock*
+#### `flitterfang` — Flitterfang (FLITTER) — *clock; many small hits*
 - **Visual**: a blue bat with oversized cyan ear-fans, purple membrane wings spread wide and tiny yellow fangs.
-- **HP** 24–28. **Spawn**: passive `shrill`: *At the end of its own turn, if alive, apply 2 Exposed to you.*
+- **HP** 24–28. **Spawn**: passive `frenzy` (v2, replaces `shrill`): *Each Frenzied Bite hits 1 more time than the one before, for the rest of the fight.*
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `frenzied_bite` | Frenzied Bite | attack | 3×3 |
+| `frenzied_bite` | Frenzied Bite | attack | 3 × (2 + `aiState.frenzy`); then `frenzy += 1`. |
 | `swoop` | Swoop | attack | 7 |
 
+- **v2 rework**: the v1 Shrill Exposed clock stacked with every multi-hitter and made the fight a 4 HP non-event for the planner bots while being swingy for players. Frenzy is a readable clock on its own attack (3×2, 3×3, 3×4, …) and the Act 1 target for Riposte cards that scale with the attack's hits (Breaker `trigger_hits` cards) and for Stagger (each stack removes a point per hit).
+
 - **AI**: `T == 1: frenzied_bite`. Afterwards `pick({frenzied_bite: 70, swoop: 30})`, never `swoop` twice in a row.
-- **Design rule**: at most one Flitterfang per encounter. Two would stack Exposed by +3 per round.
-- **The clock**: Exposed on you is applied at 2 per round and decays 1, so it climbs by 1 per round. Its Bite reads 9 → 12 → 15 → 18 → 21, and every ally acting after it gains the same +1, +2, +3 per hit. When it dies the clock stops and your Exposed drains by 1 per turn.
+- **Design rule**: at most one Flitterfang per encounter.
+- **The clock**: every Bite adds a hit, so its Bites read 6 → 9 → 12 → 15. Kill it in two turns and it never gets going.
 - **Question**: "Will you kill the thing that's making everything else worse?" (The clock / dangerous-if-left-alive slot.)
-- **Answers**: kill it in two turns (26 HP), or Stagger it (each stack removes 3 from a Bite, and the Exposed it causes is spent on fewer hits). **Difficulty**: medium; harder in pairs with multi-hitters.
+- **Answers**: kill it in two turns (26 HP); Stagger it (each stack removes one per hit); or prime a hit-scaling Riposte into a long Bite. **Difficulty**: medium; harder in pairs with multi-hitters.
 
 #### `sickle_mantis` — Sickle Mantis (MANTIS) — *anti-Riposte pressure*
 - **Visual**: a tall emerald mantis with two oversized cyan scythe-arms crossed in an X, violet compound eyes and a wasp-thin waist.
@@ -203,12 +206,12 @@ Each elite drops one relic by the GDD's elite roll. "Relic bias" names the exist
 
 #### `gnasher_alpha` — Gnasher Alpha (ALPHA) — *summoner*
 - **Visual**: a hulking blue-scaled lizard-wolf twice a Gnasher's size, with a purple crest of spines, a scarred jaw and one torn frill.
-- **HP** 62–66. **Spawn**: none. Comes with 2 `gnasher`s that have `leaderUid` = Alpha and **`flees_with_leader`**.
+- **HP** 64–68 (v2; was 62–66). **Spawn**: none. Comes with 2 `gnasher`s that have `leaderUid` = Alpha and **`flees_with_leader`**.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `rend` | Rend | attack | 5×2 |
-| `maul` | Maul | attack | 14 |
+| `rend` | Rend | attack | 6×2 (v2; was 5×2) |
+| `maul` | Maul | attack | 15 (v2; was 14) |
 | `rally_howl` | Rally Howl | defend_buff | Every living Gnasher gains 1 Might. The Alpha gains 8 Block. |
 | `call_pack` | Call the Pack | special | Summon Gnashers until 2 are alive (`flees_with_leader`). |
 
@@ -224,7 +227,7 @@ Each elite drops one relic by the GDD's elite roll. "Relic bias" names the exist
 | move | name | intent | effect |
 |---|---|---|---|
 | `sporefall` | Sporefall | debuff | Shuffle 3 `status_tangle` into your draw pile. |
-| `cap_crush` | Cap Crush | attack | 8 (+bond) |
+| `cap_crush` | Cap Crush | attack | 10 (+bond) (v2; was 8) |
 | `gill_lash` | Gill Lash | attack | 3×3 (+bond per hit) |
 | `hunker` | Hunker | defend | Gain 14 Block. Shuffle 1 `status_tangle` into your discard pile. |
 
@@ -236,52 +239,52 @@ Each elite drops one relic by the GDD's elite roll. "Relic bias" names the exist
 
 #### `shellback_titan` — Shellback Titan (TITAN) — *rewards burst windows and Rot*
 - **Visual**: a wide azure armoured beetle with a domed purple shell split down the middle, cyan glowing seams, four stubby legs and huge hooked mandibles.
-- **HP** 80–86. **Spawn**: passive `soft_underbelly`: *While it has no Block, each hit on it deals +3 damage* (pipeline step 4; it never decays).
+- **HP** 86–92 (v2; was 80–86). **Spawn**: passive `soft_underbelly`: *While it has no Block, each hit on it deals +3 damage* (pipeline step 4; it never decays).
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `clamp` | Clamp Shut | attack_defend | Gain 16 + 4 × `aiState.clamps` Block; then `clamps += 1`. Deal 6. |
-| `grind` | Mandible Grind | attack | 8×2 |
+| `clamp` | Clamp Shut | attack_defend | Gain 16 + 4 × `aiState.clamps` Block. Deal 8 + 2 × `clamps` (v2; was a flat 6). Then `clamps += 1`. |
+| `grind` | Mandible Grind | attack | 9×2 (v2; was 8×2) |
 
 - **AI**: strict alternation: `T` odd → `clamp`, `T` even → `grind`. It needs no rng, so the whole fight is visible from turn 1.
 - **Rhythm**: after a Clamp it sits behind 16 / 20 / 24… Block for your whole turn. After a Grind it has none, and every hit gains +3. Breaking the Clamp Block mid-turn also switches the Underbelly on for the rest of that turn.
 - **Question (sharp)**: "Can you time your damage?"
-- **Answers**: (1) **burst-window decks**: Breaker Guard-banks on Clamp turns and spends a full Onslaught chain on open turns; Chronist plays Delay 1 strikes on Clamp turns so they resolve on the open turn; multi-hit cards gain +3 per hit when it is open; (2) **Rot**: Rot is HP loss and ignores the shell completely, so a Graft just keeps the clock running. A deck that does the same thing every turn loses about half its damage. **Difficulty**: the Lagavulin slot. It is gentle on HP (about 11 per turn) and punishing on fight length, and the growing Clamp makes stalling lose.
+- **Answers**: (1) **burst-window decks**: Breaker Guard-banks on Clamp turns and spends a full Onslaught chain on open turns; Chronist plays Delay 1 strikes on Clamp turns so they resolve on the open turn; multi-hit cards gain +3 per hit when it is open; (2) **Rot**: Rot is HP loss and ignores the shell completely, so a Graft just keeps the clock running. A deck that does the same thing every turn loses about half its damage. **Difficulty**: the Lagavulin slot. It is gentle on HP (about 11 per turn) and punishing on fight length, and the growing Clamp (Block and, from v2, its snap) makes stalling lose.
 - **Relic bias**: `slow_temper`.
 
 ### 1.3 Act 1 bosses (one per run)
 
 #### `bramble_ram` — Bramble Ram (RAM) — boss — **"Can you hit hard on cue?"**
 - **Visual**: a massive ram-beast with a crown of curling bramble horns, mossy blue-green hide, purple flowers in its mane and glowing cyan eyes; head lowered, front hooves planted.
-- **HP** 200–210. **Spawn**: passive `charge_meter`: *While its current intent is Bramble Charge, it counts the HP it loses during your turn (Timeline resolutions at your turn start included; Block-absorbed damage does not count). At 22 (phase 2: 26) the charge **breaks**: its intent becomes Stumble at once and `aiState.broken += 1`.* A meter "BREAK 0/22" sits under its HP bar while the charge is pending.
+- **HP** 200–210. **Spawn**: passive `charge_meter`: *While its current intent is Bramble Charge, it counts the HP it loses during your turn (Timeline resolutions at your turn start included; Block-absorbed damage does not count). At 20 (phase 2: 24; v2, was 22 / 26) the charge **breaks**: its intent becomes Stumble at once and `aiState.broken += 1`.* A meter "BREAK 0/20" sits under its HP bar while the charge is pending.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `stomp` | Stomp | attack_debuff | 9 (+rage); then apply 3 Exposed to you. |
 | `thorn_volley` | Thorn Volley | attack | 4×4 (+rage per hit) |
 | `lower_head` | Lower Head | special | No effect. Telegraph: its next move is Bramble Charge. |
-| `bramble_charge` | Bramble Charge | attack | 30 + 6 × `aiState.unbroken` (+rage); then `unbroken += 1`. |
+| `bramble_charge` | Bramble Charge | attack | 27 + 4 × `aiState.unbroken` (+rage); then `unbroken += 1`. (v2; was 30 + 6×: the Ram killed 5.4% of spike fights and 14% of all personas' fights.) |
 | `stumble` | Stumble | sleep | Does nothing. (Only reached by breaking a charge.) |
 
-- **Phases**: phase 1 above 50% HP. Phase 2 ("Bloodbloom") at ≤ 50%: `aiState.rage = 2` (+2 per hit on all its attacks, shown in intents) and the break threshold becomes 26. The flowers in its mane open (a sprite palette swap).
+- **Phases**: phase 1 above 50% HP. Phase 2 ("Bloodbloom") at ≤ 50%: `aiState.rage = 2` (+2 per hit on all its attacks, shown in intents) and the break threshold becomes 24. The flowers in its mane open (a sprite palette swap).
 - **AI** (no rng):
   - Phase 1 by `last`: none → `stomp`; `stomp` → `thorn_volley`; `thorn_volley` → `lower_head`; `lower_head` → `bramble_charge`; `bramble_charge`/`stumble` → `stomp`.
   - Phase 2 by `last`: `lower_head` → `bramble_charge`; `bramble_charge`/`stumble` → `thorn_volley`; anything else → `lower_head`.
 - **The window**: Lower Head is its *current* intent on your turn N, so you know the Charge is coming. The break window is your turn N+1, while Charge is the current intent. Augury sees it one turn earlier still.
-- **Question**: "Can you hit hard on cue?" Each unbroken Charge grows by 6 (30, 36, 42…), so bracing forever loses.
+- **Question**: "Can you hit hard on cue?" Each unbroken Charge grows by 4 (27, 31, 35…), so bracing forever loses.
 - **Answers**: (1) **break it**: an Onslaught swing turn; a grown Bloom card; Delay 1 cards played on the Lower Head turn resolve inside the window and count; Stomp's Exposed on you is irrelevant to this. (2) **Brace it**: a Guard bank of 30+ (Breaker) or a heavy Block hand, plus Riposte (one big single attack is the ideal Riposte target). Rot helps the HP race but not the meter, because it ticks on its turn. Thorn Volley's 4 hits are where Stagger pays.
 - **Difficulty**: the Guardian slot: about 16 raw per turn if you never break, about 9 if you always do. A deck with no burst at all must have 40 HP of Block on demand by phase 2.
 
 #### `mother_orchid` — Mother Orchid (ORCHID) — boss, summoner — **"Can you keep the garden mowed while you cut the root?"**
 - **Visual**: a colossal violet orchid with a slender pistil-figure at its heart, cyan petal-arms, a skirt of roots and glowing yellow pollen drifting from its crown.
-- **HP** 165–175. **Spawn**: none (its opening move sows).
+- **HP** 165–175. **Spawn** (Phase D): passive `seed_bank` 10: *10 Buds left to sow. Each Bud she summons spends one; once the bank is empty she sows no more. Each Nectar Feast heals 3 less.* The AI never picks Sow or Full Bloom with an empty bank. **Stall breaker**: the Phase D report traced a Breaker stalemate (`v2-70-breaker`) to endless Buds plus a 10-HP heal every 4 moves. Now the garden runs out after 10 Buds, the heal wilts to 0, and Vine Crush keeps growing (+1 per use). She never seethes (§4.5).
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `sow` | Sow | special | Summon 2 `orchid_bud` (cap: 4 living Buds). |
-| `vine_crush` | Vine Crush | attack | 15 |
+| `sow` | Sow | special | Summon 2 `orchid_bud` from the Seed Bank (cap: 4 living Buds). |
+| `vine_crush` | Vine Crush | attack | 15 + 1 × earlier Vine Crushes (v2: a scaling attack; a Block-only Breaker stalemated it 4 times in 400 runs). |
 | `pollen_storm` | Pollen Storm | attack_debuff | 6×2; then apply 2 Stagger to you. |
-| `nectar` | Nectar Feast | buff | Heal 10. Every living Bud's remaining Ripening −1. |
+| `nectar` | Nectar Feast | buff | Heal 10 − 3 × earlier Feasts (10, 7, 4, 1, then 0; Phase D, was always 10). Every living Bud's remaining Ripening −1. |
 | `full_bloom` | Full Bloom | special | Summon 3 `orchid_bud` that ripen after 1 turn (cap 4). Phase 2 only, once. |
 
 - **Phases**: phase 2 at ≤ 50% HP. Its next choice is `full_bloom`; it then loses Nectar.
@@ -305,14 +308,14 @@ Each elite drops one relic by the GDD's elite roll. "Relic bias" names the exist
 
 #### `gloam_empress` — Gloam Empress (EMPRESS) — boss — **"Can your damage survive being blunted?"**
 - **Visual**: an enormous moth queen with four wide indigo-and-cyan eye-spotted wings, a furry white-lilac thorax, a crown of feathered antennae and a glowing amber jewel at her abdomen.
-- **HP** 195–205. **Spawn**: none.
+- **HP** 205–215 (v2; was 195–205). **Spawn**: none.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `scale_dust` | Scale Dust | debuff | Apply 2 Stagger to you. Gain 12 Block. |
-| `wing_buffet` | Wing Buffet | attack | 5 × (3 + `aiState.cocooned`); then `cocooned = 0`. |
-| `mothlight` | Mothlight | attack_debuff | 13; then apply 2 Exposed to you. |
-| `silk_cocoon` | Silk Cocoon | defend_buff | Gain 18 Block. `cocooned = 1`. |
+| `wing_buffet` | Wing Buffet | attack | 5 × (3 + `aiState.cocooned`). (v2: no longer resets.) |
+| `mothlight` | Mothlight | attack_debuff | 14 (v2; was 13); then apply 2 Exposed to you. |
+| `silk_cocoon` | Silk Cocoon | defend_buff | Gain 18 Block. `cocooned += 1` (v2: permanent, a scaling attack: every Cocoon adds a Wing Buffet hit for the rest of the fight). |
 | `dust_storm` | Dust Storm | attack_debuff | 4×3; then apply 2 Stagger to you. (Phase 2 only.) |
 
 - **Phases**: phase 2 ("Eclipse") at ≤ 50% HP. Her wings darken to void-blue.
@@ -329,19 +332,19 @@ Action order = list order. HP shown is the sum of ranges.
 
 | id | Pool | Enemies (in order) | Total HP | Weight | Note |
 |---|---|---|---|---|---|
-| `enc_a1_gnasher_pair` | easy | gnasher, gnasher | 26–34 | 1 | Floor-1 check. |
-| `enc_a1_drone_puff` | easy | scrap_drone, sporepuff | 25–32 | 1 | Priority lesson; first Tangle. |
+| `enc_a1_gnasher_pair` | easy | gnasher, gnasher | 30–38 | 1 | Floor-1 check. |
+| `enc_a1_drone_puff` | easy | scrap_drone, sporepuff | 33–40 | 1 | Learn to Block: Zap and Sting on turn 1 (v2). |
 | `enc_a1_thornback` | easy | thornback | 42–46 | 1 | Telegraphed spike. |
 | `enc_a1_mantis` | hard | sickle_mantis | 40–44 | 15 | Hold or spend. |
-| `enc_a1_vine_puff` | hard | sporepuff, vinelash | 58–67 | 15 | Double Stagger: big hits win. |
-| `enc_a1_flitter_gnasher` | hard | flitterfang, gnasher | 37–45 | 15 | Clock + beneficiary. |
-| `enc_a1_drone_pack` | hard | scrap_drone, gnasher, gnasher | 41–53 | 14 | Kill the marker turn 1. |
+| `enc_a1_vine_puff` | hard | sporepuff, vinelash | 62–71 | 15 | Double Stagger: big hits win. |
+| `enc_a1_flitter_gnasher` | hard | flitterfang, gnasher | 39–47 | 15 | Frenzy clock + partner. |
+| `enc_a1_drone_pack` | hard | scrap_drone, gnasher, gnasher | 49–61 | 14 | Kill the marker turn 1. |
 | `enc_a1_thornback_wisp` | hard | pollen_wisp, thornback | 62–70 | 14 | Support priority. |
-| `enc_a1_spore_cluster` | hard | sporepuff, sporepuff, sporepuff | 30–39 | 12 | Mini AoE check; three Tangles. |
-| `enc_a1_thornback_drone` | hard | scrap_drone, thornback | 57–65 | 15 | Exposed + boosted Gore. |
-| `enc_a1_alpha` | elite | gnasher_alpha, gnasher, gnasher | 88–100 | 1 | |
+| `enc_a1_spore_cluster` | hard | sporepuff, sporepuff, sporepuff | 42–51 | 12 | Mini AoE check: Sting, Dust, Sting on turn 1 (v2). |
+| `enc_a1_thornback_drone` | hard | scrap_drone, thornback | 61–69 | 15 | Exposed + boosted Gore. |
+| `enc_a1_alpha` | elite | gnasher_alpha, gnasher, gnasher | 94–106 | 1 | |
 | `enc_a1_dreadcap` | elite | dreadcap | 100–106 | 1 | |
-| `enc_a1_titan` | elite | shellback_titan | 80–86 | 1 | |
+| `enc_a1_titan` | elite | shellback_titan | 86–92 | 1 | |
 | `enc_a1_ram` / `enc_a1_orchid` / `enc_a1_empress` | boss | one boss | — | 1 each | Boss shown on the map from act start (GDD §4.9). |
 
 ---
@@ -372,10 +375,10 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 | Tier | From | HP | Moves (Act 1 → Act 2) | New |
 |---|---|---|---|---|
-| `furnace_drone` | `scrap_drone` | 15–19 → **34–40** (+19/+21) | Zap 6 → **Scorch 10** (+4); Target Lock 2 → **3 Exposed** (+1) | `overclock` (buff): the other living enemy with the highest HP gains 2 Might. |
-| `rivet_gnasher` | `gnasher` | 13–17 → **30–34** (+17) | Nip 3×2 → **3×3** (+1 hit); Lunge 7 → **10** (+3) | none |
+| `furnace_drone` | `scrap_drone` | 19–23 → **34–40** | Zap 7 → **Scorch 10**; Target Lock 2 → **2 Exposed** (v2; was 3) | `overclock` (buff): the other living enemy with the highest HP gains 2 Might. |
+| `rivet_gnasher` | `gnasher` | 15–19 → **28–32** (v2; was 30–34) | Nip 3×2 → **3×3** (+1 hit); Lunge 8 → **9** (v2; was 10) | none |
 
-- **Furnace Drone AI**: `aiState.slot` = Furnace Drones spawned before it. `T == 1`: `[scorch, overclock, target_lock][slot % 3]` (`overclock` → `scorch` if no ally). `T == 2` and `slot == 0` and any ally alive: `target_lock`. Afterwards `pick({scorch: 50, target_lock: 30, overclock: 20})`, never the same twice in a row; `overclock` is removed if no ally is alive. Its question is unchanged ("kill the marker"), but at 37 HP it needs two turns, so its first lock comes on turn 2 rather than 1: kill it by the end of your turn 2. Exposed 3 before a Riveter's 3×5 is +15 that phase, which is the lesson.
+- **Furnace Drone AI**: `aiState.slot` = Furnace Drones spawned before it. `T == 1`: `[scorch, overclock, target_lock][slot % 3]` (`overclock` → `scorch` if no ally). `T == 2` and `slot == 0` and any ally alive: `target_lock`. Afterwards `pick({scorch: 50, target_lock: 30, overclock: 20})`, never the same twice in a row; `overclock` is removed if no ally is alive. Its question is unchanged ("kill the marker"), but at 37 HP it needs two turns, so its first lock comes on turn 2 rather than 1: kill it by the end of your turn 2. Exposed 2 before a Riveter's 3×4 is +8 that phase, which is the lesson (v2; v1's 3 × 5 = +15 made Drone and Riveter an 11.6% killer).
 - **Rivet Gnasher AI**: as `gnasher`. A pair deals about 19 per turn and is the Act 2 easy-pool check for Stagger and AoE.
 - **Visuals**: Furnace Drone is the same drone frame repainted rust and steel, with a burning orange lens and welding nozzles for claws. Rivet Gnasher is the same lizard-pup with riveted steel back-plates, rust hide and an iron trap-jaw.
 
@@ -383,17 +386,17 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `cog_acolyte` — Cog Acolyte (ACOLYTE) — *healer/buffer*
 - **Visual**: a hooded cultist in rust-red robes, a brass cog halo bolted behind its head, steel-blue mechanical arms swinging an oil censer, two orange eye-lights under the hood.
-- **HP** 46–52. **Spawn**: none.
+- **HP** 46–52. **Spawn**: passive `scour_rite` (v2): *Its Anoint washes up to 4 Rot off every other enemy. It never scours itself.*
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `anoint` | Anoint | buff | Heal every other living enemy 8. |
+| `anoint` | Anoint | buff | Every other living enemy loses up to 4 Rot, then heals 6 (v2; was heal 8, no scour). |
 | `litany` | Litany of Iron | defend | Every living enemy gains 9 Block. |
 | `zeal` | Zeal | buff | The other living enemy with the highest HP gains 2 Might. |
 | `censer` | Censer Swing | attack | 9 |
 
 - **AI**: if no other ally is alive, alternate `censer` / `litany` (odd `T` = censer). Otherwise `T == 1` or `T % 4 == 1`: `litany`; else `pick({zeal: 35, anoint: 35, censer: 30})`, never the same twice in a row.
-- **Question**: "Kill the priest first?" **Answers**: 49 single-target damage in two turns; or AoE that out-damages 8 heal per ally. Litany's Block lasts through your turn, so AoE decks plan a turn without Litany (it is on a fixed every-4th-turn schedule). **Difficulty**: low alone, it lengthens every fight it joins.
+- **Question**: "Kill the priest first?" (v2: and for the Graft, "Rot the priest first?": it cleans its allies but never itself.) **Answers**: 49 single-target damage in two turns; or AoE that out-damages 6 heal per ally; or Rot on the Acolyte, which spreads to the pack when it dies. Litany's Block lasts through your turn, so AoE decks plan a turn without Litany (it is on a fixed every-4th-turn schedule). **Difficulty**: low alone, it lengthens every fight it joins.
 
 #### `riveter` — Riveter (RIVETER) — *multi-hit*
 - **Visual**: a barrel-chested steel construct with a rotary rivet gun for a right arm, a rust-stained ammo hopper on its back and a small domed head with one orange slit.
@@ -401,8 +404,8 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `rivet_burst` | Rivet Burst | attack | 3 × (5 + `aiState.loaded`); then `loaded = 0`. |
-| `reload` | Reload | defend_buff | Gain 12 Block. `loaded = 2` (next Burst 3×7). |
+| `rivet_burst` | Rivet Burst | attack | 3 × (4 + `aiState.loaded`); then `loaded = 0`. (v2; was 5 base hits: the #2 damage source in the v1 sim.) |
+| `reload` | Reload | defend_buff | Gain 12 Block. `loaded = 2` (next Burst 3×6). |
 | `pin_down` | Pin Down | attack_debuff | 7; then apply 2 Stagger to you. |
 
 - **AI**: `T == 1: rivet_burst`. If `last == reload`: `rivet_burst`. Else `pick({rivet_burst: 45, pin_down: 30, reload: 25})`, never the same twice in a row.
@@ -415,7 +418,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 | move | name | intent | effect |
 |---|---|---|---|
 | `pour_slag` | Pour Slag | debuff | Shuffle 2 `status_backlash` into your draw pile. Gain 8 Block. |
-| `ingot_slam` | Ingot Slam | attack | 17 |
+| `ingot_slam` | Ingot Slam | attack | 15 (v2; was 17) |
 | `cool_harden` | Cool and Harden | defend | Gain 18 Block. |
 | `spatter` | Spatter | attack_debuff | 6×2; then add 1 `status_jitter` to your discard pile. |
 
@@ -424,13 +427,13 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `loom_oracle` — Loom Oracle (ORACLE) — *hides its forecast*
 - **Visual**: a cult prophet fused into a steel weaving-loom frame, copper threads running from its many-fingered hands, a punch-card scroll unspooling from its chest and a furnace-orange third eye.
-- **HP** 58–64. **Spawn**: passive `sealed_pattern`: *Its forecast is always hidden ("?"). It always alternates: an attack on odd turns, a non-attack on even turns.* All its moves are `augury: 'hidden'` (GDD §2.9). Its **current** intent is always shown exactly, like every enemy's.
+- **HP** 58–64. **Spawn**: passive `sealed_pattern`: *Its forecast is always hidden ("?"). It always alternates: an attack on odd turns, a non-attack on even turns. Weave Ward gives 2 more Block per card on your Timeline* (v2). All its moves are `augury: 'hidden'` (GDD §2.9). Its **current** intent is always shown exactly, like every enemy's.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `shuttle_strike` | Shuttle Strike | attack | 6×2 |
-| `unravel` | Unravel | attack | 16 |
-| `weave_ward` | Weave Ward | defend | Every living enemy gains 8 Block. |
+| `unravel` | Unravel | attack | 14 (v2; was 16) |
+| `weave_ward` | Weave Ward | defend | Every living enemy gains 6 + 2 per card on your Timeline Block (v2; was a flat 8). Reacts to the Timeline: the Chronist can empty her Timeline before an even (Ward) turn. |
 | `thread_snare` | Thread Snare | debuff | Apply 2 Stagger and 2 Exposed to you. |
 
 - **AI**: `T` odd: `pick({shuttle_strike: 50, unravel: 50})`; `T` even: `pick({weave_ward: 50, thread_snare: 50})`.
@@ -440,13 +443,13 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `the_auditor` — The Auditor (AUDITOR) — *rewards lean decks*
 - **Visual**: a tall steel-blue ledger-machine on four spindly legs with a rust-orange abacus of glowing beads across its chest, a rubber-stamp arm and one round monocle lens burning orange.
-- **HP** 140–148. **Spawn**: passive `inventory`: *Ledger Lash hits once per 4 cards in your draw pile (round down; min 1, max 8), counted when it resolves.* The intent shows the live count, so every card you draw this turn visibly removes a quarter of a hit.
+- **HP** 150–158 (v2; was 140–148). **Spawn**: passive `inventory`: *Ledger Lash hits once per 4 cards in your draw pile (round down; min 2, max 8; v2 min was 1), counted when it resolves.* Passive `seething` 15 (v2, §4.5). The intent shows the live count, so every card you draw this turn visibly removes a quarter of a hit.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `ledger_lash` | Ledger Lash | attack | 4 × clamp(floor(draw pile / 4), 1, 8) |
+| `ledger_lash` | Ledger Lash | attack | 5 × clamp(floor(draw pile / 4), 2, 8) (v2; was 4 × clamp(…, 1, 8)) |
 | `requisition` | Requisition | debuff | Shuffle 3 `status_jitter` into your draw pile. |
-| `stamp` | Stamp | attack_debuff | 15; then apply 2 Exposed to you. |
+| `stamp` | Stamp | attack_debuff | 16 (v2; was 15); then apply 2 Exposed to you. |
 | `recount` | Recount | defend | Gain 20 Block. |
 
 - **AI**: `T == 1: requisition`; `T == 2: ledger_lash`. Afterwards `pick({ledger_lash: 40, stamp: 30, requisition: 15, recount: 15})`, never the same twice in a row; `requisition` not if used in the last 2 moves.
@@ -478,7 +481,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `boiler_tyrant` — Boiler Tyrant (BOILER) — *rewards sustained Rot/Delay; punishes careless burst*
 - **Visual**: a pot-bellied boiler colossus with a rust-red iron belly, two pressure gauges for eyes, a smokestack crown venting white steam and steel-blue pipe arms with valve-wheel fists.
-- **HP** 150–158. **Spawn**: passive `overpressure`: *Counts the HP it loses during your turn (Timeline resolutions at your turn start count; Rot, which ticks on its turn, does not). The first time the count reaches 25 in a turn, its current intent is replaced by Blowout, shown at once.* A pressure gauge "25" fills under its HP bar.
+- **HP** 150–158. **Spawn**: passive `seething` 12 (v2, §4.5) and passive `overpressure`: *Counts the HP it loses during your turn (Timeline resolutions at your turn start count; Rot, which ticks on its turn, does not). The first time the count reaches 30 (v2; was 25) in a turn, its current intent is replaced by Blowout, shown at once.* A pressure gauge "30" fills under its HP bar. **v2 window**: with Seething 12 below and Overpressure 30 above, the right turn deals between 12 and 29: a readable pressure-gauge puzzle that a turtle (under 12) and a careless burst (30+) both lose.
 
 | move | name | intent | effect |
 |---|---|---|---|
@@ -496,7 +499,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `grand_assembler` — Grand Assembler (ASSEMBLR) — boss, summoner — **"Can you scrap the line while cutting the foreman?"**
 - **Visual**: a four-armed gantry-crane titan of steel girders with rust-orange welding torches on each arm, a cracked furnace-glass dome head with one orange eye and a conveyor-belt skirt.
-- **HP** 290–300. **Spawn**: none.
+- **HP** 290–300. **Spawn**: none. Its Frame timer is its clock (§4.5).
 
 | move | name | intent | effect |
 |---|---|---|---|
@@ -508,28 +511,28 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 - **Phases**: phase 2 at ≤ 50%. Its next choice is `rush_order`, and Weld gives +2 Progress from then on.
 - **AI** (no rng). Phase 1 by `last`: none → `lay_frame`; `lay_frame` → `torch_sweep`; `torch_sweep` → `weld`; `weld` → `girder_drop`; `girder_drop` → (`allies('assembly_frame') + allies('welded_horror') ≤ 1` ? `lay_frame` : `weld`). Phase 2 by `last`: `rush_order`/`girder_drop` → `weld`; `weld` → `torch_sweep`; `torch_sweep` → `girder_drop`.
-- **Clock**: an untouched Frame becomes a Horror after its 3rd Weld (about 6 turns in phase 1, 2 Welds in phase 2).
+- **Clock** (v2 timer): a Frame also builds itself, +1 Progress on each of its own turns, so an untouched Frame is a Horror 3 of its turns after it is laid, sooner with Welds. Progress shows as "x of 3" on each Frame. (v1: Welds only, about 6 turns; the Assembler was a free boss: 0% deaths, 4 HP per fight.)
 - **Answers**: (1) **wide**: AoE kills 20-HP Frames as they are laid; dead minions spread Rot to the Assembler; (2) **narrow**: 295 HP of single-target burst on the Assembler, and every minion dies with it. A deck that ignores the Frames faces 3 Horrors at 12 damage per turn each. **Difficulty**: the Collector slot.
 
 #### `assembly_frame` (FRAME) → `welded_horror` (HORROR) — minions
 - **Frame visual**: an unfinished steel skeleton-frame of a construct, half-welded joints glowing orange, a bare socket where the head should be. **Horror visual**: the same frame completed into a hunched, mismatched welded beast with a furnace mouth, one hydraulic claw and one welding-torch arm.
-- **Frame**: HP 18–22, `dies_with_leader`. **Spawn**: passive `progress` (0–3, shown as three rivets). Move `idle` "Assembling" (sleep): does nothing. At 3 Progress it **transforms** **[ask §5.2]** into a Welded Horror at full HP (38–42). The new form's first move is planned for the next enemy phase.
+- **Frame**: HP 18–22, `dies_with_leader`. **Spawn**: passive `assembly_line`, and `progress` (0–3). Move `idle` "Assembling" (buff, v2): +1 Progress. At 3 Progress, at the end of its own move or the Assembler's, it **transforms** **[ask §5.2]** into a Welded Horror at full HP (38–42). The new form's first move is planned for the next enemy phase.
 - **Horror**: HP 38–42, `dies_with_leader`. Moves `weld_claw` 6×2 (attack) and `sear` (attack_debuff: 11, then shuffle 1 `status_backlash` into your discard pile). AI: alternate, starting `weld_claw`.
 - **Role**: dangerous only if left alive. A Frame is free to kill early and costly late.
 
 #### `furnace_heart` — Furnace Heart (FURNACE) — boss — **"Can your deck run hot?"**
 - **Visual**: a colossal iron furnace with a molten orange core visible through a ribcage grille, two bellows-lungs at its sides, chain arms ending in crucible hooks and a crown of four smokestacks.
-- **HP** 370–390. **Spawn**: passive `heat` (0–15, a gauge): *Heat +2 at the end of each of its turns (phase 2: +4). Whenever you play or Scrap a Status card, Heat −1.*
+- **HP** 340–360 (v2; was 370–390). **Spawn**: passive `heat` (0–15, a gauge): *Heat +2 at the end of each of its turns (phase 2: +3; v2, was +4). Whenever you play or Scrap a Status card, Heat −1.*
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `slag_tide` | Slag Tide | debuff | Shuffle 2 `status_backlash` into your draw pile and put 1 `status_jitter` into your hand. (Phase 2: 3 + 1.) |
-| `crucible_swing` | Crucible Swing | attack | 10×2 (phase 2: 12×2) |
+| `crucible_swing` | Crucible Swing | attack | 9×2 (phase 2: 11×2) (v2; was 10×2 / 12×2) |
 | `bellows_blast` | Bellows Blast | attack_defend | 14; gain 15 Block; Heat +2. |
 | `meltdown` | Meltdown | attack | 3 × Heat (live in the intent); then Heat = 0. |
 
 - **AI** (no rng; `aiState.step` advances on each choice). Phase 1 cycle: `[slag_tide, crucible_swing, bellows_blast, crucible_swing, meltdown]`. Phase 2 (≤ 50%, "White-Hot"): `step` restarts on the next choice with cycle `[slag_tide, crucible_swing, bellows_blast, meltdown]`.
-- **Maths**: with no venting, phase 1 Meltdown is 3 × 10 = 30 and phase 2 is 3 × 14 = 42 (cap 45). Each Status card you play or Scrap takes 3 off the next Meltdown.
+- **Maths**: with no venting, phase 1 Meltdown is 3 × 10 = 30 and phase 2 about 3 × 12 = 36 (cap 45). Each Status card you play or Scrap takes 3 off the next Meltdown.
 - **Answers**: (1) **clear the junk**: Prune/Scrap (the Graft), or spend draw and energy playing Jitter (a cheap card also lands a Chronist beat); (2) **brace the schedule**: the Meltdown turn is fixed and visible from turn 1 (two turns early with Augury), so Guard-banks, Delay-Block or primed Ripostes land exactly on it; (3) burst 380 HP faster than five cycles. A deck with none of these takes 30–45 every 4–5 turns plus Backlash. **Difficulty**: the Automaton slot: a known big hit and a deck-function test.
 
 #### `trihammer` + `trihammer_arm` ×3 — Trihammer (TRIHAMMR / ARM) — boss — **"Disarm or decapitate?"**
@@ -555,17 +558,17 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 | id | Pool | Enemies (in order) | Total HP | Weight | Note |
 |---|---|---|---|---|---|
-| `enc_a2_rivet_pair` | easy | rivet_gnasher, rivet_gnasher | 60–68 | 1 | Stagger/AoE check. |
-| `enc_a2_drone_gnasher` | easy | furnace_drone, rivet_gnasher | 64–74 | 1 | Marker + multi-hit. |
+| `enc_a2_rivet_pair` | easy | rivet_gnasher, rivet_gnasher | 56–64 | 1 | Stagger/AoE check. |
+| `enc_a2_drone_gnasher` | easy | furnace_drone, rivet_gnasher | 62–72 | 1 | Marker + multi-hit. |
 | `enc_a2_riveter` | easy | riveter | 64–70 | 1 | Barrage teacher. |
-| `enc_a2_drone_riveter` | hard | furnace_drone, riveter | 98–110 | 15 | Exposed 3 × 5 hits. |
-| `enc_a2_acolyte_golem` | hard | cog_acolyte, slag_golem | 126–138 | 14 | Heals + statuses. |
-| `enc_a2_oracle_pack` | hard | loom_oracle, rivet_gnasher, rivet_gnasher | 118–132 | 15 | Width + sealed forecast. |
-| `enc_a2_drone_trio` | hard | furnace_drone, furnace_drone, furnace_drone | 102–120 | 13 | Overclock chains; AoE. |
-| `enc_a2_acolyte_pack` | hard | cog_acolyte, rivet_gnasher, rivet_gnasher | 106–120 | 14 | Kill the priest. |
+| `enc_a2_drone_riveter` | hard | furnace_drone, riveter | 98–110 | 14 | Exposed 2 × 4 hits (v2; was 3 × 5). |
+| `enc_a2_acolyte_golem` | hard | cog_acolyte, slag_golem | 126–138 | 16 | Heals + statuses. |
+| `enc_a2_oracle_pack` | hard | loom_oracle, rivet_gnasher, rivet_gnasher | 114–128 | 11 | Width + sealed forecast (v2 weight 11; was 15, the deadliest v1 hallway). |
+| `enc_a2_drone_trio` | hard | furnace_drone, furnace_drone, furnace_drone | 102–120 | 16 | Overclock chains; AoE. |
+| `enc_a2_acolyte_pack` | hard | cog_acolyte, rivet_gnasher, rivet_gnasher | 102–116 | 16 | Kill (or Rot) the priest. |
 | `enc_a2_golem_riveter` | hard | slag_golem, riveter | 144–156 | 14 | Junk + barrage. |
-| `enc_a2_oracle_golem` | hard | loom_oracle, slag_golem | 138–150 | 15 | Hidden plan + statuses. |
-| `enc_a2_auditor` | elite | the_auditor | 140–148 | 1 | |
+| `enc_a2_oracle_golem` | hard | loom_oracle, slag_golem | 138–150 | 13 | Hidden plan + statuses. |
+| `enc_a2_auditor` | elite | the_auditor | 150–158 | 1 | |
 | `enc_a2_anvil_hammer` | elite | anvil_warden, hammer_warden | 160–172 | 1 | |
 | `enc_a2_boiler` | elite | boiler_tyrant | 150–158 | 1 | |
 | `enc_a2_assembler` / `enc_a2_furnace` / `enc_a2_trihammer` | boss | one boss (+ parts) | — | 1 each | |
@@ -600,7 +603,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `null_pulse` | Null Pulse | attack | 11 + `aiState.folded`; then `folded = 0`. |
+| `null_pulse` | Null Pulse | attack | 10 (v2; was 11) + `aiState.folded`; then `folded = 0`. |
 | `fold` | Fold | defend_buff | Gain 12 Block. `folded = 4`. |
 | `flicker` | Flicker | attack | 4×3 |
 
@@ -613,7 +616,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `splinter_storm` | Splinter Storm | attack | (3 + `aiState.refracted`) × 6; then `refracted = 0`. |
+| `splinter_storm` | Splinter Storm | attack | (3 + `aiState.refracted`) × 5 (v2; was × 6); then `refracted = 0`. |
 | `refract` | Refract | defend_buff | Gain 14 Block. `refracted = 1`. |
 | `lance` | Lance | attack_debuff | 15; then apply 2 Exposed to you. |
 
@@ -695,7 +698,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `mirror_knight` — Mirror Knight (M.KNIGHT) — *anti-burst*
 - **Visual**: a hollow suit of crystalline armour that mirrors starlight, an ice-white faceless helm with a prism visor, a long mirrored greatsword held point-down and a cape of black starfield.
-- **HP** 190–200. **Spawn**: passive `reflection`: *Tracks the most damage any single card of yours dealt this turn (all hits and all targets of that one card, after Block; cards resolving from your Timeline count; Riposte triggers, Rot and relics do not). Mirror Slash deals that much: minimum 12, maximum 40.* Live in the intent.
+- **HP** 190–200. **Spawn**: passive `seething` 22 (v2, §4.5) and passive `reflection`: *Tracks the most damage any single card of yours dealt this turn (all hits and all targets of that one card, after Block; cards resolving from your Timeline count; Riposte triggers, Rot and relics do not). Mirror Slash deals that much: minimum 12, maximum 40.* Live in the intent.
 
 | move | name | intent | effect |
 |---|---|---|---|
@@ -710,7 +713,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `phage_mother` + `phage` — Phage Mother (PHAGE.M) — *summoner; minions grow*
 - **Visual (Mother)**: a vast translucent ice-white cell-sac floating upright, a dark violet nucleus with a gold glowing core, crowned by whip-like flagella, with unborn phages visible inside. **Visual (Phage)**: a small spiked icosahedral virus-crawler with a cyan head on six spindly white legs.
-- **HP**: Mother 180–190; Phage 15–17, `dies_with_leader`. **Phage spawn**: passive `replicating`: *`age +1` at the end of each of its turns.*
+- **HP**: Mother 190–200 (v2; was 180–190), passive `seething` 10 (v2, §4.5); Phage 18–21 (v2; was 15–17), `dies_with_leader`. (v2: Lyse 10×2, was 8×2; Latch 5 + 3 per Age, was 4 + 3. v1 was a free elite: 0% deaths, 2.4 HP per fight.) **Phage spawn**: passive `replicating`: *`age +1` at the end of each of its turns.*
 
 | enemy | move | name | intent | effect |
 |---|---|---|---|---|
@@ -728,12 +731,12 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `event_horizon` — Event Horizon (HORIZON) — *anti-hoarding*
 - **Visual**: a spherical black void ringed by a bright ice-white accretion disc tilted towards the viewer, with prism light bending around its rim and a single gold pinpoint at its centre.
-- **HP** 220–230. **Spawn**: passive `event_horizon`: *At the start of its turn, before it acts, any of your Block plus Guard above 15 is pulled into it: you lose the excess (Guard first, then Block) and it gains that much Block.* Your defence counter shows the line at 15.
+- **HP** 200–210 (v2; was 220–230: it cost 40% of max HP per fight in v1). **Spawn**: passive `event_horizon`: *At the start of its turn, before it acts, any of your Block plus Guard above 15 is pulled into it: you lose the excess (Guard first, then Block) and it gains that much Block.* Your defence counter shows the line at 15.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `tidal_pull` | Tidal Pull | attack | (6 + `aiState.mass`) × 4 |
-| `crush_depth` | Crush Depth | attack | 28 + `mass` |
+| `tidal_pull` | Tidal Pull | attack | (5 + `aiState.mass`) × 4 (v2; was 6) |
+| `crush_depth` | Crush Depth | attack | 24 + `mass` (v2; was 28) |
 | `accrete` | Accrete | buff | Heal 12. `mass += 2` (permanent, shown). |
 
 - **AI**: `T == 1: tidal_pull`. Afterwards `pick({crush_depth: 40, tidal_pull: 40, accrete: 20})`, never the same twice in a row; `accrete` only if `T ≥ 3` and not in the last 3 moves.
@@ -745,14 +748,14 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `tether_sovereign` — Tether Sovereign (SOVREIGN) — boss, **ceiling check** — **"Can you finish what you start?"**
 - **Visual**: a crowned colossus in ice-white and void-blue plate with a ring-shaped prism crown, a torso like a cracked window full of stars, and four gold anchors orbiting on cable tethers.
-- **HP** 550–570. **Spawn**: passive `overflow`: *During each of your turns, at most 60 of the HP it would lose is actually lost (phase 3: 40). The rest is stored as Overflow, shown as a hatched segment on its HP bar, and is lost at the end of its next turn, after its move and Rot.* Overflow is never healed, Blocked or reduced. Rot (on its turn) and Riposte (during the enemy phase) are outside the line.
+- **HP** 530–550 (v2; was 550–570: the deadliest boss in the v2 baseline, 15–17% of spike fights). **Spawn**: passive `overflow`: *During each of your turns, at most 60 of the HP it would lose is actually lost (phase 3: 40). The rest is stored as Overflow, shown as a hatched segment on its HP bar, and is lost at the end of its next turn, after its move and Rot.* Overflow is never healed, Blocked or reduced. Rot (on its turn) and Riposte (during the enemy phase) are outside the line.
 
 | move | name | intent | effect |
 |---|---|---|---|
 | `decree` | Decree of Gravity | debuff | Apply 2 Exposed and 2 Stagger to you. Gain 25 Block. |
-| `tether_lash` | Tether Lash | attack | (6 + `rage`) × 4 |
-| `anchor_drop` | Anchor Drop | attack | 28 + `rage`; in phase 3 then `rage += 2`. |
-| `crownlight` | Crownlight | buff | `rage += 3` (+3 per hit on all its attacks, shown). Phase 1 only. |
+| `tether_lash` | Tether Lash | attack | (6 + Crown Rage) × 4 |
+| `anchor_drop` | Anchor Drop | attack | 25 (v2; was 28) + `rage`; in phase 3 then `rage += 2`. |
+| `crownlight` | Crownlight | buff | Crown Rage +3 (+3 per hit on all its attacks). Phase 1 only. **Phase D**: Rage is now a visible status, `crown_rage`, capped at 12 (it was hidden `aiState.rage`, unbounded), so a slow deck's worst Tether Lash is (6 + 12) × 4 and is readable on hover. Phase 3 Anchor Drops add 2, also within the cap. |
 | `starfall` | Starfall | attack_debuff | (9 + `rage`) × 3; then apply 2 Exposed to you. (Phase 2+.) |
 
 - **Phases**: 2 at ≤ 50% HP; 3 at ≤ 20% (the line drops to 40).
@@ -762,13 +765,13 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `star_archivist` — Star Archivist (ARCHIVST) — boss, loop tax — **"Can your deck afford to loop?"**
 - **Visual**: a towering hooded figure in black robes covered in ice-white constellation glyphs, six arms each holding a floating crystal tome, a gold astrolabe-ring halo and a face that is a single prism lens.
-- **HP** 510–530. **Spawn**: passive `catalogue`: *Each time your discard pile is shuffled into your draw pile (not the combat-start shuffle), it writes a Page (max 6; phase 2: max 8). Index Barrage hits 2 + Pages times.* Shown as a page counter. Hook: `onShuffle`.
+- **HP** 510–530. **Spawn**: passive `catalogue`: *Each time your discard pile is shuffled into your draw pile (not the combat-start shuffle), it writes a Page (max 6; phase 2: max 8). Index Barrage hits 2 + Pages times. Each Redact also writes a Page* (v2: a scaling attack, so a deck that never reshuffles still faces a growing Barrage; v1 was a free boss: 0% deaths, 3.6 HP). Shown as a page counter. Hook: `onShuffle`.
 
 | move | name | intent | effect |
 |---|---|---|---|
-| `redact` | Redact | debuff | Apply 2 Exposed to you. Gain 20 Block. |
+| `redact` | Redact | debuff | Apply 2 Exposed to you. Gain 20 Block. Write 1 Page (v2). |
 | `index_barrage` | Index Barrage | attack | 5 × (2 + Pages) |
-| `footnote` | Footnote | attack | 18 |
+| `footnote` | Footnote | attack | 20 (v2; was 18) |
 | `errata` | Errata | attack | 12×2 (phase 2 only) |
 
 - **Phases**: 2 at ≤ 50% HP ("Final Chapter"): the Page cap rises to 8 and the cycle tightens.
@@ -779,7 +782,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 #### `leukarch` + `antibody` — Leukarch, the White Throne (LEUKARCH / ANTIBODY) — boss, summoner + clock — **"Can your scaling outpace the response?"**
 - **Visual (Leukarch)**: an enthroned colossal white immune-cell king with a crown of glassy cilia, an ice-white membrane body around a void-blue nucleus heart, gold antibody orbs orbiting and two vast pseudopod arms resting on its throne. **Visual (Antibody)**: a Y-shaped crystalline antibody drone, ice-white with cyan tips and a gold binding-site glow.
-- **HP**: Leukarch 470–490; Antibody 20–24, `dies_with_leader`.
+- **HP**: Leukarch 450–470 (v2; was 470–490); Antibody 20–24, `dies_with_leader`. **Spawn** (v2): passive `seething` 12 (§4.5), the stall breaker: in v1 a Block-only Breaker deck stalemated it in 12 of 200 runs (seed `v2-8-breaker`). Calcify Guard grows by 5 per use (v2; was 10).
 
 | enemy | move | name | intent | effect |
 |---|---|---|---|---|
@@ -787,8 +790,8 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 | Leukarch | `cilia_storm` | Cilia Storm | attack | (4 + `fever`) × (3 + phase) |
 | Leukarch | `engulf` | Engulf | attack | 24 + `fever` |
 | Leukarch | `calcify` | Calcify | defend | Gain 20 + 10 × `aiState.calcifies` **Guard**; `calcifies += 1`. (Phase 2.) |
-| Leukarch | `consume` | Consume | buff | Every living Antibody dies; `fever += 2` per Antibody consumed. (Phase 3 entry, once.) |
-| Leukarch | `fever_pitch` | Fever Pitch | defend_buff | `fever += 3`. Gain 20 Block. (Phase 3.) |
+| Leukarch | `consume` | Consume | buff | Every living Antibody dies; Fever +2 per Antibody consumed. (Phase 3 entry, once.) |
+| Leukarch | `fever_pitch` | Fever Pitch | defend_buff | Fever +3. Gain 20 Block. (Phase 3.) **Phase D**: Fever is now a visible status, `white_fever`, capped at 9 (it was hidden `aiState.fever`, unbounded). A slow deck's worst Cilia Storm is (4 + 9 + Might) × 6, telegraphed a turn early by Fever Pitch. |
 | Antibody | `tag` | Tag | attack_debuff | 5; then apply 1 Exposed to you. |
 | Antibody | `opsonize` | Opsonize | buff | The Leukarch loses up to 4 debuff stacks (largest stack first). |
 
@@ -803,18 +806,18 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 | id | Pool | Enemies (in order) | Total HP | Weight | Note |
 |---|---|---|---|---|---|
 | `enc_a3_mote_pair` | easy | void_mote, void_mote | 68–80 | 1 | |
-| `enc_a3_shard_mote` | easy | shardling, void_mote | 82–94 | 1 | |
+| `enc_a3_shard_mote` | easy | shardling, void_mote | 78–90 | 1 | |
 | `enc_a3_seer` | easy | prism_seer | 76–82 | 1 | |
 | `enc_a3_cantor` | hard | echo_cantor | 110–118 | 15 | Card-count tension. |
 | `enc_a3_geometer` | hard | void_geometer | 130–140 | 15 | Big hits. |
-| `enc_a3_fever_pack` | hard | pyrexia_node, shardling, void_mote | 134–152 | 14 | Kill the fever. |
+| `enc_a3_fever_pack` | hard | pyrexia_node, shardling, void_mote | 130–148 | 14 | Kill the fever. (v1: 18.7% deaths per fight; Splinter Storm now 5 hits.) |
 | `enc_a3_warden_geometer` | hard | lymph_warden, void_geometer | 196–212 | 14 | Healer + bruiser. |
 | `enc_a3_warden_cantor` | hard | lymph_warden, echo_cantor | 176–190 | 14 | |
-| `enc_a3_prism_motes` | hard | prism_seer, void_mote, void_mote | 144–162 | 14 | Forecast churn; Glare feeds the Motes. |
-| `enc_a3_warden_shard` | hard | lymph_warden, shardling | 114–126 | 14 | Membrane + mend on a 6-hitter. |
+| `enc_a3_prism_motes` | hard | void_mote, void_mote, prism_seer | 144–162 | 14 | Forecast churn. v2: the Motes act first, so the Seer's opening Glare no longer lands on their first Null Pulses (v1: 13.4% deaths per fight). |
+| `enc_a3_warden_shard` | hard | lymph_warden, shardling | 110–122 | 14 | Membrane + mend on a Faceted 5-hitter. |
 | `enc_a3_mirror_knight` | elite | mirror_knight | 190–200 | 1 | |
-| `enc_a3_phage_mother` | elite | phage_mother | 180–190 | 1 | Phages summoned turn 1. |
-| `enc_a3_event_horizon` | elite | event_horizon | 220–230 | 1 | |
+| `enc_a3_phage_mother` | elite | phage_mother | 190–200 | 1 | Phages summoned turn 1. |
+| `enc_a3_event_horizon` | elite | event_horizon | 200–210 | 1 | |
 | `enc_a3_sovereign` / `enc_a3_archivist` / `enc_a3_leukarch` | boss | one boss (+ parts) | — | 1 each | |
 
 ---
@@ -870,7 +873,7 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 
 ### 4.2 Encounter weights and pool rules
 
-- **easy**: the first 3 monster fights of Act 1 and the first 2 of Acts 2–3 (GDD §4.9). Uniform among the 3.
+- **easy**: the first 3 monster fights of Acts 1 and 2 and the first 2 of Act 3 (`TUNING.easyFights`; v2 raised Act 2 from 2 to 3: a gentler Act 2 opening for the new-player curve). Uniform among the 3.
 - **hard**: weighted as listed in §1.4 / §2.5 / §3.4. Each act's hard weights sum to 100, so a weight is a percentage before the no-repeat rule. **No repeat of the last 2 encounters** (ENGINE_SPEC §4).
 - **elite**: uniform among the act's 3, pre-assigned to elite nodes at map generation (GDD §4.9), and no elite twice in an act until all 3 have appeared.
 - **boss**: one of 3, uniform, chosen at act start and shown on the map.
@@ -905,6 +908,41 @@ Phantasy Star scales its roster by re-using a design in a new palette (`art-styl
 | Dangerous only if left alive | `orchid_bud`, `pollen_wisp`, `assembly_frame`, `phage`, `pyrexia_node`. |
 | Minion flags | `dies_with_leader`: Orchid Bud, Assembly Frame, Welded Horror, Trihammer Arm, Phage, Antibody. `flees_with_leader`: Alpha's Gnashers. |
 | Act 1 → Act 2 palette tiers with deltas | `scrap_drone` → `furnace_drone`, `gnasher` → `rivet_gnasher` (§2.1). |
+
+### 4.5 v2 encounter pass: anti-stall pressure and class gimmicks
+
+**Why.** The v1 paired-seed sim (`docs/balance/report-v2-baseline.md`) found the defence-first bot (turtle) the strongest player by 25–37 points, a Leukarch stalemate in 12 of 200 Block-only Breaker runs, Act 1 hallways that cost a starter deck under 1 HP, Act 2 hallway packs that ended most runs, and bosses that were either free (Assembler, Archivist) or brutal (Ram, Furnace Heart). v2 pressures long fights through enemies that scale, a timer and a passivity punisher, mostly on elites and bosses. The pressure rewards killing faster; it never punishes Block itself.
+
+**Seething N** (shared passive, `src/content/enemies/bosses.ts`). *At the end of its turn, if it took less than N damage since its last turn, it gains 1 Might. Hits soaked by its Block or Guard still count.* Every hit counts in full (your attacks, Riposte, Timeline), plus non-hit HP loss (Rot, Harvest). **Phase D fairness fix**: v2 counted only HP lost, so the enemy's own Block turns (Leukarch's Calcify and Fever Pitch, the Auditor's Recount, the Boiler's Stoke) fed it even while you were attacking. The threshold is the status's stacks, so one glossary entry covers every holder:
+
+| enemy | N | why |
+|---|---|---|
+| `the_auditor` (A2 elite) | 15 | v1 free elite (1.3 HP per fight). |
+| `boiler_tyrant` (A2 elite) | 12 | Pairs with Overpressure 30: deal 12–29 a turn. |
+| `mirror_knight` (A3 elite) | 22 | Anti-burst *and* anti-stall: spread your damage. |
+| `phage_mother` (A3 elite) | 10 | v1 free elite (2.4 HP per fight); a turtle stalemate in the v2 baseline. |
+| `leukarch` (A3 boss) | 12 | The stall breaker. A deck that never makes it lose 12 HP a turn feeds +1 Might per hit on a 4–6-hit Cilia Storm every turn. |
+
+**Not on the other bosses.** An iteration put Seething on Mother Orchid (10), Grand Assembler, Furnace Heart, Trihammer (15) and Star Archivist (20). On paired seeds it turned Orchid from 2% to 47% Breaker deaths and Trihammer from 6% to 26% Chronist deaths: on summoners, killing minions is a correct answer that doesn't hurt the boss, so it seethed; on Furnace Heart and the Archivist the Block turns (Bellows, Redact) fed it. It was removed from all five. Their stall risk is small (v2 baseline: 4 stalemates in 1,800 runs among them, all Block-only Breaker) and left to the Breaker designer's sustain numbers.
+
+Bosses and elites without Seething already have a clock of their own: Bramble Ram (+4 per unbroken Charge), Mother Orchid (Vine Crush +1 per use, v2), Grand Assembler (the Frame timer, v2), Star Archivist (Redact Pages, v2), Furnace Heart (Heat), Trihammer (Overtime Might), Gloam Empress (Cocoon hits), Tether Sovereign (Crownlight Rage), Gnasher Alpha (Rally Might), Dreadcap (Status clog), Shellback Titan (Clamp grows), Anvil and Hammer (Wind Up), Event Horizon (Mass). Every elite and Leukarch now escalate. The v2 baseline (current tree, 150 seeds × 4 personas × 3 classes) had 11 stalemates, all Breaker: Leukarch ×6, Furnace Heart ×2, Mother Orchid, Star Archivist, Phage Mother and one Spore Cluster.
+
+Might shows live in every intent, so the escalation is always visible. A deck that deals the threshold every turn ends the fight in at most HP ÷ N turns, so no Seething fight can stall.
+
+**Scaling attacks.** Gloam Empress: every Silk Cocoon adds a Wing Buffet hit for the rest of the fight. Star Archivist: every Redact writes a Page (Index Barrage +1 hit), on top of reshuffles. Flitterfang: every Frenzied Bite adds a hit.
+
+**A timer.** Assembly Frames build themselves (+1 Progress on each of their turns), so every Frame is a visible 3-turn countdown to a Welded Horror.
+
+**Class gimmicks** (each one is an enemy passive with a status tooltip and a glossary entry in `src/content/keywords.ts`):
+
+| gimmick | enemy | interacts with |
+|---|---|---|
+| Many small hits that grow | Flitterfang (`frenzy`) | Breaker Riposte that scales with the attack's hits; Stagger. |
+| Cleanses Rot | Cog Acolyte (`scour_rite`): Anoint removes up to 4 Rot from each other enemy, never from itself | Graft Rot: Rot the Acolyte first. |
+| Reacts to the Timeline | Loom Oracle (`sealed_pattern`): Weave Ward +2 Block per card on your Timeline | Chronist Delay: empty the Timeline before its even (Ward) turns. |
+| Armour that Shards off | Shardling (`facets` 2): −1 damage per hit per Facet; a hit that still deals 10+ shatters one and pays 1 Shard | Big hits (Timmy) and the shared Shard economy; taxes many small hits. |
+
+No new enemies were added, so no new sprites. The four new passives have placeholder 12x12 icons in `src/render/ui/statusIconArt.ts`; their concepts are in `docs/v2/art-needed.md`.
 
 ---
 

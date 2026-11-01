@@ -10,7 +10,7 @@ export const STATUS_CARDS: CardDef[] = [
     values: JITTER, text: 'Scrap. The next card you play this turn costs {tax} more.',
     effects: [{ type: 'status', target: 'self', id: 'cost_tax', amount: JITTER.tax }], upgrade: {}, icon: 'card_status_jitter' },
   { id: 'status_backlash', name: 'Backlash', cls: 'status', type: 'status', rarity: 'special', cost: null, target: 'none', keywords: ['unplayable'], values: BACKLASH,
-    text: 'If this is in your hand at the end of your turn, it is primed (uses no Riposte capacity). The next enemy hit on you before your next turn deals +{extra_damage} damage. Then Scrap this.',
+    text: 'Unplayable. If held at the end of your turn, it is primed for free: the next enemy hit on you deals +{extra_damage} damage. Then Scrap it.',
     effects: [], upgrade: {}, hooks: { onTurnEndInHand: (ctx) => {
       const c = ctx.combat;
       const card = ctx.card;

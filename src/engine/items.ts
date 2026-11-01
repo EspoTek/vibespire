@@ -4,7 +4,7 @@ import { allCards, allPotions, allRelics, getPotionDef, getRelicDef } from '../c
 import { emit, type Env } from './core';
 import { currentFloor } from './history';
 import { nextInt, pickFrom, weightedPick } from './rng';
-import { dispatchRelic } from './statuses';
+import { dispatchRelic, playerRule } from './statuses';
 import { offerPotionSwap } from './runeffects';
 import { TUNING } from './tuning';
 import type { CardDef, CardRarity, PotionId, PotionRarity, RelicId, RelicRarity, RngState, RunState } from './types';
@@ -23,6 +23,27 @@ export function gainRelic(env: Env, id: RelicId): void {
   emit(env, { t: 'relic_gained', relic: id });
   currentFloor(env.state).relicsGained.push(id);
   dispatchRelic(env, id, 'onPickup', {});
+  if (env.state.phase === 'shop') repriceShopForRelic(env.state, id);
+}
+
+/**
+ * A relic gained while a shop is open re-prices everything still for sale (docs/v2/bugs.md BUG-2).
+ * Shop prices are fixed when the shop is generated, so Shard Writ or Vial Rack bought in a shop
+ * used to take effect only at the next shop. This runs the new relic's own `modifyShopPrice` over
+ * the current prices: the same fold generateShop applies (shopPrice in run.ts), with the new relic
+ * last in the modifier order, as it is now.
+ */
+function repriceShopForRelic(s: RunState, relic: RelicId): void {
+  const sh = s.shop;
+  if (!sh) throw new Error(`repriceShopForRelic(${relic}): phase shop without shop state`);
+  type Item = 'card' | 'relic' | 'potion' | 'remove_gold' | 'remove_shard_gold';
+  const by = (item: Item, price: number): number =>
+    Math.max(0, Math.floor(playerRule(s, price, (m, c, a) => (c.relic?.id === relic && m.modifyShopPrice ? m.modifyShopPrice(c, item, a) : a))));
+  for (const it of sh.cards) if (!it.sold) it.price = by('card', it.price);
+  for (const it of sh.relics) if (!it.sold) it.price = by('relic', it.price);
+  for (const it of sh.potions) if (!it.sold) it.price = by('potion', it.price);
+  sh.removePrice = by('remove_gold', sh.removePrice);
+  sh.removeShardGold = by('remove_shard_gold', sh.removeShardGold);
 }
 
 /** Relics that can still drop at `rarity` (not owned, not class-locked to another class, not excluded). */

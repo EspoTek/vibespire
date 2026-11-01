@@ -13,7 +13,7 @@ import { cpus } from 'node:os';
 import { allClasses } from '../src/content';
 import { useTestPack } from './content';
 import type { Aggregate } from './aggregate';
-import { batch, batchParallel, POLICIES, type BatchProgress } from './batch';
+import { batch, batchParallel, POLICIES, resolvePolicy, type BatchProgress } from './batch';
 import { applyOverrides, argsAll, describeOverrides, parseSets, type Overrides } from './overrides';
 
 function arg(name: string): string | null {
@@ -122,8 +122,9 @@ async function main(): Promise<void> {
   const classes = clsArg === null ? allClasses().map((c) => c.id) : clsArg.split(',');
   if (classes.length === 0) throw new Error('no classes');
   const policyName = arg('policy') ?? 'greedy';
-  const policy = POLICIES[policyName];
-  if (!policy) throw new Error(`unknown policy '${policyName}'`);
+  const first = classes[0];
+  if (first === undefined) throw new Error('no classes');
+  const policy = resolvePolicy(policyName, first);
   const workersArg = arg('workers');
   const workers = workersArg === null ? 1 : workersArg === 'auto' ? Math.max(1, cpus().length - 1) : Number(workersArg);
   if (!Number.isInteger(workers) || workers <= 0) throw new Error('--workers must be a positive integer or auto');

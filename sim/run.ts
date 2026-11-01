@@ -1,10 +1,19 @@
 // runOne: play one full run with a policy and summarise it from the run history.
 
-import { Game, hashString, nextU32 } from '../src/engine';
+import { getCardDef } from '../src/content';
+import { type Difficulty, Game, hashString, nextU32 } from '../src/engine';
+import { makeEnv } from '../src/engine/core';
+import { addToDeck } from '../src/engine/deck';
+import { gainPotion, gainRelic } from '../src/engine/items';
+import { drain } from '../src/engine/queue';
+import { DetailCollector } from './detail';
+import { assembled, classHasEngines, enginesFor } from './policies/lib/engines';
 import { TelemetryCollector } from './telemetry';
 import type { CombatRecord, Policy, RunResult } from './types';
 
 export interface RunOptions {
+  /** Difficulty tier of the run (ruling 71); absent = 'standard', the game's default tier. */
+  difficulty?: Difficulty;
   /** Throw if the run has not ended after this many actions (a stuck run is an engine/policy bug). */
   maxActions?: number;
   /** Copy state per action (slower; default false in the simulator). */
@@ -16,13 +25,51 @@ export interface RunOptions {
    * A stalemate is a policy or content bug; the report counts them separately. Default 100.
    */
   maxCombatTurns?: number;
+  /**
+   * Counterfactual grants applied right after run creation (before the Ascent Pact): a relic (its
+   * onPickup runs), extra cards in the starting deck, a potion. Used by sim/counterfactual.ts.
+   */
+  grant?: Grant;
+}
+
+export interface Grant {
+  relic?: string;
+  cards?: string[];
+  potion?: string;
+}
+
+/** Apply a counterfactual grant to a fresh run through the engine's own gain functions. */
+export function applyGrant(game: Game, g: Grant): void {
+  const env = makeEnv(game.state);
+  if (g.relic !== undefined) gainRelic(env, g.relic);
+  for (const id of g.cards ?? []) addToDeck(env, id, false, 'other');
+  if (g.potion !== undefined) gainPotion(env, g.potion);
+  drain(env);
 }
 
 export function runOne(seed: string, classId: string, policy: Policy, opts: RunOptions = {}): RunResult {
   const t0 = performance.now();
   const maxActions = opts.maxActions ?? 50_000;
   const maxTurns = opts.maxCombatTurns ?? 100;
-  const game = Game.newRun(seed, classId, { atomic: opts.atomic ?? false });
+  const game = Game.newRun(seed, classId, { atomic: opts.atomic ?? false, ...(opts.difficulty ? { difficulty: opts.difficulty } : {}) });
+  if (opts.grant) applyGrant(game, opts.grant);
+  const detail = new DetailCollector();
+  // Engine assembly (lib/engines.ts): first floor each engine has a piece / is assembled.
+  const engineList = classHasEngines(classId) ? enginesFor(classId) : [];
+  const engines: RunResult['engines'] = { firstPiece: {}, assembled: {} };
+  let lastFloor = -1;
+  const trackEngines = (): void => {
+    if (game.state.floor === lastFloor || engineList.length === 0) return;
+    lastFloor = game.state.floor;
+    for (const e of engineList) {
+      // A drafted piece: starter cards carry engine tags too, so they do not count here (they do count for assembly).
+      // RULINGS 70: an engine relic counts as a piece too (starter relics never carry engine tags).
+      const relicIds = game.state.player.relics.map((r) => r.id);
+      const hasPiece = game.state.player.deck.some((c) => e.cards.has(c.id) && getCardDef(c.id).rarity !== 'starter') || relicIds.some((id) => e.relics.has(id));
+      if (engines.firstPiece[e.name] === undefined && hasPiece) engines.firstPiece[e.name] = game.state.floor;
+      if (engines.assembled[e.name] === undefined && assembled(e, game.state.player.deck, relicIds)) engines.assembled[e.name] = game.state.floor;
+    }
+  };
   const prng = hashString(`policy:${policy.name}:${seed}`);
   let actions = 0;
   const tele = new TelemetryCollector();
@@ -33,8 +80,11 @@ export function runOne(seed: string, classId: string, policy: Policy, opts: RunO
     const action = policy.choose(game, legal, nextU32(prng));
     if (opts.strict && !legal.includes(action)) throw new Error(`run ${seed}: policy ${policy.name} returned an action not in legalActions: ${JSON.stringify(action)}`);
     const before = { phase: game.state.phase, act: game.state.act, bossRelicChoices: game.state.bossRelicChoices ? [...game.state.bossRelicChoices] : null };
+    const pre = detail.pre(game.state, action);
     const events = game.apply(action);
     tele.observe(before, action, events, game.state);
+    detail.observe(pre, action, events, game.state);
+    trackEngines();
     actions += 1;
     if (game.state.combat && game.state.combat.turn > maxTurns) {
       stalemate = game.state.combat.encounterId;
@@ -110,6 +160,8 @@ export function runOne(seed: string, classId: string, policy: Policy, opts: RunO
     goldEarnedByAct,
     goldSpentByAct,
     telemetry,
+    detail: detail.finish(),
+    engines,
   };
   if (stalemate !== null) result.deathEncounter = stalemate;
   else if (s.phase === 'defeat' && s.combat && last.encounterId !== null) result.deathEncounter = last.encounterId;

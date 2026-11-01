@@ -46,12 +46,13 @@ export function pendingOf(s: RunState): RunState['pendingChoice'] {
 
 /** Answer pending choices heuristically until none is open (or the fight is over). */
 export function settle(g: Game): void {
-  for (let i = 0; i < 30; i++) {
+  // a multi-pick answer takes one step per picked card plus the confirm
+  for (let i = 0; i < 300; i++) {
     const pc = pendingOf(g.state);
     if (!pc) return;
     g.apply(choiceAction(g.state, pc, g.legalActions()));
   }
-  throw new Error('greedy: more than 30 chained pending choices');
+  throw new Error('greedy: more than 300 steps of chained pending choices');
 }
 
 export function combatOver(s: RunState): boolean {
@@ -68,11 +69,11 @@ function endTurn(g: Game): void {
 // ---------------------------------------------------------------------------
 // Evaluation
 
-function attackTotal(e: EnemyState): number {
+export function attackTotal(e: EnemyState): number {
   return isAttackIntent(e.intent) && !e.intent.hidden ? (e.intent.damage ?? 0) * (e.intent.hits ?? 1) : 0;
 }
 
-function avgThreat(e: EnemyState): number {
+export function avgThreat(e: EnemyState): number {
   let sum = attackTotal(e);
   let n = 1;
   for (const f of e.forecast) {
@@ -86,7 +87,7 @@ function enemyHits(e: EnemyState): number {
   return isAttackIntent(e.intent) ? (e.intent.hits ?? 1) : 0.6;
 }
 
-function effHp(c: CombatState): number {
+export function effHp(c: CombatState): number {
   let n = 0;
   for (const e of c.enemies) if (e.alive) n += e.hp + e.block + e.guard;
   return n;
@@ -171,6 +172,18 @@ function enemyStatusValue(e: EnemyState, T: number): number {
   return v;
 }
 
+/**
+ * d per Reserve stack when the fight holds an X-cost card: about half an energy (lib/future.ts ENERGY_D 4.5),
+ * since the stack only pays out when an X card is drawn and played.
+ */
+const RESERVE_D = 2;
+
+/** Whether an X-cost card is in this combat's hand, draw or discard pile (what Reserve can feed). */
+export function combatHasXCard(c: CombatState): boolean {
+  for (const pile of [c.hand, c.draw, c.discard]) for (const x of pile) if (infoOf(x).def.cost === 'X') return true;
+  return false;
+}
+
 function playerStatusValue(s: RunState, c: CombatState, T: number, hitsIn: number): number {
   let v = 0;
   for (const [id, n] of Object.entries(c.player.statuses)) {
@@ -203,6 +216,13 @@ function playerStatusValue(s: RunState, c: CombatState, T: number, hitsIn: numbe
       case 'cost_tax':
         v -= 4 * n;
         break;
+      case 'reserve':
+        // Reserve only feeds X-cost cards (keywords.ts reserve). It fell to the generic buff price (~9 per
+        // stack), so with Reserve Coil the planner banked energy instead of playing cards, even in decks with
+        // no X card: the Reserve Coil "trap" (-12 to -27 win, Phase E; traced 2026-11-01 on cf-0-breaker:
+        // 3.4 plays per turn instead of 4.2). Worth RESERVE_D per stack only while an X card is in the fight.
+        v += combatHasXCard(c) ? RESERVE_D * n : 0;
+        break;
       default: {
         const def = getStatusDef(id);
         if (def.isDebuff) v -= 2.5 * Math.min(Math.abs(n), 10);
@@ -227,7 +247,7 @@ function allCards(c: CombatState): CardInstance[] {
 }
 
 /** Weight of one player HP in this fight (act 1-2 boss HP is mostly healed at the act transition). */
-function hpWeight(ctx: CombatCtx): number {
+export function hpWeight(ctx: CombatCtx): number {
   return ctx.kind === 'boss' && ctx.act < 3 ? 0.7 : 1;
 }
 
@@ -323,7 +343,7 @@ function kindOf(s: RunState, card: CardInstance): string {
 }
 
 /** Distinct candidate actions (identical copies with the same target are simulated once). */
-function distinct(s: RunState, legal: readonly Action[], allowPotions: boolean): Action[] {
+export function distinct(s: RunState, legal: readonly Action[], allowPotions: boolean): Action[] {
   const c = s.combat;
   if (!c) throw new Error('distinct: no combat');
   const seen = new Set<string>();

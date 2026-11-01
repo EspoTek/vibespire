@@ -1,6 +1,7 @@
 // Simulator contract (ENGINE_SPEC section 10).
 import type { Action, Act, CardId, EncounterId, RelicId } from '../src/engine';
 import type { Game } from '../src/engine';
+import type { RunDetail } from './detail';
 
 export interface Policy {
   name: string;
@@ -51,6 +52,10 @@ export interface RunResult {
   goldEarnedByAct: number[];
   goldSpentByAct: number[];
   telemetry: Telemetry;
+  /** Attribution telemetry (sim/detail.ts). */
+  detail: RunDetail;
+  /** v2 engines (lib/engines.ts): first floor the deck held a drafted (non-starter) piece of each engine / assembled it (starters count toward assembly). Empty without engines. */
+  engines: { firstPiece: Record<string, number>; assembled: Record<string, number> };
 }
 
 export interface CombatRecord {

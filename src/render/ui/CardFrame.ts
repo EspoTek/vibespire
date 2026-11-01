@@ -3,9 +3,11 @@
  * constants are `CARD` in art.ts. Name and body use the 4x6 font; the cost uses the 8x8 font in the
  * PS-blue bubble.
  *
- * Long text: the name gets 2 lines and the body 5; past that the face shows … and `truncated` is
- * set, and the owner shows the full text in a detail panel (CardDetail). Every number on the face
- * comes from the engine's text helpers (see game/view.ts).
+ * Long text never truncates: the face picks the first of CARD_FACE_LAYOUTS (art.ts) its rules
+ * fit, giving up the type line, then the art, then line pitch (5 → 6 → 8 → 10 → 11 lines). Only
+ * text longer than 11 lines would show … (`truncated`; tests/render/cardfit.test.ts keeps every
+ * card under that). The owner also shows the full text and keyword boxes in a CardDetail. Every
+ * number on the face comes from the engine's text helpers (see game/view.ts).
  *
  * Extras (GDD §2.4, §2.7): Bloom leaf counter "✿4" (gold when capped), a gold border when the card
  * would be on the beat, dimming when it can't be played, cost colouring.
@@ -20,7 +22,7 @@ import { rect, type Rect } from '../layout.ts';
 import { C } from '../palette.ts';
 import { Sprite } from '../sprite.ts';
 import { Text } from '../text.ts';
-import { CARD, CARD_COLORS, rasterizeCardFrame, rasterizePlaceholderArt, type CardKind } from './art.ts';
+import { CARD, CARD_COLORS, CARD_FACE_LAYOUTS, cardNameLayout, faceLayoutFor, rasterizeCardFrame, rasterizePlaceholderArt, type CardFaceLayout, type CardKind } from './art.ts';
 import { Widget, Z } from './Widget.ts';
 
 export type CostState = 'normal' | 'reduced' | 'raised' | 'unaffordable';
@@ -40,15 +42,21 @@ export interface CardFace {
   /** Bloom value of this copy (null/absent = not a Bloom card). */
   bloom?: number | null;
   bloomCapped?: boolean;
+  /** This copy's own Bloom when an effect lifts the Bloom its numbers read (Rootstock); `bloom` is the lifted value. */
+  bloomOwn?: number;
   costState?: CostState;
+  /** Glossary keyword ids this card's text uses (content keywordsFor), for keyword boxes. */
+  keywords?: readonly string[];
 }
 
-const frameTextures = new Map<CardKind, THREE.DataTexture>();
-function frameTexture(kind: CardKind): THREE.DataTexture {
-  let t = frameTextures.get(kind);
-  if (!t) { t = textureFromPixels(rasterizeCardFrame(kind)); frameTextures.set(kind, t); }
+const frameTextures = new Map<string, THREE.DataTexture>();
+function frameTexture(kind: CardKind, layout: number): THREE.DataTexture {
+  const key = `${kind}:${layout}`;
+  let t = frameTextures.get(key);
+  if (!t) { t = textureFromPixels(rasterizeCardFrame(kind, CARD_FACE_LAYOUTS[layout])); frameTextures.set(key, t); }
   return t;
 }
+
 
 export const LIFT = 8;
 /** z raise of a focused card over its neighbours. */
@@ -60,6 +68,7 @@ export class CardFrame extends Widget {
   private face: CardFace;
   private readonly frameMesh: THREE.Mesh<THREE.BufferGeometry, SpriteMaterial>;
   private readonly nameText: Text;
+  private readonly nameTight: Text;
   private readonly costText: Text;
   private readonly typeText: Text;
   private readonly bodyText: Text;
@@ -83,14 +92,20 @@ export class CardFrame extends Widget {
   /** Lift on focus (hand cards); grids set it to false. */
   liftOnFocus = true;
 
-  constructor(x: number, y: number, face: CardFace, seed = 0) {
-    super(rect(x, y, CARD.W, CARD.H), 'card');
+  /** Integer display scale: 1 (hand, grids) or 2 (reward offers, STS-size). The face is drawn at 1x and the node scaled, so pixels stay square. */
+  readonly scale: 1 | 2;
+
+  constructor(x: number, y: number, face: CardFace, seed = 0, scale: 1 | 2 = 1) {
+    super(rect(x, y, CARD.W * scale, CARD.H * scale), 'card');
+    this.scale = scale;
+    this.node.scale.set(scale, scale, 1);
     this.focusable = true;
     this.face = face;
-    this.frameMesh = this.addPart(new THREE.Mesh(quadGeometry(CARD.W, CARD.H), spriteMaterial(frameTexture(face.kind))), 0);
-    this.nameText = this.addPart(new Text(fonts.small, '', {
-      color: C.text, maxWidth: CARD.name.w, align: 'center', maxLines: CARD.name.lines, lineHeight: CARD.name.lineHeight, overflow: 'ellipsis',
-    }), 2);
+    this.frameMesh = this.addPart(new THREE.Mesh(quadGeometry(CARD.W, CARD.H), spriteMaterial(frameTexture(face.kind, 0))), 0);
+    // names never split a word (cardNameLayout): normal spacing, or the tight font for a too-long word
+    const nameStyle = { color: C.text, maxWidth: CARD.name.w, align: 'center', maxLines: CARD.name.lines, lineHeight: CARD.name.lineHeight } as const;
+    this.nameText = this.addPart(new Text(fonts.small, '', nameStyle), 2);
+    this.nameTight = this.addPart(new Text(fonts.smallTight, '', nameStyle), 2);
     this.costText = this.addPart(new Text(fonts.ui, '', { color: C.text, shadow: C.navy }), 3);
     this.typeText = this.addPart(new Text(fonts.small, '', { maxWidth: CARD.W - 8, align: 'center', overflow: 'ellipsis', maxLines: 1 }), 2);
     this.bodyText = this.addPart(new Text(fonts.small, '', {
@@ -108,26 +123,42 @@ export class CardFrame extends Widget {
 
   get cardFace(): CardFace { return this.face; }
   /** Name or body didn't fit: show the full text in a CardDetail. */
-  get truncated(): boolean { return this.nameText.layout.truncated || this.bodyText.layout.truncated; }
+  get truncated(): boolean { return this.bodyText.layout.truncated; }
+
+  /** Index of the CARD_FACE_LAYOUTS entry in use. */
+  layoutIndex = 0;
 
   setFace(face: CardFace, seed = 0): void {
     this.face = face;
-    this.frameMesh.material.uniforms.map.value = frameTexture(face.kind);
+    const li = faceLayoutFor(face.body);
+    this.layoutIndex = li;
+    const layout = CARD_FACE_LAYOUTS[li] as CardFaceLayout;
+    this.frameMesh.material.uniforms.map.value = frameTexture(face.kind, li);
     const name = face.name.toUpperCase();
-    this.nameText.setText(name).setColor(face.upgraded ? C.lime : C.text);
-    this.nameText.place(CARD.name.x, CARD.name.y + Math.floor((CARD.name.h - this.nameText.height) / 2));
+    const nl = cardNameLayout(name);
+    const nt = nl.tight ? this.nameTight : this.nameText;
+    this.nameText.visible = !nl.tight;
+    this.nameTight.visible = nl.tight;
+    nt.setText(nl.text).setColor(face.upgraded ? C.lime : C.text);
+    nt.place(CARD.name.x, CARD.name.y + Math.floor((CARD.name.h - nt.height) / 2));
     const cost = face.cost === null ? '' : String(face.cost);
     if (cost.length > 1) throw new Error(`CardFrame: cost "${cost}" does not fit the bubble (one glyph)`);
     this.costText.setText(cost).setColor(COST_COLORS[face.costState ?? 'normal']);
     this.costText.place(CARD.cost.x + Math.floor((CARD.cost.size - 7) / 2), CARD.cost.y + Math.floor((CARD.cost.size - 7) / 2));
     this.typeText.setText((face.typeLine ?? face.kind).toUpperCase()).setColor(CARD_COLORS[face.kind].trim);
-    this.typeText.place(4, CARD.type.y);
+    this.typeText.place(4, layout.type === 'top' ? CARD.art.y : CARD.type.y);
+    this.typeText.visible = layout.type !== 'none';
+    const bd = layout.body;
+    this.bodyText.setStyle({ maxWidth: bd.w, maxLines: bd.lines, lineHeight: bd.lineHeight });
     this.bodyText.setText(face.body);
-    const bodyY = CARD.body.y + Math.max(0, Math.floor((CARD.body.h - this.bodyText.height) / 2));
-    this.bodyText.place(CARD.body.x, bodyY);
+    const bodyY = bd.y + Math.max(0, Math.floor((bd.h - this.bodyText.height) / 2));
+    this.bodyText.place(bd.x, bodyY);
     if (face.bloom !== null && face.bloom !== undefined) {
-      this.leafText.setText(`✿${face.bloom}`).setColor(face.bloomCapped ? C.yellow : C.lime);
-      this.leafText.place(CARD.art.x + CARD.art.w - this.leafText.width, CARD.art.y + CARD.art.h - 6);
+      // lifted (Rootstock): the Bloom the numbers read, in cyan; the own value is in the detail panel
+      this.leafText.setText(`✿${face.bloom}`).setColor(face.bloomOwn !== undefined ? C.cyan : face.bloomCapped ? C.yellow : C.lime);
+      // over the art's corner; without art, on the type row (or the bottom border when that is gone too)
+      if (layout.art) this.leafText.place(CARD.art.x + CARD.art.w - this.leafText.width, CARD.art.y + CARD.art.h - 6);
+      else this.leafText.place(CARD.W - 4 - this.leafText.width, layout.type === 'top' ? CARD.art.y : CARD.H - 7);
       this.leafText.visible = true;
     } else this.leafText.visible = false;
     const plain = face.body.replace(/\[[^\]]*\]/g, '');
@@ -148,6 +179,7 @@ export class CardFrame extends Widget {
       m.position.set(CARD.art.x, CARD.art.y, 0);
       this.artPart = this.addPart(m, 1);
     }
+    this.artPart.visible = layout.art;
   }
 
   /** Held raised with a white border while its target is chosen (focus is on the enemies then). */
@@ -158,13 +190,31 @@ export class CardFrame extends Widget {
     this.renderFocus(this.focused);
   }
 
-  /** Small tag above the card ("WILL PRIME"); null hides it. */
-  setTag(text: string | null, color: number = C.amber): void {
+  /**
+   * End-of-turn marker above the card ("PRIMES AT END", "STAYS IN HAND"...): a small boxed label in
+   * `color`; `hint` (markup) explains it in the card's detail panel. null hides it.
+   */
+  setTag(text: string | null, color: number = C.amber, hint = ''): void {
     this.tagText.visible = text !== null;
+    for (const p of this.tagBox) this.removePart(p);
+    this.tagBox = [];
+    this.tagHint = text === null ? '' : hint;
     if (text === null) return;
     this.tagText.setText(text).setColor(color);
-    this.tagText.place(Math.floor((CARD.W - this.tagText.width) / 2), -9);
+    const x = Math.floor((CARD.W - this.tagText.width) / 2);
+    this.tagText.place(x, -8);
+    // a 1 px box in the tag colour around black, so the label reads over any backdrop
+    const w = this.tagText.width + 6, h = 10;
+    const outer = solidRect(w, h, color);
+    outer.position.set(x - 3, -10, 0);
+    const inner = solidRect(w - 2, h - 2, C.black);
+    inner.position.set(x - 2, -9, 0);
+    this.tagBox = [this.addPart(outer, 6.2), this.addPart(inner, 6.4)]; // text is at dz 7
   }
+
+  /** Explanation of the end-of-turn tag ('' = none), for the detail panel. */
+  tagHint = '';
+  private tagBox: THREE.Object3D[] = [];
 
   /** Gold border: this card would be on the beat if played next (GDD §2.7). */
   setBeat(on: boolean): void { this.beatBorder.visible = on; }

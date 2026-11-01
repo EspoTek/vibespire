@@ -1,0 +1,1390 @@
+{
+  "tool": "built-in image_gen",
+  "score_order": [
+    "SMS palette",
+    "1x readability",
+    "pixel cleanliness",
+    "coherence",
+    "communication"
+  ],
+  "review_conditions": [
+    "native 1x",
+    "exact NEAREST 4x",
+    "neutral dark field",
+    "black and navy fields",
+    "eight accepted examples per class or kind"
+  ],
+  "new_asset_density": "New subjects have no earlier same-ID art. Reviewed against the eight accepted neighbours, not asserted to be richer than an imagined original. Native cleanup retains generated material parts and uses 2\u20133 hard material tones.",
+  "scores": [
+    {
+      "id": "stoke",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "hair_trigger",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Fingertip read is small at 1x."
+    },
+    {
+      "id": "loosen_straps",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "kindle",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "spark_gap",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "iron_patience",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "worldbreaker",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "review": "Dense impact fragments at 1x."
+    },
+    {
+      "id": "turnabout",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "bellows",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "crazing",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "answer_in_kind",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "molten_shell",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "review": "Peeling plates remain fragmented at 1x."
+    },
+    {
+      "id": "hold_the_hour",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "ripple",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "whistle_for_wind",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Whistling face and distant enemy need the title for context."
+    },
+    {
+      "id": "red_sky",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        3,
+        4
+      ],
+      "review": "Scene has more area than the usual single-object card."
+    },
+    {
+      "id": "undertow",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "accelerando",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "bell_choir",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Five bells compress the individual clappers."
+    },
+    {
+      "id": "set_the_hour",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "gathering_storm",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Cloud and ward overlap densely."
+    },
+    {
+      "id": "squall_line",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "review": "Rain and figure are deliberately dense."
+    },
+    {
+      "id": "total_eclipse",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "eternal_return",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Small card in the clock loop is subtle."
+    },
+    {
+      "id": "reckoning",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Mirrored strike is small beside the main clock."
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "blood_tithe",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Cards and drops are small."
+    },
+    {
+      "id": "vent_plasma",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "scar_tissue",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "last_light",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "spare_capacitor",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "shrapnel_charge",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "black_box",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "strip_for_parts",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Wrench jaws are small next to layered plates."
+    },
+    {
+      "id": "scrapheap_colossus",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Scrap fist has dense internal parts."
+    },
+    {
+      "id": "burn_bright",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "arc_discharge",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "capacitor_bank",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "starfall_lance",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "stasis_bolt",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "encore",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Bowing silhouette needs the stage for context."
+    },
+    {
+      "id": "bait_flare",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "fuse",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "curse_burden",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "curse_seized_joint",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "curse_static_ghost",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Mask and coil have dense overlap."
+    },
+    {
+      "id": "curse_guilt",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "curse_vacuum_chill",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "curse_debt_mark",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Receipt is clear; coin faces are small."
+    },
+    {
+      "id": "curse_hollow_echo",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Secondary resonance plate reads as a small disk."
+    },
+    {
+      "id": "curse_parasite_vine",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "molt",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Husk can also read as a seed shell."
+    },
+    {
+      "id": "burst_pod",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "reap",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Curved blade is thin at its tip."
+    },
+    {
+      "id": "second_flush",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "thornstorm",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "review": "Vortex has dense loose fragments."
+    },
+    {
+      "id": "grim_harvest",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "clear_cut",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "deep_rot",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "review": "Skull and soil shadow merge at 1x."
+    },
+    {
+      "id": "rootstock",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "perennial",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "chaff",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "status_jitter",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Small escapement parts need the title for context."
+    },
+    {
+      "id": "status_backlash",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Spring and glove overlap densely."
+    },
+    {
+      "id": "status_tangle",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "status_drift",
+      "kind": "cards",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "spare_fuse",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "antenna_wire",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Narrow wire silhouette; coil has few interior pixels."
+    },
+    {
+      "id": "slag_bucket",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "storm_lantern",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Lantern reads clearly; trapped cloud is small."
+    },
+    {
+      "id": "scar_engine",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "static_choir",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        3,
+        4
+      ],
+      "review": "Three fork pylons are small and closely spaced."
+    },
+    {
+      "id": "whetstone",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Stone/blade intersection is dense."
+    },
+    {
+      "id": "ash_wick",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Stacked flames compress to a vertical wick cue."
+    },
+    {
+      "id": "overture_engine",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Music-box cylinder can read as a brass chest."
+    },
+    {
+      "id": "blood_rivets",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Three heads read clearly; red drops are tiny."
+    },
+    {
+      "id": "blood_mulch",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "borrowed_time",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Red sand and crack share the small glass chambers."
+    },
+    {
+      "id": "coal_scuttle",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "husk_sac",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "reapers_sickle",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Blade tip and bone handle are thin."
+    },
+    {
+      "id": "astrolabe",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "reserve_coil",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "echo_bell",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Ghost bell outlines are partial."
+    },
+    {
+      "id": "undertow_reliquary",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "kickback_governor",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Governor weights are small; return cue is subtle."
+    },
+    {
+      "id": "orbital_hammer",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Orbit lights are tiny."
+    },
+    {
+      "id": "momentum_flywheel",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "refrain_pin",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Repeat brooch hardware is subtle at 1x."
+    },
+    {
+      "id": "twin_scabbard",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "recoil_coil",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "trellis",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "festering_lens",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "conductors_baton",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Slender baton and small note sparks."
+    },
+    {
+      "id": "triage_locker",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "wanderers_compact",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "furnace_mantle",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "perpetual_calendar",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Turning page and return arc overlap."
+    },
+    {
+      "id": "salvagers_licence",
+      "kind": "relics",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Small tag stamp needs title context."
+    },
+    {
+      "id": "pot_blood_ampoule",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Thin ampoule leaves little space for its bolt mark."
+    },
+    {
+      "id": "pot_surge_flask",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "pot_kiln_salts",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Small jar and smoke compress the crystal shapes."
+    },
+    {
+      "id": "pot_fracture_serum",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "pot_riposte_salts",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "pot_ember_tonic",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "pot_fester_draught",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        4
+      ],
+      "review": "Skull label is tiny."
+    },
+    {
+      "id": "pot_hourglass_tonic",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "review": "Concrete object/creature read; material planes, silhouette and action cue remain legible at native size."
+    },
+    {
+      "id": "pot_echo_draught",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Inner ghost bottle is subtle."
+    },
+    {
+      "id": "pot_mimic_gel",
+      "kind": "potions",
+      "P_R_X_C_M": [
+        5,
+        3,
+        4,
+        4,
+        3
+      ],
+      "review": "Budding gel silhouette is busy above its beaker."
+    }
+  ],
+  "remaining_outliers": [
+    "hair_trigger",
+    "worldbreaker",
+    "molten_shell",
+    "molt",
+    "reap",
+    "thornstorm",
+    "deep_rot",
+    "whistle_for_wind",
+    "red_sky",
+    "bell_choir",
+    "gathering_storm",
+    "squall_line",
+    "eternal_return",
+    "reckoning",
+    "blood_tithe",
+    "strip_for_parts",
+    "scrapheap_colossus",
+    "encore",
+    "curse_static_ghost",
+    "curse_debt_mark",
+    "curse_hollow_echo",
+    "status_jitter",
+    "status_backlash",
+    "antenna_wire",
+    "storm_lantern",
+    "static_choir",
+    "whetstone",
+    "ash_wick",
+    "overture_engine",
+    "blood_rivets",
+    "borrowed_time",
+    "reapers_sickle",
+    "echo_bell",
+    "kickback_governor",
+    "orbital_hammer",
+    "refrain_pin",
+    "conductors_baton",
+    "perpetual_calendar",
+    "salvagers_licence",
+    "pot_blood_ampoule",
+    "pot_kiln_salts",
+    "pot_fester_draught",
+    "pot_echo_draught",
+    "pot_mimic_gel"
+  ],
+  "excluded": "Procedural 16x16 status icons, UI work and portrait follow-ups. 32x24 Status-card illustrations are included.",
+  "verification": {
+    "ui_validate.py": "109 new assets pass; all current IDs covered; all old sprite files and frame rectangles preserved",
+    "atlas_append_tests": "2 passed",
+    "python_diagnostics": "pass",
+    "node_syntax": "pass",
+    "npm run typecheck": "pass",
+    "npm test": {
+      "passed": 2466,
+      "failed": 72,
+      "files_passed": 44,
+      "files_failed": 13,
+      "log": "tools/sprites/preview/v2/tests.log",
+      "scope": "Content roster assertions, glossary/doc drift, engine/map/fuzz checks and simulator timeouts outside this art-only change. No src files edited."
+    }
+  }
+}

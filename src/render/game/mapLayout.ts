@@ -28,7 +28,15 @@ export interface MapLayout {
   at(row: number, col: number): PlacedNode;
 }
 
-export const DEFAULT_MAP_LAYOUT: MapLayoutOptions = { width: 300, rowGap: 24, colGap: 42, pad: 14, maxCol: 6 };
+/**
+ * Node boxes on the map screen (icon + 2 px focus margin): bosses are 28 px (2x icon), others 16 px.
+ * The pad keeps the whole boss box inside the content: MapScreen hides any node that pokes out of the
+ * view, and with pad 14 the boss (y = pad - 4 = 10, half 14) was never drawn, so mouse players had
+ * no boss to click (docs/v2/bugs.md, BUG-1).
+ */
+export const MAP_NODE_BOX = { boss: 28, node: 16 } as const;
+
+export const DEFAULT_MAP_LAYOUT: MapLayoutOptions = { width: 300, rowGap: 24, colGap: 42, pad: 18, maxCol: 6 };
 
 function jitter(row: number, col: number): number {
   const h = Math.imul(row * 73856093 ^ col * 19349663, 0x5bd1e995) >>> 0;

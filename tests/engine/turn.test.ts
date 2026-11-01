@@ -2,7 +2,7 @@ import '../testpack-only';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { computeIntent } from '../../src/engine';
 import { makeCard } from '../../src/engine/cards';
-import { combatOf, enemy, enemyUids, eventsOf, pacify, play, sandbox, setHand } from './helpers';
+import { combatOf, enemy, enemyUids, eventsOf, pacify, padDraw, play, sandbox, setHand } from './helpers';
 import { registerFixtures } from './fixtures';
 
 beforeAll(registerFixtures);
@@ -149,6 +149,7 @@ describe('turn structure', () => {
     pacify(g);
     const [ghost] = setHand(g, ['test_ghost']);
     if (ghost === undefined) throw new Error('setup');
+    padDraw(g); // RULINGS 72 Scrap floor
     const ev = play(g, ghost);
     expect(eventsOf(ev, 'exhaust')).toEqual([{ t: 'exhaust', uids: [ghost] }]);
     expect(combatOf(g).player.block).toBe(15);

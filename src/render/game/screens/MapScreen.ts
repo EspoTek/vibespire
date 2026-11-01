@@ -1,7 +1,7 @@
 /**
  * Map: the whole act (rows 0-14 + boss) in a scrolling column. PS-style 12x12 node icons, edges as
  * 1px palette lines (travelled path yellow, next steps lime), the current-position marker, the act
- * banner and boss name, and the legend on hold-info. Only the reachable next nodes are focusable
+ * banner and boss name, a node-icon legend, the act boss portrait, and a tooltip for any hovered node. Only the reachable next nodes are focusable
  * (left/right among them, confirm travels; mouse click). Wheel / focus scroll the column.
  */
 import { getEncounterDef } from '../../../content/index.ts';
@@ -11,15 +11,16 @@ import type { App } from '../../app.ts';
 import { actBackdrop } from '../../assets.ts';
 import { fonts } from '../../fonts.ts';
 import { quadGeometry, setFrameUv, spriteMaterial, textureFromPixels, type SpriteMaterial } from '../../gfx.ts';
-import { rect, type Rect } from '../../layout.ts';
+import { contains, rect, type Rect } from '../../layout.ts';
 import { C } from '../../palette.ts';
-import { bayer, PixelBuffer, TRANSPARENT } from '../../pixels.ts';
+import { PixelBuffer } from '../../pixels.ts';
 import { Icon } from '../../ui/Icon.ts';
 import { Label } from '../../ui/Label.ts';
 import { Panel } from '../../ui/Panel.ts';
-import { Tooltip } from '../../ui/Tooltip.ts';
+import { HintArea } from '../hud.ts';
+import { enemyAtlas } from '../view.ts';
 import { Widget, Z } from '../../ui/Widget.ts';
-import { layoutMap, scrollToShow, type MapLayout } from '../mapLayout.ts';
+import { layoutMap, MAP_NODE_BOX, scrollToShow, type MapLayout } from '../mapLayout.ts';
 import { RunScreen } from '../RunScreen.ts';
 import type { RunSession } from '../session.ts';
 import { ACT_NAMES } from './ActTransitionScreen.ts';
@@ -55,8 +56,8 @@ class MapNodeWidget extends Widget {
     this.cy = cy;
     const scale = node.type === 'boss' ? 2 : 1;
     this.icon = this.addChild(new Icon(0, 0, app.icons, `node_${node.type}`, scale), 1);
-    const sz = 12 * scale;
-    this.rect = { ...this.rect, w: sz + 4, h: sz + 4 };
+    const box = node.type === 'boss' ? MAP_NODE_BOX.boss : MAP_NODE_BOX.node; // 12 px icon x scale + 2 px margin each side
+    this.rect = { ...this.rect, w: box, h: box };
     this.icon.moveTo(2, 2);
     this.label = `${NODE_NAMES[node.type]}, floor row ${node.row + 1}`;
   }
@@ -76,7 +77,6 @@ export class MapScreen extends RunScreen {
   private edgeMesh: THREE.Mesh<THREE.BufferGeometry, SpriteMaterial> | null = null;
   private edgeTex: THREE.DataTexture | null = null;
   private edgeH = 0;
-  private legend: Tooltip | null = null;
   private info!: Label;
   private cursor!: Label;
   private blink = 0;
@@ -84,16 +84,18 @@ export class MapScreen extends RunScreen {
   constructor(app: App, session: RunSession) { super(app, session, 'map', actBackdrop(session.state.act)); }
 
   protected build(): void {
-    this.bg.setDim(1); // readable: the column gets its own dithered veil (drawEdges)
+    this.bg.setDim(1); // the map column has its own solid black fill (drawEdges)
     const s = this.state;
-    const frame = this.add(new Panel(rect(VIEW.x - 8, VIEW.y - 4, VIEW.w + 16, VIEW.h + 8), { fill: TRANSPARENT }));
+    const frame = this.add(new Panel(rect(VIEW.x - 8, VIEW.y - 4, VIEW.w + 16, VIEW.h + 8), { fill: C.black }));
     frame.setZ(Z.PANEL - 10);
     const side = this.add(new Panel(rect(6, 42, 162, 120), { title: `ACT ${s.act}` }));
     side.setZ(Z.PANEL);
     side.addChild(new Label(14, 62, ACT_NAMES[s.act], { font: fonts.small, color: C.textHi }), 2);
     side.addChild(new Label(14, 74, `BOSS: ${getEncounterDef(s.map.bossEncounter).name.toUpperCase()}`, { font: fonts.small, maxWidth: 146, color: C.pink }), 2);
     this.info = side.addChild(new Label(14, 90, '', { font: fonts.small, maxWidth: 146, markup: true, lineHeight: 8 }), 2);
-    side.addChild(new Label(14, 148, 'HOLD I / Y: LEGEND', { font: fonts.small, color: C.textMuted }), 2);
+    side.addChild(new Label(14, 148, 'HOVER A NODE: DETAILS', { font: fonts.small, color: C.textMuted }), 2);
+    this.buildLegend();
+    this.buildBossPreview();
     this.layout = layoutMap(s.map.rows);
     this.drawEdges();
     this.nodes = [];
@@ -116,9 +118,8 @@ export class MapScreen extends RunScreen {
     const s = this.state;
     const h = this.layout.height + 8;
     this.edgeH = h;
-    // a dithered black veil (~70% coverage): the act backdrop shows through, nodes and edges stay legible
-    const buf = new PixelBuffer(VIEW.w, h, TRANSPARENT);
-    for (let y = 0; y < h; y++) for (let x = 0; x < VIEW.w; x++) if (bayer(x, y, 11)) buf.set(x, y, C.black);
+    // a clean black fill (a dithered veil let the act backdrop's bands read as noise behind the rows)
+    const buf = new PixelBuffer(VIEW.w, h, C.black);
     // faint row stripes so the column reads as a tower
     for (let y = 0; y < h; y++) if (y % 24 === 2) buf.hline(0, y, VIEW.w, C.navy);
     const visited = s.mapPath;
@@ -162,18 +163,76 @@ export class MapScreen extends RunScreen {
       w.focusable = w.reachable;
       w.list = w.reachable ? { key: 'map-next', index: r, axis: 'x', wrap: true } : undefined;
       w.onFocus = () => { this.showInfo(w); this.ensureVisible(w); };
+      w.hint = this.nodeHint(w.mapNode);
       // left/right stay on the path even when there is only one next node (no drift into the HUD)
       w.handleNav = (dir) => w.reachable && (dir === 'left' || dir === 'right') && sorted.length <= 1;
       w.onActivate = () => {
         const a = travels.find((t) => t.to.row === w.mapNode.row && t.to.col === w.mapNode.col);
         if (!a) throw new Error('map: travel vanished');
+        // three footsteps carry over the screen change (scheduled on the audio clock)
+        const now = this.app.sfx.nowOrNull();
+        if (now !== null) for (let i = 0; i < 3; i++) this.app.sfx.play('step', { at: now + 0.1 + i * 0.12, semis: i === 1 ? -2 : 0 }); // after the confirm blip
         this.act(a);
       };
       if (w.reachable) this.scope.add(w);
       else this.scope.remove(w);
     }
+    if (this.nodes.some((w) => w.reachable && w.mapNode.type === 'elite')) this.tips.offer('elite');
     const first = this.nodes.find((w) => w.reachable && w.mapNode.col === sorted[0]?.col);
     if (first) this.focus.focus(first);
+  }
+
+  /** Tooltip for a node: what it is, and for the boss / a scouted elite, who. */
+  private nodeHint(n: MapNode): string {
+    const t = n.type;
+    let who = '';
+    if (t === 'boss') who = `\n[pink]${getEncounterDef(this.state.map.bossEncounter).name.toUpperCase()}[/] waits here.`;
+    // Surveyor Ink: elite nodes show which elite they hold
+    if (t === 'elite' && n.encounterId !== undefined && this.state.player.relics.some((r) => r.id === 'surveyor_ink')) {
+      who = `\n[pink]${getEncounterDef(n.encounterId).name.toUpperCase()}[/] (Surveyor Ink)`;
+    }
+    return `[yellow]${NODE_NAMES[t]}[/]\n${NODE_HINTS[t]}${who}`;
+  }
+
+  /** Node-icon legend under the act panel (always shown). */
+  private buildLegend(): void {
+    const types = Object.keys(NODE_NAMES) as MapNode['type'][];
+    const panel = this.add(new Panel(rect(6, 166, 162, 22 + types.length * 14), { title: 'LEGEND' }));
+    panel.setZ(Z.PANEL);
+    types.forEach((t, i) => {
+      const y = 186 + i * 14;
+      panel.addChild(new Icon(14, y - 1, this.app.icons, `node_${t}`), 2);
+      panel.addChild(new Label(32, y + 2, NODE_NAMES[t], { font: fonts.small, color: t === 'boss' || t === 'elite' ? C.pink : C.text }), 2);
+    });
+  }
+
+  /** The act boss's portrait and name (right column); focusable so keyboard / pad users can read it. */
+  private buildBossPreview(): void {
+    const enc = getEncounterDef(this.state.map.bossEncounter);
+    const first = enc.enemies[0];
+    if (first === undefined) throw new Error(`boss encounter ${enc.id} has no enemies`);
+    const bossId = typeof first === 'string' ? first : first.id;
+    const { atlas, frame } = enemyAtlas(this.app, bossId);
+    const f = atlas.frame(frame);
+    const w = 150;
+    const panel = this.add(new Panel(rect(VIEW.x + VIEW.w + 10, 42, w, f.h + 46), { title: 'ACT BOSS' }));
+    panel.setZ(Z.PANEL);
+    panel.addChild(new Icon(VIEW.x + VIEW.w + 10 + Math.floor((w - f.w) / 2), 62, atlas, frame), 2);
+    panel.addChild(new Label(VIEW.x + VIEW.w + 16, 66 + f.h, enc.name.toUpperCase(), { font: fonts.small, align: 'center', color: C.pink, maxWidth: w - 12 }), 2);
+    const area = panel.addChild(new HintArea(rect(panel.rect.x + 2, panel.rect.y + 2, w - 4, panel.rect.h - 4)), 3);
+    area.hint = `[pink]${enc.name.toUpperCase()}[/]\nThe boss at the top of this act. Beat it to reach the next act (and a boss relic).`;
+    area.label = `Act boss: ${enc.name}`;
+    this.scope.add(area);
+  }
+
+  /** Mouse over a node that can't take focus (not reachable yet): its tooltip still shows. */
+  protected override updateInfo(): void {
+    const p = this.app.input.pointer;
+    if (this.focus.depth === 1 && !this.leaving && p.inside) {
+      const n = this.nodes.find((w) => !w.focusable && w.visible && contains(w.rect, p.x, p.y));
+      if (n) { this.infoLayer.update(n, { side: 'right' }); return; }
+    }
+    super.updateInfo();
   }
 
   private showInfo(w: MapNodeWidget): void {
@@ -217,15 +276,6 @@ export class MapScreen extends RunScreen {
       const max = Math.max(0, this.layout.height - VIEW.h);
       this.scroll = Math.max(0, Math.min(max, this.scroll + inp.wheel * 24));
       this.applyScroll();
-    }
-    const info = inp.held('info') && this.focus.depth === 1;
-    if (info && !this.legend) {
-      this.legend = this.add(new Tooltip({ maxWidth: 200 }));
-      const lines = (Object.keys(NODE_NAMES) as MapNode['type'][]).map((t) => `${NODE_NAMES[t]}: ${NODE_HINTS[t]}`);
-      this.legend.show(rect(6, 166, 162, 10), `[yellow]LEGEND[/]\n${lines.join('\n')}`, 'below');
-    } else if (!info && this.legend) {
-      this.removeWidget(this.legend);
-      this.legend = null;
     }
   }
 

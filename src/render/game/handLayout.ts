@@ -22,12 +22,21 @@ export interface TimelineEntryLike { uid: number; dueTurn: number; seq: number }
 
 export interface TimelineSlot { uid: number; /** 0 = next turn, 1 = +2, 2 = +3 */ col: number; row: number; x: number; y: number }
 
-/** Timeline strip geometry (GDD §2.8): three columns "NEXT TURN / +2 / +3" of stacked mini-cards. */
-export const TIMELINE = { x: 160, y: 4, colW: 106, gapX: 4, chipW: 50, chipH: 12, headerH: 10 } as const;
+/**
+ * Timeline window geometry (GDD §2.8): a PS window at the top centre, three columns "NEXT TURN /
+ * IN 2 / IN 3" with one mini-card chip per row; `rows` rows show (more: the header counts them).
+ * The window stays clear of the relic strip (x < 156), the card detail (x < 154) and the intents (y >= 46).
+ */
+export const TIMELINE = { x: 162, y: 5, colW: 100, gapX: 4, chipW: 96, chipH: 12, headerH: 11, perRow: 1, rows: 2 } as const;
+
+/** The Timeline window's frame (black fill, white 2 px border) around the columns. */
+export function timelineWindowRect(): { x: number; y: number; w: number; h: number } {
+  return { x: TIMELINE.x - 4, y: TIMELINE.y - 4, w: 3 * TIMELINE.colW + 2 * TIMELINE.gapX + 8, h: TIMELINE.headerH + TIMELINE.rows * (TIMELINE.chipH + 1) + 7 };
+}
 
 /**
  * Place entries by turns-until-resolution (dueTurn - turn, clamped to 1..3), in seq order within
- * a column; two chips per row. Entries already due (<= turn) sit in the first column.
+ * a column; TIMELINE.perRow chips per row. Entries already due (<= turn) sit in the first column.
  */
 export function timelineSlots(entries: readonly TimelineEntryLike[], turn: number): TimelineSlot[] {
   const cols: TimelineEntryLike[][] = [[], [], []];
@@ -38,10 +47,10 @@ export function timelineSlots(entries: readonly TimelineEntryLike[], turn: numbe
   const out: TimelineSlot[] = [];
   cols.forEach((list, col) => {
     list.forEach((e, i) => {
-      const row = Math.floor(i / 2);
+      const row = Math.floor(i / TIMELINE.perRow);
       out.push({
         uid: e.uid, col, row,
-        x: TIMELINE.x + col * (TIMELINE.colW + TIMELINE.gapX) + 2 + (i % 2) * (TIMELINE.chipW + 2),
+        x: TIMELINE.x + col * (TIMELINE.colW + TIMELINE.gapX) + 2 + (i % TIMELINE.perRow) * (TIMELINE.chipW + 2),
         y: TIMELINE.y + TIMELINE.headerH + row * (TIMELINE.chipH + 1),
       });
     });

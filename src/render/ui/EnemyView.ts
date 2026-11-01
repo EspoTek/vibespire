@@ -47,6 +47,9 @@ export class EnemyView extends Widget {
     for (const y of [2, 0]) { this.lungeY = y; await tw.delay(30); }
   }
 
+  /** Attack-pose offset in whole px (negative = rear back, positive = toward the player); fx timelines drive it. */
+  setLunge(y: number): void { this.lungeY = Math.round(y); }
+
   /** Change the integer magnification, keeping the feet (bottom-centre) where they were. */
   setScale(scale: number): void {
     if (scale === this.sprite.pixelScale) return;
@@ -57,7 +60,7 @@ export class EnemyView extends Widget {
   }
 
   /** Flash white and shake; resolves when both finish. */
-  hit(tw: Tweener, px = 3, ms = 240): Promise<void> {
-    return Promise.all([flash(tw, this.sprite, ms), shake(tw, this.shaker, px, ms)]).then(() => undefined);
+  hit(tw: Tweener, px = 3, ms = 240, startOff = false): Promise<void> {
+    return Promise.all([flash(tw, this.sprite, ms, 15, startOff), shake(tw, this.shaker, px, ms)]).then(() => undefined);
   }
 }

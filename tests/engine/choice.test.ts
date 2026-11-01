@@ -4,6 +4,7 @@ import { registerFixtures } from './fixtures';
 import { Game, deserialize, serialize, type Action } from '../../src/engine';
 import { makeCard } from '../../src/engine/cards';
 import { combatOf, eventsOf, pacify, play, sandbox, setHand } from './helpers';
+import { answerChoice } from '../answer-choice';
 
 beforeAll(registerFixtures);
 
@@ -32,7 +33,7 @@ describe('pending choices', () => {
     expect(() => g.apply({ type: 'end_turn' })).toThrow(/illegal/);
     expect(() => g.apply({ type: 'resolve_choice', uids: [a, b] })).toThrow(/illegal/);
     expect(() => g.apply({ type: 'resolve_choice', uids: [99999] })).toThrow(/illegal/);
-    const ev2 = g.apply({ type: 'resolve_choice', uids: [a] });
+    const ev2 = answerChoice(g, [a]);
     expect(eventsOf(ev2, 'discard').map((d) => d.uids)).toEqual([[a], [sift]]);
     const c = combatOf(g);
     expect(c.pendingChoice).toBeNull();
@@ -48,7 +49,7 @@ describe('pending choices', () => {
     play(g, m as number);
     const pc = combatOf(g).pendingChoice;
     expect(pc).toMatchObject({ kind: 'options', choices: [0, 1], labels: ['Gain 9 Block.', 'Draw 2 cards.'] });
-    g.apply({ type: 'resolve_choice', uids: [0] });
+    answerChoice(g, [0]);
     expect(combatOf(g).player.block).toBe(9);
   });
 
@@ -61,14 +62,31 @@ describe('pending choices', () => {
     const pc = combatOf(g).pendingChoice;
     const top3 = drawBefore.slice(-3).reverse();
     expect(pc?.choices).toEqual(top3);
-    const answers = onlyChoices(g);
-    expect(answers).toHaveLength(8); // all subsets of 3
-    expect(answers[0]).toEqual({ type: 'resolve_choice', uids: [] });
-    expect(() => g.apply({ type: 'resolve_choice', uids: [top3[2] as number, top3[0] as number] })).toThrow(/illegal/);
-    g.apply({ type: 'resolve_choice', uids: [top3[0] as number, top3[2] as number] });
+    // multi-pick: confirm the (empty) selection, or select one of the 3 cards: linear, not all subsets
+    expect(g.legalActions()).toEqual([
+      { type: 'resolve_choice', uids: [] },
+      ...top3.map((uid) => ({ type: 'choice_toggle', uid })),
+    ]);
+    expect(() => g.apply({ type: 'resolve_choice', uids: [top3[0] as number, top3[2] as number] })).toThrow(/illegal/); // not selected yet
+    g.apply({ type: 'choice_toggle', uid: top3[2] as number });
+    g.apply({ type: 'choice_toggle', uid: top3[0] as number });
+    expect(combatOf(g).pendingChoice?.picked).toEqual([top3[0], top3[2]]); // kept in choices order
+    expect(g.legalActions()[0]).toEqual({ type: 'resolve_choice', uids: [top3[0], top3[2]] });
+    answerChoice(g, [top3[0] as number, top3[2] as number]);
     const c = combatOf(g);
     expect(c.draw.map((x) => x.uid)).toEqual(drawBefore.filter((u) => u !== top3[0] && u !== top3[2]));
     expect(c.discard.map((x) => x.uid)).toEqual(expect.arrayContaining([top3[0], top3[2]]));
+  });
+
+  it('a multi-pick from a big deck stays small (Overhaul: 3 of 40 cards was 9,880 answers)', () => {
+    const g = sandbox({ deck: Array.from({ length: 12 }, () => 'test_block') });
+    pacify(g);
+    const host = combatOf(g);
+    const choices = Array.from({ length: 40 }, (_, i) => 1000 + i);
+    host.pendingChoice = { kind: 'cards', prompt: 'Pick 3.', from: 'deck', choices, labels: [], offers: [], min: 3, max: 3, picked: [], resume: { op: 'upgrade_deck' } };
+    expect(g.legalActions()).toHaveLength(40); // 40 selects, no confirm yet
+    host.pendingChoice.picked = [1000, 1001, 1002];
+    expect(g.legalActions()).toHaveLength(4); // confirm + 3 deselects (no room for more)
   });
 
   it('exhaust-choose and upgrade-choose resume their cards', () => {
@@ -77,7 +95,7 @@ describe('pending choices', () => {
     const [purge, x, armory, y] = setHand(g, ['test_purge', 'test_strike', 'test_armory', 'test_block']);
     if (purge === undefined || x === undefined || armory === undefined || y === undefined) throw new Error('setup');
     play(g, purge);
-    g.apply({ type: 'resolve_choice', uids: [x] });
+    answerChoice(g, [x]);
     expect(combatOf(g).exhaust.map((c) => c.uid)).toEqual([x]);
     expect(combatOf(g).energy).toBe(4);
     play(g, armory);

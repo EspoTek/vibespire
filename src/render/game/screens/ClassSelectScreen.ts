@@ -7,7 +7,8 @@
  * registered class (the engine's test class) is appended with a placeholder portrait.
  */
 import { allClasses, getRelicDef } from '../../../content/index.ts';
-import { renderRelicText } from '../../../engine/index.ts';
+import { classMaxHpBonus, renderRelicText, type Difficulty } from '../../../engine/index.ts';
+import { DIFFICULTY_NAMES, difficultyHint } from '../difficulty.ts';
 import type { App } from '../../app.ts';
 import { fonts } from '../../fonts.ts';
 import { H, rect, W } from '../../layout.ts';
@@ -27,6 +28,8 @@ import { screenFor } from '../router.ts';
 import { RunSession } from '../session.ts';
 import { portraitOrNull } from '../view.ts';
 import type { SongName } from '../../music.ts';
+import { CardFrame } from '../../ui/CardFrame.ts';
+import { InfoLayer } from '../../ui/InfoLayer.ts';
 
 interface ClassEntry { id: string; name: string; blurb: string; available: boolean }
 
@@ -67,9 +70,28 @@ class ClassCard extends Widget {
       if (!def) throw new Error(`ClassCard: ${entry.id} vanished from the registry`);
       const relic = def.startingRelics[0];
       const relicText = relic ? `[cyan]${getRelicDef(relic).name.toUpperCase()}[/]\n${renderRelicText(relic)}` : `[grey]NO STARTER RELIC[/]`;
-      this.addChild(new Label(x + 8, y + 130, `HP ${def.maxHp}  ENERGY ${def.maxEnergy}\n${relicText}`, { font: fonts.small, markup: true, maxWidth: w - 16, lineHeight: 8, maxLines: 7, overflow: 'ellipsis' }), 2);
+      this.stats = this.addChild(new Label(x + 8, y + 130, '', { font: fonts.small, markup: true, maxWidth: w - 16, lineHeight: 8, maxLines: 7, overflow: 'ellipsis' }), 2);
+      this.statsOf = (tier) => {
+        // ruling 76: the tier's starting max-HP bonus for this class (shown, and added to the HP)
+        const bonus = classMaxHpBonus(tier, def.id);
+        return `HP ${def.maxHp + bonus}${bonus !== 0 ? ` [lime](${bonus > 0 ? '+' : ''}${bonus})[/]` : ''}  ENERGY ${def.maxEnergy}\n${relicText}`;
+      };
+      this.showTier('standard');
     }
     this.label = `${entry.name}. ${entry.blurb}${entry.available ? '' : ' Not in this build.'}`;
+    // InfoLayer boxes the class's mechanics (and its starter relic's terms) beside the focused card
+    const def = allClasses().find((c) => c.id === entry.id);
+    const relic = def?.startingRelics[0];
+    this.keywordText = `${entry.blurb} ${relic ? renderRelicText(relic) : ''}`;
+  }
+
+  /** Starting stats for a tier (null: a class not in this build shows none). */
+  private stats: Label | null = null;
+  private statsOf: ((tier: Difficulty) => string) | null = null;
+
+  /** Show the starting HP of the selected difficulty tier (ruling 76). */
+  showTier(tier: Difficulty): void {
+    if (this.stats && this.statsOf) this.stats.setText(this.statsOf(tier));
   }
 
   setSelected(on: boolean): void {
@@ -129,9 +151,13 @@ class SeedField extends Widget {
 }
 
 export class ClassSelectScreen extends Screen {
+  /** Difficulty tier for the new run (ruling 71); Standard is the default. */
+  private tier: Difficulty = 'standard';
+  private tierButton: Button | null = null;
   override get music(): SongName { return 'title'; }
   private readonly cards: ClassCard[] = [];
   private readonly seed: SeedField;
+  private readonly info: InfoLayer;
 
   constructor(app: App) {
     super(app, 'class-select');
@@ -155,6 +181,9 @@ export class ClassSelectScreen extends Screen {
     this.seed = panel.addChild(new SeedField(80, 236, app), 2);
     panel.addChild(new Label(256, 241, 'CONFIRM TO TYPE  (KEYBOARD)', { font: fonts.small, color: C.textMuted }), 2);
     panel.addChild(new Button(rect(40, 270, 120, 0), 'STARTER DECK', { onActivate: () => this.showDeck(), hint: 'Preview the starting deck.' }), 2);
+    // difficulty tier (ruling 71): confirm / click toggles Standard <-> Heroic; the tooltip explains it
+    this.tierButton = panel.addChild(new Button(rect(170, 270, 160, 0), '', { onActivate: () => this.toggleTier() }), 2);
+    this.showTier();
     const begin = panel.addChild(new Button(rect(W - 170, 300, 130, 0), 'BEGIN CLIMB', { onActivate: () => this.begin() }), 2);
     const back = panel.addChild(new Button(rect(40, 300, 80, 0), 'BACK', { onActivate: () => { void this.app.screens.pop(); } }), 2);
     // one row: left/right moves between BACK and BEGIN CLIMB (spatial nav would jump up to STARTER DECK)
@@ -163,6 +192,13 @@ export class ClassSelectScreen extends Screen {
     this.focus.pushScope('class-select', () => { void this.app.screens.pop(); }).add(panel);
     const firstAvailable = this.cards.find((c) => c.entry.available);
     if (firstAvailable) this.select(firstAvailable, false);
+    this.info = new InfoLayer(this);
+  }
+
+  override update(): void {
+    // keyword boxes / tooltips for the focused class card or button (the deck preview has its own detail)
+    const f = this.focus.focused;
+    this.info.update(this.focus.depth === 1 && !(f instanceof CardFrame) ? f : null);
   }
 
   override enter(): void {
@@ -174,6 +210,7 @@ export class ClassSelectScreen extends Screen {
   private select(card: ClassCard, sound = true): void {
     if (!card.entry.available) { if (sound) this.app.sfx.play('cancel'); this.app.toasts.show(`${card.entry.name} IS NOT IN THIS BUILD YET`); return; }
     for (const c of this.cards) c.setSelected(c === card);
+    if (this.tierButton) this.showTier(); // the tooltip names this class's bonus, if any
   }
 
   private selected(): ClassCard {
@@ -193,12 +230,27 @@ export class ClassSelectScreen extends Screen {
     });
   }
 
+  private toggleTier(): void {
+    this.tier = this.tier === 'standard' ? 'heroic' : 'standard';
+    this.showTier();
+  }
+
+  private showTier(): void {
+    const b = this.tierButton;
+    if (!b) throw new Error('ClassSelect: tier button not built');
+    b.setText(`TIER: ${DIFFICULTY_NAMES[this.tier]}`);
+    for (const c of this.cards) c.showTier(this.tier);
+    const sel = this.cards.find((c) => c.selected);
+    b.hint = difficultyHint(this.tier, sel ? sel.entry.id : null);
+    b.label = `TIER: ${DIFFICULTY_NAMES[this.tier]}. ${b.hint.replace(/\[[^\]]*\]/g, '').replace(/\n/g, ' ')} Confirm to switch.`;
+  }
+
   private begin(): void {
     const classId = this.selected().entry.id;
     const seed = this.seed.value || randomSeed();
     const start = () => {
-      const session = RunSession.newRun(this.app.storage, seed, classId);
-      console.info(`[run] new run: class ${classId}, seed ${seed}`);
+      const session = RunSession.newRun(this.app.storage, seed, classId, this.tier);
+      console.info(`[run] new run: class ${classId}, seed ${seed}, ${this.tier}`);
       void this.app.screens.replace(screenFor(this.app, session));
     };
     if (RunSession.hasSave(this.app.storage)) confirmDialog(this, 'NEW RUN', 'Start a new run? Your saved run will be lost.', 'START', start);

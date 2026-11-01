@@ -3,6 +3,7 @@
 import { emit, enqueue, type Env } from './core';
 import { nextBeat } from './combat';
 import { setEnemyIntent } from './enemies';
+import { isRipe } from './cards';
 import { runNow } from './queue';
 import { rngApi } from './rng';
 import type {
@@ -68,6 +69,7 @@ export function makeEffectCtx(env: Env, o: CtxOpts): EffectCtx {
       if (o.owner === 'player') throw new Error('setIntent: owner is the player, not an enemy');
       setEnemyIntent(env, o.owner, moveId);
     },
+    isRipe: (card) => isRipe(env.state, card),
   };
 }
 

@@ -2,17 +2,21 @@
 import type { ChooseOption, Effect, EncounterDef, EventDef, ReadCtx, StatusDef } from '../engine/types';
 
 const BLOOM_CARDS = new Set([
-  'seed_bite', 'thornwhirl', 'barb_flick', 'grafting_cut', 'chitin_ram', 'sap_shell',
+  'seed_bite', 'thornwhirl', 'barb_flick', 'grafting_cut', 'sap_shell',
   'blightcap', 'tendril_reach', 'twin_thorn', 'miasma_sweep', 'pollen_sting', 'patient_thorn',
-  'burl_wall', 'puffball', 'thorn_halo', 'heartwood_spear', 'chitin_cocoon', 'thresher',
+  'burl_wall', 'puffball', 'thorn_halo', 'heartwood_spear', 'thresher',
+  'thornstorm', // Graft v2
 ]);
 const TIMING_CARDS = new Set([
-  'tick', 'tock', 'pinion_jab', 'gear_train', 'downbeat', 'noon_gun',
-  'afterpeal', 'spring_tide', 'carillon', 'storm_glass', 'almanac', 'ephemeris',
-  'balance_wheel', 'detent', 'sweep_hand', 'fermata', 'appointed_hour', 'knell',
+  'tick', 'tock', 'gear_train', 'downbeat', 'noon_gun',
+  'afterpeal', 'spring_tide', 'carillon', 'storm_glass', 'almanac',
+  'balance_wheel', 'fermata', 'appointed_hour', 'knell',
   'second_hand', 'mainspring', 'quarter_chime', 'hasten', 'banked_hours', 'breakwater',
-  'batten_down', 'striking_train', 'zenith', 'syzygy', 'toll_the_hours', 'seen_it_coming',
-  'star_tithe', 'tourbillon', 'polyrhythm', 'fault_beacon',
+  'striking_train', 'zenith', 'syzygy', 'toll_the_hours', 'seen_it_coming',
+  'tourbillon', 'polyrhythm', 'fault_beacon',
+  'stasis_bolt', // shared v2 colourless Delay card
+  // Chronist v2 Delay cards (Pinion Jab and Ephemeris lost their on-beat clauses to Quicken).
+  'ripple', 'bell_choir', 'reckoning',
 ]);
 const STARTER_RELICS = new Set(['riven_gauntlet', 'heartseed', 'chrono_lens']);
 const ASSEMBLY_TOOLS = [
@@ -29,7 +33,6 @@ const ASSEMBLY_TOOLS = [
   { id: 'fault_beacon', name: 'Fault Beacon', rarity: 'uncommon' },
   { id: 'snare_line', name: 'Snare Line', rarity: 'uncommon' },
   { id: 'cutting_torch', name: 'Cutting Torch', rarity: 'rare' },
-  { id: 'medbay_voucher', name: 'Medbay Voucher', rarity: 'rare' },
   { id: 'clean_manifest', name: 'Clean Manifest', rarity: 'rare' },
   { id: 'salvage_kiln', name: 'Salvage Kiln', rarity: 'rare' },
   { id: 'prism_resonance', name: 'Prism Resonance', rarity: 'rare' },
@@ -151,7 +154,7 @@ export const EVENTS: EventDef[] = [
         if (ctx.state.pendingChoice) throw new Error('Assembly Line: a choice is already pending.');
         ctx.state.pendingChoice = {
           kind: 'offers', prompt: 'Take one tool.', from: null, choices: tools.map((_, i) => i), labels: tools.map((card) => card.name),
-          offers: tools.map((card) => ({ id: card.id, upgraded: false })), min: 1, max: 1, resume: { op: 'offer_pick' },
+          offers: tools.map((card) => ({ id: card.id, upgraded: false })), min: 1, max: 1, picked: [], resume: { op: 'offer_pick' },
         };
         ctx.emit({ t: 'choice', prompt: 'Take one tool.' });
       },
@@ -197,7 +200,7 @@ export const EVENTS: EventDef[] = [
         const choices = ctx.state.player.deck.filter((card) => !card.upgraded && TIMING_CARDS.has(card.id)).map((card) => card.uid);
         if (choices.length === 0) return;
         if (ctx.state.pendingChoice) throw new Error('Oracle Terminal: a choice is already pending.');
-        ctx.state.pendingChoice = { kind: 'cards', prompt: 'Upgrade a Delay or on-beat card.', from: 'deck', choices, labels: [], offers: [], min: 1, max: 1, resume: { op: 'upgrade_deck' } };
+        ctx.state.pendingChoice = { kind: 'cards', prompt: 'Upgrade a Delay or on-beat card.', from: 'deck', choices, labels: [], offers: [], min: 1, max: 1, picked: [], resume: { op: 'upgrade_deck' } };
         ctx.emit({ t: 'choice', prompt: 'Upgrade a Delay or on-beat card.' });
       },
     },

@@ -1,0 +1,101 @@
+{
+  "furnace_heart": {
+    "original_sha256": "0d467cdbe0dc68b3e2cd86386858139bb6134db2345030200479e79a6b35f855",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 162,
+    "isolated_material_highlights_joined": 23,
+    "directional_shade_pixels_adjusted": 42,
+    "opaque_colours": 13
+  },
+  "grand_assembler": {
+    "original_sha256": "0363e211c03eecded847466c0375941d7143d66e4585da7b4b8bdcada599f0d2",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 131,
+    "isolated_material_highlights_joined": 8,
+    "directional_shade_pixels_adjusted": 26,
+    "opaque_colours": 13
+  },
+  "leukarch": {
+    "original_sha256": "28f622f6364ef460e0bde1c341f820279a9ea6228a04fb9bf5d6181801e5f81b",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 1108,
+    "isolated_material_highlights_joined": 46,
+    "directional_shade_pixels_adjusted": 300,
+    "opaque_colours": 10
+  },
+  "loom_oracle": {
+    "original_sha256": "1a12a9e1da1a0d30f1d84b95efa3a5e6da0e6826a10c8f13c21bd8685d4f893a",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 151,
+    "isolated_material_highlights_joined": 8,
+    "directional_shade_pixels_adjusted": 60,
+    "opaque_colours": 12
+  },
+  "phage_mother": {
+    "original_sha256": "892b8c8a3a0aed36463b866980c67118c793f22c4fe791e00f8263930be2cd8b",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 367,
+    "isolated_material_highlights_joined": 17,
+    "directional_shade_pixels_adjusted": 95,
+    "opaque_colours": 11
+  },
+  "pollen_wisp": {
+    "original_sha256": "d6519dccf7f16f77503f5d0017630ccdc6f6c504a962bb7ff357d08cca313c4e",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 215,
+    "isolated_material_highlights_joined": 3,
+    "directional_shade_pixels_adjusted": 44,
+    "opaque_colours": 11
+  },
+  "riveter": {
+    "original_sha256": "1d7f0bec91c70b4666fac9e89e6d85fbef0512e772beeba90ad79eec3bc73277",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 96,
+    "isolated_material_highlights_joined": 4,
+    "directional_shade_pixels_adjusted": 27,
+    "opaque_colours": 11
+  },
+  "scrap_drone": {
+    "original_sha256": "060849fdaf55eb0a9d18683643290df4641815388e5dbba967b9ce53f9ee3063",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 322,
+    "isolated_material_highlights_joined": 8,
+    "directional_shade_pixels_adjusted": 40,
+    "opaque_colours": 9
+  },
+  "shardling": {
+    "original_sha256": "d8ecb2279569003cd77487afb005bbc0dcdc5de10120da0c0ba07726ea4501ee",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 395,
+    "isolated_material_highlights_joined": 2,
+    "directional_shade_pixels_adjusted": 69,
+    "opaque_colours": 9
+  },
+  "sporepuff": {
+    "original_sha256": "c9bafb8bc55e8f93b9c6c18d7546fd22fcb33437f5c801b48f370e26f8bf046c",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 164,
+    "isolated_material_highlights_joined": 1,
+    "directional_shade_pixels_adjusted": 134,
+    "opaque_colours": 12
+  },
+  "welded_horror": {
+    "original_sha256": "cdec963e6895430ccbe2bd6eb9a28166c7ba35dde80ed518ca8aa0f1f55006f7",
+    "silhouette_pixels_retained_percent": 100,
+    "structural_ink_retained_percent": 100,
+    "redundant_shade_pixels_merged": 196,
+    "isolated_material_highlights_joined": 8,
+    "directional_shade_pixels_adjusted": 25,
+    "opaque_colours": 13
+  }
+}

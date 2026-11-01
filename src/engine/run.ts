@@ -31,11 +31,13 @@ import { ENGINE_VERSION } from './version';
 import { dispatch, playerRule } from './statuses';
 import { TUNING } from './tuning';
 import type {
+  ClassId,
   Act,
   Action,
   CardDef,
   CardOffer,
   CombatKind,
+  Difficulty,
   EffectSource,
   EncounterId,
   EventOptionDef,
@@ -75,7 +77,15 @@ function newActMap(rng: RngState, act: Act) {
 // ---------------------------------------------------------------------------
 // New run
 
-export function createRun(seed: string, classId: string): { state: RunState; events: GameEvent[] } {
+/** Ruling 76: the tier's starting max-HP bonus for a class (throws for a class the tier doesn't list). */
+export function classMaxHpBonus(difficulty: Difficulty, classId: string): number {
+  const table = TUNING.difficulty[difficulty].classMaxHpBonus;
+  const bonus = Object.prototype.hasOwnProperty.call(table, classId) ? table[classId] : undefined;
+  if (bonus === undefined) throw new Error(`TUNING.difficulty.${difficulty}.classMaxHpBonus has no entry for class '${classId}' (have: ${Object.keys(table).join(', ')})`);
+  return bonus;
+}
+
+export function createRun(seed: string, classId: string, difficulty: Difficulty): { state: RunState; events: GameEvent[] } {
   const cls = getClassDef(classId);
   const rng = createStreams(seed);
   const map = newActMap(rng.map, 1);
@@ -86,11 +96,12 @@ export function createRun(seed: string, classId: string): { state: RunState; eve
     rng,
     act: 1,
     ascent: 0,
+    difficulty,
     floor: 0,
     phase: 'start',
     player: {
-      hp: cls.maxHp,
-      maxHp: cls.maxHp,
+      hp: cls.maxHp + classMaxHpBonus(difficulty, classId),
+      maxHp: cls.maxHp + classMaxHpBonus(difficulty, classId),
       gold: cls.startingGold,
       deck: [],
       relics: [],
@@ -335,12 +346,52 @@ export function generateReward(s: RunState, kind: CombatKind): RewardState {
   const size = fixed ? fixed.length : rewardSize(s);
   const queueRar = fixed ? [...fixed] : null;
   const roll = (): 'common' | 'uncommon' | 'rare' => queueRar?.shift() ?? rollRarity(rng, odds, movesPity ? s.counters.rarePity : 0);
-  const defs = pickCards(rng, (r) => classCardPool(s.classId, r), size, roll, `class ${s.classId} card reward`);
+  // Shared v2 H8 (Wanderer's Compact): one card from each listed class instead of `size` from yours.
+  const classes = playerRule<ClassId[] | null>(s, null, (m, c, a) => a ?? (m.cardRewardClasses ? m.cardRewardClasses(c, kind) : null));
+  const defs = classes
+    ? classes.flatMap((cls) => pickCards(rng, (r) => classCardPool(cls, r), 1, roll, `class ${cls} card reward`))
+    : pickCards(rng, (r) => classCardPool(s.classId, r), size, roll, `class ${s.classId} card reward`);
   if (movesPity) {
     if (defs.some((d) => d.rarity === 'rare')) s.counters.rarePity = TUNING.rarePityStart;
     else s.counters.rarePity += TUNING.rarePityStep;
   }
   const cards: CardOffer[] = defs.map((d) => ({ id: d.id, upgraded: upgradedOffer(s, d) }));
+  // RULINGS 69: sometimes one class card is replaced by a colourless card of the same rarity roll (reward stream).
+  // Fixed-rarity screens (Void Compass: one common, one uncommon, one rare) keep their promise and don't roll.
+  const colorlessChance = kind === 'elite' ? TUNING.rewardColorlessChance.elite : TUNING.rewardColorlessChance.default;
+  if (fixed === null && cards.length > 0 && nextInt(rng, 0, 9999) < Math.round(colorlessChance * 10000)) {
+    const slot = nextInt(rng, 0, cards.length - 1);
+    const replaced = defs[slot];
+    if (!replaced) throw new Error(`colourless reward slot ${slot} out of range`);
+    const r = replaced.rarity === 'rare' ? 'rare' : 'uncommon';
+    const opts = colorlessPool(r).filter((d) => !cards.some((o) => o.id === d.id));
+    if (opts.length === 0) throw new Error(`no colourless ${r} card to put in a card reward`);
+    // RULINGS 70: lean toward a shared engine you've started (you own one of its cards or relics).
+    const started = startedSharedEngines(s);
+    const engineOpts = started.size === 0 ? [] : opts.filter((d) => engineTags(d.tags).some((t) => started.has(t)));
+    const biased = engineOpts.length > 0 && nextInt(rng, 0, 9999) < Math.round(TUNING.colorlessEngineBias * 10000);
+    const d = pickFrom(rng, biased ? engineOpts : opts);
+    cards[slot] = { id: d.id, upgraded: upgradedOffer(s, d) };
+  }
+  // Shared v2 H8 (Salvager's Licence): one colourless card joins the offer.
+  if (playerRule(s, false, (m, c, a) => a || (m.extraColorlessOffer ? m.extraColorlessOffer(c, kind) : false))) {
+    const r = nextInt(rng, 0, 99) < TUNING.shop.colorlessExtraRarePct ? 'rare' : 'uncommon';
+    const opts = colorlessPool(r).filter((d) => !cards.some((o) => o.id === d.id));
+    if (opts.length === 0) throw new Error(`no colourless ${r} card to offer`);
+    const d = pickFrom(rng, opts);
+    cards.push({ id: d.id, upgraded: upgradedOffer(s, d) });
+  }
+  // Phase F: a started shared engine sometimes adds one of its own cards (TUNING.colorlessEngineExtra). The rarity
+  // rolls like Salvager's Licence; when the engine has no card of that rarity left to offer, nothing is added.
+  const startedNow = fixed === null && cards.length < TUNING.rewardMaxCards ? startedSharedEngines(s) : new Set<string>();
+  if (startedNow.size > 0 && nextInt(rng, 0, 9999) < Math.round(TUNING.colorlessEngineExtra * 10000)) {
+    const r = nextInt(rng, 0, 99) < TUNING.shop.colorlessExtraRarePct ? 'rare' : 'uncommon';
+    const opts = colorlessPool(r).filter((d) => !cards.some((o) => o.id === d.id) && engineTags(d.tags).some((t) => startedNow.has(t)));
+    if (opts.length > 0) {
+      const d = pickFrom(rng, opts);
+      cards.push({ id: d.id, upgraded: upgradedOffer(s, d) });
+    }
+  }
   const p = TUNING.potion;
   let potion: string | null = null;
   if (nextInt(rng, 0, 99) < s.counters.potionChance) {
@@ -351,8 +402,29 @@ export function generateReward(s: RunState, kind: CombatKind): RewardState {
   return { kind, gold, goldTaken: false, cards, cardStatus: 'pending', potion, potionTaken: false, relic, relicTaken: false };
 }
 
+/** `engine:<name>` tags of a card or relic (shared v2 engines; docs/v2/shared-design.md). */
+function engineTags(tags: readonly string[] | undefined): string[] {
+  return (tags ?? []).filter((t) => t.startsWith('engine:'));
+}
+
+/**
+ * RULINGS 70: shared engines (engine tags that appear on colourless cards) the player has started, i.e.
+ * owns a deck card or a relic carrying the tag. Class engines are excluded (their tags never appear on
+ * colourless cards).
+ */
+export function startedSharedEngines(s: RunState): Set<string> {
+  const shared = new Set((['uncommon', 'rare'] as const).flatMap((r) => colorlessPool(r)).flatMap((d) => engineTags(d.tags)));
+  const owned = [...s.player.deck.flatMap((c) => engineTags(getCardDef(c.id).tags)), ...s.player.relics.flatMap((r) => engineTags(getRelicDef(r.id).tags))];
+  return new Set(owned.filter((t) => shared.has(t)));
+}
+
 function canSkipCards(s: RunState): boolean {
   return playerRule(s, true, (m, c, a) => a && (m.canSkipCardReward ? m.canSkipCardReward(c) : true));
+}
+
+/** Shards a card-reward skip gives now (TUNING.shards.skipReward through skipShards modifiers, e.g. Ascendant Prism). */
+export function skipRewardShards(s: RunState): number {
+  return playerRule(s, TUNING.shards.skipReward, (m, c, a) => (m.skipShards ? m.skipShards(c, a) : a), false);
 }
 
 /** Skipping a card reward screen: +1 Shard (skipShards modifier), onRewardSkipped. */
@@ -362,7 +434,7 @@ function skipCards(env: Env): void {
   if (!r) throw new Error('no reward');
   r.cardStatus = 'skipped';
   currentFloor(s).cardSkipped = true;
-  const n = playerRule(s, TUNING.shards.skipReward, (m, c, a) => (m.skipShards ? m.skipShards(c, a) : a), false);
+  const n = skipRewardShards(s);
   if (n > 0) gainShards(env, n);
   dispatch(env, 'onRewardSkipped', 'player', {});
 }
@@ -450,10 +522,19 @@ export function generateShop(s: RunState): ShopState {
     it.price = Math.floor((it.price * sh.salePct) / 100);
     it.sale = true;
   }
-  for (const r of sh.colorlessRarities) {
+  // RULINGS 61: TUNING.shopColorless slots; the first follow colorlessRarities, extra slots roll their rarity.
+  const colorlessSlots: ('uncommon' | 'rare')[] = [];
+  for (let i = 0; i < TUNING.shopColorless; i++) {
+    colorlessSlots.push(sh.colorlessRarities[i] ?? (nextInt(rng, 0, 99) < sh.colorlessExtraRarePct ? 'rare' : 'uncommon'));
+  }
+  // RULINGS 70 (amended): each colourless slot independently leans toward a shared engine you've started.
+  const startedEngines = startedSharedEngines(s);
+  for (const r of colorlessSlots) {
     const opts = colorlessPool(r).filter((d) => !cards.some((c) => c.id === d.id));
     if (opts.length === 0) continue;
-    const d = pickFrom(rng, opts);
+    const engineOpts = startedEngines.size === 0 ? [] : opts.filter((d) => engineTags(d.tags).some((t) => startedEngines.has(t)));
+    const biased = engineOpts.length > 0 && nextInt(rng, 0, 9999) < Math.round(TUNING.colorlessEngineBias * 10000);
+    const d = pickFrom(rng, biased ? engineOpts : opts);
     cards.push({ id: d.id, upgraded: false, price: shopPrice(s, 'card', priceIn(rng, sh.cardPrice[r], sh.colorlessMarkupPct)), sold: false, sale: false });
   }
   const relics: ShopState['relics'] = [];
@@ -522,6 +603,9 @@ export function restOptionAvailable(s: RunState, index: number): true | string {
   const { def } = restOptionFor(s, id);
   const side = isRestSide(s, id);
   if (side ? r.sideUsed.includes(id) : r.done) return 'Already used.';
+  // Shared v2 H13 (Ascendant Prism): a relic may forbid a rest option outright.
+  const blocked = playerRule<string | null>(s, null, (m, c, a) => a ?? (m.restOptionBlocked ? m.restOptionBlocked(c, id) : null));
+  if (blocked !== null) return blocked;
   const cost = restOptionShardCost(s, def);
   if (shardsOf(s) < cost) return `Needs ${cost} Shard${cost === 1 ? '' : 's'}.`;
   return def.available ? def.available({ state: s, combat: null }) : true;

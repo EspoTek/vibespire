@@ -16,8 +16,11 @@ export const randomPolicy: Policy = {
       legal.filter((a): a is Extract<Action, { type: T }> => a.type === t);
     const pick = <T>(xs: readonly T[]): T => r.pick(xs);
 
+    // multi-pick choices are built with choice_toggle; confirm half the time once that is legal
     const choices = of('resolve_choice');
-    if (choices.length) return pick(choices);
+    const toggles = of('choice_toggle');
+    if (choices.length && (toggles.length === 0 || r.chance(0.5))) return pick(choices);
+    if (toggles.length) return pick(toggles);
 
     switch (s.phase) {
       case 'combat': {
@@ -25,14 +28,19 @@ export const randomPolicy: Policy = {
         if (potions.length && r.chance(0.1)) return pick(potions);
         const plays = of('play_card');
         if (plays.length) return pick(plays);
-        return pick(of('end_turn'));
+        // No end_turn while a fight is resolving or a choice is open: any legal action.
+        const end = of('end_turn');
+        return pick(end.length ? end : legal);
       }
       case 'reward': {
         const free = legal.filter((a) => a.type === 'pick_reward' && a.kind !== 'card');
         if (free.length) return pick(free);
         const cards = legal.filter((a) => a.type === 'pick_reward' && a.kind === 'card');
-        if (cards.length) return r.chance(0.8) ? pick(cards) : pick(of('skip_reward'));
-        return pick(of('proceed'));
+        // Skipping can be illegal (Binding Contract: you must take a card).
+        const skip = of('skip_reward');
+        if (cards.length) return skip.length && !r.chance(0.8) ? pick(skip) : pick(cards);
+        const proceed = of('proceed');
+        return pick(proceed.length ? proceed : legal);
       }
       case 'shop': {
         const buys = legal.filter((a) => a.type === 'shop_buy' || a.type === 'shop_remove');

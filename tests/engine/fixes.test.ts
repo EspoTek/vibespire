@@ -1,8 +1,9 @@
 import '../testpack-only';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { canPlayCard, computeIntent } from '../../src/engine';
-import { combatOf, enemyUids, eventsOf, pacify, play, sandbox, setHand } from './helpers';
+import { combatOf, enemyUids, eventsOf, pacify, padDraw, play, sandbox, setHand } from './helpers';
 import { registerFixtures } from './fixtures';
+import { answerChoice } from '../answer-choice';
 
 beforeAll(registerFixtures);
 
@@ -11,6 +12,7 @@ describe('engine fixes (implementer reports)', () => {
     const g = sandbox();
     pacify(g);
     const [a] = setHand(g, ['fx_self_scrap']);
+    padDraw(g); // RULINGS 72 Scrap floor
     const t = enemyUids(g)[0] as number;
     const ev = play(g, a as number, t);
     expect(eventsOf(ev, 'exhaust')).toEqual([{ t: 'exhaust', uids: [a] }]);
@@ -47,12 +49,12 @@ describe('engine fixes (implementer reports)', () => {
     play(g, p as number);
     const pc = combatOf(g).pendingChoice;
     expect(pc).toMatchObject({ min: 0, max: 2, resume: { op: 'prime', step: false } });
-    g.apply({ type: 'resolve_choice', uids: [r1 as number, r2 as number] });
+    answerChoice(g, [r1 as number, r2 as number]);
     expect(combatOf(g).primed.map((x) => x.card.uid)).toEqual([r1, r2]);
     g.apply({ type: 'end_turn' });
     // capacity 1 still available at the prime step: 2 Riposte cards left > 1 → choice
     expect(combatOf(g).pendingChoice).toMatchObject({ min: 1, max: 1, resume: { op: 'prime', step: true } });
-    const ev = g.apply({ type: 'resolve_choice', uids: [r3 as number] });
+    const ev = answerChoice(g, [r3 as number]);
     expect(eventsOf(ev, 'card_primed')).toEqual([{ t: 'card_primed', uid: r3 }]);
     // 3 primed this turn (1 capacity + 2 by effect); nothing attacked, so all 3 fizzle at the next turn start
     expect(eventsOf(ev, 'prime_fizzled').map((x) => x.uid)).toEqual([r1, r2, r3]);

@@ -1,17 +1,18 @@
-// REAL CONTENT: the Breaker class pool (docs/cards/breaker.md): 4 starters (GDD §4.1) + 20 common +
-// 20 uncommon + 12 rare, and the Power / one-turn statuses of its §D.2.
+// REAL CONTENT: the Breaker class pool, v2 (docs/v2/breaker-design.md; kept cards are specified in
+// docs/cards/breaker.md): 4 starters (GDD §4.1) + 20 common + 24 uncommon + 16 rare, and the Power /
+// one-turn statuses. Engines (tags engine:*): furnace (Onslaught/Embers), crazing (Exposed x hits),
+// counter (Riposte), bastion (Guard/Shed).
 //
 // Interpretations (see docs/RULINGS.md):
 // - ruling 32: the Power `furnace_heart` is `cinder_heart` ("Cinder Heart"); the Act 2 boss keeps the id.
 // - Steal the Swing uses the engine primitive `cancel_attack` (designer: custom fn of that name).
-// - Forge Oath uses `run_flag combat_start_status:onslaught` + `remove_card {self}` (designer: run counter
-//   `oath_onslaught` + custom `remove_self_from_deck`).
 // - En Garde uses the engine primitive `prime {n}` (designer: custom `prime_from_hand`).
 // - Condition thresholds live in per-card constants shared by the condition and the text `values`, so the
 //   text can never drift from the rule.
 import type { CardDef, Condition, Effect, HookCtx, ScaledAmount, StatusDef } from '../../engine/types';
 
 const ONSLAUGHT = 'onslaught';
+const EMBERS = 'embers';
 
 /** `{ base, per, scale: Onslaught }`: "Deal X damage, +Y per Onslaught". */
 const perOnslaught = (base: number, per: number): ScaledAmount => ({ base, per, scale: { status: ONSLAUGHT } });
@@ -22,6 +23,13 @@ const spendInstead = (n: number, spent: Effect[], otherwise: Effect[]): Effect =
   type: 'conditional',
   if: onslaughtAtLeast(n),
   then: [{ type: 'spend_status', id: ONSLAUGHT, n, effects: spent }],
+  else: otherwise,
+});
+/** "Deal X. Shed N: deal Y instead." (Breaker v2) Always exactly one hit, like spendInstead. */
+const shedInstead = (n: number, shed: Effect[], otherwise: Effect[]): Effect => ({
+  type: 'conditional',
+  if: { type: 'compare', left: { scale: 'guard' }, op: '>=', right: n },
+  then: [{ type: 'shed', n, effects: shed }],
   else: otherwise,
 });
 const selfStatus = (id: string, amount: number): Effect => ({ type: 'status', target: 'self', id, amount });
@@ -35,34 +43,131 @@ function combatOf(ctx: HookCtx, what: string) {
 // Shared numbers (condition thresholds + text values).
 const CHAIN_DRIVER = { min: 2 };
 const BREACH_HAMMER = { spend: 2 };
-const PLATE_RAM = { min: 10 };
+const PLATE_RAM = { shed: 4 };
+const LOOSEN_STRAPS = { shed: 4 };
+const SHED_PLATING = { shed: 6 };
+/** Kindle: an Ember for every `every` Onslaught spent. */
+const KINDLE = { every: 2 };
+/** Bellows: Spending at least `min` Onslaught at once grants Embers. */
+const BELLOWS = { min: 4 };
 const READ_THE_LINE = { min: 3 };
-const PLANTED_FEET = { min: 5 };
 const QUAKE_HAMMER = { spend: 3 };
 const QUENCH = { spend: 2 };
 const RIDE_THE_SURGE = { min: 3 };
 const ENDLESS_MAUL = { min: 4 };
-const SHED_PLATING = { guard: 8 };
+/** Vent Pressure: Spend all Onslaught for energy when you have at least this much. */
+const VENT_PRESSURE = { min: 3 };
 const EN_GARDE = { prime: 2 };
-const FORGE_OATH_FLAG = `combat_start_status:${ONSLAUGHT}`;
 
 // ---------------------------------------------------------------------------
 // Statuses (designer §D.2)
 
 /** combat.counters key prefix marking a fired card for Recoil Spring (value 1; the uid follows). */
 const RECOIL_MARK = 'recoil_spring_uid:';
+/** combat.counters key: damageTaken at your last turn end (Anvil Heart). */
+const ANVIL_MARK = 'anvil_heart_hp';
 
 export const BREAKER_STATUSES: StatusDef[] = [
   {
-    id: 'cinder_heart',
-    name: 'Cinder Heart',
+    // Breaker v2 keyword (docs/v2/breaker-design.md §2.1). Replaces v1's `cinder_heart` status; cap TUNING.caps.status.embers.
+    id: EMBERS,
+    name: 'Embers',
     stacks: 'amount',
     decay: 'never',
     tick: 'never',
     isDebuff: false,
     text: 'At the start of your turn, gain {stacks} Onslaught.',
     triggers: { onTurnStart: [{ type: 'status', target: 'self', id: ONSLAUGHT, amount: { scale: 'stacks' } }] },
-    icon: 'status_cinder_heart',
+    // the conversion is a moment the renderer animates: announced before the queued Onslaught gain
+    hooks: { onTurnStart: (c) => c.emit({ t: 'embers_converted', amount: c.stacks }) },
+    icon: 'status_embers',
+  },
+  {
+    id: 'bellows',
+    name: 'Bellows',
+    stacks: 'amount',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    values: BELLOWS,
+    text: 'Whenever you Spend {min} or more Onslaught at once, gain {stacks} Ember(s).',
+    hooks: {
+      onStatusSpent: (ctx, info) => {
+        if (info.id !== ONSLAUGHT || info.amount < BELLOWS.min) return;
+        ctx.queue([{ type: 'status', target: 'self', id: EMBERS, amount: { scale: 'stacks' } }]);
+      },
+    },
+    icon: 'status_bellows',
+  },
+  {
+    id: 'crazing',
+    name: 'Crazing',
+    stacks: 'flag',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    text: "Exposed on enemies doesn't decay.",
+    hooks: { keepEnemyStatus: (_ctx, _uid, id, stacks) => (id === 'exposed' ? stacks : 0) },
+    icon: 'status_crazing',
+  },
+  {
+    id: 'answer_in_kind',
+    name: 'Answer in Kind',
+    stacks: 'flag',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    text: 'When one of your Riposte cards fires, it also resolves its played effects.',
+    hooks: { riposteResolvesPlayed: () => true },
+    icon: 'status_answer_in_kind',
+  },
+  {
+    id: 'molten_shell',
+    name: 'Molten Shell',
+    stacks: 'amount',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    text: 'Whenever you Shed Guard, deal that much damage times {stacks} to the enemy with the lowest HP.',
+    hooks: {
+      // One player hit per Shed (Exposed applies), queued after the Shed clause's own effects.
+      onGuardShed: (ctx, info) => {
+        ctx.queue([{ type: 'damage', amount: info.amount * ctx.stacks, target: 'lowest_hp_enemy' }]);
+      },
+    },
+    icon: 'status_molten_shell',
+  },
+  {
+    id: 'spark_gap',
+    name: 'Spark Gap',
+    stacks: 'amount',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    text: 'Whenever you Shed Guard, gain {stacks} Onslaught.',
+    triggers: { onGuardShed: [{ type: 'status', target: 'self', id: ONSLAUGHT, amount: { scale: 'stacks' } }] },
+    icon: 'status_spark_gap',
+  },
+  {
+    id: 'iron_patience',
+    name: 'Iron Patience',
+    stacks: 'amount',
+    decay: 'never',
+    tick: 'never',
+    isDebuff: false,
+    text: 'At the end of your turn, gain {stacks} Guard for each unspent energy.',
+    // stacks = Guard per unspent energy (the card applies 3, upgraded 4); player turn end step 1, before anything clears energy.
+    amounts: {
+      patience: (ctx) => {
+        const c = ctx.combat;
+        if (!c) throw new Error('iron_patience outside combat');
+        const stacks = c.player.statuses.iron_patience;
+        if (stacks === undefined) throw new Error('iron_patience amount without the status');
+        return stacks * c.energy;
+      },
+    },
+    triggers: { onTurnEnd: [{ type: 'guard', amount: { scale: { fn: 'patience' } } }] },
+    icon: 'status_iron_patience',
   },
   {
     id: 'parry_ledger',
@@ -95,11 +200,20 @@ export const BREAKER_STATUSES: StatusDef[] = [
     decay: 'never',
     tick: 'never',
     isDebuff: false,
-    text: 'When an enemy attack ends and you lost no HP to it, gain {stacks} Onslaught.',
+    // Phase D: a clean enemy turn (no HP lost since your last turn ended) banks an Ember, so a defended long fight
+    // ramps into damage. combat.counters[ANVIL_MARK] holds damageTaken at your last turn end.
+    text: 'At the start of your turn, if you lost no HP since your last turn, gain {stacks} Ember(s).',
     hooks: {
-      onEnemyMoveEnd: (ctx, info) => {
-        if (!info.wasAttack || info.hpLostThisMove !== 0) return;
-        ctx.queue([{ type: 'status', target: 'self', id: ONSLAUGHT, amount: { scale: 'stacks' } }]);
+      onTurnEnd: (ctx) => {
+        const c = combatOf(ctx, 'anvil_heart');
+        c.counters[ANVIL_MARK] = c.damageTaken;
+      },
+      onTurnStart: (ctx) => {
+        const c = combatOf(ctx, 'anvil_heart');
+        const mark = c.counters[ANVIL_MARK];
+        // No mark yet: the Power was played this turn's start or not at all before a turn ended (nothing to compare).
+        if (mark === undefined || c.damageTaken !== mark) return;
+        ctx.queue([{ type: 'status', target: 'self', id: EMBERS, amount: { scale: 'stacks' } }]);
       },
     },
     icon: 'status_anvil_heart',
@@ -122,7 +236,7 @@ export const BREAKER_STATUSES: StatusDef[] = [
     decay: 'never',
     tick: 'never',
     isDebuff: false,
-    text: 'When a primed card fires, it comes back to your hand next turn.',
+    text: 'When a primed card fires, it comes back to your hand next turn and is free to play that turn.',
     hooks: {
       // Mark the card after its LAST firing (Duelist's Oath: a card with charges left is still on the rack).
       onRiposteTriggered: (ctx, info) => {
@@ -143,7 +257,7 @@ export const BREAKER_STATUSES: StatusDef[] = [
         if (back.length === 0) return;
         const rest = c.discard.filter((card) => !uids.has(card.uid));
         c.discard.splice(0, c.discard.length, ...rest, ...back);
-        ctx.queue([{ type: 'fetch_card', from: 'discard', select: 'top', to: 'hand', n: back.length }]);
+        ctx.queue([{ type: 'fetch_card', from: 'discard', select: 'top', to: 'hand', n: back.length, costThisTurn: 0 }]);
       },
     },
     icon: 'status_recoil_spring',
@@ -223,7 +337,7 @@ const STARTERS: CardDef[] = [
     effects: [{ type: 'damage', amount: perOnslaught(6, 2), target: 'target' }],
     riposte: [{ type: 'damage', amount: 6, target: 'attacker', key: 'rdamage' }],
     upgrade: {
-      effects: [{ type: 'damage', amount: perOnslaught(8, 2), target: 'target' }],
+      effects: [{ type: 'damage', amount: perOnslaught(8, 3), target: 'target' }],
       riposte: [{ type: 'damage', amount: 9, target: 'attacker', key: 'rdamage' }],
     },
     icon: 'card_shoulder_check', tags: ['starter', 'swing', 'riposte'],
@@ -241,8 +355,8 @@ const COMMONS: CardDef[] = [
   {
     id: 'piston_jab', name: 'Piston Jab', cls: 'breaker', type: 'attack', rarity: 'common', cost: 0, target: 'enemy',
     text: 'Deal {damage} damage, +{damage_per} per Onslaught.',
-    effects: [{ type: 'damage', amount: perOnslaught(2, 1), target: 'target' }],
-    upgrade: { effects: [{ type: 'damage', amount: perOnslaught(4, 1), target: 'target' }] },
+    effects: [{ type: 'damage', amount: perOnslaught(3, 1), target: 'target' }],
+    upgrade: { effects: [{ type: 'damage', amount: perOnslaught(5, 1), target: 'target' }] },
     icon: 'card_piston_jab', tags: ['swing', 'cheap', 'scaling'],
   },
   {
@@ -262,24 +376,20 @@ const COMMONS: CardDef[] = [
     icon: 'card_chain_driver', tags: ['swing', 'draw'],
   },
   {
-    id: 'overhand_drive', name: 'Overhand Drive', cls: 'breaker', type: 'attack', rarity: 'common', cost: 2, target: 'enemy',
-    text: 'Deal {damage} damage, +{damage_per} per Onslaught.',
-    effects: [{ type: 'damage', amount: perOnslaught(5, 3), target: 'target' }],
-    upgrade: { effects: [{ type: 'damage', amount: perOnslaught(5, 4), target: 'target' }] },
-    icon: 'card_overhand_drive', tags: ['swing', 'finisher', 'scaling'],
-  },
-  {
     id: 'breach_hammer', name: 'Breach Hammer', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
-    text: 'Deal {damage} damage. Spend {spend} Onslaught: deal {sdamage} instead.',
+    // v2 rework: Spend 2 Onslaught for cards (refill the chain) instead of a bigger hit.
+    text: 'Deal {damage} damage. Spend {spend} Onslaught: draw {draw} cards.',
     effects: [
-      spendInstead(BREACH_HAMMER.spend, [{ type: 'damage', amount: 12, target: 'target', key: 'sdamage' }], [{ type: 'damage', amount: 6, target: 'target' }]),
+      { type: 'damage', amount: 7, target: 'target' },
+      { type: 'spend_status', id: ONSLAUGHT, n: BREACH_HAMMER.spend, effects: [{ type: 'draw', n: 2 }] },
     ],
     upgrade: {
       effects: [
-        spendInstead(BREACH_HAMMER.spend, [{ type: 'damage', amount: 15, target: 'target', key: 'sdamage' }], [{ type: 'damage', amount: 8, target: 'target' }]),
+        { type: 'damage', amount: 10, target: 'target' },
+        { type: 'spend_status', id: ONSLAUGHT, n: BREACH_HAMMER.spend, effects: [{ type: 'draw', n: 2 }] },
       ],
     },
-    icon: 'card_breach_hammer', tags: ['swing', 'finisher'],
+    icon: 'card_breach_hammer', tags: ['swing', 'draw'],
   },
   {
     id: 'thresher_arc', name: 'Thresher Arc', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'all_enemies',
@@ -290,14 +400,17 @@ const COMMONS: CardDef[] = [
   },
   {
     id: 'fault_line', name: 'Fault Line', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
-    text: 'Apply {status} Exposed. Deal {damage} damage.',
+    // Phase E floor: the crack also Staggers (a Crazing deck has no other defence while it assembles).
+    text: 'Apply {status} Exposed and {status2} Stagger. Deal {damage} damage.',
     effects: [
       { type: 'status', target: 'target', id: 'exposed', amount: 1 },
+      { type: 'status', target: 'target', id: 'stagger', amount: 1 },
       { type: 'damage', amount: 4, target: 'target' },
     ],
     upgrade: {
       effects: [
         { type: 'status', target: 'target', id: 'exposed', amount: 2 },
+        { type: 'status', target: 'target', id: 'stagger', amount: 1 },
         { type: 'damage', amount: 4, target: 'target' },
       ],
     },
@@ -324,25 +437,13 @@ const COMMONS: CardDef[] = [
   },
   {
     id: 'plate_ram', name: 'Plate Ram', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
-    values: PLATE_RAM,
-    text: 'Deal {damage} damage. If your defence ≥ {min}: deal {cdamage} instead.',
-    effects: [
-      {
-        type: 'conditional', if: { type: 'compare', left: { scale: 'defence' }, op: '>=', right: PLATE_RAM.min },
-        then: [{ type: 'damage', amount: 9, target: 'target', key: 'cdamage' }],
-        else: [{ type: 'damage', amount: 5, target: 'target' }],
-      },
-    ],
+    // v2 rework: Shed Guard for the bigger hit (a Shed trigger for Molten Shell / Spark Gap).
+    text: 'Deal {damage} damage. Shed {shed}: deal {sdamage} instead.',
+    effects: [shedInstead(PLATE_RAM.shed, [{ type: 'damage', amount: 12, target: 'target', key: 'sdamage' }], [{ type: 'damage', amount: 6, target: 'target' }])],
     upgrade: {
-      effects: [
-        {
-          type: 'conditional', if: { type: 'compare', left: { scale: 'defence' }, op: '>=', right: PLATE_RAM.min },
-          then: [{ type: 'damage', amount: 12, target: 'target', key: 'cdamage' }],
-          else: [{ type: 'damage', amount: 7, target: 'target' }],
-        },
-      ],
+      effects: [shedInstead(PLATE_RAM.shed, [{ type: 'damage', amount: 15, target: 'target', key: 'sdamage' }], [{ type: 'damage', amount: 8, target: 'target' }])],
     },
-    icon: 'card_plate_ram', tags: ['guard', 'defence'],
+    icon: 'card_plate_ram', tags: ['guard', 'shed'],
   },
   {
     id: 'return_stroke', name: 'Return Stroke', cls: 'breaker', type: 'attack', rarity: 'common', cost: 1, target: 'enemy',
@@ -374,10 +475,10 @@ const COMMONS: CardDef[] = [
     keywords: ['riposte'],
     text: 'Gain {block} Block. Riposte: gain {rguard_per} Guard for each hit of its attack.',
     effects: [{ type: 'block', amount: 6 }],
-    riposte: [{ type: 'guard', amount: { base: 0, per: 4, scale: 'trigger_hits' }, key: 'rguard' }],
+    riposte: [{ type: 'guard', amount: { base: 0, per: 3, scale: 'trigger_hits' }, key: 'rguard' }],
     upgrade: {
       effects: [{ type: 'block', amount: 8 }],
-      riposte: [{ type: 'guard', amount: { base: 0, per: 5, scale: 'trigger_hits' }, key: 'rguard' }],
+      riposte: [{ type: 'guard', amount: { base: 0, per: 4, scale: 'trigger_hits' }, key: 'rguard' }],
     },
     icon: 'card_catch_blade', tags: ['riposte', 'guard', 'multihit_answer'],
   },
@@ -389,24 +490,19 @@ const COMMONS: CardDef[] = [
     icon: 'card_cool_the_steel', tags: ['swing', 'guard'],
   },
   {
-    id: 'find_the_seam', name: 'Find the Seam', cls: 'breaker', type: 'skill', rarity: 'common', cost: 0, target: 'enemy',
-    text: 'Apply {status} Exposed.',
-    effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 1 }],
-    upgrade: { effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
-    icon: 'card_find_the_seam', tags: ['exposed', 'cheap'],
-  },
-  {
-    id: 'read_the_line', name: 'Read the Line', cls: 'breaker', type: 'skill', rarity: 'common', cost: 1, target: 'none',
+    // v2 Phase C: cf Δwin −10 ±8 (significant) as a 1-cost draw. Now a 0-cost mid-chain refill (Furnace glue).
+    id: 'read_the_line', name: 'Read the Line', cls: 'breaker', type: 'skill', rarity: 'common', cost: 0, target: 'none',
     values: READ_THE_LINE,
-    text: 'Draw {draw} cards. If Onslaught ≥ {min}: draw {draw2} more.',
+    text: 'Draw {draw} card. If Onslaught ≥ {min}: draw {draw2} more.',
     effects: [
-      { type: 'draw', n: 2 },
-      { type: 'conditional', if: onslaughtAtLeast(READ_THE_LINE.min), then: [{ type: 'draw', n: 1 }] },
+      { type: 'draw', n: 1 },
+      { type: 'conditional', if: onslaughtAtLeast(READ_THE_LINE.min), then: [{ type: 'draw', n: 2 }] },
     ],
     upgrade: {
+      text: 'Draw {draw} cards. If Onslaught ≥ {min}: draw {draw2} more.',
       effects: [
-        { type: 'draw', n: 3 },
-        { type: 'conditional', if: onslaughtAtLeast(READ_THE_LINE.min), then: [{ type: 'draw', n: 1 }] },
+        { type: 'draw', n: 2 },
+        { type: 'conditional', if: onslaughtAtLeast(READ_THE_LINE.min), then: [{ type: 'draw', n: 2 }] },
       ],
     },
     icon: 'card_read_the_line', tags: ['draw', 'swing'],
@@ -431,34 +527,18 @@ const COMMONS: CardDef[] = [
     icon: 'card_rivet_wall', tags: ['guard'],
   },
   {
-    id: 'planted_feet', name: 'Planted Feet', cls: 'breaker', type: 'skill', rarity: 'common', cost: 1, target: 'self',
-    values: PLANTED_FEET,
-    text: 'Gain {block} Block. If you have {min} or more Guard: draw {draw} card.',
-    effects: [
-      { type: 'block', amount: 5 },
-      { type: 'conditional', if: { type: 'compare', left: { scale: 'guard' }, op: '>=', right: PLANTED_FEET.min }, then: [{ type: 'draw', n: 1 }] },
-    ],
-    upgrade: {
-      effects: [
-        { type: 'block', amount: 7 },
-        { type: 'conditional', if: { type: 'compare', left: { scale: 'guard' }, op: '>=', right: PLANTED_FEET.min }, then: [{ type: 'draw', n: 1 }] },
-      ],
-    },
-    icon: 'card_planted_feet', tags: ['guard', 'draw', 'block'],
-  },
-  {
     id: 'loaded_spring', name: 'Loaded Spring', cls: 'breaker', type: 'skill', rarity: 'common', cost: 1, target: 'self',
     keywords: ['riposte'],
     text: 'Gain {guard} Guard. Riposte: gain {rguard} Guard and {rstatus} Onslaught.',
-    effects: [{ type: 'guard', amount: 7 }],
+    effects: [{ type: 'guard', amount: 6 }],
     riposte: [
-      { type: 'guard', amount: 4, key: 'rguard' },
+      { type: 'guard', amount: 3, key: 'rguard' },
       { type: 'status', target: 'self', id: ONSLAUGHT, amount: 2, key: 'rstatus' },
     ],
     upgrade: {
-      effects: [{ type: 'guard', amount: 9 }],
+      effects: [{ type: 'guard', amount: 8 }],
       riposte: [
-        { type: 'guard', amount: 5, key: 'rguard' },
+        { type: 'guard', amount: 4, key: 'rguard' },
         { type: 'status', target: 'self', id: ONSLAUGHT, amount: 3, key: 'rstatus' },
       ],
     },
@@ -471,6 +551,35 @@ const COMMONS: CardDef[] = [
     upgrade: { effects: [{ type: 'status', target: 'all_enemies', id: 'exposed', amount: 2 }, { type: 'draw', n: 1 }] },
     icon: 'card_sabre_rattle', tags: ['exposed', 'aoe', 'draw'],
   },
+  // --- v2 new commons (docs/v2/breaker-design.md §5.2)
+  {
+    id: 'stoke', name: 'Stoke', cls: 'breaker', type: 'skill', rarity: 'common', cost: 1, target: 'none',
+    // Phase E floor: + Guard (a Furnace deck's turn without a payoff is not a dead turn).
+    text: 'Gain {status} Onslaught and {guard} Guard. Draw {draw} card.',
+    effects: [selfStatus(ONSLAUGHT, 2), { type: 'guard', amount: 2 }, { type: 'draw', n: 1 }],
+    upgrade: { effects: [selfStatus(ONSLAUGHT, 3), { type: 'guard', amount: 3 }, { type: 'draw', n: 1 }] },
+    icon: 'card_stoke', tags: ['swing', 'draw'],
+  },
+  {
+    id: 'hair_trigger', name: 'Hair Trigger', cls: 'breaker', type: 'skill', rarity: 'common', cost: 0, target: 'none',
+    keywords: ['riposte'],
+    text: 'Draw {draw} card. Riposte: deal {rdamage} damage to the attacker.',
+    effects: [{ type: 'draw', n: 1 }],
+    // Phase F: Riposte 3/5 -> 2/4 (in 62% of spike decks; spike Breaker trim).
+    riposte: [{ type: 'damage', amount: 2, target: 'attacker', key: 'rdamage' }],
+    upgrade: { riposte: [{ type: 'damage', amount: 4, target: 'attacker', key: 'rdamage' }] },
+    icon: 'card_hair_trigger', tags: ['riposte', 'cheap', 'draw'],
+  },
+  {
+    // Phase F: an added copy was cf −19 ±13 (Δprog −5): as a free card the bot played it whenever it had Guard,
+    // and the Shed stripped Guard it needed. Now it brings its own Guard, so it is Guard-neutral and always a
+    // Shed trigger (Molten Shell, Spark Gap, Slag Bucket).
+    id: 'loosen_straps', name: 'Loosen Straps', cls: 'breaker', type: 'skill', rarity: 'common', cost: 1, target: 'none',
+    text: 'Gain {guard} Guard. Shed {shed}: draw {draw} cards.',
+    effects: [{ type: 'guard', amount: 4 }, { type: 'shed', n: LOOSEN_STRAPS.shed, effects: [{ type: 'draw', n: 2 }] }],
+    upgrade: { effects: [{ type: 'guard', amount: 4 }, { type: 'shed', n: LOOSEN_STRAPS.shed, effects: [{ type: 'draw', n: 3 }] }] },
+    icon: 'card_loosen_straps', tags: ['guard', 'shed', 'draw', 'cheap'],
+  },
 ];
 
 const UNCOMMONS: CardDef[] = [
@@ -478,9 +587,9 @@ const UNCOMMONS: CardDef[] = [
     id: 'hammerfall', name: 'Hammerfall', cls: 'breaker', type: 'attack', rarity: 'uncommon', cost: 2, target: 'enemy',
     keywords: ['retain'],
     text: 'Keep. Spend all Onslaught: deal {damage} damage, +{damage_per} per Onslaught spent.',
-    effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 8, per: 4, scale: 'spent' }, target: 'target' }] }],
+    effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 8, per: 5, scale: 'spent' }, target: 'target' }] }],
     upgrade: {
-      effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 8, per: 5, scale: 'spent' }, target: 'target' }] }],
+      effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 8, per: 6, scale: 'spent' }, target: 'target' }] }],
     },
     icon: 'card_hammerfall', tags: ['swing', 'finisher'],
   },
@@ -551,20 +660,13 @@ const UNCOMMONS: CardDef[] = [
     icon: 'card_quake_hammer', tags: ['swing', 'aoe', 'finisher'],
   },
   {
-    id: 'prism_edge', name: 'Prism Edge', cls: 'breaker', type: 'attack', rarity: 'uncommon', cost: 1, target: 'enemy',
-    text: 'Deal {damage} damage, +{damage_per} per Shard you hold.',
-    effects: [{ type: 'damage', amount: { base: 5, per: 2, scale: 'shards' }, target: 'target' }],
-    upgrade: { effects: [{ type: 'damage', amount: { base: 5, per: 3, scale: 'shards' }, target: 'target' }] },
-    icon: 'card_prism_edge', tags: ['shards', 'run'],
-  },
-  {
     id: 'feint_step', name: 'Feint Step', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 0, target: 'self',
     keywords: ['riposte'],
     text: 'Gain {block} Block. Riposte: deal {rdamage} damage to the attacker.',
-    effects: [{ type: 'block', amount: 4 }],
+    effects: [{ type: 'block', amount: 3 }],
     riposte: [{ type: 'damage', amount: 5, target: 'attacker', key: 'rdamage' }],
     upgrade: {
-      effects: [{ type: 'block', amount: 6 }],
+      effects: [{ type: 'block', amount: 5 }],
       riposte: [{ type: 'damage', amount: 7, target: 'attacker', key: 'rdamage' }],
     },
     icon: 'card_feint_step', tags: ['riposte', 'cheap'],
@@ -573,13 +675,13 @@ const UNCOMMONS: CardDef[] = [
     id: 'bind_the_blade', name: 'Bind the Blade', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 1, target: 'enemy',
     keywords: ['riposte'],
     text: 'Apply {status} Stagger. Riposte: apply {rstatus} Stagger to the attacker and gain {rstatus2} Onslaught.',
-    effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 3 }],
+    effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 2 }],
     riposte: [
       { type: 'status', target: 'attacker', id: 'stagger', amount: 2, key: 'rstatus' },
       { type: 'status', target: 'self', id: ONSLAUGHT, amount: 2, key: 'rstatus2' },
     ],
     upgrade: {
-      effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 4 }],
+      effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 3 }],
       riposte: [
         { type: 'status', target: 'attacker', id: 'stagger', amount: 3, key: 'rstatus' },
         { type: 'status', target: 'self', id: ONSLAUGHT, amount: 3, key: 'rstatus2' },
@@ -619,9 +721,10 @@ const UNCOMMONS: CardDef[] = [
   },
   {
     id: 'hairline_mark', name: 'Hairline Mark', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 1, target: 'enemy',
-    text: 'Apply {status} Exposed. Draw {draw} card.',
-    effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'draw', n: 1 }],
-    upgrade: { effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 3 }, { type: 'draw', n: 1 }] },
+    // Phase E floor: + Stagger (spike's pick rate barely moved with it, 10% -> 11%; the Crazing johnny's did).
+    text: 'Apply {status} Exposed and {status2} Stagger. Draw {draw} card.',
+    effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'status', target: 'target', id: 'stagger', amount: 1 }, { type: 'draw', n: 1 }],
+    upgrade: { effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 3 }, { type: 'status', target: 'target', id: 'stagger', amount: 2 }, { type: 'draw', n: 1 }] },
     icon: 'card_hairline_mark', tags: ['exposed', 'draw'],
   },
   {
@@ -630,7 +733,7 @@ const UNCOMMONS: CardDef[] = [
     effects: [
       {
         type: 'conditional', if: { type: 'target_intends_attack' },
-        then: [{ type: 'guard', amount: 8 }, { type: 'status', target: 'target', id: 'stagger', amount: 1 }],
+        then: [{ type: 'guard', amount: 6 }, { type: 'status', target: 'target', id: 'stagger', amount: 1 }],
         else: [{ type: 'draw', n: 2 }],
       },
     ],
@@ -638,7 +741,7 @@ const UNCOMMONS: CardDef[] = [
       effects: [
         {
           type: 'conditional', if: { type: 'target_intends_attack' },
-          then: [{ type: 'guard', amount: 11 }, { type: 'status', target: 'target', id: 'stagger', amount: 1 }],
+          then: [{ type: 'guard', amount: 9 }, { type: 'status', target: 'target', id: 'stagger', amount: 1 }],
           else: [{ type: 'draw', n: 3 }],
         },
       ],
@@ -648,10 +751,11 @@ const UNCOMMONS: CardDef[] = [
   {
     // RULINGS 32: designer id `furnace_heart` (collides with the Act 2 boss).
     id: 'cinder_heart', name: 'Cinder Heart', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
-    text: 'At the start of your turn, gain {status} Onslaught.',
-    effects: [selfStatus('cinder_heart', 1)],
-    upgrade: { keywords: ['innate'], text: 'Opening. At the start of your turn, gain {status} Onslaught.' },
-    icon: 'card_cinder_heart', tags: ['swing', 'scaling'],
+    // v2 rework: same behaviour, now through the Embers keyword (the status `cinder_heart` is gone).
+    text: 'Gain {status} Ember.',
+    effects: [selfStatus(EMBERS, 1)],
+    upgrade: { keywords: ['innate'], text: 'Opening. Gain {status} Ember.' },
+    icon: 'card_cinder_heart', tags: ['swing', 'scaling', 'embers'],
   },
   {
     id: 'crossed_blades', name: 'Crossed Blades', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
@@ -661,6 +765,8 @@ const UNCOMMONS: CardDef[] = [
     icon: 'card_crossed_blades', tags: ['riposte'],
   },
   {
+    // v2 Phase C made it free (cf Δprog −3.3 at cost 1); Phase D: back to cost 1, upgrade cost 0. At cost 0 it was in
+    // 72% of spike decks (cf Δwin +11.5) and fed the defensive Counter stall that the Phase D A/B had to pull down.
     id: 'parry_ledger', name: 'Parry Ledger', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
     text: 'Whenever one of your Ripostes triggers, draw {status} more card next turn.',
     effects: [selfStatus('parry_ledger', 1)],
@@ -668,8 +774,11 @@ const UNCOMMONS: CardDef[] = [
     icon: 'card_parry_ledger', tags: ['riposte', 'draw'],
   },
   {
+    // v2 Phase C: cf Δprog −2.6 (significant): a 1-cost Power with no early payoff. Free now; the Onslaught it
+    // banks on the enemy turn feeds next turn's Furnace finishers (Bastion → Furnace bridge). Upgrade: 2 per blocked attack.
+    // Phase D: Embers instead of Onslaught (the Bastion/Counter -> Furnace ramp for long fights; notes-v2 item 6).
     id: 'anvil_heart', name: 'Anvil Heart', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
-    text: 'When an enemy attack ends and you lost no HP to it, gain {status} Onslaught.',
+    text: 'At the start of your turn, if you lost no HP since your last turn, gain {status} Ember.',
     effects: [selfStatus('anvil_heart', 1)],
     upgrade: { cost: 0 },
     icon: 'card_anvil_heart', tags: ['guard', 'swing'],
@@ -680,6 +789,51 @@ const UNCOMMONS: CardDef[] = [
     effects: [selfStatus('fault_reader', 1)],
     upgrade: { keywords: ['innate'], text: 'Opening. At the start of your turn, apply {status} Exposed to the lowest-HP enemy.' },
     icon: 'card_fault_reader', tags: ['exposed'],
+  },
+  // --- v2: moved down from rare and reworked
+  {
+    // The engine's `prime` primitive (rack capped at TUNING.caps.primeCapacity), then a card back.
+    id: 'en_garde', name: 'En Garde', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 1, target: 'none',
+    text: 'Prime up to {prime} Riposte cards from your hand. Draw {draw} card.',
+    effects: [{ type: 'prime', n: EN_GARDE.prime }, { type: 'draw', n: 1 }],
+    upgrade: {
+      text: 'Prime up to {prime} Riposte cards from your hand. Draw {draw} cards.',
+      effects: [{ type: 'prime', n: EN_GARDE.prime }, { type: 'draw', n: 2 }],
+    },
+    icon: 'card_en_garde', tags: ['riposte', 'draw'],
+  },
+  {
+    id: 'shed_plating', name: 'Shed Plating', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 0, target: 'none',
+    // Phase E floor: draws 1 even with no Guard to Shed.
+    text: 'Draw {draw} card. Shed {shed}: gain {energy} energy and draw {draw2} more.',
+    effects: [{ type: 'draw', n: 1 }, { type: 'shed', n: SHED_PLATING.shed, effects: [{ type: 'energy', n: 1 }, { type: 'draw', n: 1 }] }],
+    upgrade: { effects: [{ type: 'draw', n: 1 }, { type: 'shed', n: SHED_PLATING.shed, effects: [{ type: 'energy', n: 1 }, { type: 'draw', n: 2 }] }] },
+    icon: 'card_shed_plating', tags: ['guard', 'shed', 'energy', 'draw'],
+  },
+  // --- v2 new uncommons
+  {
+    id: 'kindle', name: 'Kindle', cls: 'breaker', type: 'skill', rarity: 'uncommon', cost: 1, target: 'none',
+    values: KINDLE,
+    text: 'Draw {draw} cards. Spend all Onslaught: gain an Ember for every {every} Onslaught spent.',
+    // floor(spent / every) via per = 1 / every (exact for every Onslaught value up to the cap; tested).
+    // Phase E floor: draws first, so it is never a blank turn-1 card.
+    effects: [{ type: 'draw', n: 2 }, { type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'status', target: 'self', id: EMBERS, amount: { base: 0, per: 1 / KINDLE.every, scale: 'spent' } }] }],
+    upgrade: { cost: 0 },
+    icon: 'card_kindle', tags: ['swing', 'embers', 'scaling'],
+  },
+  {
+    id: 'spark_gap', name: 'Spark Gap', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
+    text: 'Whenever you Shed Guard, gain {status} Onslaught.',
+    effects: [selfStatus('spark_gap', 1)],
+    upgrade: { cost: 0 },
+    icon: 'card_spark_gap', tags: ['guard', 'shed', 'swing'],
+  },
+  {
+    id: 'iron_patience', name: 'Iron Patience', cls: 'breaker', type: 'power', rarity: 'uncommon', cost: 1, target: 'self',
+    text: 'At the end of your turn, gain {status} Guard for each unspent energy.',
+    effects: [selfStatus('iron_patience', 1)],
+    upgrade: { effects: [selfStatus('iron_patience', 2)] },
+    icon: 'card_iron_patience', tags: ['guard', 'riposte'],
   },
 ];
 
@@ -709,20 +863,17 @@ const RARES: CardDef[] = [
   {
     id: 'iron_avalanche', name: 'Iron Avalanche', cls: 'breaker', type: 'attack', rarity: 'rare', cost: 2, target: 'all_enemies',
     keywords: ['retain'],
-    text: 'Keep. Deal damage equal to your defence to ALL enemies. Lose all Guard.',
-    effects: [
-      { type: 'damage', amount: { base: 0, per: 1, scale: 'defence' }, target: 'all_enemies' },
-      { type: 'lose_guard', amount: 'all' },
-    ],
+    // v2 rework: Shed all Guard (a Shed trigger); Block no longer counts.
+    text: 'Keep. Shed all Guard: deal {damage} damage plus the Guard Shed to ALL enemies.',
+    effects: [{ type: 'shed', n: 'all', effects: [{ type: 'damage', amount: { base: 5, per: 1, scale: 'shed' }, target: 'all_enemies' }] }],
     upgrade: {
-      text: 'Keep. Deal damage equal to your defence to ALL enemies. Lose all Guard. Gain {block} Block.',
+      text: 'Keep. Shed all Guard: deal {damage} damage plus the Guard Shed to ALL enemies. Gain {block} Block.',
       effects: [
-        { type: 'damage', amount: { base: 0, per: 1, scale: 'defence' }, target: 'all_enemies' },
-        { type: 'lose_guard', amount: 'all' },
+        { type: 'shed', n: 'all', effects: [{ type: 'damage', amount: { base: 5, per: 1, scale: 'shed' }, target: 'all_enemies' }] },
         { type: 'block', amount: 8 },
       ],
     },
-    icon: 'card_iron_avalanche', tags: ['guard', 'defence', 'aoe', 'finisher'],
+    icon: 'card_iron_avalanche', tags: ['guard', 'shed', 'aoe', 'finisher'],
   },
   {
     id: 'endless_maul', name: 'Endless Maul', cls: 'breaker', type: 'attack', rarity: 'rare', cost: 1, target: 'enemy',
@@ -741,68 +892,45 @@ const RARES: CardDef[] = [
     icon: 'card_endless_maul', tags: ['swing', 'scaling'],
   },
   {
-    // Designer: run counter `oath_onslaught` + custom `remove_self_from_deck` -> remove_card self, then the run flag
-    // gated on removed_self (a cap_prune_away cut leaves the card in the deck and grants nothing permanent).
+    // v2 Phase C: measured dead (plays/draw 0.04 over 6,236 draws: playing it removed it from the deck for good,
+    // which neither bots nor most players will do). Now a 0-cost Embers starter for the Furnace engine.
     id: 'forge_oath', name: 'Forge Oath', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 0, target: 'self',
     keywords: ['exhaust'],
-    text: 'Scrap. Gain {status} Onslaught. Remove this from your deck. Later combats start with {run_flag} more Onslaught.',
+    text: 'Scrap. Gain {status} Ember.',
+    effects: [selfStatus(EMBERS, 1)],
+    upgrade: {
+      text: 'Scrap. Gain {status} Ember and {status2} Onslaught.',
+      effects: [selfStatus(EMBERS, 1), selfStatus(ONSLAUGHT, 2)],
+    },
+    icon: 'card_forge_oath', tags: ['swing', 'embers'],
+  },
+  {
+    // v2 Phase C: measured dead (plays/draw 0.14): "Spend 4" was rarely reachable from a Skill (mean Onslaught at
+    // play 2.7) and did nothing otherwise. Now never dead (draw first) and the Spend is "all of it", so a long
+    // chain becomes a second chain (and a Bellows trigger at 4+).
+    id: 'vent_pressure', name: 'Vent Pressure', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 1, target: 'none',
+    values: VENT_PRESSURE,
+    text: 'Draw {draw} cards. If Onslaught ≥ {min}: Spend all of it and gain {energy} energy.',
     effects: [
-      selfStatus(ONSLAUGHT, 2),
-      { type: 'remove_card', self: true },
-      { type: 'conditional', if: { type: 'removed_self' }, then: [{ type: 'run_flag', key: FORGE_OATH_FLAG, delta: 2 }] },
+      { type: 'draw', n: 2 },
+      { type: 'conditional', if: onslaughtAtLeast(VENT_PRESSURE.min), then: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'energy', n: 2 }] }] },
     ],
     upgrade: {
       effects: [
-        selfStatus(ONSLAUGHT, 3),
-        { type: 'remove_card', self: true },
-        { type: 'conditional', if: { type: 'removed_self' }, then: [{ type: 'run_flag', key: FORGE_OATH_FLAG, delta: 3 }] },
+        { type: 'draw', n: 3 },
+        { type: 'conditional', if: onslaughtAtLeast(VENT_PRESSURE.min), then: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'energy', n: 2 }] }] },
       ],
     },
-    icon: 'card_forge_oath', tags: ['swing', 'run', 'removal'],
-  },
-  {
-    // Designer: custom `prime_from_hand` -> the engine's `prime` primitive (rack capped at TUNING.caps.primeCapacity).
-    id: 'en_garde', name: 'En Garde', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 1, target: 'none',
-    text: 'Prime up to {prime} Riposte cards from your hand now, past capacity.',
-    effects: [{ type: 'prime', n: EN_GARDE.prime }],
-    upgrade: {
-      text: 'Draw {draw} card. Prime up to {prime} Riposte cards from your hand now, past capacity.',
-      effects: [{ type: 'draw', n: 1 }, { type: 'prime', n: EN_GARDE.prime }],
-    },
-    icon: 'card_en_garde', tags: ['riposte'],
-  },
-  {
-    id: 'vent_pressure', name: 'Vent Pressure', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 1, target: 'none',
-    text: 'Spend {spend} Onslaught: gain {energy} energy and draw {draw} cards.',
-    effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 4, effects: [{ type: 'energy', n: 2 }, { type: 'draw', n: 2 }] }],
-    upgrade: { effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 3, effects: [{ type: 'energy', n: 2 }, { type: 'draw', n: 2 }] }] },
     icon: 'card_vent_pressure', tags: ['swing', 'energy', 'draw'],
   },
   {
-    id: 'iron_rhythm', name: 'Iron Rhythm', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 1, target: 'none',
+    id: 'iron_rhythm', name: 'Iron Rhythm', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 0, target: 'none',
     text: 'Draw {draw} cards. This turn, Skills also add {status} Onslaught (this one too).',
+    // Phase F: back to draw 2/3 and cost 0. At draw 1/2 an added copy was cf −11 (Δprog −7 **); at draw 2/3 and
+    // cost 1 it still measured −15 to −20 (Δprog −5.7 to −5.9 **) in two runs.
     effects: [{ type: 'draw', n: 2 }, selfStatus('iron_rhythm', 1)],
     upgrade: { effects: [{ type: 'draw', n: 3 }, selfStatus('iron_rhythm', 1)] },
     icon: 'card_iron_rhythm', tags: ['swing', 'guard', 'draw'],
-  },
-  {
-    id: 'shed_plating', name: 'Shed Plating', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 0, target: 'self',
-    text: 'If you have {lose_guard}+ Guard: lose {lose_guard}, gain {energy} energy, draw {draw} cards.',
-    effects: [
-      {
-        type: 'conditional', if: { type: 'compare', left: { scale: 'guard' }, op: '>=', right: SHED_PLATING.guard },
-        then: [{ type: 'lose_guard', amount: SHED_PLATING.guard }, { type: 'energy', n: 1 }, { type: 'draw', n: 2 }],
-      },
-    ],
-    upgrade: {
-      effects: [
-        {
-          type: 'conditional', if: { type: 'compare', left: { scale: 'guard' }, op: '>=', right: SHED_PLATING.guard },
-          then: [{ type: 'lose_guard', amount: SHED_PLATING.guard }, { type: 'energy', n: 1 }, { type: 'draw', n: 3 }],
-        },
-      ],
-    },
-    icon: 'card_shed_plating', tags: ['guard', 'energy', 'draw'],
   },
   {
     id: 'smouldering_core', name: 'Smouldering Core', cls: 'breaker', type: 'power', rarity: 'rare', cost: 2, target: 'self',
@@ -812,9 +940,12 @@ const RARES: CardDef[] = [
     icon: 'card_smouldering_core', tags: ['swing', 'scaling'],
   },
   {
+    // v2 Phase C: cf Δprog −3.5 (significant). The returned card now costs 0 that turn, so a Riposte-dense deck
+    // either replays its best parry for free or holds it again: a payoff Counter decks build toward.
     id: 'recoil_spring', name: 'Recoil Spring', cls: 'breaker', type: 'power', rarity: 'rare', cost: 1, target: 'self',
-    text: 'When a primed card fires, it comes back to your hand next turn.',
-    effects: [selfStatus('recoil_spring', 1)],
+    // Phase E floor: draws a card on play.
+    text: 'Draw {draw} card. When a primed card fires, it comes back to your hand next turn and is free to play that turn.',
+    effects: [{ type: 'draw', n: 1 }, selfStatus('recoil_spring', 1)],
     upgrade: { cost: 0 },
     icon: 'card_recoil_spring', tags: ['riposte', 'draw'],
   },
@@ -825,6 +956,108 @@ const RARES: CardDef[] = [
     upgrade: { cost: 1 },
     icon: 'card_reactive_plate', tags: ['guard', 'damage'],
   },
+  // --- v2 new rares (docs/v2/breaker-design.md §5.4)
+  {
+    id: 'worldbreaker', name: 'Worldbreaker', cls: 'breaker', type: 'attack', rarity: 'rare', cost: 'X', target: 'enemy',
+    text: 'Spend all Onslaught: deal {damage} damage, +{damage_per} per Onslaught spent, {times} times.',
+    effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 4, per: 2, scale: 'spent' }, times: 'X', target: 'target' }] }],
+    upgrade: {
+      effects: [{ type: 'spend_status', id: ONSLAUGHT, n: 'all', effects: [{ type: 'damage', amount: { base: 4, per: 3, scale: 'spent' }, times: 'X', target: 'target' }] }],
+    },
+    icon: 'card_worldbreaker', tags: ['swing', 'finisher', 'multihit', 'x_cost'],
+  },
+  {
+    id: 'turnabout', name: 'Turnabout', cls: 'breaker', type: 'skill', rarity: 'rare', cost: 2, target: 'self',
+    keywords: ['riposte'],
+    text: "Gain {block} Block. Riposte: deal damage equal to the attack's total damage to the attacker.",
+    effects: [{ type: 'block', amount: 12 }],
+    // The attacker's current intent (per-hit × hits, already with your Stagger on it), read at declaration.
+    riposte: [{ type: 'damage', amount: { scale: { intent_damage: 'target' } }, target: 'attacker', key: 'rdamage' }],
+    upgrade: { effects: [{ type: 'block', amount: 16 }] },
+    icon: 'card_turnabout', tags: ['riposte', 'block'],
+  },
+  {
+    // Phase F: cost 1 -> 0 (an added copy was cf −17 ±12: tempo). Upgrade: 2 Embers on play.
+    id: 'bellows', name: 'Bellows', cls: 'breaker', type: 'power', rarity: 'rare', cost: 0, target: 'self',
+    values: BELLOWS,
+    // Phase E floor: it lights the fire it fans (1 Ember now).
+    // Phase F: replaces itself. Without the draw an added copy measured −5.4 ±4.0 floors; with it, ns in four rounds.
+    text: 'Gain {status} Ember. Draw {draw} card. Whenever you Spend {min} or more Onslaught at once, gain another Ember.',
+    effects: [selfStatus(EMBERS, 1), { type: 'draw', n: 1 }, selfStatus('bellows', 1)],
+    upgrade: { text: 'Gain {status} Embers. Draw {draw} card. Whenever you Spend {min} or more Onslaught at once, gain another Ember.', effects: [selfStatus(EMBERS, 2), { type: 'draw', n: 1 }, selfStatus('bellows', 1)] },
+    icon: 'card_bellows', tags: ['swing', 'embers', 'scaling'],
+  },
+  {
+    // Phase F: cost 2/1 -> 0, draws 1. An added copy was cf −18 ±11 at cost 2 and −5.8 ±4.0 floors at cost 1;
+    // at cost 0 with the draw it measured 0.0, −6.7 and −3.3 (all ns) in three rounds.
+    id: 'crazing', name: 'Crazing', cls: 'breaker', type: 'power', rarity: 'rare', cost: 0, target: 'self',
+    // Phase E floor: it cracks every enemy as it lands.
+    text: "Apply {status} Exposed to ALL enemies. Draw {draw} card. Exposed on enemies doesn't decay.",
+    effects: [{ type: 'status', target: 'all_enemies', id: 'exposed', amount: 1 }, { type: 'draw', n: 1 }, selfStatus('crazing', 1)],
+    upgrade: { effects: [{ type: 'status', target: 'all_enemies', id: 'exposed', amount: 2 }, { type: 'draw', n: 1 }, selfStatus('crazing', 1)] },
+    icon: 'card_crazing', tags: ['exposed', 'scaling'],
+  },
+  {
+    id: 'answer_in_kind', name: 'Answer in Kind', cls: 'breaker', type: 'power', rarity: 'rare', cost: 2, target: 'self',
+    // Phase E floor: +1 prime capacity, so it helps before the rack is full.
+    text: 'You can prime {status} additional Riposte card. When one of your Riposte cards fires, it also resolves its played effects.',
+    effects: [selfStatus('riposte_capacity', 1), selfStatus('answer_in_kind', 1)],
+    upgrade: { cost: 1 },
+    icon: 'card_answer_in_kind', tags: ['riposte'],
+  },
+  {
+    // Phase F: cost 2/1 -> 1/0, 8 Guard, draws 1. Its counterfactual stayed negative at every strength tried
+    // (cost 0 with 12 Guard included), so the harm is not its tempo; see docs/v2/breaker-design.md §16.
+    id: 'molten_shell', name: 'Molten Shell', cls: 'breaker', type: 'power', rarity: 'rare', cost: 1, target: 'self',
+    // Phase E floor: comes with a bank to Shed.
+    text: 'Gain {guard} Guard. Draw {draw} card. Whenever you Shed Guard, deal that much damage to the enemy with the lowest HP.',
+    effects: [{ type: 'guard', amount: 8 }, { type: 'draw', n: 1 }, selfStatus('molten_shell', 1)],
+    upgrade: { cost: 0 },
+    icon: 'card_molten_shell', tags: ['guard', 'shed', 'damage'],
+  },
 ];
 
-export const BREAKER_CARDS: CardDef[] = [...STARTERS, ...COMMONS, ...UNCOMMONS, ...RARES];
+// ---------------------------------------------------------------------------
+// Engine / role tags for the simulator (docs/v2/breaker-design.md §7 H12). Every card must have an entry.
+type Eng = 'furnace' | 'crazing' | 'counter' | 'bastion';
+type Role = 'enabler' | 'payoff' | 'multiplier' | 'bridge' | 'glue';
+const ENGINE_ROLES: Record<string, [Eng[], Role]> = {
+  hew: [[], 'glue'], bulwark: [[], 'glue'], shoulder_check: [['furnace', 'counter'], 'payoff'], brace: [['bastion'], 'enabler'],
+  piston_jab: [['furnace', 'crazing'], 'enabler'], chain_driver: [['furnace'], 'glue'],
+  breach_hammer: [['furnace'], 'glue'], thresher_arc: [['furnace', 'crazing'], 'payoff'], fault_line: [['crazing', 'counter'], 'enabler'],
+  rivet_flurry: [['crazing'], 'payoff'], counterweight: [['counter'], 'enabler'], plate_ram: [['bastion'], 'payoff'],
+  return_stroke: [['counter', 'furnace'], 'bridge'], gauntlet_tap: [['furnace', 'bastion'], 'enabler'], catch_blade: [['counter', 'bastion'], 'bridge'],
+  cool_the_steel: [['furnace', 'bastion'], 'bridge'], read_the_line: [['furnace'], 'glue'],
+  pivot_sweep: [['counter', 'crazing'], 'payoff'], rivet_wall: [['bastion'], 'enabler'],
+  loaded_spring: [['counter', 'furnace', 'bastion'], 'bridge'], sabre_rattle: [['crazing'], 'enabler'], stoke: [['furnace'], 'enabler'],
+  hair_trigger: [['counter'], 'enabler'], loosen_straps: [['bastion'], 'payoff'],
+  hammerfall: [['furnace'], 'payoff'], piston_volley: [['furnace', 'crazing'], 'payoff'], answering_steel: [['counter'], 'payoff'],
+  rampart_crash: [['bastion'], 'payoff'], coiled_strike: [['counter'], 'payoff'], seam_ripper: [['crazing'], 'glue'],
+  quake_hammer: [['furnace', 'crazing'], 'payoff'], feint_step: [['counter'], 'enabler'],
+  bind_the_blade: [['counter', 'furnace'], 'bridge'], anneal: [['bastion'], 'enabler'], quench: [['furnace', 'bastion'], 'bridge'],
+  ride_the_surge: [['furnace'], 'glue'], hairline_mark: [['crazing'], 'enabler'], read_the_blow: [['bastion', 'counter'], 'enabler'],
+  cinder_heart: [['furnace'], 'multiplier'], crossed_blades: [['counter'], 'enabler'], parry_ledger: [['counter'], 'payoff'],
+  anvil_heart: [['bastion', 'furnace'], 'bridge'], fault_reader: [['crazing'], 'enabler'], en_garde: [['counter'], 'enabler'],
+  shed_plating: [['bastion'], 'payoff'], kindle: [['furnace'], 'multiplier'], spark_gap: [['bastion', 'furnace'], 'bridge'],
+  iron_patience: [['bastion', 'counter'], 'enabler'],
+  jackhammer: [['furnace', 'crazing'], 'multiplier'], steal_the_swing: [['counter'], 'payoff'], iron_avalanche: [['bastion'], 'payoff'],
+  endless_maul: [['furnace'], 'payoff'], forge_oath: [['furnace'], 'multiplier'], vent_pressure: [['furnace'], 'payoff'],
+  iron_rhythm: [['furnace', 'bastion'], 'bridge'], smouldering_core: [['furnace'], 'multiplier'], recoil_spring: [['counter'], 'multiplier'],
+  reactive_plate: [['bastion'], 'multiplier'], worldbreaker: [['furnace', 'crazing'], 'payoff'], turnabout: [['counter'], 'payoff'],
+  bellows: [['furnace'], 'multiplier'], crazing: [['crazing'], 'multiplier'], answer_in_kind: [['counter'], 'multiplier'],
+  molten_shell: [['bastion'], 'multiplier'],
+};
+
+function withEngineTags(def: CardDef): CardDef {
+  const entry = ENGINE_ROLES[def.id];
+  if (!entry) throw new Error(`breaker card ${def.id} has no engine/role tags (ENGINE_ROLES)`);
+  const [engines, role] = entry;
+  return { ...def, tags: [...(def.tags ?? []), ...engines.map((e) => `engine:${e}`), `role:${role}`] };
+}
+
+export const BREAKER_CARDS: CardDef[] = [...STARTERS, ...COMMONS, ...UNCOMMONS, ...RARES].map(withEngineTags);
+
+// The tag table must match the pool exactly (Johnny bots read engine:* tags): a stale entry is a cut card.
+for (const id of Object.keys(ENGINE_ROLES)) {
+  if (!BREAKER_CARDS.some((c) => c.id === id)) throw new Error(`ENGINE_ROLES has '${id}', which is not in the Breaker pool`);
+}

@@ -1,5 +1,5 @@
 {
-  "source": "raw/backdrops/act3_crown-v5.png",
+  "source": "/Users/chrises/.codex/generated_images/01a189d9-b462-7220-8830-e662faedfd2e/exec-39c1bb5e-ab22-4610-aa93-da76fb6bcd54.png",
   "source_size": [
     1672,
     941
@@ -10,21 +10,30 @@
     1672,
     940
   ],
-  "pitch": 6.07,
+  "pitch": 6.67,
   "phase": [
-    1.309,
-    5.998
+    5.903,
+    1.349
   ],
-  "grid_score": 0.2101977269473082,
+  "grid_score": 0.23130413012637602,
   "recovered_size": [
-    275,
-    155
+    251,
+    141
   ],
   "size": [
     640,
     360
   ],
-  "colors": 14,
-  "output": "../../public/assets/backdrops/act3_crown.png",
-  "preview": "../../public/assets/backdrops/act3_crown@2x.png"
+  "colors": 16,
+  "output": "/Users/chrises/git/vibespire/public/assets/backdrops/act3_crown.png",
+  "preview": "/Users/chrises/git/vibespire/public/assets/backdrops/act3_crown@2x.png",
+  "final_cleanup": "ui_retouch.py: 320x180 construction grid, flat calm centre and jar repairs",
+  "recovered_size_before_cleanup": [
+    251,
+    141
+  ],
+  "construction_grid": [
+    320,
+    180
+  ]
 }

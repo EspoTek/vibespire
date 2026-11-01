@@ -14,17 +14,21 @@ describe('KeyValueStorage / Stored', () => {
     const kv = new KeyValueStorage(new FakeStorage());
     const s = new Stored(kv, 'k', settingsCodec);
     expect(s.getOrNull()).toBeNull();
-    expect(s.set({ version: 2, volume: 0.5, musicVolume: 0.3, animSpeed: 2 })).toBe(true);
-    expect(s.getOrNull()).toEqual({ version: 2, volume: 0.5, musicVolume: 0.3, animSpeed: 2 });
+    expect(s.set({ version: 3, volume: 0.5, musicVolume: 0.3, animSpeed: 2, shake: 1, flashes: false })).toBe(true);
+    expect(s.getOrNull()).toEqual({ version: 3, volume: 0.5, musicVolume: 0.3, animSpeed: 2, shake: 1, flashes: false });
   });
 
-  it('v1 settings (before music) migrate to the default music volume; v2 without it is invalid', () => {
+  it('v1 settings (before music) and v2 (before shake/flash options) migrate to the defaults; missing fields of the current version are invalid', () => {
     const fake = new FakeStorage();
     const s = new Stored(new KeyValueStorage(fake), 'k', settingsCodec);
     fake.map.set('k', JSON.stringify({ version: 1, volume: 0.7, animSpeed: 1 }));
-    expect(s.getOrNull()).toEqual({ version: 2, volume: 0.7, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1 });
+    expect(s.getOrNull()).toEqual({ version: 3, volume: 0.7, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1, shake: 2, flashes: true });
     fake.map.set('k', JSON.stringify({ version: 2, volume: 0.7, animSpeed: 1 }));
     expect(() => s.getOrNull()).toThrow(/musicVolume/);
+    fake.map.set('k', JSON.stringify({ version: 2, volume: 0.7, musicVolume: 0.2, animSpeed: 1 }));
+    expect(s.getOrNull()).toEqual({ version: 3, volume: 0.7, musicVolume: 0.2, animSpeed: 1, shake: 2, flashes: true });
+    fake.map.set('k', JSON.stringify({ version: 3, volume: 0.7, musicVolume: 0.2, animSpeed: 1, flashes: true }));
+    expect(() => s.getOrNull()).toThrow(/shake/);
   });
 
   it('quota errors refuse the write and are reported once', () => {
@@ -64,7 +68,7 @@ describe('KeyValueStorage / Stored', () => {
     const s = new Stored(kv, 'k', settingsCodec);
     fake.map.set('k', '{nope');
     expect(() => s.getOrNull()).toThrow(/invalid JSON/);
-    fake.map.set('k', JSON.stringify({ version: 3, volume: 1, animSpeed: 1 }));
+    fake.map.set('k', JSON.stringify({ version: 4, volume: 1, animSpeed: 1 }));
     expect(() => s.getOrNull()).toThrow(/unsupported version/);
     fake.map.set('k', JSON.stringify({ version: 1, volume: 3, animSpeed: 1 }));
     expect(() => s.getOrNull()).toThrow(/volume/);

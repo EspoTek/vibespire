@@ -24,7 +24,8 @@
 // need combat or a trigger context (trigger_hits, spent, ...) render their `base` when unavailable.
 // renderTemplate THROWS on any placeholder it cannot fill.
 
-import { getBoonDef, getCardDef, getEnemyDef, getEventDef, getPotionDef, getRelicDef, getRestOptionDef, getStatusDef } from '../content';
+import { CARD_KEYWORD_PREFIX, getBoonDef, getCardDef, getEnemyDef, getEventDef, getKeyword, getPotionDef, getRelicDef, getRestOptionDef, getStatusDef } from '../content';
+import { TUNING } from './tuning';
 import { findCardAnywhere } from './cards';
 import { getEnemy, isAlive } from './core';
 import { computeBlock, computeDamage } from './damage';
@@ -79,6 +80,8 @@ function scaleAvailable(ctx: TextCtx, scale: AmountScale): boolean {
   const f = ctx.frame;
   if (scale === 'trigger_hits') return f.hits !== undefined;
   if (scale === 'spent') return f.spent !== undefined;
+  if (scale === 'shed') return f.shed !== undefined;
+  if (scale === 'scrapped') return f.scrapped !== undefined;
   if (scale === 'stacks') return f.src.kind === 'status';
   if (typeof scale === 'object' && 'cardVar' in scale) return cardKnown(ctx);
   if (typeof scale === 'object' && 'ai' in scale) return typeof f.self === 'number';
@@ -180,8 +183,11 @@ export function effectTextValues(
         case 'scry':
           put(e.key ?? e.type, av(e.n), true, e.n);
           break;
-        case 'discard':
         case 'exhaust':
+          put(e.key ?? e.type, av(e.n ?? 1), true, e.n);
+          if (e.then) visit(e.then);
+          break;
+        case 'discard':
         case 'upgrade':
         case 'remove_card':
         case 'transform_card':
@@ -205,7 +211,11 @@ export function effectTextValues(
           break;
         case 'advance':
         case 'postpone':
+        case 'quicken':
           put(e.key ?? e.type, e.n, true);
+          break;
+        case 'schedule':
+          put(e.key ?? 'schedule', e.turns, true);
           break;
         case 'prime':
           put('prime', e.n ?? 1, true);
@@ -219,8 +229,27 @@ export function effectTextValues(
         case 'prune':
           put(e.key ?? 'prune', e.bloom ?? 1, true);
           break;
+        case 'harvest':
+          put(e.key ?? 'harvest', av(e.mult), true, e.mult);
+          break;
+        // Shared v2
+        case 'strain':
+          put(e.key ?? 'strain', av(e.amount), true, e.amount);
+          break;
+        case 'triage':
+          put(e.key ?? 'triage', e.keep, true);
+          break;
+        case 'add_random_card':
+          put(e.key ?? 'add_random_card', av(e.n ?? 1), true, e.n);
+          break;
+        case 'copy_card':
+          break;
         case 'spend_status':
           put(e.key ?? 'spend', e.n === 'all' ? 'all' : e.n, true);
+          visit(e.effects);
+          break;
+        case 'shed':
+          put(e.key ?? 'shed', e.n === 'all' ? 'all' : e.n, true);
           visit(e.effects);
           break;
         case 'repeat':
@@ -285,7 +314,7 @@ export function effectTextValues(
 function usesKeyN(effects: readonly Effect[]): boolean {
   for (const e of effects) {
     if ('key' in e && e.key === 'n') return true;
-    if ((e.type === 'repeat' || e.type === 'on_beat' || e.type === 'spend_status') && usesKeyN(e.effects)) return true;
+    if ((e.type === 'repeat' || e.type === 'on_beat' || e.type === 'spend_status' || e.type === 'shed') && usesKeyN(e.effects)) return true;
     if (e.type === 'conditional' && (usesKeyN(e.then) || (e.else !== undefined && usesKeyN(e.else)))) return true;
     if (e.type === 'choose' && e.options.some((o) => usesKeyN(o.effects))) return true;
     if (e.type === 'gamble' && e.outcomes.some((o) => usesKeyN(o.effects))) return true;
@@ -305,14 +334,15 @@ export type CardRef = Pick<CardInstance, 'id' | 'upgraded'> & { uid?: number };
 
 function cardTextCtx(card: CardRef, state: RunState | null, target: number | null): TextCtx | null {
   if (!state) return null;
-  const x = state.phase === 'combat' && state.combat ? state.combat.energy : 0;
+  // X previews include Reserve (shared v2 H3): an X-cost card would add it to X.
+  const x = state.phase === 'combat' && state.combat ? state.combat.energy + (state.combat.player.statuses.reserve ?? 0) : 0;
   return { state, frame: { src: { kind: 'card', uid: card.uid ?? -1, id: card.id, upgraded: card.upgraded }, self: 'player', target, x } };
 }
 
 /** The full walk list of a card: effects, then riposte, then delay.effects. */
 function cardWalk(card: CardRef): Effect[] {
   const def = getCardDef(card.id, card.upgraded);
-  return [...def.effects, ...(def.riposte ?? []), ...(def.delay?.effects ?? [])];
+  return [...def.effects, ...(def.riposte ?? []), ...(def.delay?.effects ?? []), ...(def.salvage ?? [])];
 }
 
 /** Placeholder values for a card. With `state` in combat they include all current modifiers (and `target`'s). */
@@ -344,7 +374,7 @@ export function computeDamagePreview(state: RunState, cardUid: number, target: n
   const collect = (list: readonly Effect[]): void => {
     for (const e of list) {
       if (e.type === 'damage') keys.push(e.key ?? 'damage');
-      if (e.type === 'repeat' || e.type === 'on_beat' || e.type === 'spend_status') collect(e.effects);
+      if (e.type === 'repeat' || e.type === 'on_beat' || e.type === 'spend_status' || e.type === 'shed') collect(e.effects);
       if (e.type === 'conditional') {
         collect(e.then);
         if (e.else) collect(e.else);
@@ -443,4 +473,63 @@ export function renderMoveText(state: RunState, enemyUid: number, moveId: string
   if (move.text === undefined) return null;
   const ctx: TextCtx = { state, frame: { src: { kind: 'enemy', uid: e.uid, id: e.id, moveId }, self: e.uid, target: 'player', x: 0 } };
   return renderTemplate(move.text, effectTextValues(ctx, move.effects, def.values));
+}
+
+// ---------------------------------------------------------------------------
+// Keyword glossary (src/content/keywords.ts): rule numbers come from TUNING and the content
+// tables at call time, so simulator overrides show up too.
+
+/** Placeholder values available to keyword rules text. */
+export function keywordTextValues(): Record<string, TextValue> {
+  const beats = TUNING.cadence.beats;
+  const beatList = beats.length <= 1 ? beats.join('') : `${beats.slice(0, -1).join(', ')} or ${beats[beats.length - 1] ?? ''}`;
+  return {
+    draw_per_turn: TUNING.drawPerTurn,
+    hand_limit: TUNING.handLimit,
+    onslaught_per_attack: TUNING.onslaught.perAttack,
+    onslaught_cap: statusCap('onslaught'),
+    embers_cap: statusCap('embers'),
+    reserve_cap: statusCap('reserve'),
+    reprise_max: TUNING.caps.reprise,
+    exposed_cap: statusCap('exposed'),
+    stagger_cap: statusCap('stagger'),
+    rot_cap: statusCap('rot'),
+    prime_base: TUNING.riposte.baseCapacity,
+    prime_cap: TUNING.caps.primeCapacity,
+    guard_cap: TUNING.caps.guard,
+    bloom_cap: TUNING.caps.bloom,
+    bloom_ripe: TUNING.bloomRipe,
+    prune_away_cap: TUNING.caps.pruneAwayPerTurn,
+    beats: beatList,
+    timeline_cap: TUNING.caps.timeline,
+    advance_cap: TUNING.caps.advancePerTurn,
+    delay_max: TUNING.caps.delayMax,
+    augury_depth: TUNING.augury.depth,
+    shard_cap: TUNING.shards.cap,
+    skip_shards: TUNING.shards.skipReward,
+    skip_boss_shards: TUNING.shards.skipBossRelic,
+    backlash_per: TUNING.backlashPerStack,
+    purge_shards: restShardCost('rest_purge'),
+    transmute_shards: restShardCost('rest_transmute'),
+    transmute_offers: TUNING.transmute.offers,
+  };
+}
+
+function statusCap(id: string): number {
+  const cap = TUNING.caps.status[id];
+  if (cap === undefined) throw new Error(`keyword text: TUNING.caps.status has no '${id}'`);
+  return cap;
+}
+
+function restShardCost(id: string): number {
+  const cost = getRestOptionDef(id).shardCost;
+  if (cost === undefined) throw new Error(`keyword text: rest option '${id}' has no shardCost`);
+  return cost;
+}
+
+/** A glossary entry's rules text with live rule numbers. Throws on an unknown keyword or placeholder. */
+export function renderKeywordText(id: string): string {
+  const k = getKeyword(id);
+  if (id.startsWith(CARD_KEYWORD_PREFIX)) return renderCardText({ id: id.slice(CARD_KEYWORD_PREFIX.length), upgraded: false }, null);
+  return renderTemplate(k.text, keywordTextValues());
 }

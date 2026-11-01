@@ -1,0 +1,6 @@
+{
+  "id": "scar_tissue",
+  "prompt": "Use case: illustration-story. Asset type ONE 32x24 Sega Master System colourless card illustration, shown enlarged with crisp square logical pixels. Subject scar_tissue: One broad grey stitched armour patch with a clean red healed seam running down its center, three large black stitch breaks and a folded lower corner. Clear whole patch, no debris. Center ONE clear physical subject occupying around 25x19 of the 32x24 logical canvas; strong silhouette at native size. Large simple shapes, flat 2–3 tone shading, no texture noise. Grey steel #555555/#AAAAAA/#FFFFFF covers most of the object, restrained brass #AA5500/#FFAA00, one red or cyan functional accent as described. Max ten SMS colours on exact channels 00/55/AA/FF, one logical pixel black contour, upper-left light. Phantasy Star/Ys modeled game item style with broad clean planes. No speckles, isolated pixels, checkerboard, dithering, stipple, antialiasing, rubble, miniature scenery, text, labels or glow. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-a31f044c-0dd3-4bcc-9d64-e4b2e97eef80.png"
+}

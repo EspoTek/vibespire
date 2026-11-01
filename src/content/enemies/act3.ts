@@ -11,7 +11,8 @@ const RESONANCE = { after: 5, max: 5, per_card: 1 };
 const CLEANSE = { cleanse_heal: 10 };
 const MEND = { mend_heal: 18 };
 const REFLECT = { min: 12, max: 40 };
-const PHAGE = { bud_n: 2, cap: 4, age: 1, latch_base: 4, latch_per: 3 };
+const PHAGE = { bud_n: 2, cap: 4, age: 1, latch_base: 5, latch_per: 3 };
+const FACET = { start: 2, break_at: 10, shard: 1 };
 const HORIZON = { line: 15 };
 
 type Weights = [string, number][];
@@ -42,7 +43,7 @@ export const ACT3_ENEMIES: EnemyDef[] = [
     id: 'void_mote', name: 'Void Mote', hp: [34, 40], icon: 'enemy_void_mote',
     moves: {
       null_pulse: { name: 'Null Pulse', intent: 'attack', text: 'Deal {damage} damage. Spends its Fold bonus.',
-        effects: [{ type: 'damage', amount: { base: 11, scale: { ai: 'folded' } }, target: 'target' }, { type: 'ai_state', key: 'folded', set: 0 }] },
+        effects: [{ type: 'damage', amount: { base: 10, scale: { ai: 'folded' } }, target: 'target' }, { type: 'ai_state', key: 'folded', set: 0 }] },
       fold: { name: 'Fold', intent: 'defend_buff', text: 'Gain {block} Block. Its next Null Pulse deals {ai_state} more damage.',
         effects: [{ type: 'block', amount: 12 }, { type: 'ai_state', key: 'folded', set: 4 }] },
       flicker: { name: 'Flicker', intent: 'attack', text: 'Deal {damage} damage {times} times.',
@@ -54,10 +55,10 @@ export const ACT3_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'shardling', name: 'Shardling', hp: [48, 54], icon: 'enemy_shardling',
+    id: 'shardling', name: 'Shardling', hp: [44, 50], icon: 'enemy_shardling', spawnStatuses: { facets: FACET.start },
     moves: {
       splinter_storm: { name: 'Splinter Storm', intent: 'attack', text: 'Deal {damage} damage {times} times. Spends its Refract bonus.',
-        effects: [{ type: 'damage', amount: { base: 3, scale: { ai: 'refracted' } }, times: 6, target: 'target' }, { type: 'ai_state', key: 'refracted', set: 0 }] },
+        effects: [{ type: 'damage', amount: { base: 3, scale: { ai: 'refracted' } }, times: 5, target: 'target' }, { type: 'ai_state', key: 'refracted', set: 0 }] },
       refract: { name: 'Refract', intent: 'defend_buff', text: 'Gain {block} Block. Its next Splinter Storm deals {ai_state} more damage per hit.',
         effects: [{ type: 'block', amount: 14 }, { type: 'ai_state', key: 'refracted', set: 1 }] },
       lance: { name: 'Lance', intent: 'attack_debuff', text: 'Deal {damage} damage. Apply {status} Exposed to you.',
@@ -172,7 +173,7 @@ export const ACT3_ENEMIES: EnemyDef[] = [
   },
   // --- elites (§3.2)
   {
-    id: 'mirror_knight', name: 'Mirror Knight', hp: [190, 200], icon: 'enemy_mirror_knight', spawnStatuses: { reflection: 1 }, values: REFLECT,
+    id: 'mirror_knight', name: 'Mirror Knight', hp: [190, 200], icon: 'enemy_mirror_knight', spawnStatuses: { reflection: 1, seething: 22 }, values: REFLECT,
     amounts: {
       // bestCardDamage is the engine's per-turn counter (HP lost to the best single card, after Block; Riposte,
       // Rot and relics excluded). It is deleted at player turn start, so absent means no card has hit yet: 0.
@@ -193,11 +194,11 @@ export const ACT3_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'phage_mother', name: 'Phage Mother', hp: [180, 190], icon: 'enemy_phage_mother', values: PHAGE,
+    id: 'phage_mother', name: 'Phage Mother', hp: [190, 200], icon: 'enemy_phage_mother', values: PHAGE, spawnStatuses: { seething: 10 },
     moves: {
       bud_phages: { name: 'Bud', intent: 'special', text: 'Summons {summon} Phages (at most {cap} alive). They die with her.',
         effects: [{ type: 'summon', enemy: 'phage', n: PHAGE.bud_n, cap: PHAGE.cap, withLeader: 'die' }] },
-      lyse: { name: 'Lyse', intent: 'attack', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 8, times: 2, target: 'target' }] },
+      lyse: { name: 'Lyse', intent: 'attack', text: 'Deal {damage} damage {times} times.', effects: [{ type: 'damage', amount: 10, times: 2, target: 'target' }] },
       enzyme_wash: { name: 'Enzyme Wash', intent: 'debuff', text: 'Apply {status} Exposed and {status2} Stagger to you.',
         effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }, { type: 'status', target: 'target', id: 'stagger', amount: 2 }] },
       incubate: { name: 'Incubate', intent: 'defend_buff', text: 'Every Phage ages by {age}. Gain {block} Block.',
@@ -221,7 +222,7 @@ export const ACT3_ENEMIES: EnemyDef[] = [
     },
   },
   {
-    id: 'phage', name: 'Phage', hp: [15, 17], icon: 'enemy_phage', onLeaderDeath: 'die', spawnStatuses: { replicating: 1 },
+    id: 'phage', name: 'Phage', hp: [18, 21], icon: 'enemy_phage', onLeaderDeath: 'die', spawnStatuses: { replicating: 1 },
     moves: {
       latch: { name: 'Latch', intent: 'attack', text: 'Deal {damage} damage (+{damage_per} per Age).',
         effects: [{ type: 'damage', amount: { base: PHAGE.latch_base, per: PHAGE.latch_per, scale: { status: 'phage_age', of: 'self' } }, target: 'target' }] },
@@ -229,12 +230,12 @@ export const ACT3_ENEMIES: EnemyDef[] = [
     chooseMove: () => 'latch',
   },
   {
-    id: 'event_horizon', name: 'Event Horizon', hp: [220, 230], icon: 'enemy_event_horizon', spawnStatuses: { horizon_pull: 1 },
+    id: 'event_horizon', name: 'Event Horizon', hp: [200, 210], icon: 'enemy_event_horizon', spawnStatuses: { horizon_pull: 1 },
     moves: {
       tidal_pull: { name: 'Tidal Pull', intent: 'attack', text: 'Deal {damage} damage {times} times (+{damage_per} per hit per Mass).',
-        effects: [{ type: 'damage', amount: { base: 6, scale: { ai: 'mass' } }, times: 4, target: 'target' }] },
+        effects: [{ type: 'damage', amount: { base: 5, scale: { ai: 'mass' } }, times: 4, target: 'target' }] },
       crush_depth: { name: 'Crush Depth', intent: 'attack', text: 'Deal {damage} damage (+{damage_per} per Mass).',
-        effects: [{ type: 'damage', amount: { base: 28, scale: { ai: 'mass' } }, target: 'target' }] },
+        effects: [{ type: 'damage', amount: { base: 24, scale: { ai: 'mass' } }, target: 'target' }] },
       accrete: { name: 'Accrete', intent: 'buff', text: 'Heal {heal} HP. Gain {ai_state} Mass (permanent).',
         effects: [{ type: 'heal', amount: 12 }, { type: 'ai_state', key: 'mass', delta: 2 }] },
     },
@@ -247,6 +248,19 @@ export const ACT3_ENEMIES: EnemyDef[] = [
 ];
 
 export const ACT3_STATUSES: StatusDef[] = [
+  {
+    // Armour that Shards off: rewards big single hits (and pays out the shared Shard currency).
+    id: 'facets', name: 'Facets', stacks: 'amount', decay: 'never', tick: 'never', isDebuff: false, values: FACET,
+    text: 'Each hit on it deals {stacks} less damage. A hit of yours that still deals {break_at} or more shatters a Facet, and you gain {shard} Shard.',
+    hooks: {
+      damageTakenFlat: (c) => -c.stacks,
+      onDamageTaken: (ctx, info) => {
+        if (info.source !== 'player' || info.amount < FACET.break_at || ctx.stacks <= 0) return;
+        ctx.now([{ type: 'status', target: 'self', id: 'facets', amount: -1 }, { type: 'shards', amount: FACET.shard }]);
+      },
+    },
+    icon: 'status_facets',
+  },
   {
     id: 'resonance', name: 'Resonance', stacks: 'flag', decay: 'never', tick: 'start_player_turn', isDebuff: false, values: RESONANCE,
     text: 'While its intent is Chime, each card you play after your {after}th this turn adds {per_card} hit to Chime (at most {max} added). Resets when Chime resolves.',
@@ -326,7 +340,8 @@ export const ACT3_ENCOUNTERS: EncounterDef[] = [
   { id: 'enc_a3_fever_pack', name: 'Fever Pack', acts: [3], pool: 'hard', weight: 14, enemies: ['pyrexia_node', 'shardling', 'void_mote'] },
   { id: 'enc_a3_warden_geometer', name: 'Warden and Geometer', acts: [3], pool: 'hard', weight: 14, enemies: ['lymph_warden', 'void_geometer'] },
   { id: 'enc_a3_warden_cantor', name: 'Warden and Cantor', acts: [3], pool: 'hard', weight: 14, enemies: ['lymph_warden', 'echo_cantor'] },
-  { id: 'enc_a3_prism_motes', name: 'Prism Seer and Motes', acts: [3], pool: 'hard', weight: 14, enemies: ['prism_seer', 'void_mote', 'void_mote'] },
+  // The Motes act before the Seer, so its opening Glare no longer lands on their first Null Pulses.
+  { id: 'enc_a3_prism_motes', name: 'Prism Seer and Motes', acts: [3], pool: 'hard', weight: 14, enemies: ['void_mote', 'void_mote', 'prism_seer'] },
   { id: 'enc_a3_warden_shard', name: 'Warden and Shardling', acts: [3], pool: 'hard', weight: 14, enemies: ['lymph_warden', 'shardling'] },
   // Relic biases (glass_spurs, hairline_saw, dampener_coil) are omitted until those relics exist (RULINGS 14;
   // validateAllContent rejects an unknown relicBias).

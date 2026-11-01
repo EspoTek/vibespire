@@ -14,6 +14,12 @@ import type { RunResult } from '../../sim/types';
 
 const CLS = 'test_class';
 const WORKERS = Math.max(2, Math.min(8, cpus().length - 1));
+/**
+ * CPU seconds (all threads) for 200 greedy test-pack runs, worker start-up included: measured 332 s on
+ * 2026-11-01 (8 workers, 44 s wall, M-series). The budget is about 1.8× that, so it catches a performance
+ * regression without flaking on a slower or busier machine.
+ */
+const CPU_BUDGET_S = 600;
 
 const strip = (r: RunResult): Omit<RunResult, 'elapsedMs'> => {
   const { elapsedMs: _ignored, ...rest } = r;
@@ -51,20 +57,28 @@ describe('greedy policy', () => {
     expect(results).toHaveLength(50);
   }, 120_000);
 
-  it('beats the random policy decisively and finishes 200 runs in under 60 s', async () => {
+  it('beats the random policy decisively and plays 200 runs within a CPU budget', async () => {
     const seeds = Array.from({ length: 200 }, (_, i) => `wr-${i}`);
-    const t0 = Date.now();
+    // CPU time, not wall time: worker_threads share this process, so process.cpuUsage() counts them, and
+    // CPU time does not stretch when other jobs load the machine (the 60 s wall-clock check flaked at
+    // load 190 on 2026-10-30).
+    const cpu0 = process.cpuUsage();
     const greedy = await batchParallel(seeds, [CLS], 'greedy', 'test', WORKERS, () => {}, 2000, {}, true);
-    const elapsed = Date.now() - t0;
+    const cpu = process.cpuUsage(cpu0);
+    const cpuSeconds = (cpu.user + cpu.system) / 1e6;
     const random = seeds.map((s) => runOne(`${s}-${CLS}`, CLS, randomPolicy));
     const gWin = greedy.results.filter((r) => r.won).length / seeds.length;
     const rWin = random.filter((r) => r.won).length / seeds.length;
-    // Measured 2026-10-29 on the test pack: greedy 100%, random 15-28%.
     expect(gWin).toBeGreaterThanOrEqual(0.8);
-    expect(rWin).toBeLessThanOrEqual(0.35);
+    // The test pack got easier for every player under the v2 engine rules (Bloom Spill, the next-turn
+    // bank, Shed, Timeline batches; 1300+ engine lines since v1): on 2026-11-01 random won 0.430, and
+    // v1's committed random policy won 0.395 on the same 200 seeds, so the rise is the rules, not the
+    // policy. The HP lever cannot move it (tests run at neutral tuning). What this test guards is that
+    // greedy beats random decisively: the 0.4 gap stays; the absolute random cap moves from 0.35 to 0.5.
+    expect(rWin).toBeLessThanOrEqual(0.5);
     expect(gWin - rWin).toBeGreaterThanOrEqual(0.4);
-    expect(elapsed).toBeLessThan(60_000);
-  }, 180_000);
+    expect(cpuSeconds).toBeLessThan(CPU_BUDGET_S);
+  }, 300_000);
 });
 
 describe('stalemate guard', () => {
@@ -81,13 +95,13 @@ describe('stalemate guard', () => {
 
 describe('balance overrides', () => {
   it('sets TUNING leaves by path and restores them', () => {
-    const before = TUNING.enemyDamagePct[1];
+    const before = TUNING.difficulty.standard.enemyDamagePct[1];
     const rare = TUNING.cardOdds.monster.rare;
-    const undo = applyTuningOverrides({ 'enemyDamagePct.1': 85, 'cardOdds.monster.rare': 9 });
-    expect(TUNING.enemyDamagePct[1]).toBe(85);
+    const undo = applyTuningOverrides({ 'difficulty.standard.enemyDamagePct.1': 85, 'cardOdds.monster.rare': 9 });
+    expect(TUNING.difficulty.standard.enemyDamagePct[1]).toBe(85);
     expect(TUNING.cardOdds.monster.rare).toBe(9);
     undo();
-    expect(TUNING.enemyDamagePct[1]).toBe(before);
+    expect(TUNING.difficulty.standard.enemyDamagePct[1]).toBe(before);
     expect(TUNING.cardOdds.monster.rare).toBe(rare);
   });
 

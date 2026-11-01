@@ -1,6 +1,7 @@
 import '../testpack';
-// Chronist pool (docs/cards/chronist.md): roster, starters, every card played base + upgraded, and the
-// class mechanics the pool leans on (Cadence, Delay / Timeline, Advance, Augury reads, the named fns).
+// Chronist pool (docs/cards/chronist.md, v2: docs/v2/chronist-design.md): roster, starters, every card played
+// base + upgraded, and the class mechanics the pool leans on (Cadence, Delay / Timeline, Advance, Augury reads,
+// the named fns). The v2 mechanics (Chorus, Gather, Quicken, Crescendo, Goad, Schedule, ...) are in chronist-v2.test.ts.
 import { describe, expect, it } from 'vitest';
 import { getCardDef, getStatusDef } from '../../src/content';
 import { CHRONIST_CARDS, CHRONIST_STATUSES } from '../../src/content/cards/chronist';
@@ -8,17 +9,23 @@ import { Game, TUNING, canPlayCard, getCardCost, nextBeat, renderCardText, rende
 import { makeCard } from '../../src/engine/cards';
 import { combatOf, enemy, enemyUids, eventsOf, play, sandbox, setHand } from '../engine/helpers';
 
+// Pool order (v1 order with the 12 v2 cuts removed, then the v2 additions).
 const IDS = {
   starter: ['pulse_shot', 'ward', 'tick', 'tock'],
   common: [
-    'pinion_jab', 'gear_train', 'downbeat', 'slack_water', 'parallax', 'noon_gun', 'afterpeal', 'spring_tide', 'carillon', 'storm_glass',
-    'almanac', 'ephemeris', 'upbeat', 'weather_eye', 'balance_wheel', 'detent', 'dead_reckoning', 'logbook', 'reef_the_sails', 'wind_forward',
+    'pinion_jab', 'gear_train', 'downbeat', 'noon_gun', 'afterpeal', 'spring_tide', 'carillon', 'storm_glass',
+    'almanac', 'ephemeris', 'upbeat', 'weather_eye', 'balance_wheel', 'dead_reckoning', 'wind_forward',
+    'hold_the_hour', 'ripple', 'whistle_for_wind', 'red_sky', 'undertow',
   ],
   uncommon: [
-    'sweep_hand', 'fermata', 'appointed_hour', 'knell', 'turn_the_tide', 'confluence', 'second_hand', 'mainspring', 'quarter_chime', 'hasten',
-    'banked_hours', 'breakwater', 'heave_to', 'batten_down', 'mark_the_lull', 'glance_ahead', 'striking_train', 'tide_table', 'storm_warning', 'escapement',
+    'fermata', 'appointed_hour', 'knell', 'turn_the_tide', 'confluence', 'second_hand', 'mainspring', 'quarter_chime', 'hasten',
+    'banked_hours', 'breakwater', 'heave_to', 'striking_train', 'tide_table', 'escapement',
+    'accelerando', 'bell_choir', 'set_the_hour', 'gathering_storm', 'squall_line',
   ],
-  rare: ['zenith', 'syzygy', 'culmination', 'toll_the_hours', 'seen_it_coming', 'star_tithe', 'tourbillon', 'lighthouse', 'polyrhythm', 'portents', 'watch_bell', 'perpetual_motion'],
+  rare: [
+    'zenith', 'syzygy', 'culmination', 'toll_the_hours', 'seen_it_coming', 'tourbillon', 'lighthouse', 'polyrhythm', 'watch_bell', 'perpetual_motion',
+    'total_eclipse', 'eternal_return', 'reckoning', 'eye_of_the_storm',
+  ],
 } as const;
 
 const FILLER: CardId[] = Array.from({ length: 20 }, () => 'ward');
@@ -58,18 +65,34 @@ const playerHits = (ev: GameEvent[], target?: number) =>
   eventsOf(ev, 'damage').filter((d) => d.source === 'player' && (target === undefined || d.target === target)).map((d) => d.amount);
 
 describe('Chronist roster', () => {
-  it('has 56 cards: 4 starters, 20 commons, 20 uncommons, 12 rares, in pool order', () => {
-    expect(CHRONIST_CARDS).toHaveLength(56);
+  it('v2 pool: 58 cards (4 / 20 / 20 / 14, RULINGS 59), in pool order', () => {
+    expect(CHRONIST_CARDS).toHaveLength(58);
     for (const rarity of ['starter', 'common', 'uncommon', 'rare'] as const) {
       expect(CHRONIST_CARDS.filter((c) => c.rarity === rarity).map((c) => c.id)).toEqual([...IDS[rarity]]);
     }
     expect(CHRONIST_CARDS.every((c) => c.cls === 'chronist')).toBe(true);
-    // Types and Delay counts from chronist.md §6.
-    expect(CHRONIST_CARDS.filter((c) => c.type === 'attack')).toHaveLength(22);
-    expect(CHRONIST_CARDS.filter((c) => c.type === 'skill')).toHaveLength(26);
-    expect(CHRONIST_CARDS.filter((c) => c.type === 'power')).toHaveLength(8);
-    expect(CHRONIST_CARDS.filter((c) => c.delay !== undefined)).toHaveLength(16);
-    expect(CHRONIST_CARDS.filter((c) => c.cost === 0)).toHaveLength(19);
+    const v2 = CHRONIST_CARDS;
+    expect(['starter', 'common', 'uncommon', 'rare'].map((r) => v2.filter((c) => c.rarity === r).length)).toEqual([4, 20, 20, 14]);
+    // Types, Delay and 0-cost counts from chronist-design.md §4.5.
+    expect(v2.filter((c) => c.type === 'attack')).toHaveLength(23);
+    expect(v2.filter((c) => c.type === 'skill')).toHaveLength(24);
+    expect(v2.filter((c) => c.type === 'power')).toHaveLength(11);
+    expect(v2.filter((c) => c.delay !== undefined)).toHaveLength(17);
+    expect(v2.filter((c) => c.cost === 0)).toHaveLength(19); // 17 in §4.5, + Accelerando (Phase C, §15) and Squall Line (Phase D, §16)
+    // Every card carries exactly one role:* tag, and every non-glue card at least one engine:* tag (sim johnny bots).
+    for (const c of v2) {
+      const tags = c.tags ?? [];
+      const roles = tags.filter((t) => t.startsWith('role:'));
+      expect(roles, c.id).toHaveLength(1);
+      expect(['role:enabler', 'role:payoff', 'role:multiplier', 'role:glue']).toContain(roles[0]);
+      if (roles[0] !== 'role:glue') expect(tags.some((t) => t.startsWith('engine:')), c.id).toBe(true);
+    }
+    // Each engine has exactly the multipliers chronist-design.md §2 names.
+    const mult = (e: string) => v2.filter((c) => c.tags?.includes(`engine:${e}`) && c.tags.includes('role:multiplier')).map((c) => c.id);
+    expect(mult('clockwork')).toEqual(['polyrhythm', 'perpetual_motion']);
+    expect(mult('conjunction')).toEqual(['total_eclipse']);
+    expect(mult('storm')).toEqual(['eye_of_the_storm']);
+    expect(mult('calendar')).toEqual(['eternal_return']);
     // Every Power applies its own status (status id = card id) and that status is registered.
     for (const c of CHRONIST_CARDS.filter((x) => x.type === 'power')) {
       expect(c.effects).toEqual([{ type: 'status', target: 'self', id: c.id, amount: expect.any(Number) }]);
@@ -110,9 +133,9 @@ describe('Chronist roster', () => {
       expect(s.text.replace(/\{[a-z_0-9]+\}/g, '')).not.toMatch(/\d/);
       for (const n of [1, 2, 3]) expect(renderStatusText(s.id, n)).not.toMatch(/[{}]/);
     }
-    expect(renderCardText({ id: 'watch_bell', upgraded: false }, null)).toBe('Whenever a card on your Timeline resolves, gain 3 Block, +3 if any enemy intends to attack.');
-    expect(renderStatusText('watch_bell', 2)).toBe('Whenever a card on your Timeline resolves, gain 6 Block, +6 if any enemy intends to attack.');
-    expect(renderCardText({ id: 'toll_the_hours', upgraded: true }, null)).toBe('Deal 8 damage X times. Delay 1: deal 8 damage X times.');
+    expect(renderCardText({ id: 'watch_bell', upgraded: false }, null)).toBe('Whenever a card on your Timeline resolves, gain 2 Block, +2 if any enemy intends to attack.');
+    expect(renderStatusText('watch_bell', 2)).toBe('Whenever a card on your Timeline resolves, gain 4 Block, +4 if any enemy intends to attack.');
+    expect(renderCardText({ id: 'toll_the_hours', upgraded: true }, null)).toBe('Deal 7 damage X times. Delay 1: deal 7 damage X times.');
   });
 });
 
@@ -133,7 +156,6 @@ describe('every Chronist card plays base and upgraded, off and on the beat', () 
           c.hand = [card, makeCard(g.state, 'pulse_shot'), makeCard(g.state, 'ward')];
           const ok = canPlayCard(g.state, card);
           if (def.id === 'zenith' && !beat) return void expect(ok).toBe('Only on the beat.');
-          if (def.id === 'upbeat' && beat) return void expect(ok).toBe("Can't be played on the beat.");
           expect(ok).toBe(true);
           const action = g.legalActions().find((a) => a.type === 'play_card' && a.uid === card.uid);
           if (!action) throw new Error('no play action');
@@ -151,28 +173,16 @@ describe('every Chronist card plays base and upgraded, off and on the beat', () 
 });
 
 describe('Cadence', () => {
-  it("an on-beat clause fires only as the 3rd / 6th / 9th play (Pinion Jab's Exposed)", () => {
+  it("an on-beat clause fires only as the 3rd / 6th / 9th play (Tick's draw)", () => {
     const g = fresh();
     const t = enemyUids(g)[0] as number;
-    const uids = setHand(g, Array.from({ length: 9 }, () => 'pinion_jab'));
-    const exposedOn: number[] = [];
+    const uids = setHand(g, Array.from({ length: 9 }, () => 'tick'));
+    const drewOn: number[] = [];
     uids.forEach((uid, i) => {
       const ev = play(g, uid, t);
-      if (eventsOf(ev, 'status').some((s) => s.status === 'exposed' && s.delta > 0)) exposedOn.push(i + 1);
+      if (eventsOf(ev, 'draw').length > 0) drewOn.push(i + 1);
     });
-    expect(exposedOn).toEqual([3, 6, 9]);
-    expect(enemy(g, t).statuses.exposed).toBe(3);
-  });
-
-  it('Sweep Hand branches on the beat: single target off it, ALL enemies on it', () => {
-    const g = fresh('test_enc_slimes');
-    const [a, b] = enemyUids(g) as [number, number];
-    const [s1, s2] = setHand(g, ['sweep_hand', 'sweep_hand']);
-    expect(playerHits(play(g, s1 as number, a))).toEqual([9]);
-    playedAlready(g, 2);
-    const ev = play(g, s2 as number, a);
-    expect(playerHits(ev, a)).toEqual([9]);
-    expect(playerHits(ev, b)).toEqual([9]);
+    expect(drewOn).toEqual([3, 6, 9]);
   });
 
   it('a Delay card stamps the beat at play and pays it on resolution (Second Hand)', () => {
@@ -245,9 +255,8 @@ describe('Delay and the Timeline', () => {
     expect(combatOf(g).player.block).toBe(4);
 
     const h = fresh();
-    const t = enemyUids(h)[0] as number;
-    const [sy, ha] = setHand(h, ['syzygy', 'hasten']);
-    play(h, sy as number, t);
+    const [sy, ha] = setHand(h, ['spring_tide', 'hasten']);
+    play(h, sy as number);
     playedAlready(h, 2);
     play(h, ha as number);
     expect(combatOf(h).timeline[0]?.dueTurn).toBe(combatOf(h).turn + 1);
@@ -259,34 +268,17 @@ describe('Delay and the Timeline', () => {
     const t = enemyUids(g)[0] as number;
     combatOf(g).energy = 3;
     const [x] = setHand(g, ['toll_the_hours']);
-    expect(playerHits(play(g, x as number, t), t)).toEqual([6, 6, 6]);
+    expect(playerHits(play(g, x as number, t), t)).toEqual([5, 5, 5]);
     expect(combatOf(g).timeline[0]?.x).toBe(3);
-    expect(playerHits(endTurn(g), t)).toEqual([6, 6, 6]);
+    expect(playerHits(endTurn(g), t)).toEqual([5, 5, 5]);
   });
 });
 
 describe('Augury reads', () => {
-  it('forecast_is_attack at depth 1: Slack Water and Culmination pay their window; a hidden forecast is not an attack', () => {
-    // Cultist: intent Incantation (buff), forecast Stab (attack).
-    const g = fresh('test_enc_cultist');
-    const t = enemyUids(g)[0] as number;
-    expect(enemy(g, t).forecast[0]?.kind).toBe('attack');
-    const [s, cu] = setHand(g, ['slack_water', 'culmination']);
-    expect(playerHits(play(g, s as number, t))).toEqual([7]);
-    expect(playerHits(play(g, cu as number, t))).toEqual([14]);
-    // Mystic: intent Hex, forecast Veiled Strike (hidden) => counts as not an attack (RULINGS 27).
-    const m = fresh('test_enc_mystic');
-    const mystic = combatOf(m).enemies.find((e) => e.id === 'test_mystic');
-    if (!mystic) throw new Error('setup');
-    expect(mystic.forecast[0]?.hidden).toBe(true);
-    const [s2] = setHand(m, ['slack_water']);
-    expect(playerHits(play(m, s2 as number, mystic.uid))).toEqual([9]);
-  });
-
   it('forecast_damage scales Turn the Tide and Heave To; intent_damage feeds Seen It Coming at resolution', () => {
     for (const [id, check] of [
-      ['turn_the_tide', (g: Game, ev: GameEvent[]) => expect(playerHits(ev)).toEqual([4 + 10])],
-      ['heave_to', (g: Game) => expect(combatOf(g).player.guard).toBe(4 + 10)],
+      ['turn_the_tide', (g: Game, ev: GameEvent[]) => expect(playerHits(ev)).toEqual([3 + 20])], // v2: the full forecast
+      ['heave_to', (g: Game) => expect(combatOf(g).player.guard).toBe(1 + 10)],
     ] as const) {
       const g = fresh('test_enc_slime');
       const e = combatOf(g).enemies[0];
@@ -309,33 +301,13 @@ describe('Augury reads', () => {
     expect(combatOf(j).exhaust.some((x) => x.uid === sic)).toBe(true);
   });
 
-  it('Batten Down (delayed depth-0 read) staggers only an attacking target; Mark the Lull adds Exposed in a lull', () => {
-    const g = fresh('test_enc_jaw');
-    const jaw = enemyUids(g)[0] as number;
-    const [bd] = setHand(g, ['batten_down']);
-    play(g, bd as number, jaw);
-    endTurn(g);
-    expect(enemy(g, jaw).statuses.stagger).toBe(3);
-
-    const c = fresh('test_enc_cultist');
-    const cultist = enemyUids(c)[0] as number;
-    const [ml] = setHand(c, ['mark_the_lull']);
-    play(c, ml as number, cultist); // forecast Stab is an attack: no extra
-    expect(enemy(c, cultist).statuses.exposed).toBe(1);
-    const m = fresh('test_enc_mystic');
-    const mystic = combatOf(m).enemies.find((e) => e.id === 'test_mystic');
-    if (!mystic) throw new Error('setup');
-    const [ml2] = setHand(m, ['mark_the_lull']);
-    play(m, ml2 as number, mystic.uid); // hidden forecast: the lull bonus applies
-    expect(enemy(m, mystic.uid).statuses.exposed).toBe(2);
-  });
 });
 
 describe('named functions and Power hooks', () => {
-  it('Zenith, Upbeat and the Perpetual Motion discount follow the engine nextBeat (offset, beatPositions modifier)', () => {
+  it('Zenith and the Perpetual Motion price follow the engine nextBeat (offset, beatPositions modifier)', () => {
     const g = fresh();
     const c = combatOf(g);
-    const [zUid, uUid, sUid] = setHand(g, ['zenith', 'upbeat', 'pulse_shot']);
+    const [zUid, sUid] = setHand(g, ['zenith', 'pulse_shot']);
     c.player.statuses.perpetual_motion = 1;
     const inHand = (uid: number) => {
       const x = combatOf(g).hand.find((h) => h.uid === uid);
@@ -348,7 +320,6 @@ describe('named functions and Power hooks', () => {
         const engine = nextBeat(g.state).onBeat;
         expect(getCardCost(g.state, inHand(sUid as number))).toBe(engine ? 0 : 1);
         expect(canPlayCard(g.state, inHand(zUid as number)) === true).toBe(engine);
-        expect(canPlayCard(g.state, inHand(uUid as number)) === true).toBe(!engine);
         return engine;
       });
     expect(sample().flatMap((b, i) => (b ? [i + 1] : []))).toEqual([3, 6, 9]);
@@ -368,22 +339,16 @@ describe('named functions and Power hooks', () => {
     }
   });
 
-  it('Zenith only on the beat; Upbeat never on it', () => {
+  it('Zenith only on the beat', () => {
     const g = fresh();
     const t = enemyUids(g)[0] as number;
-    const [z, u] = setHand(g, ['zenith', 'upbeat']);
+    const [z] = setHand(g, ['zenith']);
     const zc = combatOf(g).hand[0];
-    const uc = combatOf(g).hand[1];
-    if (!zc || !uc) throw new Error('setup');
+    if (!zc) throw new Error('setup');
     expect(canPlayCard(g.state, zc)).toBe('Only on the beat.');
-    expect(canPlayCard(g.state, uc)).toBe(true);
     playedAlready(g, 2);
     expect(canPlayCard(g.state, zc)).toBe(true);
-    expect(canPlayCard(g.state, uc)).toBe("Can't be played on the beat.");
     expect(playerHits(play(g, z as number, t))).toEqual([10]);
-    expect(canPlayCard(g.state, uc)).toBe(true);
-    play(g, u as number);
-    expect(combatOf(g).player.block).toBe(4);
   });
 
   it('Polyrhythm repeats on-beat lists (onBeatRepeats), at most three runs in all', () => {
@@ -400,33 +365,28 @@ describe('named functions and Power hooks', () => {
     expect(eventsOf(play(g, tk2 as number, t), 'draw').flatMap((d) => d.uids)).toHaveLength(TUNING.caps.onBeatRuns);
   });
 
-  it('Perpetual Motion: the first on-beat play each turn costs 1 less, then the discount is used up', () => {
+  it('Perpetual Motion (v2): every card played on the beat costs 0; X costs and off-beat plays pay in full', () => {
     const g = fresh();
     const t = enemyUids(g)[0] as number;
     const [pm] = setHand(g, ['perpetual_motion']);
     play(g, pm as number);
-    const shots = setHand(g, ['pulse_shot', 'pulse_shot']);
+    const [d1, d2, x] = setHand(g, ['downbeat', 'downbeat', 'toll_the_hours']);
     const card = (uid: number) => {
-      const x = combatOf(g).hand.find((h) => h.uid === uid);
-      if (!x) throw new Error('not in hand');
-      return x;
+      const c = combatOf(g).hand.find((h) => h.uid === uid);
+      if (!c) throw new Error('not in hand');
+      return c;
     };
     // 1 play so far: the next is beat 2 -> full cost.
-    expect(getCardCost(g.state, card(shots[0] as number))).toBe(1);
+    expect(getCardCost(g.state, card(d1 as number))).toBe(1);
     playedAlready(g, 2);
-    expect(getCardCost(g.state, card(shots[0] as number))).toBe(0);
+    expect(getCardCost(g.state, card(d1 as number))).toBe(0);
+    expect(getCardCost(g.state, card(x as number))).toBe('X');
     const energy = combatOf(g).energy;
-    play(g, shots[0] as number, t);
+    play(g, d1 as number, t);
     expect(combatOf(g).energy).toBe(energy);
-    expect(combatOf(g).player.statuses.perpetual_motion_used).toBe(1);
+    // Not just the first: the next beat is free too.
     playedAlready(g, 5);
-    expect(getCardCost(g.state, card(shots[1] as number))).toBe(1);
-    // Next turn the discount is back.
-    endTurn(g);
-    expect(combatOf(g).player.statuses.perpetual_motion_used).toBeUndefined();
-    const [s3] = setHand(g, ['pulse_shot']);
-    playedAlready(g, 2);
-    expect(getCardCost(g.state, card(s3 as number))).toBe(0);
+    expect(getCardCost(g.state, card(d2 as number))).toBe(0);
   });
 
   it('Escapement Advances when a Delay card goes on the Timeline on the beat, not off it', () => {
@@ -461,27 +421,10 @@ describe('named functions and Power hooks', () => {
     play(g, wb as number);
     play(g, tk as number);
     const ev = endTurn(g);
-    // Tock's 5 + Watch Bell 3 + 3 (Jaw always intends to attack); Tide Table draws 1 before the turn's 5.
-    expect(combatOf(g).player.block).toBe(5 + 3 + 3);
+    // Tock's 5 + Watch Bell 2 + 2 (Jaw always intends to attack); Tide Table draws 1 before the turn's 5.
+    expect(combatOf(g).player.block).toBe(5 + 2 + 2);
     const draws = eventsOf(ev, 'draw').map((d) => d.uids.length);
     expect(draws[0]).toBe(1);
-  });
-
-  it('Storm Warning and Portents act at turn start, reading intents and forecasts', () => {
-    const g = fresh('test_enc_jaw');
-    const jaw = enemyUids(g)[0] as number;
-    const [sw, po] = setHand(g, ['storm_warning', 'portents']);
-    play(g, sw as number);
-    play(g, po as number);
-    endTurn(g);
-    expect(enemy(g, jaw).statuses.stagger).toBe(2);
-    expect(enemy(g, jaw).statuses.exposed).toBe(1); // every forecast is an attack: no lull stack
-
-    const m = fresh('test_enc_mystic');
-    const [po2] = setHand(m, ['portents']);
-    play(m, po2 as number);
-    endTurn(m); // turn 2: the mystic intends Veiled Strike, its forecast is Hex (not an attack)
-    for (const e of combatOf(m).enemies) expect(e.statuses.exposed).toBe(2);
   });
 
   it('Tourbillon on the beat gains energy, then Scraps itself; off the beat it goes to the discard pile', () => {

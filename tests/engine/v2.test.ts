@@ -9,6 +9,7 @@ import { drain } from '../../src/engine/queue';
 import { transmutePick } from '../../src/engine/runeffects';
 import { combatOf, enemy, enemyUids, eventsOf, pacify, play, sandbox, setHand } from './helpers';
 import { registerFixtures, spy } from './fixtures';
+import { answerChoice } from '../answer-choice';
 
 beforeAll(registerFixtures);
 
@@ -109,7 +110,7 @@ describe('Riposte (GDD §2.2)', () => {
     g.apply({ type: 'end_turn' });
     const pc = combatOf(g).pendingChoice;
     expect(pc).toMatchObject({ min: 1, max: 1, from: 'hand', resume: { op: 'prime', step: true } });
-    const ev = g.apply({ type: 'resolve_choice', uids: [b as number] });
+    const ev = answerChoice(g, [b as number]);
     expect(combatOf(g).primed).toHaveLength(0); // fizzled at the new turn start
     expect(eventsOf(ev, 'riposte_triggered')).toHaveLength(0);
     expect(eventsOf(ev, 'prime_fizzled')).toEqual([{ t: 'prime_fizzled', uid: b }]);
@@ -341,14 +342,15 @@ describe('Pipeline step 4 (GDD §2.10-2.11, §2.15)', () => {
     expect(combatOf(g).player.statuses.exposed).toBeUndefined();
   });
 
-  it('TUNING.enemyDamagePct scales enemy hits in step 3 (previews too)', () => {
+  it('the tier enemyDamagePct scales enemy hits in step 3 (previews too)', () => {
     const g = sandbox();
     const e = combatOf(g).enemies[0];
     if (!e) throw new Error('setup');
-    const before = TUNING.enemyDamagePct[1];
-    TUNING.enemyDamagePct[1] = 50;
+    const lever = TUNING.difficulty[g.state.difficulty].enemyDamagePct;
+    const before = lever[1];
+    lever[1] = 50;
     expect(computeIntent(g.state, e, 'tackle').damage).toBe(3);
-    TUNING.enemyDamagePct[1] = before;
+    lever[1] = before;
     expect(computeIntent(g.state, e, 'tackle').damage).toBe(6);
   });
 });
@@ -400,7 +402,7 @@ describe('Caps (GDD §3)', () => {
     const [p1, p2] = setHand(g, ['fx_prune_away', 'fx_prune_away']);
     combatOf(g).hand.push(...deckCards);
     play(g, p1 as number);
-    const ev = g.apply({ type: 'resolve_choice', uids: [deckCards[0]?.uid as number] });
+    const ev = answerChoice(g, [deckCards[0]?.uid as number]);
     expect(eventsOf(ev, 'card_removed')).toHaveLength(1);
     expect(g.state.player.deck).toHaveLength(11);
     const ev2 = play(g, p2 as number);
@@ -459,12 +461,12 @@ describe('Shards, Transmute, shop, potions, elites (GDD §4)', () => {
     expect(g.state.player.counters.shards).toBe(0);
     const sprout = g.state.player.deck.find((c) => c.id === 'test_sprout');
     if (!sprout) throw new Error('setup');
-    g.apply({ type: 'resolve_choice', uids: [sprout.uid] });
+    answerChoice(g, [sprout.uid]);
     const pc = g.state.pendingChoice;
     expect(pc?.kind).toBe('offers');
     expect(pc?.offers).toHaveLength(2);
     expect(pc?.offers.every((o) => o.id !== 'test_sprout' && o.upgraded)).toBe(true);
-    g.apply({ type: 'resolve_choice', uids: [0] });
+    answerChoice(g, [0]);
     expect(g.state.player.deck.some((c) => c.uid === sprout.uid)).toBe(false);
 
     const h = Game.newRun('carry', 'test_class');
@@ -485,7 +487,7 @@ describe('Shards, Transmute, shop, potions, elites (GDD §4)', () => {
     g.state.reward && (g.state.reward.potion = 'test_potion_fire');
     g.apply({ type: 'pick_reward', kind: 'potion' });
     expect(g.state.pendingChoice?.labels).toHaveLength(4);
-    g.apply({ type: 'resolve_choice', uids: [0] });
+    answerChoice(g, [0]);
     expect(g.state.player.potions).toEqual(['test_potion_heal', 'test_potion_heal', 'test_potion_fire']);
   });
 

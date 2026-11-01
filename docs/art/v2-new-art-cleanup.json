@@ -1,0 +1,656 @@
+[
+  {
+    "id": "stoke",
+    "native_pixels_changed": 90,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "hair_trigger",
+    "native_pixels_changed": 97,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "loosen_straps",
+    "native_pixels_changed": 108,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "kindle",
+    "native_pixels_changed": 73,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "spark_gap",
+    "native_pixels_changed": 171,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "iron_patience",
+    "native_pixels_changed": 133,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "worldbreaker",
+    "native_pixels_changed": 74,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "turnabout",
+    "native_pixels_changed": 106,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "bellows",
+    "native_pixels_changed": 79,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "crazing",
+    "native_pixels_changed": 89,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "answer_in_kind",
+    "native_pixels_changed": 201,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "molten_shell",
+    "native_pixels_changed": 115,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "hold_the_hour",
+    "native_pixels_changed": 57,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "ripple",
+    "native_pixels_changed": 132,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "whistle_for_wind",
+    "native_pixels_changed": 120,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "red_sky",
+    "native_pixels_changed": 75,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "undertow",
+    "native_pixels_changed": 267,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "accelerando",
+    "native_pixels_changed": 98,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "bell_choir",
+    "native_pixels_changed": 187,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "set_the_hour",
+    "native_pixels_changed": 41,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "gathering_storm",
+    "native_pixels_changed": 188,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "squall_line",
+    "native_pixels_changed": 381,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "total_eclipse",
+    "native_pixels_changed": 66,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "eternal_return",
+    "native_pixels_changed": 116,
+    "colors": 9,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "reckoning",
+    "native_pixels_changed": 152,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "eye_of_the_storm",
+    "native_pixels_changed": 229,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "blood_tithe",
+    "native_pixels_changed": 68,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "vent_plasma",
+    "native_pixels_changed": 94,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "scar_tissue",
+    "native_pixels_changed": 75,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "last_light",
+    "native_pixels_changed": 77,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "spare_capacitor",
+    "native_pixels_changed": 106,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "shrapnel_charge",
+    "native_pixels_changed": 96,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "black_box",
+    "native_pixels_changed": 96,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "strip_for_parts",
+    "native_pixels_changed": 58,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "scrapheap_colossus",
+    "native_pixels_changed": 74,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "burn_bright",
+    "native_pixels_changed": 74,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "arc_discharge",
+    "native_pixels_changed": 168,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "capacitor_bank",
+    "native_pixels_changed": 90,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "starfall_lance",
+    "native_pixels_changed": 350,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "stasis_bolt",
+    "native_pixels_changed": 152,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "encore",
+    "native_pixels_changed": 219,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "bait_flare",
+    "native_pixels_changed": 81,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "fuse",
+    "native_pixels_changed": 136,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_burden",
+    "native_pixels_changed": 68,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_seized_joint",
+    "native_pixels_changed": 72,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_static_ghost",
+    "native_pixels_changed": 103,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_guilt",
+    "native_pixels_changed": 59,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_vacuum_chill",
+    "native_pixels_changed": 99,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_debt_mark",
+    "native_pixels_changed": 209,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_hollow_echo",
+    "native_pixels_changed": 74,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "curse_parasite_vine",
+    "native_pixels_changed": 123,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "molt",
+    "native_pixels_changed": 104,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "burst_pod",
+    "native_pixels_changed": 55,
+    "colors": 9,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "reap",
+    "native_pixels_changed": 79,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "second_flush",
+    "native_pixels_changed": 88,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "thornstorm",
+    "native_pixels_changed": 78,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "grim_harvest",
+    "native_pixels_changed": 120,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "clear_cut",
+    "native_pixels_changed": 114,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "deep_rot",
+    "native_pixels_changed": 41,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "rootstock",
+    "native_pixels_changed": 120,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "perennial",
+    "native_pixels_changed": 110,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "chaff",
+    "native_pixels_changed": 177,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "status_jitter",
+    "native_pixels_changed": 64,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "status_backlash",
+    "native_pixels_changed": 45,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "status_tangle",
+    "native_pixels_changed": 87,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "status_drift",
+    "native_pixels_changed": 79,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "spare_fuse",
+    "native_pixels_changed": 35,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "antenna_wire",
+    "native_pixels_changed": 21,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "slag_bucket",
+    "native_pixels_changed": 72,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "storm_lantern",
+    "native_pixels_changed": 37,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "scar_engine",
+    "native_pixels_changed": 26,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "static_choir",
+    "native_pixels_changed": 72,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "whetstone",
+    "native_pixels_changed": 33,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "ash_wick",
+    "native_pixels_changed": 28,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "overture_engine",
+    "native_pixels_changed": 60,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "blood_rivets",
+    "native_pixels_changed": 40,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "blood_mulch",
+    "native_pixels_changed": 41,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "borrowed_time",
+    "native_pixels_changed": 51,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "coal_scuttle",
+    "native_pixels_changed": 12,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "husk_sac",
+    "native_pixels_changed": 26,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "reapers_sickle",
+    "native_pixels_changed": 26,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "astrolabe",
+    "native_pixels_changed": 25,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "reserve_coil",
+    "native_pixels_changed": 38,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "echo_bell",
+    "native_pixels_changed": 37,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "undertow_reliquary",
+    "native_pixels_changed": 43,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "kickback_governor",
+    "native_pixels_changed": 35,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "orbital_hammer",
+    "native_pixels_changed": 35,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "momentum_flywheel",
+    "native_pixels_changed": 54,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "refrain_pin",
+    "native_pixels_changed": 44,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "twin_scabbard",
+    "native_pixels_changed": 33,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "recoil_coil",
+    "native_pixels_changed": 32,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "trellis",
+    "native_pixels_changed": 26,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "festering_lens",
+    "native_pixels_changed": 70,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "conductors_baton",
+    "native_pixels_changed": 76,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "triage_locker",
+    "native_pixels_changed": 62,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "wanderers_compact",
+    "native_pixels_changed": 51,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "furnace_mantle",
+    "native_pixels_changed": 74,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "perpetual_calendar",
+    "native_pixels_changed": 73,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "salvagers_licence",
+    "native_pixels_changed": 26,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_blood_ampoule",
+    "native_pixels_changed": 25,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_surge_flask",
+    "native_pixels_changed": 75,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_kiln_salts",
+    "native_pixels_changed": 33,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_fracture_serum",
+    "native_pixels_changed": 46,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_riposte_salts",
+    "native_pixels_changed": 90,
+    "colors": 6,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_ember_tonic",
+    "native_pixels_changed": 25,
+    "colors": 8,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_fester_draught",
+    "native_pixels_changed": 33,
+    "colors": 5,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_hourglass_tonic",
+    "native_pixels_changed": 30,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_echo_draught",
+    "native_pixels_changed": 30,
+    "colors": 4,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  },
+  {
+    "id": "pot_mimic_gel",
+    "native_pixels_changed": 35,
+    "colors": 7,
+    "treatment": "material ramp alignment; missing contour repairs; native motif repairs where listed in v2_cleanup.py"
+  }
+]

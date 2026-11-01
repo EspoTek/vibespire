@@ -1,12 +1,14 @@
 // The Verdant Decks: ENEMIES §0–§1.2, §1.4. Bosses live in bosses.ts.
 import type { EnemyAiCtx, EnemyDef, StatusDef, EncounterDef } from '../../engine/types';
 
-const SHRILL = { exposed: 2 };
+const FRENZY = { more: 1 };
 const SICKLE = { hits: 2, extra_hits: 1 };
 const BOND = { damage_per_status: 1, lash_per_status: 0.5 };
 const UNDERBELLY = { damage: 3 };
 const POLLEN = { might: 1, heal: 8 };
 const RALLY = { might: 1 };
+/** Spore Dust never stacks your Stagger past this (v1 soft-lock: Stagger 20 + Tangles, 3000+ turns). */
+const DUST = { dust_cap: 2 };
 
 /** Remove forbidden repeats before drawing; the remaining weights renormalise. */
 function differentMove(c: EnemyAiCtx, moves: [string, number][]): string {
@@ -15,12 +17,12 @@ function differentMove(c: EnemyAiCtx, moves: [string, number][]): string {
 
 export const ACT1_ENEMIES: EnemyDef[] = [
   {
-    id: 'gnasher', name: 'Gnasher', hp: [13, 17], onLeaderDeath: 'flee',
+    id: 'gnasher', name: 'Gnasher', hp: [15, 19], onLeaderDeath: 'flee',
     moves: {
       nip: { name: 'Nip', intent: 'attack', text: 'Deal {damage} damage × {times}.',
         effects: [{ type: 'damage', amount: 3, times: 2, target: 'target' }] },
       lunge: { name: 'Lunge', intent: 'attack', text: 'Deal {damage} damage.',
-        effects: [{ type: 'damage', amount: 7, target: 'target' }] },
+        effects: [{ type: 'damage', amount: 8, target: 'target' }] },
     },
     chooseMove: (c) => c.rng.weighted((c.forTurn === 1
       ? [['nip', 50], ['lunge', 50]] as [string, number][]
@@ -29,7 +31,7 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_gnasher',
   },
   {
-    id: 'sporepuff', name: 'Sporepuff', hp: [10, 13],
+    id: 'sporepuff', name: 'Sporepuff', hp: [14, 17], values: DUST,
     onSpawn: (c) => {
       if (!c.combat || c.owner === 'player') throw new Error('Sporepuff spawned outside an enemy slot');
       const owner = c.owner;
@@ -40,14 +42,16 @@ export const ACT1_ENEMIES: EnemyDef[] = [
       puff: { name: 'Puff', intent: 'debuff', text: 'Shuffle {add_card} Tangle into your draw pile.',
         effects: [{ type: 'add_card', card: 'status_tangle', to: 'draw', n: 1 }] },
       sting: { name: 'Sting', intent: 'attack', text: 'Deal {damage} damage.',
-        effects: [{ type: 'damage', amount: 5, target: 'target' }] },
-      dust: { name: 'Spore Dust', intent: 'debuff', text: 'Apply {status} Stagger to you.',
-        effects: [{ type: 'status', target: 'target', id: 'stagger', amount: 2 }] },
+        effects: [{ type: 'damage', amount: 7, target: 'target' }] },
+      dust: { name: 'Spore Dust', intent: 'debuff', text: 'Apply {status} Stagger to you, unless you already have {dust_cap} or more.',
+        effects: [{ type: 'conditional', if: { type: 'not', cond: { type: 'has_status', who: 'target', id: 'stagger', min: DUST.dust_cap } },
+          then: [{ type: 'status', target: 'target', id: 'stagger', amount: 2 }] }] },
     },
     chooseMove: (c) => {
       if (c.forTurn === 1) {
-        if (c.alliesAlive('sporepuff') === 0) return 'puff';
-        const move = ['puff', 'sting', 'dust'][(c.aiState.slot ?? 0) % 3];
+        // A lone puff opens with Sting beside another enemy (it teaches Block), with Puff when truly alone.
+        if (c.alliesAlive('sporepuff') === 0) return c.alliesAlive() > 0 ? 'sting' : 'puff';
+        const move = ['sting', 'dust', 'sting'][(c.aiState.slot ?? 0) % 3];
         if (!move) throw new Error('Invalid Sporepuff slot');
         return move;
       }
@@ -56,15 +60,16 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_sporepuff',
   },
   {
-    id: 'scrap_drone', name: 'Scrap Drone', hp: [15, 19],
+    id: 'scrap_drone', name: 'Scrap Drone', hp: [19, 23],
     moves: {
       zap: { name: 'Zap', intent: 'attack', text: 'Deal {damage} damage.',
-        effects: [{ type: 'damage', amount: 6, target: 'target' }] },
+        effects: [{ type: 'damage', amount: 7, target: 'target' }] },
       target_lock: { name: 'Target Lock', intent: 'debuff', text: 'Apply {status} Exposed to you.',
         effects: [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }] },
     },
     chooseMove: (c) => {
-      if (c.forTurn === 1) return c.alliesAlive() > 0 ? 'target_lock' : 'zap';
+      // v2: it locks first only in front of a pack (two or more allies); beside one partner it opens with Zap.
+      if (c.forTurn === 1) return c.alliesAlive() >= 2 ? 'target_lock' : 'zap';
       return c.lastMove() === 'target_lock' ? 'zap' : c.rng.weighted([['zap', 60], ['target_lock', 40]]);
     },
     icon: 'enemy_scrap_drone',
@@ -73,10 +78,10 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     id: 'thornback', name: 'Thornback', hp: [42, 46],
     moves: {
       gore: { name: 'Gore', intent: 'attack', text: 'Deal {damage} damage. Consume Bristle.',
-        effects: [{ type: 'damage', amount: { base: 13, scale: { ai: 'bristle' } }, target: 'target' },
+        effects: [{ type: 'damage', amount: { base: 11, scale: { ai: 'bristle' } }, target: 'target' },
           { type: 'ai_state', key: 'bristle', set: 0 }] },
       bristle: { name: 'Bristle', intent: 'defend_buff', text: 'Gain {block} Block. Next Gore deals +{ai_state} damage.',
-        effects: [{ type: 'block', amount: 9 }, { type: 'ai_state', key: 'bristle', set: 5 }] },
+        effects: [{ type: 'block', amount: 9 }, { type: 'ai_state', key: 'bristle', set: 4 }] },
       trample: { name: 'Trample', intent: 'attack', text: 'Deal {damage} damage × {times}.',
         effects: [{ type: 'damage', amount: 5, times: 2, target: 'target' }] },
     },
@@ -103,10 +108,12 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_vinelash',
   },
   {
-    id: 'flitterfang', name: 'Flitterfang', hp: [24, 28], spawnStatuses: { shrill: 1 },
+    id: 'flitterfang', name: 'Flitterfang', hp: [24, 28], spawnStatuses: { frenzy: 1 }, values: FRENZY,
     moves: {
-      frenzied_bite: { name: 'Frenzied Bite', intent: 'attack', text: 'Deal {damage} damage × {times}.',
-        effects: [{ type: 'damage', amount: 3, times: 3, target: 'target' }] },
+      // Many small hits: the Riposte target of Act 1 (Riposte cards that scale with the attack's hits).
+      frenzied_bite: { name: 'Frenzied Bite', intent: 'attack', text: 'Deal {damage} damage × {times}. Its next Frenzied Bite hits {more} more time.',
+        effects: [{ type: 'damage', amount: 3, times: { base: 2, scale: { ai: 'frenzy' } }, target: 'target' },
+          { type: 'ai_state', key: 'frenzy', delta: FRENZY.more }] },
       swoop: { name: 'Swoop', intent: 'attack', text: 'Deal {damage} damage.',
         effects: [{ type: 'damage', amount: 7, target: 'target' }] },
     },
@@ -164,12 +171,12 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_pollen_wisp',
   },
   {
-    id: 'gnasher_alpha', name: 'Gnasher Alpha', hp: [62, 66], values: RALLY,
+    id: 'gnasher_alpha', name: 'Gnasher Alpha', hp: [64, 68], values: RALLY,
     moves: {
       rend: { name: 'Rend', intent: 'attack', text: 'Deal {damage} damage × {times}.',
-        effects: [{ type: 'damage', amount: 5, times: 2, target: 'target' }] },
+        effects: [{ type: 'damage', amount: 6, times: 2, target: 'target' }] },
       maul: { name: 'Maul', intent: 'attack', text: 'Deal {damage} damage.',
-        effects: [{ type: 'damage', amount: 14, target: 'target' }] },
+        effects: [{ type: 'damage', amount: 15, target: 'target' }] },
       rally_howl: { name: 'Rally Howl', intent: 'defend_buff', text: 'Every living Gnasher gains {might} Might. Gain {block} Block.',
         effects: [{ type: 'custom', fn: 'rally_howl' }, { type: 'block', amount: 8 }] },
       call_pack: { name: 'Call the Pack', intent: 'special', text: 'Summon Gnashers until {summon} are alive. They flee when the Alpha dies.',
@@ -196,7 +203,7 @@ export const ACT1_ENEMIES: EnemyDef[] = [
       sporefall: { name: 'Sporefall', intent: 'debuff', text: 'Shuffle {add_card} Tangle into your draw pile.',
         effects: [{ type: 'add_card', card: 'status_tangle', to: 'draw', n: 2 }] },
       cap_crush: { name: 'Cap Crush', intent: 'attack', text: 'Deal {damage} damage (+{damage_per} per Status card in your hand, draw and discard piles).',
-        effects: [{ type: 'damage', amount: { base: 8, per: BOND.damage_per_status, scale: 'player_status_cards' }, target: 'target' }] },
+        effects: [{ type: 'damage', amount: { base: 10, per: BOND.damage_per_status, scale: 'player_status_cards' }, target: 'target' }] },
       gill_lash: { name: 'Gill Lash', intent: 'attack', text: 'Deal {damage} damage × {times}. Each hit grows with the Status cards in your hand, draw and discard piles.',
         effects: [{ type: 'damage', amount: { base: 3, per: BOND.lash_per_status, scale: 'player_status_cards' }, times: 3, target: 'target' }] },
       hunker: { name: 'Hunker', intent: 'defend', text: 'Gain {block} Block. Shuffle {add_card} Tangle into your discard pile.',
@@ -211,13 +218,14 @@ export const ACT1_ENEMIES: EnemyDef[] = [
     icon: 'enemy_dreadcap',
   },
   {
-    id: 'shellback_titan', name: 'Shellback Titan', hp: [80, 86], spawnStatuses: { soft_underbelly: 1 },
+    id: 'shellback_titan', name: 'Shellback Titan', hp: [86, 92], spawnStatuses: { soft_underbelly: 1 },
     moves: {
-      clamp: { name: 'Clamp Shut', intent: 'attack_defend', text: 'Gain {block} Block (+{block_per} each use). Deal {damage} damage.',
+      // v2: the snap grows with the shell, so a deck that cannot break it cannot stall it either.
+      clamp: { name: 'Clamp Shut', intent: 'attack_defend', text: 'Gain {block} Block (+{block_per} each use). Deal {damage} damage (+{damage_per} each use).',
         effects: [{ type: 'block', amount: { base: 16, per: 4, scale: { ai: 'clamps' } } },
-          { type: 'ai_state', key: 'clamps', delta: 1 }, { type: 'damage', amount: 6, target: 'target' }] },
+          { type: 'damage', amount: { base: 8, per: 2, scale: { ai: 'clamps' } }, target: 'target' }, { type: 'ai_state', key: 'clamps', delta: 1 }] },
       grind: { name: 'Mandible Grind', intent: 'attack', text: 'Deal {damage} damage × {times}.',
-        effects: [{ type: 'damage', amount: 8, times: 2, target: 'target' }] },
+        effects: [{ type: 'damage', amount: 9, times: 2, target: 'target' }] },
     },
     chooseMove: (c) => c.forTurn % 2 === 1 ? 'clamp' : 'grind',
     icon: 'enemy_shellback_titan',
@@ -226,10 +234,10 @@ export const ACT1_ENEMIES: EnemyDef[] = [
 
 export const ACT1_STATUSES: StatusDef[] = [
   {
-    id: 'shrill', name: 'Shrill', stacks: 'flag', decay: 'never', tick: 'end_own_turn', isDebuff: false,
-    text: 'At the end of its own turn, if alive, apply {exposed} Exposed to you.', values: SHRILL,
-    hooks: { onTick: (c) => c.now([{ type: 'status', target: 'target', id: 'exposed', amount: SHRILL.exposed }], { target: 'player' }) },
-    icon: 'status_shrill',
+    id: 'frenzy', name: 'Frenzy', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false, values: FRENZY,
+    text: 'Each Frenzied Bite hits {more} more time than the one before, for the rest of the fight, so finish it early.',
+    // The move scales on aiState.frenzy, so the intent shows the live hit count.
+    icon: 'status_frenzy',
   },
   {
     id: 'reads_the_guard', name: 'Reads the Guard', stacks: 'flag', decay: 'never', tick: 'never', isDebuff: false,

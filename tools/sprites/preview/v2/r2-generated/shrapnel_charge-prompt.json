@@ -1,0 +1,6 @@
+{
+  "id": "shrapnel_charge",
+  "prompt": "Use case: illustration-story. Asset type ONE 32x24 Sega Master System colourless card illustration, shown enlarged with crisp square logical pixels. Subject shrapnel_charge: One broad heavy grey cylindrical explosive canister with two metal retaining bands, a bronze cap and one large red triangular warning plate. One thick fuse bends off top. No explosion or fragments. Center ONE clear physical subject occupying around 25x19 of the 32x24 logical canvas; strong silhouette at native size. Large simple shapes, flat 2–3 tone shading, no texture noise. Grey steel #555555/#AAAAAA/#FFFFFF covers most of the object, restrained brass #AA5500/#FFAA00, one red or cyan functional accent as described. Max ten SMS colours on exact channels 00/55/AA/FF, one logical pixel black contour, upper-left light. Phantasy Star/Ys modeled game item style with broad clean planes. No speckles, isolated pixels, checkerboard, dithering, stipple, antialiasing, rubble, miniature scenery, text, labels or glow. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-056c8005-b15c-406e-aab9-0d8e5a56d443.png"
+}

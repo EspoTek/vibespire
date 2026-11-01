@@ -20,7 +20,7 @@ import { CardFrame } from '../ui/CardFrame.ts';
 import { Label } from '../ui/Label.ts';
 import { Panel } from '../ui/Panel.ts';
 import { Widget, Z } from '../ui/Widget.ts';
-import { CardDetail } from './overlays.ts';
+import { CardDetail, UpgradeCompare, UpgradeToggle } from './overlays.ts';
 import { cardFace } from './view.ts';
 import { getCardDef } from '../../content/index.ts';
 
@@ -47,6 +47,11 @@ export interface DeckViewOptions {
   state: RunState | null;
   pick?: DeckPick;
   onClose?: () => void;
+  /**
+   * Smith picker: the focused card is shown before → after (UpgradeCompare) instead of the plain
+   * detail, and there is no VIEW UPGRADE toggle (the comparison already shows it).
+   */
+  compareUpgrade?: boolean;
 }
 
 const COLS = 6;
@@ -74,6 +79,8 @@ export function openDeckView(screen: Screen, app: App, opts: DeckViewOptions): (
   let indexMap: number[] = []; // grid position -> index in tab.cards
   let panel: Panel;
   let detail: CardDetail;
+  let compare: UpgradeCompare | null = null;
+  let upgradeView = false;
   let countLabel: Label;
   let confirmBtn: Button | null = null;
   let emptyLabel: Label;
@@ -106,7 +113,10 @@ export function openDeckView(screen: Screen, app: App, opts: DeckViewOptions): (
   const showDetail = (cw: CardFrame, idx: number) => {
     const card = tab().cards[idx] as ViewCard;
     const reason = opts.pick ? opts.pick.reason(card, idx) : null;
-    detail.show(cw.cardFace, reason ? `[pink]${reason}[/]` : '');
+    // keyword boxes keep clear of the card and of the bottom row (count, CONFIRM / CLOSE)
+    const avoid = [cw.ringRect(), rect(0, H - 46, W, 46)];
+    if (compare) { compare.show(card, reason, avoid); return; }
+    detail.show(cw.cardFace, reason ? `[pink]${reason}[/]` : '', avoid);
   };
 
   let rebuild = (): void => { /* assigned below once the panel exists */ };
@@ -145,6 +155,19 @@ export function openDeckView(screen: Screen, app: App, opts: DeckViewOptions): (
     panel.setZ(Z.MODAL);
     detail = new CardDetail(GRID_X + COLS * CELL_W + 6, GRID_Y, W - 12 - (GRID_X + COLS * CELL_W + 6) - 4);
     panel.addChild(detail, 40);
+    if (opts.compareUpgrade) {
+      compare = panel.addChild(new UpgradeCompare(app, GRID_X + COLS * CELL_W + 6, GRID_Y, W - 12 - (GRID_X + COLS * CELL_W + 6) - 4), 40);
+    } else {
+      // VIEW UPGRADE (STS checkbox): every card in the grid shown upgraded, changed numbers green
+      panel.addChild(new UpgradeToggle(app, screen, GRID_X, H - 30, (on) => {
+        upgradeView = on;
+        gridWidgets.forEach((cw, i) => {
+          const card = tab().cards[indexMap[i] as number] as ViewCard;
+          cw.setFace(cardFace(app, card, { state: opts.state, upgradePreview: on }), indexMap[i] as number);
+          if (cw.focused) showDetail(cw, indexMap[i] as number);
+        });
+      }), 2);
+    }
     emptyLabel = panel.addChild(new Label(GRID_X + 8, GRID_Y + 30, 'NO CARDS HERE.', { color: C.textMuted }), 3);
     let tx = 14;
     for (const t of opts.tabs) {
@@ -186,7 +209,7 @@ export function openDeckView(screen: Screen, app: App, opts: DeckViewOptions): (
     const t = tab();
     t.cards.forEach((card, idx) => {
       if (!matches(filter, card)) return;
-      const cw = new CardFrame(0, 0, cardFace(app, card, { state: opts.state }), idx);
+      const cw = new CardFrame(0, 0, cardFace(app, card, { state: opts.state, upgradePreview: upgradeView }), idx);
       cw.liftOnFocus = false;
       const reason = opts.pick ? opts.pick.reason(card, idx) : null;
       cw.setDimmed(opts.pick !== undefined && reason !== null);
@@ -217,6 +240,7 @@ export function openDeckView(screen: Screen, app: App, opts: DeckViewOptions): (
     emptyLabel.visible = gridWidgets.length === 0;
     emptyLabel.setText(t.note ?? 'NO CARDS HERE.');
     detail.hide();
+    compare?.hide();
     layoutGrid();
     scopeNow.add(panel);
     refreshPickUi();

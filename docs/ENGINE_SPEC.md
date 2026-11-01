@@ -269,6 +269,52 @@ This section supersedes §3 to §11 wherever they differ. The authoritative shap
 
 **Actions**: `skip_boss_relic` (+2 Shards) replaces `proceed` on the boss relic screen. `shop_remove {uid, pay: 'gold' | 'shard'}`.
 
+**Multi-pick choices (v2.1)**:
+- A PendingChoice with `max > 1` is answered step by step, so `legalActions()` stays linear. It used
+  to list every subset, and "upgrade 3 of 33 cards" was 5,456 answers.
+- `{type: 'choice_toggle', uid}` selects or deselects one choice into `PendingChoice.picked`, which
+  is kept in `choices` order.
+- `resolve_choice {uids: picked}` confirms once `min <= picked.length <= max`.
+- Single-pick choices (`max <= 1`) are unchanged: one `resolve_choice` per choice, plus `[]` when
+  `min` is 0.
+- `choiceStep(pc, uids)` gives the next step toward a wanted answer. Policies, the UI
+  (`RunSession.answerChoice`) and tests (`tests/answer-choice.ts`) use it.
+- Order of the legal list: confirm, then selects, then deselects.
+
+**Saves (v2.1)**:
+- `ENGINE_VERSION` 3. There are no migrations.
+- `parseSaveOrIncompatible(json)` reports a save as incompatible, without throwing, in two cases:
+  - its version differs (the live v1 build wrote version 2);
+  - any id in it doesn't resolve in the registries (`unresolvedIds`, `src/engine/savecheck.ts`):
+    cards, relics, statuses, potions, enemies, encounters, events, boons, rest options, class,
+    history included.
+- The title deletes an incompatible save and tells the player.
+- `deserialize` throws on all of these. A malformed save of the current version, or non-JSON, also
+  throws.
+
+**Difficulty tiers (rulings 71, 74)**:
+- `RunState.difficulty: 'standard' | 'heroic'` is set at run start:
+  `Game.newRun(seed, classId, { difficulty })`; absent means `'standard'`.
+- `TUNING.difficulty[tier]` holds both enemy levers per act, and they have no other source:
+  - `enemyHpPct` scales rolled enemy HP;
+  - `enemyDamagePct` is damage pipeline step 3 on enemy hits, so intents, forecasts and move text show
+    the tier-scaled number.
+- The levers today:
+  | tier | HP | damage |
+  |---|---|---|
+  | Standard | 85 | 75 |
+  | Heroic | 110 | 85 |
+- Sim:
+  - `--set enemyHpPct.all=N` and `--set enemyDamagePct.all=N` set both tiers;
+    `difficulty.<tier>.<lever>.<act|all>` sets one;
+  - `--difficulty standard|heroic` picks the tier for `personas-batch`, `counterfactual` and `trace`.
+- `ENGINE_VERSION` 4: a version 3 save migrates to `difficulty: 'standard'`. Ruling 74 doesn't change
+  the save shape, so there is no new bump.
+
+**AI purity**: `AI_PURITY.mode` selects how strictly `chooseMove` is checked.
+- `'frozen'`: a deep-frozen clone. Tests and dev builds use it.
+- `'copied'`: a cheap unfrozen copy. The default, used by the simulator and production.
+
 **Events (additions)**:
 - `damage` gains `guarded`; `block` gains `pool`; `card_played` gains `onBeat`.
 - New events: `guard_decay`, `enemy_forecast`, `attack_cancelled`, `enemy_transformed`, `enemy_fled`, `card_primed`, `riposte_triggered`, `prime_fizzled`, `timeline_added`, `timeline_shifted`, `timeline_resolved`, `bloom`, `shards`, `cap_hit`, `relic_lost`, `potion_lost`.

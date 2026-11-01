@@ -28,7 +28,7 @@ export class RestScreen extends RunScreen {
   private content: Widget[] = [];
   constructor(app: App, session: RunSession) { super(app, session, 'rest', 'rest_site'); }
 
-  protected build(): void { this.draw(); }
+  protected build(): void { this.draw(); this.tips.offer('rest'); }
 
   private draw(): void {
     for (const w of this.content) { this.scope.remove(w); this.removeWidget(w); }
@@ -92,6 +92,7 @@ export class RestScreen extends RunScreen {
       title: 'SMITH: UPGRADE A CARD',
       tabs: [{ id: 'deck', title: 'DECK', cards: deck }],
       state: this.state,
+      compareUpgrade: true,
       pick: {
         min: 1, max: 1, confirmLabel: 'UPGRADE', cancellable: true,
         reason: (card) => ('uid' in card && legal.some((x) => x.uid === card.uid) ? null : 'Already upgraded or cannot be upgraded.'),

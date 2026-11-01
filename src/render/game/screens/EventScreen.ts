@@ -92,6 +92,16 @@ export class EventScreen extends RunScreen {
     this.scope.add(box);
   }
 
+  /** Option rows fill the text box's width: their keyword boxes go above the box, over the backdrop. */
+  protected override updateInfo(): void {
+    const f = this.focus.focused;
+    if (this.focus.depth === 1 && !this.leaving && f instanceof ChoiceRow) {
+      this.infoLayer.update(f, { anchor: rect(20, 196, W - 40, 150), side: 'above' });
+      return;
+    }
+    super.updateInfo();
+  }
+
   private finishTyping(): void {
     this.shown = this.fullText.length;
     this.textBox.setText(this.fullText);

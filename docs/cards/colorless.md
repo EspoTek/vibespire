@@ -2,6 +2,8 @@
 
 Status: v1, colourless card designer. Source of truth for mechanics is `docs/GDD.md`; this file only defines content. Colourless cards are bought in shops (1 uncommon + 1 rare per shop, §4.6), offered by `ev_assembly_line` and `pact_wanderer` (§4.2), and never appear in combat card rewards. Split here: **12 uncommon + 8 rare** (see "GDD ambiguities" at the end: §4.2 says 14/6).
 
+> **v2 (2026-10-30):** 16 more colourless cards (the Strain, Salvage, Reserve and Reprise engines, plus Bait Flare) and the `fuse` token are specified in `docs/v2/shared-design.md` §4, implemented in `src/content/cards/colorless.ts`. RULINGS 60 sets the v2 split to 21 uncommon / 14 rare; that split is reached once Medbay Voucher is cut, which waits for the v2 baseline (ruling 55). Shops stock `TUNING.shopColorless` (3) colourless cards (ruling 61).
+
 ## Pricing conventions used in every note (GDD §8.5, colourless at −10%)
 
 Colourless cards are priced **10% below the class rate at the same rarity**, because every class can buy them.
@@ -22,9 +24,9 @@ Colourless cards are priced **10% below the class rate at the same rarity**, bec
 
 | # | id | Name | Rarity | Type | Cost | Text (base → upgraded) | Role |
 |---|---|---|---|---|---|---|---|
-| 1 | `relay_ping` | Relay Ping | uncommon | skill | 0 | Draw 2 cards. Add a Jitter to your hand. → Draw 3, add 2 Jitters | Cheap draw with a cost |
-| 2 | `shardfall` | Shardfall | uncommon | attack | 2 | Deal 16 damage, +2 per Shard you hold. Scrap. → +3 per Shard | Burst with Scrap · Shards |
-| 3 | `arc_lattice` | Arc Lattice | uncommon | attack | 2 | Deal 4 damage, +2 per living enemy, to ALL enemies. → 6 (+2) | AoE |
+| 1 | `relay_ping` | Relay Ping | uncommon | skill | 0 | Draw 3 cards. Add a Jitter to your hand. → Draw 4 (Phase F; was draw 2, never picked) | Cheap draw with a cost |
+| 2 | `shardfall` | Shardfall | uncommon | attack | 2 | Deal 16 damage, +2 per Shard you hold. → +3 per Shard (Phase F: no Scrap) | Burst · Shards |
+| 3 | `arc_lattice` | Arc Lattice | uncommon | attack | 2 | Deal 7 damage, +3 per living enemy, to ALL enemies. → 9 (+3) (Phase F; was 4 + 2) | AoE |
 | 4 | `salvage_kit` | Salvage Kit | uncommon | skill | 1 | Choose: gain 7 Block, draw 2 cards, or deal 5 damage to ALL enemies. → 10 / 3 / 8 | Choose-one utility |
 | 5 | `stress_fracture` | Stress Fracture | uncommon | skill | 1 | Apply 3 Exposed to an enemy. Gain 2 Exposed. → 4 Exposed | Exposed applier |
 | 6 | `gyro_jammer` | Gyro Jammer | uncommon | skill | 1 | Apply 1 Stagger per hit the enemy intends (max 3). → + Draw 1 card | Stagger applier |
@@ -37,7 +39,7 @@ Colourless cards are priced **10% below the class rate at the same rarity**, bec
 | 13 | `cutting_torch` | Cutting Torch | rare | skill | 1 | Remove a card in your hand from your deck. Lose 3 Max HP. Scrap. → cost 0 | Run surgery |
 | 14 | `medbay_voucher` | Medbay Voucher | rare | skill | 1 | Spend 35 gold: gain 3 Max HP. Scrap. → cost 0 | Max HP / healing with a real cost |
 | 15 | `clean_manifest` | Clean Manifest | rare | attack | 2 | Deal 6 damage, +2 per card fewer than 20 in your deck. → +3 per card | Cares about deck size |
-| 16 | `salvage_kiln` | Salvage Kiln | rare | power | 1 | When a card is Scrapped, apply 1 Exposed to a random enemy. → Opening | Build-around (Scrap) |
+| 16 | `salvage_kiln` | Salvage Kiln | rare | power | 1 | At the end of your turn, deal 1 damage to ALL enemies for each card in your Scrapheap. → Opening (Phase F; see docs/v2/shared-design.md §14) | Build-around (Scrap) |
 | 17 | `prism_resonance` | Prism Resonance | rare | power | 2 | At the start of your turn, gain 1 Guard per Shard you hold. → cost 1 | Build-around (Shard hoard) |
 | 18 | `shard_cache` | Shard Cache | rare | skill | 0 | Gain 2 energy and 2 Shards. Remove this card from your deck. → 3 Shards | Grants Shards (bounded) |
 | 19 | `mirror_tether` | Mirror Tether | rare | attack | 2 | Deal damage equal to the damage the enemy intends. Scrap. → 8 + that | Burst with Scrap (rare) |

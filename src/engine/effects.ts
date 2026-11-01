@@ -20,20 +20,23 @@ import { execBloom, deckBloomCards, execPrune } from './bloom';
 import { capHit, takeBudget } from './caps';
 import {
   addCardToCombat,
+  bloomCapFor,
   bloomOf,
   cardDef,
   discardFromHand,
   drawCards,
+  effectiveBloomOf,
   exhaustCards,
   findCardAnywhere,
   isBloomCard,
+  isRipe,
   isUpgradable,
   matchesFilter,
   putIntoHand,
   takeFrom,
   upgradeCard,
 } from './cards';
-import { autoplayCard, nextBeat } from './combat';
+import { autoplayCard, nextBeat, triageKeepKey } from './combat';
 import {
   alliesOf,
   blockOf,
@@ -54,8 +57,8 @@ import {
 import { effectItems, makeEffectCtx } from './ctx';
 import { dealDamage, gainDefence, heal, loseHp } from './damage';
 import { addToDeck, isBound, removeFromDeck, transformInDeck, upgradableDeckCards, upgradeInDeck } from './deck';
-import { haltEnemy, isAttackIntent, rerollForecasts, riposteWillTrigger, summon, transformEnemy } from './enemies';
-import { gainPotion, gainRelic, rollPotion, rollRelicOrNull } from './items';
+import { computeIntent, haltEnemy, isAttackIntent, rerollForecasts, riposteWillTrigger, summon, transformEnemy } from './enemies';
+import { classCardPool, colorlessPool, gainPotion, gainRelic, rollPotion, rollRelicOrNull } from './items';
 import { openChoice } from './queue';
 import { primeFromHand } from './riposte';
 import {
@@ -72,7 +75,7 @@ import {
 } from './runeffects';
 import { pickFrom, shuffleInPlace } from './rng';
 import { applyStatus, dispatch, playerRule, setStatusStacks } from './statuses';
-import { advance, postpone } from './timeline';
+import { advance, chorusPreview, gather, postpone, scheduleFromHand } from './timeline';
 import { renderTemplate, effectTextValues } from './text';
 import { TUNING } from './tuning';
 import type {
@@ -85,6 +88,7 @@ import type {
   Effect,
   EffectFrame,
   EffectSource,
+  EnemyState,
   EntityRef,
   Intent,
   RelicState,
@@ -117,6 +121,12 @@ function intentDamage(i: Intent): number {
   return !i.hidden && isAttackIntent(i) && i.damage !== undefined ? i.damage * (i.hits ?? 1) : 0;
 }
 
+/** The enemy's current intent with numbers re-computed from the current state (stored intents refresh only between actions). */
+function liveIntent(state: RunState, e: EnemyState): Intent {
+  if (e.intent.hidden === true || !isAttackIntent(e.intent) || e.intent.moveId === '') return e.intent;
+  return computeIntent(state, e, e.intent.moveId);
+}
+
 /** RULINGS 27: attack damage of the current intent / of all forecast entries (hidden = 0), for the target or all enemies. */
 function enemyDamageScale(ctx: AmountCtx, which: 'intent' | 'forecast', who: 'target' | 'all'): number {
   const c = requireCombat(ctx, `${which}_damage`);
@@ -124,7 +134,8 @@ function enemyDamageScale(ctx: AmountCtx, which: 'intent' | 'forecast', who: 'ta
   let total = 0;
   for (const e of enemies) {
     if (!e.alive) continue;
-    total += which === 'intent' ? intentDamage(e.intent) : e.forecast.reduce((a, i) => a + intentDamage(i), 0);
+    // The current intent is re-computed live, so a status applied earlier in this action (Goad) counts.
+    total += which === 'intent' ? intentDamage(liveIntent(ctx.state, e)) : e.forecast.reduce((a, i) => a + intentDamage(i), 0);
   }
   return total;
 }
@@ -133,6 +144,11 @@ function enemyDamageScale(ctx: AmountCtx, which: 'intent' | 'forecast', who: 'ta
 function statusCardCount(ctx: AmountCtx): number {
   const c = requireCombat(ctx, 'player_status_cards');
   return [...c.hand, ...c.draw, ...c.discard].filter((x) => cardDef(x).type === 'status').length;
+}
+
+/** Shared v2 H21: extra beats the beat_index scale counts on the beat (Conductor's Baton). */
+function beatIndexBonus(state: RunState): number {
+  return playerRule(state, 0, (m, c, a) => a + (m.beatIndexBonus ? m.beatIndexBonus(c) : 0));
 }
 
 export function scaleValue(ctx: AmountCtx, scale: AmountScale): number {
@@ -147,6 +163,8 @@ export function scaleValue(ctx: AmountCtx, scale: AmountScale): number {
       if (frame.src.kind !== 'card') throw new Error(`amount scale cardVar '${scale.cardVar}' outside a card`);
       const card = findCardAnywhere(ctx, frame.src.uid);
       if (!card) throw new Error(`amount scale cardVar: card ${frame.src.uid} not found`);
+      // Bloom numbers read the effective Bloom (Rootstock); Graft v2 §7 H6.
+      if (scale.cardVar === 'bloom') return effectiveBloomOf(state, card);
       // A var that was never set is 0 (vars start empty).
       return card.vars?.[scale.cardVar] ?? 0;
     }
@@ -209,6 +227,23 @@ export function scaleValue(ctx: AmountCtx, scale: AmountScale): number {
       return state.player.deck.length;
     case 'timeline_count':
       return requireCombat(ctx, 'timeline_count').timeline.length;
+    case 'chorus': {
+      // H1: stamped on the frame by resolveEntry. Card text previews count the entries landing with it.
+      if (frame.chorus !== undefined) return frame.chorus;
+      if (!ctx.preview) throw new Error(`amount scale 'chorus' outside a Timeline resolution (${describeSource(frame.src)})`);
+      if (frame.src.kind !== 'card') return 0;
+      return chorusPreview(state, frame.src.uid, getCardDef(frame.src.id, frame.src.upgraded));
+    }
+    case 'beat_index': {
+      // H4: stamped on the play's frame (Crescendo). Previews ask where the next play would land.
+      if (frame.beatIndex !== undefined) return frame.onBeat === true && frame.beatIndex > 0 ? frame.beatIndex + beatIndexBonus(state) : 0;
+      if (!ctx.preview) {
+        if (frame.onBeat === true) throw new Error(`amount scale 'beat_index' on an on-beat frame without a stamped index (${describeSource(frame.src)})`);
+        return 0;
+      }
+      const nb = nextBeat(state);
+      return nb.onBeat ? nb.positions.indexOf(nb.count) + 1 + beatIndexBonus(state) : 0;
+    }
     case 'primed_count':
       return requireCombat(ctx, 'primed_count').primed.length;
     case 'trigger_hits':
@@ -217,6 +252,17 @@ export function scaleValue(ctx: AmountCtx, scale: AmountScale): number {
     case 'spent':
       if (frame.spent === undefined) throw new Error("amount scale 'spent' outside spend_status");
       return frame.spent;
+    case 'shed':
+      if (frame.shed === undefined) throw new Error("amount scale 'shed' outside a shed effect");
+      return frame.shed;
+    case 'scrapped':
+      if (frame.scrapped === undefined) throw new Error("amount scale 'scrapped' outside an exhaust `then` list");
+      return frame.scrapped;
+    case 'strained_this_combat':
+      // Nothing Strained yet this combat = 0 (the counter starts absent).
+      return requireCombat(ctx, 'strained_this_combat').counters.strained ?? 0;
+    case 'energy':
+      return requireCombat(ctx, 'energy scale').energy;
     case 'bloom_cards_in_deck':
       return deckBloomCards(state).length;
     case 'bloom_total_in_deck':
@@ -310,6 +356,12 @@ export function evalCondition(ctx: AmountCtx, cond: Condition): boolean {
     }
     case 'is_class':
       return state.classId === cond.cls;
+    case 'ripe': {
+      if (frame.src.kind !== 'card') throw new Error('condition ripe outside a card');
+      const card = findCardAnywhere(ctx, frame.src.uid);
+      if (!card) throw new Error(`condition ripe: card ${frame.src.uid} not found`);
+      return isRipe(state, card);
+    }
     case 'not':
       return !evalCondition(ctx, cond.cond);
     case 'all':
@@ -453,10 +505,13 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
         enqueue(env, effectItems(Array.from({ length: times }, () => hit), frame));
         return;
       }
-      const base = amt(effect.amount);
       const card = sourceCard(s, frame.src);
       const tags = frameTags(frame, effect.tags);
-      for (const target of resolveTargets(env, effect.target, frame)) {
+      const targets = resolveTargets(env, effect.target, frame);
+      // H9 perTarget: each hit enemy is the frame target for its own amount (Eye of the Storm reads each intent).
+      const shared = effect.perTarget === true ? 0 : amt(effect.amount);
+      for (const target of targets) {
+        const base = effect.perTarget === true ? resolveAmount(amountCtx(s, { ...frame, target }, false), effect.amount) : shared;
         dealDamage(env, { source: frame.self, target, base, card, tags, ignoreBlock: effect.ignoreBlock === true });
       }
       return;
@@ -500,9 +555,12 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
       }
       return;
     }
-    case 'draw':
-      drawCards(env, Math.max(0, amt(effect.n)), true);
+    case 'draw': {
+      const n = Math.max(0, amt(effect.n));
+      if (effect.nextTurn === true || requireCombat(s, 'draw effect').turnPhase !== 'player') return bankNextTurn(env, n, 0);
+      drawCards(env, n, true);
       return;
+    }
     case 'discard': {
       const combat = requireCombat(s, 'discard effect');
       const mode = modeOf(effect, ['random', 'choose', 'all'], 'discard');
@@ -525,18 +583,26 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
         else if (combat.inPlay.some((c) => c.uid === uid)) exhaustCards(env, 'inPlay', [uid]);
         return;
       }
-      const pile = (effect.from === 'hand' ? combat.hand : combat.discard).map((c) => c.uid);
-      if (mode === 'all') return exhaustCards(env, effect.from, pile);
+      const pile = (effect.from === 'hand' ? combat.hand : combat.discard).filter((c) => matchesFilter(cardDef(c), effect.filter)).map((c) => c.uid);
+      // Shared v2: a `then` list runs after the Scrap, with scale 'scrapped'.
+      const scrapThen = (uids: readonly number[]): void => {
+        const done = exhaustCards(env, effect.from, uids);
+        if (effect.then) enqueue(env, effectItems(effect.then, { ...frame, scrapped: done.length }));
+      };
+      if (mode === 'all') return scrapThen(pile);
       const n = Math.min(amt(effect.n ?? 1), pile.length);
-      if (n <= 0) return;
-      if (mode === 'random') return exhaustCards(env, effect.from, pickRandom(s, pile, n));
-      if (n >= pile.length) return exhaustCards(env, effect.from, pile);
-      openChoice(env, { kind: 'cards', prompt: `Scrap ${n} card${n > 1 ? 's' : ''}.`, from: effect.from, choices: pile, labels: [], offers: [], min: n, max: n, resume: { op: 'exhaust', from: effect.from } });
+      if (n <= 0) return scrapThen([]);
+      if (mode === 'random') return scrapThen(pickRandom(s, pile, n));
+      if (n >= pile.length && effect.upTo !== true) return scrapThen(pile);
+      const resume = effect.then ? { op: 'exhaust_then' as const, from: effect.from, then: effect.then, frame } : { op: 'exhaust' as const, from: effect.from };
+      openChoice(env, { kind: 'cards', prompt: `Scrap ${effect.upTo === true ? 'up to ' : ''}${n} card${n > 1 ? 's' : ''}.`, from: effect.from, choices: pile, labels: [], offers: [], min: effect.upTo === true ? 0 : n, max: n, resume });
       return;
     }
     case 'energy': {
       const combat = requireCombat(s, 'energy effect');
       let n = amt(effect.n);
+      // Gains outside the player's turn (or marked nextTurn) are banked; losses always apply now.
+      if (n > 0 && (effect.nextTurn === true || combat.turnPhase !== 'player')) return bankNextTurn(env, 0, n);
       if (n > 0) n = takeBudget(env, 'bonusEnergy', TUNING.caps.bonusEnergy, 'cap_bonus_energy', n);
       const before = combat.energy;
       combat.energy = Math.max(0, combat.energy + n);
@@ -544,8 +610,16 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
       return;
     }
     case 'status': {
-      const n = amt(effect.amount);
-      for (const t of resolveTargets(env, effect.target, frame)) applyStatus(env, t, effect.id, n);
+      const shared = effect.perTarget === true ? 0 : amt(effect.amount);
+      for (const t of resolveTargets(env, effect.target, frame)) {
+        // Shared v2 perTarget: each target is the frame target for its own amount (Fracture Serum doubles each enemy's Exposed).
+        const n = effect.perTarget === true ? resolveAmount(amountCtx(s, { ...frame, target: t }, false), effect.amount) : shared;
+        const before = stacksOf(s, t, effect.id);
+        applyStatus(env, t, effect.id, n);
+        // H10: the player's statuses and relics hear about stacks they put on an enemy (Squall Line).
+        const gained = stacksOf(s, t, effect.id) - before;
+        if (frame.self === 'player' && t !== 'player' && gained > 0) dispatch(env, 'onStatusInflicted', 'player', { target: t, id: effect.id, amount: gained }, t);
+      }
       return;
     }
     case 'heal': {
@@ -571,8 +645,10 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
     case 'add_card': {
       const n = amt(effect.n ?? 1);
       for (let i = 0; i < n; i++) {
-        if (effect.to === 'deck') addToDeck(env, effect.card, effect.upgraded === true, 'other');
-        else addCardToCombat(env, effect.card, effect.to, { upgraded: effect.upgraded === true, costThisTurn: effect.costThisTurn, position: effect.position ?? 'random' });
+        if (effect.to === 'deck') {
+          const added = addToDeck(env, effect.card, effect.upgraded === true, 'other');
+          if (effect.bloom !== undefined) setNewCopyBloom(env, added, amt(effect.bloom));
+        } else addCardToCombat(env, effect.card, effect.to, { upgraded: effect.upgraded === true, costThisTurn: effect.costThisTurn, position: effect.position ?? 'random' });
       }
       return;
     }
@@ -667,7 +743,23 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
       const n = effect.n === 'all' ? Math.max(0, have) : effect.n;
       if (effect.n !== 'all' && (n <= 0 || have < n)) return;
       if (n > 0) setStatusStacks(env, frame.self, effect.id, have - n);
+      // Clause first (it lands at the front of the queue), then the onStatusSpent listeners' effects.
       enqueue(env, effectItems(effect.effects, { ...frame, spent: n }));
+      if (n > 0) dispatch(env, 'onStatusSpent', frame.self, { id: effect.id, amount: n });
+      return;
+    }
+    case 'shed': {
+      requireCombat(s, 'shed');
+      if (frame.self !== 'player') throw new Error(`shed is player-only (${describeSource(frame.src)})`);
+      const g = guardOf(s, 'player');
+      const n = effect.n === 'all' ? g : effect.n;
+      if (effect.n !== 'all' && (n <= 0 || g < n)) return;
+      if (n > 0) {
+        setGuard(s, 'player', g - n);
+        emit(env, { t: 'guard_shed', target: 'player', amount: n, now: g - n });
+      }
+      enqueue(env, effectItems(effect.effects, { ...frame, shed: n }));
+      if (n > 0) dispatch(env, 'onGuardShed', 'player', { amount: n });
       return;
     }
     case 'bloom':
@@ -747,9 +839,61 @@ export function execEffect(env: Env, effect: Effect, frame: EffectFrame): void {
     case 'halt_enemy':
       for (const t of resolveTargets(env, effect.target, frame)) if (t !== 'player') haltEnemy(env, t);
       return;
+    case 'harvest':
+      return execHarvest(env, effect, frame, amt(effect.mult));
     case 'prime':
       primeFromHand(env, effect.n ?? 1);
       return;
+    // --- Chronist v2
+    case 'gather':
+      gather(env);
+      return;
+    case 'quicken': {
+      const combat = requireCombat(s, 'quicken');
+      if (effect.n < 1) throw new Error(`quicken n must be >= 1 (got ${effect.n})`);
+      combat.counters.beatOffset = (combat.counters.beatOffset ?? 0) + effect.n; // no offset yet this turn = 0
+      emit(env, { t: 'beat_shift', delta: effect.n, now: combat.cardsPlayedThisTurn.length + combat.counters.beatOffset });
+      return;
+    }
+    case 'schedule':
+      scheduleFromHand(env, effect.turns, frame.target);
+      return;
+    // --- Shared v2
+    case 'strain':
+      return execStrain(env, amt(effect.amount));
+    case 'triage': {
+      const combat = requireCombat(s, 'triage');
+      const cands = combat.hand.filter((c) => !hasCardKeyword(c, 'retain')).map((c) => c.uid);
+      if (cands.length === 0) return;
+      if (cands.length <= effect.keep) {
+        for (const uid of cands) combat.counters[triageKeepKey(uid)] = 1;
+        return;
+      }
+      openChoice(env, { kind: 'cards', prompt: `Keep up to ${effect.keep} card${effect.keep > 1 ? 's' : ''}. The rest of your hand is Scrapped.`, from: 'hand', choices: cands, labels: [], offers: [], min: 0, max: effect.keep, resume: { op: 'triage' } });
+      return;
+    }
+    case 'copy_card': {
+      const combat = requireCombat(s, 'copy_card');
+      const cands = combat.hand.map((c) => c.uid);
+      if (cands.length === 0) return;
+      const costThisTurn = effect.costThisTurn ?? null; // no cost change unless given
+      const only = cands[0];
+      if (cands.length === 1 && only !== undefined) return copyHandCard(env, only, costThisTurn);
+      openChoice(env, { kind: 'cards', prompt: 'Choose a card to copy.', from: 'hand', choices: cands, labels: [], offers: [], min: 1, max: 1, resume: { op: 'copy_card', costThisTurn } });
+      return;
+    }
+    case 'add_random_card': {
+      requireCombat(s, 'add_random_card');
+      const n = amt(effect.n ?? 1);
+      const rarities = ['common', 'uncommon', 'rare'] as const;
+      const pool = rarities.flatMap((r) => (effect.pool === 'colorless' ? colorlessPool(r) : classCardPool(s.classId, r))).filter((d) => matchesFilter(d, effect.filter));
+      if (pool.length === 0) throw new Error(`add_random_card: no ${effect.pool} card matches the filter (${describeSource(frame.src)})`);
+      for (let i = 0; i < n; i++) {
+        const d = pickFrom(s.rng.misc, pool);
+        addCardToCombat(env, d.id, effect.to, { upgraded: false, costThisTurn: effect.costThisTurn, position: 'random' });
+      }
+      return;
+    }
     case 'cancel_attack': {
       const combat = requireCombat(s, 'cancel_attack');
       const t = frame.target;
@@ -790,6 +934,35 @@ function execUpgrade(env: Env, effect: Extract<Effect, { type: 'upgrade' }>, n: 
   }
   const picked = effect.choose === true ? cands : pickRandom(s, cands, k);
   for (const c of picked) upgradeCard(env, c);
+}
+
+/** add_card {to: 'deck', bloom}: the new deck copy starts with that Bloom (clamped to its cap); not growth, so no onBloomGained. */
+function setNewCopyBloom(env: Env, card: CardInstance, bloom: number): void {
+  if (!isBloomCard(card)) throw new Error(`add_card bloom: ${card.id} is not a Bloom card`);
+  const now = Math.max(0, Math.min(bloomCapFor(env.state, card), bloom));
+  if (now === 0) return;
+  card.vars = { ...(card.vars ?? {}), bloom: now };
+  emit(env, { t: 'bloom', uid: card.uid, delta: now, now });
+}
+
+/**
+ * Graft v2 Harvest (docs/v2/graft-design.md §2.3): each target with Rot loses mult × Rot HP, then its Rot
+ * is halved (round down) if it is still alive. A kill spreads the full stack through Rot's onDeath (RULINGS 53).
+ */
+function execHarvest(env: Env, effect: Extract<Effect, { type: 'harvest' }>, frame: EffectFrame, mult: number): void {
+  const s = env.state;
+  requireCombat(s, 'harvest');
+  for (const t of resolveTargets(env, effect.target, frame)) {
+    if (t === 'player') throw new Error('harvest targets the player');
+    const rot = stacksOf(s, t, 'rot');
+    if (rot <= 0) continue;
+    const before = hpOf(s, t).hp;
+    loseHp(env, t, rot * Math.max(0, mult), frame.self);
+    const hpLost = before - hpOf(s, t).hp;
+    emit(env, { t: 'harvest', enemyUid: t, rot, loss: hpLost });
+    if (isAlive(s, t)) setStatusStacks(env, t, 'rot', Math.floor(rot / 2));
+    dispatch(env, 'onHarvest', 'player', { uid: t, rot, hpLost });
+  }
 }
 
 /** In-combat permanent removals share cap_prune_away (RULINGS 7). */
@@ -839,7 +1012,16 @@ function execFetch(env: Env, effect: Extract<Effect, { type: 'fetch_card' }>, n:
   const s = env.state;
   const combat = requireCombat(s, 'fetch_card');
   const pile = effect.from === 'draw' ? combat.draw : effect.from === 'discard' ? combat.discard : combat.exhaust;
-  const cands = pile.filter((c) => matchesFilter(cardDef(c), effect.filter) && (effect.select === 'max_bloom' || effect.select === 'min_bloom' ? isBloomCard(c) : true));
+  // Shared v2: filter.ripe needs the instance (matchesFilter is def-only), so it is checked here.
+  const ripe = effect.filter?.ripe;
+  const defFilter = effect.filter && ripe !== undefined ? { ...effect.filter, ripe: undefined } : effect.filter;
+  const cands = pile.filter(
+    (c) =>
+      (effect.uid === undefined || c.uid === effect.uid) &&
+      matchesFilter(cardDef(c), defFilter) &&
+      (ripe === undefined || isRipe(s, c) === ripe) &&
+      (effect.select === 'max_bloom' || effect.select === 'min_bloom' ? isBloomCard(c) : true),
+  );
   if (cands.length === 0 || n <= 0) return;
   const resume = { op: 'fetch' as const, from: effect.from, to: effect.to, costThisTurn: effect.costThisTurn ?? null, countsAsDraw: effect.countsAsDraw === true };
   if (effect.select === 'choose') {
@@ -853,7 +1035,11 @@ function execFetch(env: Env, effect: Extract<Effect, { type: 'fetch_card' }>, n:
     let c: CardInstance;
     if (effect.select === 'top') c = pool[pool.length - 1] as CardInstance;
     else if (effect.select === 'random') c = pickFrom(s.rng.misc, pool);
-    else {
+    else if (effect.select === 'max_cost') {
+      const costs = pool.map(printedCostOf);
+      const best = Math.max(...costs);
+      c = pickFrom(s.rng.misc, pool.filter((x) => printedCostOf(x) === best));
+    } else {
       const vals = pool.map(bloomOf);
       const best = effect.select === 'max_bloom' ? Math.max(...vals) : Math.min(...vals);
       c = pickFrom(s.rng.misc, pool.filter((x) => bloomOf(x) === best));
@@ -894,7 +1080,57 @@ export function moveFetched(env: Env, uids: readonly number[], r: { from: 'draw'
   }
 }
 
+/** Printed numeric cost (X and unplayable = 0); fetch select 'max_cost'. */
+function printedCostOf(card: CardInstance): number {
+  const cost = cardDef(card).cost;
+  return typeof cost === 'number' ? cost : 0;
+}
+
+function hasCardKeyword(card: CardInstance, kw: 'retain'): boolean {
+  return (cardDef(card).keywords ?? []).includes(kw);
+}
+
+/**
+ * Strain (shared v2 H1, RULINGS 62): the player loses up to n HP but stops at 1 HP. The HP actually lost
+ * goes into combat.counters.strained and fires onStrain (when > 0). Not a hit, so nothing reduces it.
+ */
+export function execStrain(env: Env, n: number): void {
+  const s = env.state;
+  const combat = requireCombat(s, 'strain');
+  const lose = Math.min(Math.max(0, n), s.player.hp - 1);
+  if (lose <= 0) {
+    if (n > 0) emit(env, { t: 'text', text: 'Strain: you are at 1 HP.' });
+    return;
+  }
+  loseHp(env, 'player', lose, 'player');
+  combat.counters.strained = (combat.counters.strained ?? 0) + lose;
+  dispatch(env, 'onStrain', 'player', { amount: lose });
+}
+
+/** copy_card (shared v2 H17): a combat-only copy of a hand card goes into the hand (cap_to_hand). */
+export function copyHandCard(env: Env, uid: number, costThisTurn: number | null): void {
+  const combat = requireCombat(env.state, 'copy_card');
+  const src = combat.hand.find((c) => c.uid === uid);
+  if (!src) throw new Error(`copy_card: card ${uid} not in hand`);
+  const copy = addCardToCombat(env, src.id, 'hand', { upgraded: src.upgraded, costThisTurn: costThisTurn ?? undefined, position: 'random' });
+  if (copy && src.vars) copy.vars = { ...src.vars };
+}
+
 /** Gold change; throws if it would go negative (content must gate costs with `available`). */
+/**
+ * Next-turn bank (generic; Breaker v2 ruling 3): draw / energy that arrives outside the player's turn
+ * (e.g. a Riposte's played effects via Answer in Kind) or is marked `nextTurn` is paid at the start of
+ * the player's next turn: energy right after the refill (step 3), cards with the turn-start draw
+ * (step 6). Neither counts toward this turn's or next turn's effect caps (cap_draw, cap_bonus_energy).
+ */
+export function bankNextTurn(env: Env, draw: number, energy: number): void {
+  const c = requireCombat(env.state, 'next-turn bank');
+  if (draw <= 0 && energy <= 0) return;
+  c.counters.bankDraw = (c.counters.bankDraw ?? 0) + Math.max(0, draw);
+  c.counters.bankEnergy = (c.counters.bankEnergy ?? 0) + Math.max(0, energy);
+  emit(env, { t: 'next_turn_bank', draw: c.counters.bankDraw, energy: c.counters.bankEnergy });
+}
+
 export function gainGold(env: Env, amount: number): void {
   if (amount === 0) return;
   const p = env.state.player;

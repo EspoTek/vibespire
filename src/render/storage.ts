@@ -138,31 +138,43 @@ export class Stored<T> {
 // ------------------------------------------------------------------ renderer-owned keys
 
 export interface Settings {
-  version: 2;
+  version: 3;
   /** Master SFX volume 0..1. */
   volume: number;
   /** Music volume 0..1 (separate from SFX). */
   musicVolume: number;
   /** Animation speed multiplier (1 = normal). */
   animSpeed: number;
+  /** Screen shake (accessibility): 0 = off, 1 = low (half), 2 = full. */
+  shake: ShakeLevel;
+  /** Full-screen flashes (parry, phase change, beat): false = replaced by a gentler border blink. */
+  flashes: boolean;
 }
+
+export type ShakeLevel = 0 | 1 | 2;
 
 /** Music default for new players and for v1 settings (saved before music existed). */
 export const DEFAULT_MUSIC_VOLUME = 0.4;
 
-export const DEFAULT_SETTINGS: Settings = { version: 2, volume: 0.6, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1 };
+export const DEFAULT_SETTINGS: Settings = { version: 3, volume: 0.6, musicVolume: DEFAULT_MUSIC_VOLUME, animSpeed: 1, shake: 2, flashes: true };
 
 export const settingsCodec: Codec<Settings> = (raw, key) => {
   if (typeof raw !== 'object' || raw === null) throw new Error(`storage: "${key}" is not an object`);
   const r = raw as Record<string, unknown>;
-  if (r['version'] !== 1 && r['version'] !== 2) throw new Error(`storage: "${key}" has unsupported version ${String(r['version'])}`);
+  const version = r['version'];
+  if (version !== 1 && version !== 2 && version !== 3) throw new Error(`storage: "${key}" has unsupported version ${String(version)}`);
   const volume = r['volume'], animSpeed = r['animSpeed'];
-  // v1 had no music setting: migrate to the default; v2 must carry it
-  const musicVolume = r['version'] === 1 ? DEFAULT_MUSIC_VOLUME : r['musicVolume'];
+  // v1 had no music setting: migrate to the default; v2+ must carry it
+  const musicVolume = version === 1 ? DEFAULT_MUSIC_VOLUME : r['musicVolume'];
+  // v1/v2 predate the accessibility options: migrate to the defaults; v3 must carry them
+  const shake = version < 3 ? DEFAULT_SETTINGS.shake : r['shake'];
+  const flashes = version < 3 ? DEFAULT_SETTINGS.flashes : r['flashes'];
   if (typeof volume !== 'number' || volume < 0 || volume > 1) throw new Error(`storage: "${key}".volume invalid: ${String(volume)}`);
   if (typeof musicVolume !== 'number' || musicVolume < 0 || musicVolume > 1) throw new Error(`storage: "${key}".musicVolume invalid: ${String(musicVolume)}`);
   if (typeof animSpeed !== 'number' || !(animSpeed > 0)) throw new Error(`storage: "${key}".animSpeed invalid: ${String(animSpeed)}`);
-  return { version: 2, volume, musicVolume, animSpeed };
+  if (shake !== 0 && shake !== 1 && shake !== 2) throw new Error(`storage: "${key}".shake invalid: ${String(shake)}`);
+  if (typeof flashes !== 'boolean') throw new Error(`storage: "${key}".flashes invalid: ${String(flashes)}`);
+  return { version: 3, volume, musicVolume, animSpeed, shake, flashes };
 };
 
 export const SETTINGS_KEY = 'vibespire.settings.v1';

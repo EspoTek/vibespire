@@ -22,6 +22,8 @@ export const TUNING = {
     onBeatRuns: 3,
     advancePerTurn: 2,
     timeline: 10,
+    /** Chronist v2 (H7): the most times one Timeline entry resolves (Total Eclipse). */
+    timelineResolutions: 2,
     delayMax: 3,
     postponeMax: 3,
     primeCapacity: 3,
@@ -30,8 +32,35 @@ export const TUNING = {
     guard: 50,
     bloom: 10,
     /** Status stack caps by status id (win over StatusDef.maxStacks). */
-    status: { onslaught: 30, exposed: 20, stagger: 20, rot: 15 } as Record<string, number>,
+    /** Shared v2 H3: `reserve` = most Reserve (energy only X-cost cards can spend) you can hold. */
+    status: { onslaught: 30, exposed: 20, stagger: 20, rot: 15, embers: 10, goaded: 20, reserve: 5 } as Record<string, number>,
+    /** Shared v2 H4 / RULINGS 65: a card's effects resolve at most this many times per play (Reprise). */
+    reprise: 2,
+    /** RULINGS 72: Scrap never takes your combat deck (draw + discard + hand + in play) below this many cards. */
+    scrapFloor: 8,
   },
+
+  /** RULINGS 61: colourless cards in a shop (slots past colorlessRarities roll rare at shop.colorlessExtraRarePct). */
+  shopColorless: 3,
+  /**
+   * RULINGS 69: chance (0..1) that a card reward replaces one of its class cards with a colourless card of
+   * the same rarity roll (a common slot becomes an uncommon colourless card: colourless has no commons).
+   */
+  rewardColorlessChance: { default: 0.12, elite: 0.25 },
+  /** RULINGS 70: chance (0..1) that a rolled colourless reward card comes from a shared engine you've started. */
+  colorlessEngineBias: 0.5,
+  /**
+   * Phase F (shared engines): chance (0..1) that a card reward ALSO offers one colourless card from a shared engine
+   * you've started (RULINGS 70's "started"), added to the offer rather than replacing a class card. Not on
+   * fixed-rarity screens, and never past `rewardMaxCards` cards.
+   */
+  colorlessEngineExtra: 0.3,
+  rewardMaxCards: 4,
+
+  /** Graft v2 (docs/v2/graft-design.md §2): a Bloom card with this much Bloom is Ripe. */
+  bloomRipe: 10,
+  /** RULINGS 51: Spill, 1 = on, 0 = off (numeric so `sim/batch.ts --set bloomSpill=0` can A/B it). */
+  bloomSpill: 1,
 
   /** GDD §2.7. */
   cadence: { beats: [3, 6, 9] as number[] },
@@ -43,10 +72,32 @@ export const TUNING = {
   augury: { depth: 2 },
   /** GDD §2.14 backlash_primed: +4 per stack on the next enemy hit. */
   backlashPerStack: 4,
-  /** Pipeline step 3 multiplier on enemy-sourced hits, per act (simulator lever). */
-  enemyDamagePct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
-  /** Balance lever: % applied to every rolled enemy HP, per act. */
-  enemyHpPct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
+  /**
+   * Difficulty tiers (rulings 71 and 74), chosen at run start and stored in RunState.difficulty. Per tier
+   * and act, the single source of both global enemy levers:
+   *  - `enemyHpPct`: % applied to every rolled enemy HP;
+   *  - `enemyDamagePct`: pipeline step 3 multiplier on enemy-sourced hits (previews and intents too).
+   * The sim's `--set enemyHpPct.all=N` / `enemyDamagePct.all=N` set both tiers,
+   * `difficulty.<tier>.<lever>.all=N` one (sim/overrides.ts).
+   *  - `classMaxHpBonus`: extra starting max HP (and HP) by class id, applied once at run creation
+   *    (ruling 76). Every playable class id must be listed in every tier (classMaxHpBonus() throws on a
+   *    missing one), the engine test pack's test_class included.
+   *  - standard (the default): HP 85, damage 75 (ruling 74, Phase E sweep: timmy 22%, novice 10.7%);
+   *    Chronist +10 max HP (ruling 76: novice Chronist lost to its 66 HP pool).
+   *  - heroic: HP 110 (ruling 67, the Phase D sweep: spike 30-45% in every class), damage 85, no bonus.
+   */
+  difficulty: {
+    standard: {
+      enemyHpPct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
+      enemyDamagePct: { 1: 75, 2: 75, 3: 75 } as Record<Act, number>,
+      classMaxHpBonus: { breaker: 0, graft: 0, chronist: 10, test_class: 0 } as Record<string, number>,
+    },
+    heroic: {
+      enemyHpPct: { 1: 110, 2: 110, 3: 110 } as Record<Act, number>,
+      enemyDamagePct: { 1: 85, 2: 85, 3: 85 } as Record<Act, number>,
+      classMaxHpBonus: { breaker: 0, graft: 0, chronist: 0, test_class: 0 } as Record<string, number>,
+    },
+  },
 
   map: {
     rows: 15,
@@ -69,7 +120,7 @@ export const TUNING = {
   unknownRoomOdds: { event: 65, monster: 20, shop: 8, treasure: 7 },
 
   /** First N normal fights of an act use the 'easy' pool. */
-  easyFights: { 1: 3, 2: 2, 3: 2 } as Record<Act, number>,
+  easyFights: { 1: 3, 2: 3, 3: 2 } as Record<Act, number>,
   /** Do not repeat any of the last N encounters. */
   encounterNoRepeat: 2,
 
@@ -118,6 +169,8 @@ export const TUNING = {
     classCards: { attack: 2, skill: 2, power: 1 },
     salePct: 50,
     colorlessRarities: ['uncommon', 'rare'] as ('uncommon' | 'rare')[],
+    /** Shared v2: rare chance (percent) for colourless slots beyond colorlessRarities (TUNING.shopColorless). */
+    colorlessExtraRarePct: 30,
     relics: 3,
     potions: 3,
     cardPrice: { common: [45, 55], uncommon: [68, 82], rare: [135, 165] } as Record<'common' | 'uncommon' | 'rare', Range>,
@@ -172,7 +225,7 @@ export const CAP_NAMES: Record<string, string> = {
 
 /**
  * Simulator sweep hook (sim/sweep.ts, `sim/batch.ts --set`): set numeric TUNING leaves by dotted path,
- * e.g. `enemyDamagePct.1`, `cardOdds.monster.rare`, `caps.bloom`. Throws on an unknown path or a
+ * e.g. `difficulty.heroic.enemyDamagePct.1`, `cardOdds.monster.rare`, `caps.bloom`. Throws on an unknown path or a
  * leaf that is not a number. Returns a function that restores the previous values.
  */
 export function applyTuningOverrides(overrides: Readonly<Record<string, number>>): () => void {

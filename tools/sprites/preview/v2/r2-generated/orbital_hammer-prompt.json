@@ -1,0 +1,6 @@
+{
+  "id": "orbital_hammer",
+  "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic shown as a crisp nearest-neighbour enlarged sprite. Subject orbital_hammer: One heavy chunky steel hammer, broad rectangular silver hammerhead across upper cell, short thick bronze handle descending diagonally. A small blue curved orbit ridge is part of the hammerhead. Full-cell silhouette 13–14 logical pixels long inside a 16x16 cell, at least 9 pixels body width, one transparent margin pixel. Large simple shapes, flat 2–3 tone shading, no texture noise. Bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Physical modeled game object with broad planes, Phantasy Star/Ys style. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, thin sticks or additional props. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-ab1407c2-e2b5-4223-88f1-f796cbda2ff6.png"
+}

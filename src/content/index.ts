@@ -45,3 +45,4 @@ if (REAL_CLASSES_READY) registerPack({ classes: CLASSES, boons: PACTS });
 
 export { CLASSES, PACTS };
 export * from './registry';
+export * from './keywords';

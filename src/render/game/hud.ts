@@ -4,7 +4,8 @@
  * focus), floor/act, DECK and pause buttons. `refresh()` re-reads the run state.
  */
 import { getClassDef, getPotionDef, getRelicDef } from '../../content/index.ts';
-import { renderPotionText, renderRelicText, type RunState } from '../../engine/index.ts';
+import { renderKeywordText, renderPotionText, renderRelicText, TUNING, type RunState } from '../../engine/index.ts';
+import { potionHint, relicHint } from './explain.ts';
 import type { App } from '../app.ts';
 import { fonts } from '../fonts.ts';
 import { rect, W, type Rect } from '../layout.ts';
@@ -17,13 +18,13 @@ import { Panel } from '../ui/Panel.ts';
 import { Picture } from '../ui/Picture.ts';
 import { Widget, Z } from '../ui/Widget.ts';
 import { itemIcon, portraitOrNull, shardsOf } from './view.ts';
+import { DIFFICULTY_NAMES } from './difficulty.ts';
 import type { Atlas } from '../gfx.ts';
 
 export const TOPBAR_H = 36;
 
 /** A focusable 12x12 icon with a tooltip text (relics, potions, statuses). */
 export class HintIcon extends Icon {
-  hint = '';
   /** A UI-sheet icon by frame name, or any atlas frame ({atlas, frame}). */
   constructor(x: number, y: number, app: App, frame: string | { atlas: Atlas; frame: string }) {
     super(x, y, typeof frame === 'string' ? app.icons : frame.atlas, typeof frame === 'string' ? frame : frame.frame, 1);
@@ -55,6 +56,9 @@ export class TopBar extends Widget {
   private readonly shardIcon: Icon;
   private readonly floorLabel: Label;
   private strip: Widget[] = [];
+  private readonly hpArea: HintArea;
+  private readonly goldArea: HintArea;
+  private readonly shardArea: HintArea;
   readonly deckButton: Button;
   readonly pauseButton: Button;
   /** Widgets the screen should register for focus (rebuilt on refresh; see `focusables`). */
@@ -75,11 +79,15 @@ export class TopBar extends Widget {
     this.goldLabel = this.addChild(new Label(110, 21, '', { font: fonts.small, color: C.yellow }), 2);
     this.shardIcon = this.addChild(new Icon(136, 19, app.icons, 'shard'), 2);
     this.shardLabel = this.addChild(new Label(150, 21, '', { font: fonts.small, color: C.magenta }), 2);
+    // hover / focus areas explaining the readouts (HP, gold, Shards)
+    this.hpArea = this.addChild(new HintArea(rect(37, 18, 56, 14)), 4);
+    this.goldArea = this.addChild(new HintArea(rect(95, 18, 38, 14)), 4);
+    this.shardArea = this.addChild(new HintArea(rect(135, 18, 34, 14)), 4);
     this.floorLabel = this.addChild(new Label(W - 108, 5, '', { font: fonts.small, color: C.textMuted, align: 'right' }), 2);
     this.deckButton = this.addChild(new Button(rect(W - 104, 14, 52, 18), 'DECK', { onActivate: () => this.handlers.onDeck(), hint: 'Your run deck (V).' }), 2);
     this.deckButton.label = 'Deck';
     this.pauseButton = this.addChild(new Button(rect(W - 48, 14, 44, 18), 'MENU', { onActivate: () => this.handlers.onPause(), hint: 'Pause menu (M / Start).' }), 2);
-    this.fixed = [this.deckButton, this.pauseButton];
+    this.fixed = [this.hpArea, this.goldArea, this.shardArea, this.deckButton, this.pauseButton];
     this.setZ(Z.PANEL);
     this.refresh(state);
   }
@@ -92,7 +100,10 @@ export class TopBar extends Widget {
     this.goldLabel.setText(String(p.gold));
     const shards = shardsOf(state);
     this.shardLabel.setText(String(shards));
-    this.floorLabel.setText(`ACT ${state.act}  FLOOR ${state.floor}`);
+    this.floorLabel.setText(`ACT ${state.act}  FLOOR ${state.floor}  · ${DIFFICULTY_NAMES[state.difficulty]}`);
+    this.hpArea.hint = `[pink]HP ${p.hp}/${p.maxHp}[/]\nAt 0 the run ends. Rest sites heal ${TUNING.restHealPct}% of Max HP.`;
+    this.goldArea.hint = `[yellow]GOLD ${p.gold}[/]\nSpend it in shops on cards, relics, potions and card removal.`;
+    this.shardArea.hint = `[magenta]SHARDS ${shards}/${TUNING.shards.cap}[/]\n${renderKeywordText('shards')}`;
     this.label = `${getClassDef(state.classId).name}. HP ${p.hp} of ${p.maxHp}. ${p.gold} gold. ${shards} shards.`;
     for (const w of this.strip) w.dispose();
     this.strip = [];
@@ -104,7 +115,7 @@ export class TopBar extends Widget {
         icon.focusable = false;
       } else {
         const def = getPotionDef(id);
-        icon.hint = `[yellow]${def.name.toUpperCase()}[/]\n${renderPotionText(id, state)}${def.combatOnly ? '\n[grey](combat only)[/]' : ''}`;
+        icon.hint = potionHint(id, state, state.phase === 'combat');
         icon.label = `${def.name}: ${renderPotionText(id, state)}`;
         icon.onActivate = () => this.handlers.onPotion(i);
       }
@@ -117,7 +128,7 @@ export class TopBar extends Widget {
       const def = getRelicDef(r.id);
       const icon = this.addChild(new HintIcon(x, 17, this.app, itemIcon(this.app, 'relic', r.id)), 3);
       const counter = def.counterMax !== undefined ? `\n[grey]counter ${r.counter}/${def.counterMax}[/]` : '';
-      icon.hint = `[cyan]${def.name.toUpperCase()}[/]\n${renderRelicText(r.id, state)}${counter}`;
+      icon.hint = relicHint(r.id, state, def.counterMax !== undefined ? r.counter : null);
       icon.label = `${def.name}: ${renderRelicText(r.id, state)}`;
       this.strip.push(icon);
       x += 18;
@@ -129,9 +140,15 @@ export class TopBar extends Widget {
   tickGold(from: number, to: number): void {
     const o = { v: from };
     void this.app.tweens.to(o, { v: to }, Math.min(600, 40 * Math.abs(to - from)));
-    this.app.tweens.every(() => {
-      this.goldLabel.setText(String(Math.round(o.v)));
-      if (Math.round(o.v) === to) { this.app.sfx.play('move'); return false; }
+    let shown = from, sinceTick = 99;
+    this.app.tweens.every((dt) => {
+      const v = Math.round(o.v);
+      sinceTick += dt;
+      this.goldLabel.setText(String(v));
+      // a coin tick per change (throttled to one per 2 frames), a higher ding on the last one
+      if (v !== shown && v !== to && sinceTick >= 32) { this.app.sfx.play('gold'); sinceTick = 0; }
+      shown = v;
+      if (v === to) { this.app.sfx.play('gold', { semis: 7 }); return false; }
       return true;
     });
   }
@@ -143,5 +160,19 @@ export class TopBar extends Widget {
     const relics = this.strip.filter((w) => w instanceof HintIcon && (w as HintIcon).hint.startsWith('[cyan]'));
     const w = relics[index];
     return w ? w.rect : null;
+  }
+}
+
+/**
+ * An invisible focusable area with a tooltip (`hint`): explains a readout that is drawn by other
+ * widgets (HP bar + Block/Guard, the Timeline header...). Keyboard / pad focus reaches it like any
+ * widget; the focus ring shows where it is.
+ */
+export class HintArea extends Widget {
+  constructor(r: Rect, hint = '') {
+    super(r, 'hintarea');
+    this.focusable = true;
+    this.activateSound = false;
+    this.hint = hint;
   }
 }

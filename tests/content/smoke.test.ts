@@ -270,6 +270,8 @@ const MODIFIER_HOOKS: ReadonlySet<string> = new Set([
   'modifyHeal', 'bloomCap', 'modifyPruneBloom', 'beatPositions', 'onBeatRepeats', 'primeCapacity', 'primeCharges', 'forecastDepth', 'maxEnergy',
   'drawPerTurn', 'handLimit', 'enemiesActFirst', 'canSkipCardReward', 'skipShards', 'cardRewardRarities', 'modifyShopPrice',
   'shardRemovalKeepsService', 'restOptionCost', 'restSideAction',
+  // Shared v2
+  'grantsReprise', 'delayPlay', 'cardRewardClasses', 'extraColorlessOffer', 'restOptionBlocked', 'beatIndexBonus', 'timelineDestination',
 ]);
 
 const RUN_LEVEL_HOOKS: ReadonlySet<string> = new Set(['onPickup', 'onRest', 'onShopEnter', 'onFloorEnter', 'onActStart', 'onGoldGain', 'onShardGain', 'onRewardSkipped', 'onCardAdded']);
@@ -301,12 +303,12 @@ function fireEventHook(relicId: string, hook: HookName): void {
     case 'onTurnStart': dispatchRelic(env, relicId, hook, {}); break;
     case 'onTurnEnd': dispatchRelic(env, relicId, hook, {}); break;
     case 'onCardPlayed':
-    case 'afterCardPlayed': dispatchRelic(env, relicId, hook, { card, def, target: enemyUid, onBeat: true, depth: 0 }); break;
+    case 'afterCardPlayed': dispatchRelic(env, relicId, hook, { card, def, target: enemyUid, onBeat: true, depth: 0, x: 0 }); break;
     case 'onCardExhausted':
     case 'onCardDrawn':
     case 'onCardToHand': dispatchRelic(env, relicId, hook, { card }); break;
-    case 'onDamageDealt': dispatchRelic(env, relicId, hook, { source: 'player', target: enemyUid, card, tags: [], amount: 5, blocked: 0, guarded: 0, hpLost: 5 }); break;
-    case 'onDamageTaken': dispatchRelic(env, relicId, hook, { source: enemyUid, target: 'player', card: null, tags: [], amount: 5, blocked: 2, guarded: 1, hpLost: 2 }); break;
+    case 'onDamageDealt': dispatchRelic(env, relicId, hook, { source: 'player', target: enemyUid, card, tags: [], amount: 5, blocked: 0, guarded: 0, hpLost: 5, staggerPrevented: 0 }); break;
+    case 'onDamageTaken': dispatchRelic(env, relicId, hook, { source: enemyUid, target: 'player', card: null, tags: [], amount: 5, blocked: 2, guarded: 1, hpLost: 2, staggerPrevented: 1 }); break;
     case 'onHpLost': dispatchRelic(env, relicId, hook, { amount: 3, source: enemyUid, fromHit: true }); break;
     case 'onBlockGained': dispatchRelic(env, relicId, hook, { amount: 5, pool: 'guard' }); break;
     case 'onGuardDecay': dispatchRelic(env, relicId, hook, { lost: 4 }); break;
@@ -322,7 +324,7 @@ function fireEventHook(relicId: string, hook: HookName): void {
     case 'onEnemyMoveEnd': dispatchRelic(env, relicId, hook, { uid: enemyUid, moveId: 'tackle', wasAttack: true, hpLostThisMove: 0 }); break;
     case 'onPrune': dispatchRelic(env, relicId, hook, { scrapped: card }); break;
     case 'onBloomGained': dispatchRelic(env, relicId, hook, { card, delta: 1 }); break;
-    case 'onDelayResolved': dispatchRelic(env, relicId, hook, { card }); break;
+    case 'onDelayResolved': dispatchRelic(env, relicId, hook, { card, batch: 3 }); break;
     case 'onTimelineAdd': {
       if (!c) throw new Error('combat needed');
       const entry = { card: makeCard(s, 'test_tock'), dueTurn: c.turn + 2, seq: 50, onBeat: true, target: null, x: 0, advancedThisTurn: false };
@@ -331,6 +333,13 @@ function fireEventHook(relicId: string, hook: HookName): void {
       break;
     }
     case 'onPotionUsed': dispatchRelic(env, relicId, hook, { potion: 'test_potion_heal' }); break;
+    // Shared v2 hooks
+    case 'onStrain': dispatchRelic(env, relicId, hook, { amount: 2 }); break;
+    case 'onPrimeFizzled': dispatchRelic(env, relicId, hook, { card }); break;
+    case 'onBlockReset': dispatchRelic(env, relicId, hook, { lost: 6 }); break;
+    case 'onHandEndOfTurn': dispatchRelic(env, relicId, hook, {}); break;
+    case 'onAttackCancelled':
+    case 'onMoveSkipped': dispatchRelic(env, relicId, hook, { uid: enemyUid }); break;
     case 'onPickup':
     case 'onShopEnter':
     case 'onFloorEnter':
@@ -392,6 +401,18 @@ function callModifier(relicId: string, name: string): void {
     case 'shardRemovalKeepsService': results.push(m.shardRemovalKeepsService?.(ctx)); break;
     case 'restOptionCost': results.push(m.restOptionCost?.(ctx, 'rest_purge', 2)); break;
     case 'restSideAction': results.push(m.restSideAction?.(ctx, 'rest_purge')); break;
+    // Shared v2 modifiers
+    case 'grantsReprise': {
+      const def = getCardDef(card.id);
+      results.push(m.grantsReprise?.(ctx, { card, def, target: enemyUid, onBeat: true, depth: 0, x: 3, costPaid: 3, handEmpty: true }));
+      break;
+    }
+    case 'delayPlay': results.push(m.delayPlay?.(ctx, { card, def: getCardDef(card.id), target: enemyUid, onBeat: false, depth: 0, x: 0 }, 0)); break;
+    case 'cardRewardClasses': results.push(m.cardRewardClasses?.(ctx, 'monster')); break;
+    case 'extraColorlessOffer': results.push(m.extraColorlessOffer?.(ctx, 'elite')); break;
+    case 'restOptionBlocked': results.push(m.restOptionBlocked?.(ctx, 'rest_purge')); break;
+    case 'beatIndexBonus': results.push(m.beatIndexBonus?.(ctx)); break;
+    case 'timelineDestination': results.push(m.timelineDestination?.(ctx, card)); break;
     default: throw new Error(`unknown modifier ${name}`);
   }
   for (const r of results) expect(['number', 'boolean', 'object']).toContain(typeof r);

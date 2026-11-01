@@ -19,35 +19,35 @@ const ENEMY_IDS = [
   'gnasher', 'sporepuff', 'scrap_drone', 'thornback', 'vinelash', 'flitterfang',
   'sickle_mantis', 'pollen_wisp', 'gnasher_alpha', 'dreadcap', 'shellback_titan',
 ];
-const STATUS_IDS = ['shrill', 'reads_the_guard', 'mycelial_bond', 'soft_underbelly'];
+const STATUS_IDS = ['frenzy', 'reads_the_guard', 'mycelial_bond', 'soft_underbelly'];
 const BASE_ATTACKS: Record<string, Record<string, readonly [number, number]>> = {
-  gnasher: { nip: [3, 2], lunge: [7, 1] },
-  sporepuff: { sting: [5, 1] },
-  scrap_drone: { zap: [6, 1] },
-  thornback: { gore: [13, 1], trample: [5, 2] },
+  gnasher: { nip: [3, 2], lunge: [8, 1] },
+  sporepuff: { sting: [7, 1] },
+  scrap_drone: { zap: [7, 1] },
+  thornback: { gore: [11, 1], trample: [5, 2] },
   vinelash: { lash: [4, 3], strangle: [11, 1] },
-  flitterfang: { frenzied_bite: [3, 3], swoop: [7, 1] },
+  flitterfang: { frenzied_bite: [3, 2], swoop: [7, 1] },
   sickle_mantis: { twin_sickle: [5, 2], scissor_cut: [14, 1] },
   pollen_wisp: { seed_flick: [4, 1] },
-  gnasher_alpha: { rend: [5, 2], maul: [14, 1] },
-  dreadcap: { cap_crush: [8, 1], gill_lash: [3, 3] },
-  shellback_titan: { clamp: [6, 1], grind: [8, 2] },
+  gnasher_alpha: { rend: [6, 2], maul: [15, 1] },
+  dreadcap: { cap_crush: [10, 1], gill_lash: [3, 3] },
+  shellback_titan: { clamp: [8, 1], grind: [9, 2] },
 };
 // Independent roster transcription: id, pool, exact action order, HP sum and weight.
 const ROSTER = [
-  ['enc_a1_gnasher_pair', 'easy', ['gnasher', 'gnasher'], [26, 34], 1],
-  ['enc_a1_drone_puff', 'easy', ['scrap_drone', 'sporepuff'], [25, 32], 1],
+  ['enc_a1_gnasher_pair', 'easy', ['gnasher', 'gnasher'], [30, 38], 1],
+  ['enc_a1_drone_puff', 'easy', ['scrap_drone', 'sporepuff'], [33, 40], 1],
   ['enc_a1_thornback', 'easy', ['thornback'], [42, 46], 1],
   ['enc_a1_mantis', 'hard', ['sickle_mantis'], [40, 44], 15],
-  ['enc_a1_vine_puff', 'hard', ['sporepuff', 'vinelash'], [58, 67], 15],
-  ['enc_a1_flitter_gnasher', 'hard', ['flitterfang', 'gnasher'], [37, 45], 15],
-  ['enc_a1_drone_pack', 'hard', ['scrap_drone', 'gnasher', 'gnasher'], [41, 53], 14],
+  ['enc_a1_vine_puff', 'hard', ['sporepuff', 'vinelash'], [62, 71], 15],
+  ['enc_a1_flitter_gnasher', 'hard', ['flitterfang', 'gnasher'], [39, 47], 15],
+  ['enc_a1_drone_pack', 'hard', ['scrap_drone', 'gnasher', 'gnasher'], [49, 61], 14],
   ['enc_a1_thornback_wisp', 'hard', ['pollen_wisp', 'thornback'], [62, 70], 14],
-  ['enc_a1_spore_cluster', 'hard', ['sporepuff', 'sporepuff', 'sporepuff'], [30, 39], 12],
-  ['enc_a1_thornback_drone', 'hard', ['scrap_drone', 'thornback'], [57, 65], 15],
-  ['enc_a1_alpha', 'elite', ['gnasher_alpha', 'gnasher', 'gnasher'], [88, 100], 1],
+  ['enc_a1_spore_cluster', 'hard', ['sporepuff', 'sporepuff', 'sporepuff'], [42, 51], 12],
+  ['enc_a1_thornback_drone', 'hard', ['scrap_drone', 'thornback'], [61, 69], 15],
+  ['enc_a1_alpha', 'elite', ['gnasher_alpha', 'gnasher', 'gnasher'], [94, 106], 1],
   ['enc_a1_dreadcap', 'elite', ['dreadcap'], [90, 96], 1],
-  ['enc_a1_titan', 'elite', ['shellback_titan'], [80, 86], 1],
+  ['enc_a1_titan', 'elite', ['shellback_titan'], [86, 92], 1],
 ] as const;
 
 /** A combat fixture with real registered enemies, without depending on a registered class/test pack.
@@ -63,7 +63,7 @@ function sandbox(encounterId = 'enc_a1_gnasher_pair', seed = encounterId) {
     reducedThisTurn: [], resolvedThisTurn: [], lastPrune: null, damageTaken: 0, counters: {}, nextEnemyUid: 1,
   };
   const state: RunState = {
-    version: ENGINE_VERSION, seed, classId: 'breaker', rng: createStreams(seed), act: 1, ascent: 0,
+    version: ENGINE_VERSION, seed, classId: 'breaker', rng: createStreams(seed), act: 1, ascent: 0, difficulty: 'standard',
     floor: 1, phase: 'combat', player: { hp: 100000, maxHp: 100000, gold: 0, deck: [], relics: [],
       potions: [], potionSlots: 3, counters: { shards: 0 } },
     map: { act: 1, rows: [], bossEncounter: 'enc_a1_titan' }, mapPos: null, mapPath: [], room: 'monster', combat,
@@ -300,7 +300,9 @@ describe('AI contract over two hundred seeded turns', () => {
   it('uses encounter slot order for Sporepuff openings and ally presence for the Drone/Wisp', () => {
     const cluster = sandbox('enc_a1_spore_cluster');
     expect(cluster.combat.enemies.map((e) => e.aiState.slot)).toEqual([0, 1, 2]);
-    expect(cluster.combat.enemies.map((e) => e.intent.moveId)).toEqual(['puff', 'sting', 'dust']);
+    expect(cluster.combat.enemies.map((e) => e.intent.moveId)).toEqual(['sting', 'dust', 'sting']);
+    // A lone puff beside another enemy opens with Sting (Vine and Puff, Drone and Puff).
+    expect(sandbox('enc_a1_vine_puff').combat.enemies[0]?.intent.moveId).toBe('sting');
     const solo = sandbox('enc_a1_gnasher_pair');
     solo.combat.enemies.forEach((e) => { e.alive = false; });
     const puff = addEnemy(solo.env, 'sporepuff');
@@ -314,6 +316,9 @@ describe('AI contract over two hundred seeded turns', () => {
       expect(getEnemyDef(wisp.id).chooseMove(aiCtx(solo.combat, wisp, wisp.rng, [], turn))).toBe('seed_flick');
     }
     expect(firstEnemy(sandbox('enc_a1_drone_pack').combat).intent.moveId).toBe('target_lock');
+    // v2: beside a single partner the Drone opens with Zap, not the lock.
+    expect(firstEnemy(sandbox('enc_a1_drone_puff').combat).intent.moveId).toBe('zap');
+    expect(firstEnemy(sandbox('enc_a1_thornback_drone').combat).intent.moveId).toBe('zap');
   });
 
   it('calls the pack only once, after turn three, when every Gnasher is gone', () => {
@@ -348,10 +353,10 @@ describe('Act 1 mechanics and custom effects', () => {
     const thorn = firstEnemy(combat);
     resolveMove(env, thorn, 'bristle');
     expect(thorn.block).toBe(9);
-    expect(computeIntent(state, thorn, 'gore').damage).toBe(18);
-    expect(hits(resolveMove(env, thorn, 'gore'), thorn.uid)).toEqual([expect.objectContaining({ amount: 18 })]);
+    expect(computeIntent(state, thorn, 'gore').damage).toBe(15);
+    expect(hits(resolveMove(env, thorn, 'gore'), thorn.uid)).toEqual([expect.objectContaining({ amount: 15 })]);
     expect(thorn.aiState.bristle).toBe(0);
-    expect(computeIntent(state, thorn, 'gore').damage).toBe(13);
+    expect(computeIntent(state, thorn, 'gore').damage).toBe(11);
     const mantis = addEnemy(env, 'sickle_mantis');
     for (const [attack, amount, count] of [['twin_sickle', 7, 2], ['scissor_cut', 16, 1]] as const) {
       resolveMove(env, mantis, 'preen');
@@ -382,22 +387,21 @@ describe('Act 1 mechanics and custom effects', () => {
     expect(computeIntent(state, mantis, 'twin_sickle').hits).toBe(2);
   });
 
-  it('Shrill increases Exposed once per own turn, boosts later allies and stops on death', () => {
+  it('Frenzy: every Frenzied Bite hits once more than the last; Swoop does not feed it; Riposte sees the hits', () => {
     const { state, combat, env } = sandbox('enc_a1_flitter_gnasher');
     const flitter = firstEnemy(combat);
-    const ally = combat.enemies[1]!;
+    expect(flitter.statuses.frenzy).toBe(1);
+    expect(renderStatusText('frenzy', 1)).toBe('Each Frenzied Bite hits 1 more time than the one before, for the rest of the fight, so finish it early.');
+    expect(computeIntent(state, flitter, 'frenzied_bite')).toMatchObject({ damage: 3, hits: 2 });
+    expect(hits(resolveMove(env, flitter, 'frenzied_bite'), flitter.uid)).toHaveLength(2);
     expect(computeIntent(state, flitter, 'frenzied_bite')).toMatchObject({ damage: 3, hits: 3 });
-    resolveMove(env, flitter, 'frenzied_bite');
-    expect(combat.player.statuses.exposed).toBe(2);
-    expect(computeIntent(state, ally, 'nip').damage).toBe(5);
-    // End the player's following turn: Exposed decays to one, then Shrill adds two again.
-    runNow(env, [{ kind: 'step', step: { op: 'own_decay', who: 'player' } }]);
-    expect(combat.player.statuses.exposed).toBe(1);
+    expect(renderMoveText(state, flitter.uid, 'frenzied_bite')).toBe('Deal 3 damage × 3. Its next Frenzied Bite hits 1 more time.');
     resolveMove(env, flitter, 'swoop');
-    expect(combat.player.statuses.exposed).toBe(3);
-    loseHp(env, flitter.uid, flitter.hp, 'player');
-    runNow(env, [{ kind: 'step', step: { op: 'own_tick', who: flitter.uid } }]);
-    expect(combat.player.statuses.exposed).toBe(3);
+    expect(computeIntent(state, flitter, 'frenzied_bite').hits).toBe(3);
+    expect(hits(resolveMove(env, flitter, 'frenzied_bite'), flitter.uid)).toHaveLength(3);
+    expect(computeIntent(state, flitter, 'frenzied_bite').hits).toBe(4);
+    // No Exposed clock any more (v1 Shrill): many small hits are the gimmick.
+    expect(combat.player.statuses.exposed).toBeUndefined();
   });
 
   it('Pollinate excludes self/dead allies; Dewdrop chooses lowest absolute HP with leftmost ties', () => {
@@ -461,20 +465,20 @@ describe('Act 1 mechanics and custom effects', () => {
     const cap = firstEnemy(combat);
     resolveMove(env, cap, 'sporefall');
     expect(combat.draw.map((c) => c.id)).toEqual(['status_tangle', 'status_tangle']);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(12);
     expect(computeIntent(state, cap, 'gill_lash')).toMatchObject({ damage: 4, hits: 3 });
     combat.hand.push(combat.draw.pop()!);
     combat.discard.push(combat.draw.pop()!);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(12);
     combat.exhaust.push(combat.hand.pop()!);
     cap.intent = computeIntent(state, cap, 'cap_crush');
     refreshIntents(env);
-    expect(cap.intent.damage).toBe(9);
+    expect(cap.intent.damage).toBe(11);
     expect(hits(resolveMove(env, cap, 'gill_lash'), cap.uid)).toEqual(Array.from({ length: 3 }, () => expect.objectContaining({ amount: 3 })));
     resolveMove(env, cap, 'hunker');
     expect(cap.block).toBe(14);
     expect(combat.discard).toHaveLength(2);
-    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(10);
+    expect(computeIntent(state, cap, 'cap_crush').damage).toBe(12);
   });
 
   it('Titan escalates Clamp Block, exposes its underbelly mid-volley, and Rot ignores its shell', () => {
@@ -501,7 +505,22 @@ describe('Act 1 mechanics and custom effects', () => {
     expect(titan.statuses.rot).toBe(4);
     resolveMove(env, titan, 'grind');
     expect(titan.block).toBe(0);
-    expect(computeIntent(state, titan, 'clamp')).toMatchObject({ damage: 6, hits: 1 });
+    // v2: Clamp's snap grows +2 per use with the shell (8, 10, 12, 14, then 16 after four Clamps).
+    expect(computeIntent(state, titan, 'clamp')).toMatchObject({ damage: 16, hits: 1 });
+    expect(renderMoveText(state, titan.uid, 'clamp')).toBe('Gain 32 Block (+4 each use). Deal 16 damage (+2 each use).');
+  });
+
+  it('Spore Dust never stacks your Stagger past 2 (the v1 Spore Cluster soft-lock)', () => {
+    const { state, combat, env } = sandbox('enc_a1_spore_cluster');
+    const puff = firstEnemy(combat);
+    expect(renderMoveText(state, puff.uid, 'dust')).toBe('Apply 2 Stagger to you, unless you already have 2 or more.');
+    resolveMove(env, puff, 'dust');
+    expect(combat.player.statuses.stagger).toBe(2);
+    resolveMove(env, puff, 'dust');
+    expect(combat.player.statuses.stagger).toBe(2);
+    combat.player.statuses.stagger = 1;
+    resolveMove(env, puff, 'dust');
+    expect(combat.player.statuses.stagger).toBe(3);
   });
 
   it('all three named custom functions have been exercised by move tests', () => {

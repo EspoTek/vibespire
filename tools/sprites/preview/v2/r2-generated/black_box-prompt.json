@@ -1,0 +1,6 @@
+{
+  "id": "black_box",
+  "prompt": "Use case: illustration-story. Asset type ONE 32x24 Sega Master System colourless card illustration, shown enlarged with crisp square logical pixels. Subject black_box: One squat steel flight-recorder box in three-quarter view, broad dark grey front plane, silver top plane, two large cyan horizontal data bands and a thick metal carrying handle. Solid rectangular case. Center ONE clear physical subject occupying around 25x19 of the 32x24 logical canvas; strong silhouette at native size. Large simple shapes, flat 2–3 tone shading, no texture noise. Grey steel #555555/#AAAAAA/#FFFFFF covers most of the object, restrained brass #AA5500/#FFAA00, one red or cyan functional accent as described. Max ten SMS colours on exact channels 00/55/AA/FF, one logical pixel black contour, upper-left light. Phantasy Star/Ys modeled game item style with broad clean planes. No speckles, isolated pixels, checkerboard, dithering, stipple, antialiasing, rubble, miniature scenery, text, labels or glow. Transparent background.",
+  "tool": "built-in image_gen",
+  "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-080acdf5-67bb-41d9-a789-8aeaaf4697fd.png"
+}

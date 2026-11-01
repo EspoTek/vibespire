@@ -20,7 +20,8 @@
 //   Then tick/decay 'end_enemy_turn', round end -> next player turn.
 
 import { getClassDef, getEncounterDef, getEnemyDef } from '../content';
-import { canPlayCard, cardDef, drawCards, exhaustCards, findCombatCard, getCardCost, hasKeyword, runCardHook, takeFrom } from './cards';
+import { capHit } from './caps';
+import { canPlayCard, cardDef, drawCards, exhaustCards, findCombatCard, getCardCost, hasKeyword, runCardHook, runRepeatResolution, takeFrom } from './cards';
 import { emit, enqueue, livingEnemies, requireCombat, stacksOf, type Env } from './core';
 import { effectItems } from './ctx';
 import { FLEE_MOVE } from './damage';
@@ -32,7 +33,7 @@ import { finishCombatWin } from './run';
 import { applyStatus, decayEntity, decayPhase, dispatch, guardDecayLoss, keptBlock, playerRule, setStatusStacks, tickEntity, tickPhase } from './statuses';
 import { addToTimeline, dueEntrySteps, resolveEntry } from './timeline';
 import { TUNING } from './tuning';
-import type { Action, CardInstance, CombatKind, CombatState, Effect, EncounterId, EntityRef, EffectFrame, EventId, QueueItem, RunState, TurnStep } from './types';
+import type { Action, CardInstance, CardPlayedInfo, CombatKind, CombatState, Effect, EncounterId, EntityRef, EffectFrame, EventId, QueueItem, RepriseInfo, RunState, TurnStep } from './types';
 
 const step = (s: TurnStep): QueueItem => ({ kind: 'step', step: s });
 
@@ -53,7 +54,7 @@ function combatCopy(c: CardInstance): CardInstance {
 }
 
 /** Per-turn engine counters (GDD §3), reset at player turn start step 3. */
-const PER_TURN_COUNTERS = ['primedByEffect', 'bonusEnergy', 'toHand', 'effectDraw', 'advance', 'pruneAway', 'plays', 'bestCardDamage', 'curCardUid', 'curCardDmg', 'beatOffset'];
+const PER_TURN_COUNTERS = ['primedByEffect', 'bonusEnergy', 'toHand', 'effectDraw', 'advance', 'pruneAway', 'plays', 'bestCardDamage', 'curCardUid', 'curCardDmg', 'beatOffset', 'recurs', 'delayEligible'];
 
 function effectiveStats(state: RunState): { maxEnergy: number; drawPerTurn: number; handLimit: number } {
   const cls = getClassDef(state.classId);
@@ -128,11 +129,13 @@ function resetDefence(env: Env, ref: EntityRef): void {
   const e = ref === 'player' ? null : c.enemies.find((x) => x.uid === ref);
   if (ref !== 'player' && !e) throw new Error(`no enemy ${ref}`);
   const block = e ? e.block : c.player.block;
+  let blockLost = 0;
   if (block > 0) {
     const keep = keptBlock(env.state, ref, block);
     if (keep !== block) {
       if (e) e.block = keep;
       else c.player.block = keep;
+      blockLost = block - keep;
       emit(env, { t: 'block_lost', target: ref, amount: block - keep });
     }
   }
@@ -146,6 +149,8 @@ function resetDefence(env: Env, ref: EntityRef): void {
       dispatch(env, 'onGuardDecay', ref, { lost });
     }
   }
+  // Shared v2 H9 (Bulwark Rivets): after the Guard halving, so Guard gained from it is not halved.
+  if (ref === 'player' && blockLost > 0) dispatch(env, 'onBlockReset', 'player', { lost: blockLost });
 }
 
 function applyCombatStartTraits(env: Env): void {
@@ -193,6 +198,13 @@ export function combatStep(env: Env, st: TurnStep): void {
       const before = c.energy;
       c.energy = c.maxEnergy;
       if (c.energy !== before) emit(env, { t: 'energy', delta: c.energy - before, now: c.energy });
+      // Next-turn bank (effects.ts bankNextTurn): banked energy lands on top of the refill, outside cap_bonus_energy.
+      const bankedEnergy = c.counters.bankEnergy ?? 0;
+      delete c.counters.bankEnergy;
+      if (bankedEnergy > 0) {
+        c.energy += bankedEnergy;
+        emit(env, { t: 'energy', delta: bankedEnergy, now: c.energy });
+      }
       for (const k of PER_TURN_COUNTERS) delete c.counters[k];
       c.cardsPlayedThisTurn = [];
       c.attacksPlayedThisTurn = 0;
@@ -213,7 +225,7 @@ export function combatStep(env: Env, st: TurnStep): void {
       enqueue(env, dueEntrySteps(env));
       return;
     case 'timeline_entry':
-      resolveEntry(env, st.seq);
+      resolveEntry(env, st.seq, st.batch ?? 1);
       return;
     case 'player_draw': {
       let n = c.drawPerTurn;
@@ -221,17 +233,23 @@ export function combatStep(env: Env, st: TurnStep): void {
         const innateOnTop = c.draw.filter((card) => hasKeyword(cardDef(card), 'innate')).length;
         n = Math.max(n, innateOnTop);
       }
+      // Next-turn bank: banked cards come with the turn-start draw (not effect draws, so not cap_draw).
+      n += c.counters.bankDraw ?? 0;
+      delete c.counters.bankDraw;
       drawCards(env, n, false);
       return;
     }
     case 'player_turn_end': {
       emit(env, { t: 'turn_end' });
+      // Shared v2 (RULINGS 63): from here to the enemy phase, Salvage draw / energy go to the next-turn bank.
+      c.counters.turnEnding = 1;
       dispatch(env, 'onTurnEnd', 'player', {});
       enqueue(env, [
         step({ op: 'tick', phase: 'end_player_turn' }),
         step({ op: 'own_tick', who: 'player' }),
         step({ op: 'prime' }),
         step({ op: 'hand_end_of_turn' }),
+        step({ op: 'hand_end_relics' }),
         step({ op: 'discard_hand' }),
         step({ op: 'decay', phase: 'end_player_turn' }),
         step({ op: 'own_decay', who: 'player' }),
@@ -262,13 +280,26 @@ export function combatStep(env: Env, st: TurnStep): void {
     case 'hand_end_of_turn':
       for (const card of [...c.hand]) runCardHook(env, card, 'onTurnEndInHand');
       return;
+    case 'hand_end_relics':
+      // Shared v2 H6 (Triage Locker, Gravity Loom).
+      dispatch(env, 'onHandEndOfTurn', 'player', {});
+      return;
+    case 'reprise_card':
+      repriseCard(env, st);
+      return;
+    case 'repeat_resolution':
+      runRepeatResolution(env, st);
+      return;
     case 'discard_hand': {
       const ethereal: number[] = [];
       const discard: CardInstance[] = [];
       const retained: CardInstance[] = [];
       for (const card of c.hand) {
         const def = cardDef(card);
-        if (hasKeyword(def, 'retain')) retained.push(card);
+        // Shared v2 Triage: chosen cards are kept this turn (flag set by the triage effect, cleared here).
+        const triaged = c.counters[triageKeepKey(card.uid)] === 1;
+        if (triaged) delete c.counters[triageKeepKey(card.uid)];
+        if (hasKeyword(def, 'retain') || triaged) retained.push(card);
         else if (hasKeyword(def, 'ethereal')) ethereal.push(card.uid);
         else discard.push(card);
       }
@@ -281,6 +312,7 @@ export function combatStep(env: Env, st: TurnStep): void {
     }
     case 'enemy_phase': {
       c.turnPhase = 'enemy';
+      delete c.counters.turnEnding;
       emit(env, { t: 'enemy_turn_start' });
       const items: QueueItem[] = [];
       for (const e of livingEnemies(c)) {
@@ -315,6 +347,7 @@ export function combatStep(env: Env, st: TurnStep): void {
       if (stacksOf(s, e.uid, STATUS_HALTED) > 0) {
         emit(env, { t: 'text', text: `${getEnemyDef(e.id).name} is halted.` });
         setStatusStacks(env, e.uid, STATUS_HALTED, 0);
+        dispatch(env, 'onMoveSkipped', 'player', { uid: e.uid });
         return;
       }
       const def = getEnemyDef(e.id);
@@ -347,6 +380,7 @@ export function combatStep(env: Env, st: TurnStep): void {
       if (!e.alive) return; // its attack_cancelled was emitted when it died mid-declaration
       if (cancelled) {
         emit(env, { t: 'attack_cancelled', uid: e.uid });
+        dispatch(env, 'onAttackCancelled', 'player', { uid: e.uid });
         return;
       }
       const moveId = e.moveHistory[e.moveHistory.length - 1];
@@ -437,7 +471,10 @@ function resolvePlay(env: Env, card: CardInstance, target: number | null, cost: 
   const s = env.state;
   const c = requireCombat(s, 'resolvePlay');
   const def = cardDef(card);
-  const x = cost === 'X' && !free ? c.energy : 0;
+  // Shared v2 H3: an X-cost card adds your Reserve to X and empties it.
+  const reserve = cost === 'X' && !free ? stacksOf(s, 'player', STATUS_RESERVE) : 0;
+  if (reserve > 0) setStatusStacks(env, 'player', STATUS_RESERVE, 0);
+  const x = cost === 'X' && !free ? c.energy + reserve : 0;
   const spend = free ? 0 : cost === 'X' ? c.energy : cost;
   if (spend > 0) {
     c.energy -= spend;
@@ -446,19 +483,92 @@ function resolvePlay(env: Env, card: CardInstance, target: number | null, cost: 
   if (!free && typeof def.cost === 'number' && typeof cost === 'number' && cost < def.cost) c.reducedThisTurn.push(card.uid);
   c.counters.plays = (c.counters.plays ?? 0) + 1;
   let onBeat = false;
+  let beatIndex = 0;
   if (depth <= TUNING.caps.playDepth) {
     const beat = nextBeat(s);
     c.cardsPlayedThisTurn.push(card.id);
     onBeat = beat.onBeat;
+    // Chronist v2 Crescendo: which beat this is (1st, 2nd, ...), scale 'beat_index'.
+    if (onBeat) beatIndex = beat.positions.indexOf(beat.count) + 1;
   }
   c.inPlay.push(card);
   emit(env, target === null ? { t: 'card_played', uid: card.uid, cardId: card.id, onBeat } : { t: 'card_played', uid: card.uid, cardId: card.id, target, onBeat });
   c.cardsPlayedThisCombat += 1;
   c.counters.curCardUid = card.uid;
   c.counters.curCardDmg = 0;
-  dispatch(env, 'onCardPlayed', 'global', { card, def, target, onBeat, depth }, target, onBeat);
-  enqueue(env, effectItems(def.effects, { src: { kind: 'card', uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player', target, x, onBeat, depth }));
-  enqueue(env, [{ kind: 'finish_card', uid: card.uid, target, via: 'play', onBeat, depth, x }]);
+  const info = { card, def, target, onBeat, depth, x };
+  dispatch(env, 'onCardPlayed', 'global', info, target, onBeat);
+  // Shared v2 H7 (Cracked Hourglass): the play's effects may go onto the Timeline instead.
+  const delayTurns = playDelayTurns(env, info, free);
+  if (delayTurns > 0) {
+    enqueue(env, [{ kind: 'finish_card', uid: card.uid, target, via: 'play', onBeat, depth, x, beatIndex, delayPlay: delayTurns }]);
+    return;
+  }
+  const frame = { src: { kind: 'card' as const, uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player' as const, target, x, onBeat, depth, beatIndex };
+  // A hand play already passed canPlayCard (Shards included). A free play (autoplay) is a non-play
+  // resolution: RULINGS 73, it pays its Shard cost when it starts or is skipped.
+  if (free) enqueue(env, [step({ op: 'repeat_resolution', uid: card.uid, list: 'effects', frame, why: 'the autoplay' })]);
+  else enqueue(env, effectItems(def.effects, frame));
+  // Shared v2 H4 Reprise: the effects resolve a second time (never more: RULINGS 65).
+  if (hasReprise(env, { ...info, costPaid: spend, handEmpty: c.hand.length === 0 })) {
+    enqueue(env, [step({ op: 'reprise_card', uid: card.uid, target, x, onBeat, depth, beatIndex })]);
+  }
+  enqueue(env, [{ kind: 'finish_card', uid: card.uid, target, via: 'play', onBeat, depth, x, beatIndex }]);
+}
+
+export const STATUS_RESERVE = 'reserve';
+export const STATUS_REPRISE = 'reprise';
+
+/** counters key: Triage chose this hand card to keep this turn. */
+export function triageKeepKey(uid: number): string {
+  return `triage:keep:${uid}`;
+}
+
+/** H4: a relic grants Reprise, or a Reprise status stack is used (only when no relic granted it). */
+function hasReprise(env: Env, info: RepriseInfo): boolean {
+  const s = env.state;
+  if (TUNING.caps.reprise < 2) return false;
+  const byRule = playerRule(s, false, (m, ctx, a) => a || (m.grantsReprise ? m.grantsReprise(ctx, info) : false), false);
+  if (byRule) return true;
+  const stacks = stacksOf(s, 'player', STATUS_REPRISE);
+  if (stacks <= 0) return false;
+  setStatusStacks(env, 'player', STATUS_REPRISE, stacks - 1);
+  return true;
+}
+
+/** H7: Delay for a play's effects (0 = now). Only non-Power, non-Delay cards played from hand. */
+function playDelayTurns(env: Env, info: CardPlayedInfo, free: boolean): number {
+  const s = env.state;
+  const c = requireCombat(s, 'delayPlay');
+  if (free || info.depth !== 0 || info.def.type === 'power' || info.def.delay) return 0;
+  const index = c.counters.delayEligible ?? 0; // no eligible play yet this turn = 0
+  c.counters.delayEligible = index + 1;
+  const turns = playerRule(s, 0, (m, ctx, a) => Math.max(a, m.delayPlay ? m.delayPlay(ctx, info, index) : 0), false);
+  if (turns <= 0) return 0;
+  if (c.timeline.length >= TUNING.caps.timeline) {
+    capHit(env, 'cap_timeline');
+    return 0;
+  }
+  return Math.min(turns, TUNING.caps.delayMax);
+}
+
+/** H4: the second resolution of a played card (same frame; a dead target becomes the leftmost living enemy). */
+function repriseCard(env: Env, st: Extract<TurnStep, { op: 'reprise_card' }>): void {
+  const s = env.state;
+  const c = requireCombat(s, 'reprise');
+  if (c.outcome !== null) return;
+  const card = findCombatCard(c, st.uid);
+  if (!card) throw new Error(`reprise: card ${st.uid} is nowhere in combat`);
+  let target = st.target;
+  if (typeof target === 'number' && !c.enemies.some((e) => e.uid === target && e.alive)) {
+    const left = livingEnemies(c)[0];
+    if (!left) return;
+    target = left.uid;
+  }
+  emit(env, { t: 'reprise', cardUid: card.uid });
+  emit(env, { t: 'text', text: `${cardDef(card).name}: Reprise.` });
+  // RULINGS 66: the second resolution pays the Shard cost again, or is skipped.
+  runRepeatResolution(env, { uid: card.uid, list: 'effects', why: 'Reprise', frame: { src: { kind: 'card', uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player', target, x: st.x, onBeat: st.onBeat, depth: st.depth, beatIndex: st.beatIndex } });
 }
 
 /** autoplay effect: play the top card of the draw pile / a random hand card for free at depth + 1. */
@@ -525,18 +635,47 @@ export function finishCardItem(env: Env, item: Extract<QueueItem, { kind: 'finis
     return;
   }
   if (item.via === 'timeline') {
-    toPile();
+    // Chronist v2 H8 (Eternal Return): a non-Scrap card may go back on the Timeline instead of its pile.
+    // Exempt from cap_relay (that rule only gates playing a resolved card again).
+    const recurs = c.counters.recurs ?? 0;
+    const again =
+      inPlay && c.outcome === null && !hasKeyword(def, 'exhaust')
+        ? playerRule<number | null>(s, null, (m, ctx, a) => (a === null && m.recurDelay ? m.recurDelay(ctx, card, recurs) : a), false)
+        : null;
+    // Shared v2 H22 (Perpetual Calendar): a card that would be discarded goes to the bottom of the draw pile.
+    const dest = inPlay && again === null && c.outcome === null && !hasKeyword(def, 'exhaust')
+      ? playerRule<'draw_bottom' | null>(s, null, (m, ctx, a) => (a === null && m.timelineDestination ? m.timelineDestination(ctx, card) : a), false)
+      : null;
+    if (again !== null && c.timeline.length < TUNING.caps.timeline) {
+      takeFrom(c.inPlay, card.uid, 'in play');
+      c.counters.recurs = recurs + 1;
+      const opts = { turns: again, scheduled: item.scheduled === true, ...(item.beatIndex !== undefined ? { beatIndex: item.beatIndex } : {}) };
+      if (!addToTimeline(env, card, item.target, item.x, item.onBeat, opts)) throw new Error('recur: Timeline full after the cap check');
+    } else if (dest === 'draw_bottom') {
+      c.draw.unshift(takeFrom(c.inPlay, card.uid, 'in play'));
+      emit(env, { t: 'text', text: `${def.name} goes to the bottom of your draw pile.` });
+    } else toPile();
     if (c.counters.curCardUid === card.uid) delete c.counters.curCardUid;
-    dispatch(env, 'onDelayResolved', 'player', { card });
+    // Total Eclipse (H7): a card that resolved twice fires onDelayResolved twice.
+    const runs = item.runs ?? 1;
+    for (let r = 0; r < runs; r++) dispatch(env, 'onDelayResolved', 'player', { card, batch: item.batch ?? 1 });
     return;
   }
   // via 'play'
   if (!inPlay) {
     // moved itself: nothing to place
+  } else if (item.delayPlay !== undefined) {
+    // Shared v2 H7: its effects wait on the Timeline (a scheduled entry). The play itself counted.
+    takeFrom(c.inPlay, card.uid, 'in play');
+    const opts = { turns: item.delayPlay, scheduled: true, ...(item.beatIndex !== undefined ? { beatIndex: item.beatIndex } : {}) };
+    if (!addToTimeline(env, card, item.target, item.x, item.onBeat, opts)) {
+      c.discard.push(card);
+      emit(env, { t: 'discard', uids: [card.uid] });
+    }
   } else if (def.type === 'power') takeFrom(c.inPlay, card.uid, 'in play');
   else if (def.delay) {
     takeFrom(c.inPlay, card.uid, 'in play');
-    if (!addToTimeline(env, card, item.target, item.x, item.onBeat)) {
+    if (!addToTimeline(env, card, item.target, item.x, item.onBeat, item.beatIndex !== undefined ? { beatIndex: item.beatIndex } : {})) {
       c.discard.push(card);
       emit(env, { t: 'discard', uids: [card.uid] });
     }
@@ -546,7 +685,7 @@ export function finishCardItem(env: Env, item: Extract<QueueItem, { kind: 'finis
     c.attacksPlayedThisTurn += 1;
     if (c.outcome === null && getClassDef(env.state.classId).onslaughtFromAttacks === true) applyStatus(env, 'player', STATUS_ONSLAUGHT, TUNING.onslaught.perAttack);
   }
-  dispatch(env, 'afterCardPlayed', 'global', { card, def, target: item.target, onBeat: item.onBeat, depth: item.depth }, item.target, item.onBeat);
+  dispatch(env, 'afterCardPlayed', 'global', { card, def, target: item.target, onBeat: item.onBeat, depth: item.depth, x: item.x }, item.target, item.onBeat);
 }
 
 export function endTurn(env: Env): void {

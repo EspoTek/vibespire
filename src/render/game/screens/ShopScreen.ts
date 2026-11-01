@@ -4,8 +4,9 @@
  * 1 Shard + gold; each enabled per legalActions), and LEAVE. Focusing an item shows its detail.
  */
 import { getPotionDef, getRelicDef } from '../../../content/index.ts';
-import { renderPotionText, renderRelicText, type GameEvent, type ShopItem } from '../../../engine/index.ts';
+import type { GameEvent, ShopItem } from '../../../engine/index.ts';
 import type { App } from '../../app.ts';
+import { Juice } from '../../fx/juice.ts';
 import { fonts } from '../../fonts.ts';
 import { rect, W } from '../../layout.ts';
 import { C } from '../../palette.ts';
@@ -16,7 +17,8 @@ import { Panel } from '../../ui/Panel.ts';
 import { Tooltip } from '../../ui/Tooltip.ts';
 import { Z, type Widget } from '../../ui/Widget.ts';
 import { openDeckView } from '../deckView.ts';
-import { CardDetail } from '../overlays.ts';
+import { CardDetail, UpgradeToggle } from '../overlays.ts';
+import { potionHint, relicHint } from '../explain.ts';
 import { RunScreen } from '../RunScreen.ts';
 import type { RunSession } from '../session.ts';
 import { cardFace, itemIcon } from '../view.ts';
@@ -26,10 +28,14 @@ export class ShopScreen extends RunScreen {
   private content: Widget[] = [];
   private detail!: CardDetail;
   private tip!: Tooltip;
+  /** VIEW UPGRADE: shelf cards shown upgraded. */
+  private upgradeView = false;
 
-  constructor(app: App, session: RunSession) { super(app, session, 'shop', 'shop_interior'); }
+  private readonly juice: Juice;
 
-  protected build(): void { this.draw(); }
+  constructor(app: App, session: RunSession) { super(app, session, 'shop', 'shop_interior'); this.juice = new Juice(app, this.root); }
+
+  protected build(): void { this.draw(); this.tips.offer('shop'); }
 
   /** Price under an item; `sale` only exists on shelf cards (relics and potions are never on sale). */
   private priceLabel(it: ShopItem<string>, sale: boolean, x: number, y: number, parent: Widget): void {
@@ -53,17 +59,30 @@ export class ShopScreen extends RunScreen {
     this.content.push(this.tip);
     const n = sh.cards.length;
     const x0 = Math.floor((W - (n * 70 - 6)) / 2);
+    const frames: CardFrame[] = [];
+    const priceNote = (it: ShopItem<string> & { sale: boolean }) => (it.sold ? '[grey]SOLD[/]' : `[yellow]${it.price} GOLD[/]${it.sale ? '  [lime]SALE[/]' : ''}`);
     sh.cards.forEach((it, i) => {
       const a = this.session.findOrNull('shop_buy', (x) => x.kind === 'card' && x.index === i);
-      const cw = shelf.addChild(new CardFrame(x0 + i * 70, 56, cardFace(this.app, { id: it.id, upgraded: it.upgraded }, { state: this.state }), i), 5);
+      const cw = shelf.addChild(new CardFrame(x0 + i * 70, 56, cardFace(this.app, { id: it.id, upgraded: it.upgraded }, { state: this.state, upgradePreview: this.upgradeView }), i), 5);
       cw.liftOnFocus = false;
       cw.list = { key: 'shop-cards', index: i, axis: 'x', wrap: false };
       cw.setDimmed(it.sold || a === null);
-      cw.onFocus = () => this.detail.show(cw.cardFace, it.sold ? '[grey]SOLD[/]' : `[yellow]${it.price} GOLD[/]${it.sale ? '  [lime]SALE[/]' : ''}`);
+      frames.push(cw);
+      cw.onFocus = () => this.detail.show(cw.cardFace, priceNote(it), [cw.ringRect()]);
       cw.onBlur = () => this.detail.hide();
       cw.onActivate = () => this.buy(a, it.sold);
       this.priceLabel(it, it.sale, x0 + i * 70 + 32, 146, shelf);
     });
+    // VIEW UPGRADE (STS checkbox), bottom right beside LEAVE (after the cards in reading order, so the cards get first focus)
+    shelf.addChild(new UpgradeToggle(this.app, this, W - 224, 326, (on) => {
+      this.upgradeView = on;
+      sh.cards.forEach((it, i) => {
+        const cw = frames[i];
+        if (!cw) throw new Error(`shop: no frame for card ${i}`);
+        cw.setFace(cardFace(this.app, { id: it.id, upgraded: it.upgraded }, { state: this.state, upgradePreview: on }), i);
+        if (cw.focused) this.detail.show(cw.cardFace, priceNote(it), [cw.ringRect()]);
+      });
+    }, this.upgradeView), 6);
     const goods = this.add(new Panel(rect(14, 160, W - 238, 92), { title: 'RELICS & POTIONS' }));
     goods.setZ(Z.PANEL);
     this.content.push(goods);
@@ -74,7 +93,6 @@ export class ShopScreen extends RunScreen {
     ];
     items.forEach(({ kind, it, index }, k) => {
       const name = kind === 'relic' ? getRelicDef(it.id).name : getPotionDef(it.id).name;
-      const text = kind === 'relic' ? renderRelicText(it.id, this.state) : renderPotionText(it.id, this.state);
       const a = this.session.findOrNull('shop_buy', (x) => x.kind === kind && x.index === index);
       const bx = 22 + k * (boxW + 4);
       const row = goods.addChild(new ChoiceRow(rect(bx, 179, boxW, 51), {
@@ -82,8 +100,8 @@ export class ShopScreen extends RunScreen {
         reason: it.sold ? 'SOLD' : a ? null : this.state.player.gold < it.price ? 'NO GOLD' : 'BELT FULL',
       }), 3);
       row.list = { key: 'shop-goods', index: k, axis: 'x', wrap: false };
-      row.onFocus = () => this.tip.show(row.rect, `[${kind === 'relic' ? 'cyan' : 'magenta'}]${name.toUpperCase()}[/]\n${text}\n[yellow]${it.price} GOLD[/]`, 'above');
-      row.onBlur = () => this.tip.hide();
+      // InfoLayer shows it (with keyword boxes) on focus / hover
+      row.hint = `${kind === 'relic' ? relicHint(it.id, this.state, null) : potionHint(it.id, this.state, false)}\n[yellow]${it.price} GOLD[/]`;
       row.onActivate = () => this.buy(a, it.sold);
       this.priceLabel(it, false, bx + boxW / 2, 233, goods);
     });
@@ -131,5 +149,11 @@ export class ShopScreen extends RunScreen {
     });
   }
 
-  protected refresh(_e: readonly GameEvent[]): void { this.app.sfx.play('confirm'); this.draw(); }
+  protected refresh(e: readonly GameEvent[]): void {
+    // a purchase: the till chime, and coins fly off the gold readout
+    const spent = e.some((x) => x.t === 'gold' && x.delta < 0);
+    this.app.sfx.play(spent ? 'purchase' : 'confirm');
+    if (spent) this.juice.particles.burst(112, 24, { n: 10, colors: [C.yellow, C.amber, C.white], shapes: ['px2', 'plus'], speed: [40, 110], angle: Math.PI / 2, spread: 2.2, gravity: 260, life: [300, 550] });
+    this.draw();
+  }
 }

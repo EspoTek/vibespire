@@ -14,10 +14,11 @@ import { Backdrop } from '../ui/Backdrop.ts';
 import { Label } from '../ui/Label.ts';
 import { ListMenu } from '../ui/ListMenu.ts';
 import { Z } from '../ui/Widget.ts';
-import { openOptions } from '../game/overlays.ts';
+import { noticeDialog, openOptions } from '../game/overlays.ts';
 import { screenFor } from '../game/router.ts';
 import { ClassSelectScreen } from '../game/screens/ClassSelectScreen.ts';
-import { RunSession } from '../game/session.ts';
+import { INCOMPATIBLE_SAVE_TEXT, RunSession } from '../game/session.ts';
+import { CompendiumScreen } from './CompendiumScreen.ts';
 import { GalleryScreen } from './GalleryScreen.ts';
 import { Screen } from './Screen.ts';
 import type { SongName } from '../music.ts';
@@ -40,6 +41,7 @@ export class TitleScreen extends Screen {
     const items = [
       { label: 'NEW RUN', onActivate: () => { void this.app.screens.push(new ClassSelectScreen(this.app)); } },
       { label: 'CONTINUE', enabled: RunSession.hasSave(app.storage), onActivate: () => this.continueRun() },
+      { label: 'COMPENDIUM', onActivate: () => { void this.app.screens.push(new CompendiumScreen(this.app)); } },
       { label: 'GALLERY', onActivate: () => { void this.app.screens.push(new GalleryScreen(this.app)); } },
       { label: 'OPTIONS', onActivate: () => openOptions(this, this.app) },
     ];
@@ -51,7 +53,11 @@ export class TitleScreen extends Screen {
     this.prompt = this.add(new Label(W - 6, H - 10, '', { font: fonts.small, align: 'right', color: C.textMuted, outline: C.black, markup: true }));
   }
 
-  override enter(): void { this.focus.ensureFocus(); }
+  override enter(): void {
+    this.focus.ensureFocus();
+    // an old build's save is found here, before CONTINUE is offered: discard it and say why
+    if (RunSession.hasSave(this.app.storage) && RunSession.open(this.app.storage).kind === 'incompatible') this.tellIncompatible();
+  }
 
   /** Back from a run / class select: CONTINUE follows the save. */
   override resume(): void {
@@ -60,10 +66,19 @@ export class TitleScreen extends Screen {
   }
 
   private continueRun(): void {
-    const session = RunSession.loadOrNull(this.app.storage);
-    if (!session) { this.app.toasts.show('NO SAVED RUN'); this.resume(); return; }
+    const slot = RunSession.open(this.app.storage);
+    if (slot.kind === 'incompatible') { this.tellIncompatible(); return; }
+    if (slot.kind === 'none') { this.app.toasts.show('NO SAVED RUN'); this.resume(); return; }
+    const session = slot.session;
     console.info(`[run] continue: seed ${session.state.seed}, phase ${session.state.phase}, floor ${session.state.floor}`);
     void this.app.screens.push(screenFor(this.app, session));
+  }
+
+  /** An old save was found and discarded (RunSession.open): say so; CONTINUE goes grey. */
+  private tellIncompatible(): void {
+    this.menu.row(1).setEnabled(false);
+    this.focus.focus(this.menu.row(0));
+    noticeDialog(this, 'SAVED RUN', INCOMPATIBLE_SAVE_TEXT);
   }
 
   override update(): void {

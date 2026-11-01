@@ -1,0 +1,5953 @@
+{
+  "cards": [
+    {
+      "id": "afterpeal",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "almanac",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "anneal",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "answering_steel",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "anvil_heart",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "appointed_hour",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "arc_lattice",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "balance_wheel",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "ballast_lock",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "banked_hours",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "barb_flick",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "batten_down",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "bind_the_blade",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "blightcap",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "brace",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "breach_hammer",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "breakwater",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "bulwark",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "burl_wall",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "canker_bite",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "canopy_crush",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "carillon",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "catch_blade",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "chain_driver",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "chitin_cocoon",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "chitin_ram",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "choking_spores",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "cinder_heart",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "clean_manifest",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original blade over golden scroll retained; two stray warm shades consolidated."
+    },
+    {
+      "id": "coiled_strike",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "confluence",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "cool_the_steel",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "counterweight",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "crossed_blades",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "crystal_graft",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "culmination",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "cutting_torch",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "dead_reckoning",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "death_cap",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Large cap is clear, but its uniform violet face and regular spots remain flat. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "decomposer",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "deep_graft",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "detent",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "downbeat",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "dusk_pruning",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "en_garde",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "endless_maul",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "ephemeris",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "escapement",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "excise",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin grey implement and violet roots disappear at 1\u00d7; cut is unclear."
+    },
+    {
+      "id": "fault_beacon",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "fault_line",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "fault_reader",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "feint_step",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "fermata",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "find_the_seam",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "forge_oath",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "fungal_aegis",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "gauntlet_tap",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "gear_train",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "glance_ahead",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "graft_hide",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "grafting_cut",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "grav_clamp",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "gyro_jammer",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original gimbal, axle, brass hub and blue/cyan rim retained; six violet shadow pixels become navy."
+    },
+    {
+      "id": "hairline_mark",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original chisel, branching red fissure and shaded plate retained; one warm highlight consolidated."
+    },
+    {
+      "id": "hammerfall",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "hasten",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "heartwood_spear",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Readable spear has a simpler shaft and leaf head than the organic cards. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "heave_to",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "hew",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "hivestrike",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "humus_rite",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "husk",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "hyphal_web",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "iron_avalanche",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "iron_rhythm",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "jackhammer",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "jettison_pod",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original nested pod ribs, canopy, core and facets retained; one stray slate shade consolidated."
+    },
+    {
+      "id": "knell",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "lash",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "leaf_litter",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "lighthouse",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "living_hedge",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "loaded_spring",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "logbook",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "mainspring",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "mark_the_lull",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "medbay_voucher",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "miasma_sweep",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "mire_carapace",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "mirror_tether",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "mulch_maul",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "noon_gun",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "overdraft_cell",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "overhand_drive",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "parallax",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "parry_ledger",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "patient_thorn",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "perpetual_motion",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pinion_jab",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "piston_jab",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "piston_volley",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pivot_sweep",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "planted_feet",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "plate_ram",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pollen_sting",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "polyrhythm",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "portents",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "prism_edge",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "prism_resonance",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "prism_thorn",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "propagate",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "puffball",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pulse_shot",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "quake_hammer",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "quarter_chime",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "quench",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "quickening_sap",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "rampart_crash",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "reactive_plate",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "read_the_blow",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Large blue hand plane has less modelling than the nearby gauntlet art. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "read_the_line",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        3
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        3
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original brass calipers over a shaded blue blade retained; one pink handle pixel becomes warm brass highlight."
+    },
+    {
+      "id": "reaping_vine",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "recoil_spring",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "reef_the_sails",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "relay_ping",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "return_stroke",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "ride_the_surge",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "ripening_rot",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "rivet_flurry",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "rivet_wall",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "root_mesh",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "sabre_rattle",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "salvage_kiln",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "salvage_kit",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original open case, trays, cables and small fittings retained; three near-duplicate cyan highlights consolidated."
+    },
+    {
+      "id": "sap_drip",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "sap_shell",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "seam_ripper",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "second_hand",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "seed_bite",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "seed_rain",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "seen_it_coming",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shard_cache",
+      "before": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Untouched legacy chest has broad flat panels beside the detailed colourless machinery. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "shardfall",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shear",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "shed_husk",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shed_plating",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shoulder_check",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "slack_water",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "smouldering_core",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "snare_line",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original shaded coil, links and brass end weights retained; one lavender fleck joins the pale-cyan ramp."
+    },
+    {
+      "id": "spore_haze",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "spore_lash",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "sporeburst",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "spring_tide",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "star_survey",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "star_tithe",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "steal_the_swing",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Thin or crowded steel forms; bronze/violet overtake the steel/red identity."
+    },
+    {
+      "id": "storm_glass",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "storm_warning",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "stress_fracture",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original fractured plates, yellow fault and wear retained; two isolated off-ramp pixels consolidated."
+    },
+    {
+      "id": "striking_train",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "sweep_hand",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "syzygy",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "tendril_reach",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "thicket_crash",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "thorn_halo",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "thornwhirl",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "thresher",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "thresher_arc",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Dark crescent competes with the axe instead of describing a sweep."
+    },
+    {
+      "id": "tick",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "tide_table",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "tock",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Abstract timing motif or thin pointer; reduce small internal detail."
+    },
+    {
+      "id": "toll_the_hours",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "tourbillon",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original open cage, brass balance, inner mechanism and rim glints retained; seven saturated-blue/violet shadow specks become navy."
+    },
+    {
+      "id": "transplant",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "turn_the_tide",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "twin_thorn",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "upbeat",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "uproot",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "vent_pressure",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "verdant_tide",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "ward",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "watch_bell",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "weather_eye",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "wind_forward",
+      "before": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Untouched legacy winding key is unusually smooth and emblem-like. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "windblown_seed",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine roots, strands or overlapping anatomy; cyan/brown compete with green/violet."
+    },
+    {
+      "id": "zenith",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    }
+  ],
+  "relics": [
+    {
+      "id": "ascendant_prism",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "bastion_core",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "binding_contract",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original rolled parchment, folds, ribbon and red seal retained; three olive flecks and one right-edge fold repaired."
+    },
+    {
+      "id": "bulwark_rivets",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original three shaded rivet heads and shafts retained; six violet/grey flecks join the warm material ramp."
+    },
+    {
+      "id": "chain_wraps",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "chrono_lens",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "compost_heap",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "concussion_rig",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "cracked_hourglass",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "cracked_prism",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "crowd_breaker",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "crown_fragment",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "crystal_spine",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Cyan spine has fewer small facets than the crystal family. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "dampener_coil",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "duelists_oath",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "elder_seed",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "engine_tooth",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small bronze zigzag does not describe a mechanical gear tooth."
+    },
+    {
+      "id": "exposed_core",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "field_dressing",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original folded cloth, warm crease shading and red binding retained; one dark cloth pixel closes a pinhole."
+    },
+    {
+      "id": "fixed_star",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "fracture_engine",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "geode_heart",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "ghost_lantern",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "glass_spurs",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        3,
+        4,
+        3,
+        3
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Flat boot/spur planes have less material modelling than the crystal relics. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "grafting_knife",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Long clean blade has less material texture than the older tools. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "gravity_loom",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original carved uprights, three cyan warps, gold rail and shaded feet retained; two dark upright pixels close gaps."
+    },
+    {
+      "id": "hairline_saw",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Broad saw face and regular teeth are more geometric than the older metalwork. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "heartseed",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "heartwood_ring",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original irregular bark, leaf knots and ring hole retained; two dark connector pixels close pinholes."
+    },
+    {
+      "id": "heavy_heart",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Solid heart reads clearly, but its grey face is plainer than neighbouring amulets. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "hollow_bough",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Broad forked branch is readable but smoother and less textured than the wood family. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "kept_fury",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "metronome_heart",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "mycelial_net",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        3,
+        4,
+        3,
+        3
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Orthogonal net and bright corner blocks remain diagram-like. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "notched_buckler",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "nursery_tray",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Repeated stems and plain tray edge are sparse beside the richer seed relics. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "offbeat_drum",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "oracle_pebble",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "overwatch_drone",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "paradox_coil",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original two shaded loops and brass joint retained; two rim pixels restore a broken dark-blue arc."
+    },
+    {
+      "id": "parry_charm",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    },
+    {
+      "id": "plague_bloom",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pocket_star_chart",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pollen_sac",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    },
+    {
+      "id": "practice_dummy",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "prophet_glass",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "riven_gauntlet",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "rot_censer",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "sandglass_bead",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "scrap_magnet",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "seed_pouch",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "seers_veil",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shard_crucible",
+      "before": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        3,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original irregular shards, vessel, feet and sparks retained; three local rim pixels restore cup continuity."
+    },
+    {
+      "id": "shard_debt",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shard_lens",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shard_writ",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "slow_temper",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "star_atlas",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "star_pip",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "stasis_engine",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "stim_patch",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "stormbreak_gem",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    },
+    {
+      "id": "surveyor_ink",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "tally_stick",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    },
+    {
+      "id": "tender_plating",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        3,
+        4,
+        3,
+        3
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Red plates retain shallow two-tone shading and little wear. Score floor 3; retained under do-no-harm rule."
+    },
+    {
+      "id": "timeline_clamp",
+      "before": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        3,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original: original form/ramps/texture retained; see per-pixel evidence in ui-review.md",
+      "reason": "Original jaw bevels, screw/tail, cyan caps and metal highlights retained; two stray teal shades consolidated."
+    },
+    {
+      "id": "timeline_spool",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "tuning_fork",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "vial_rack",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "void_compass",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "wayfinder_needle",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    },
+    {
+      "id": "wild_growth",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Small interior, fragile stroke or crowded silhouette; simplify and centre at 16px."
+    }
+  ],
+  "potions": [
+    {
+      "id": "pot_bastion_tonic",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_blight_vial",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_charge_cell",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_concussion_gas",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_fault_dust",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_flare_cell",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_fury_draught",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Bottle mark is ambiguous or too small; distinguish effect with a large symbol."
+    },
+    {
+      "id": "pot_growth_sap",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_halt_ampoule",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Bottle mark is ambiguous or too small; distinguish effect with a large symbol."
+    },
+    {
+      "id": "pot_mending_ampoule",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Bottle mark is ambiguous or too small; distinguish effect with a large symbol."
+    },
+    {
+      "id": "pot_quicksilver",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_rewind_phial",
+      "before": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Gold mark reads as a plus; backward arrow is lost."
+    },
+    {
+      "id": "pot_seers_draught",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Bottle mark is ambiguous or too small; distinguish effect with a large symbol."
+    },
+    {
+      "id": "pot_shard_tincture",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_shield_gel",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "pot_tempo_draught",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        3
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Bottle mark is ambiguous or too small; distinguish effect with a large symbol."
+    }
+  ],
+  "backdrops": [
+    {
+      "id": "act1_verdant",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "act2_foundry",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "act3_crown",
+      "before": [
+        5,
+        4,
+        3,
+        3,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Fine floor grid and crystal microdetail differ from the broad forest/foundry clusters."
+    },
+    {
+      "id": "event_generic",
+      "before": [
+        5,
+        3,
+        3,
+        3,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": true,
+      "density": "\u2265 original floor structure: original joints plus two distant courses; accepted quiet walls held",
+      "reason": "Accepted quiet room retained; original lower floor joints recovered in black on navy, with two distant courses and four aligned perspective joints."
+    },
+    {
+      "id": "rest_site",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    },
+    {
+      "id": "shop_interior",
+      "before": [
+        5,
+        4,
+        3,
+        3,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": true,
+      "revised": false,
+      "density": "Held: lead accepted round one; no round-two replacement",
+      "reason": "Coarse furniture and clipped top jars; density differs from other locations."
+    },
+    {
+      "id": "title_spire",
+      "before": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "after": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "selected": false,
+      "revised": false,
+      "density": "Unchanged original",
+      "reason": "Retain: readable established house silhouette and palette."
+    }
+  ]
+}

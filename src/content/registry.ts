@@ -86,6 +86,18 @@ export function registerPack(pack: ContentPack, tag = 'real'): void {
   add(restOptions, pack.restOptions, tag);
 }
 
+export type DefKind = 'class' | 'card' | 'relic' | 'enemy' | 'encounter' | 'event' | 'potion' | 'status' | 'boon' | 'rest option';
+
+/**
+ * Whether `id` names a registered definition of `kind`. "No" is an expected answer here: save
+ * validation asks it about ids from older builds (removed cards, relics, statuses...) before loading.
+ * Gameplay code uses the throwing get*Def lookups.
+ */
+export function isRegisteredId(kind: DefKind, id: string): boolean {
+  const reg: Registry<{ id: string }> = ({ class: classes, card: cards, relic: relics, enemy: enemies, encounter: encounters, event: events, potion: potions, status: statuses, boon: boons, 'rest option': restOptions } as const)[kind];
+  return Object.prototype.hasOwnProperty.call(reg.byId, id);
+}
+
 export function getClassDef(id: string): ClassDef {
   return get(classes, id);
 }
@@ -109,6 +121,9 @@ export function getCardDef(id: CardId, upgraded = false): CardDef {
   if (riposte) merged.riposte = riposte;
   const delay = u.delay ?? base.delay;
   if (delay) merged.delay = delay;
+  // An upgrade's Salvage replaces the base one (CardDef.upgrade allowed it, but it was never merged).
+  const salvage = u.salvage ?? base.salvage;
+  if (salvage) merged.salvage = salvage;
   const kw = u.keywords ?? base.keywords;
   if (kw) merged.keywords = kw;
   upgradedCache[id] = merged;

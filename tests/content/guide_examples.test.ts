@@ -8,6 +8,7 @@ import { hashString, nextU32 } from '../../src/engine/rng';
 import { randomPolicy } from '../../sim/policies/random';
 import { combatOf, eventsOf, play, sandbox, setHand } from '../engine/helpers';
 import * as ex from './guide_examples';
+import { answerChoice } from '../answer-choice';
 
 beforeAll(() => {
   registerPack({
@@ -89,7 +90,9 @@ describe('CONTENT_GUIDE examples', () => {
     const p = Game.newRun('ex-pact', 'test_class');
     p.state.startChoices = [{ id: 'ex_pact_lean_start' }];
     p.apply({ type: 'choose_start_boon', index: 0 });
-    p.apply(p.legalActions()[0] as Action);
+    const pc = p.state.pendingChoice;
+    if (!pc) throw new Error('the pact should ask which cards to remove');
+    answerChoice(p, pc.choices.slice(0, pc.min));
     expect(p.state.player.deck).toHaveLength(10);
     expect(p.state.player.gold).toBe(0);
   });

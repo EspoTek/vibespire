@@ -29,10 +29,20 @@ import { enqueue, makeEnv, type Env } from '../../src/engine/core';
 import { addToDeck } from '../../src/engine/deck';
 import { newFloorRecord } from '../../src/engine/history';
 import { gainRelic } from '../../src/engine/items';
-import { drain } from '../../src/engine/queue';
+import { choiceStep, drain } from '../../src/engine/queue';
 import { generateReward } from '../../src/engine/run';
 import { dispatch } from '../../src/engine/statuses';
 import { combatOf, enemyUids, eventsOf, pacify, play, setHand } from '../engine/helpers';
+import { registerPack } from '../../src/content/registry';
+import { answerChoice } from '../answer-choice';
+
+// Twin Scabbard adds a random non-starter Riposte card of your class; the test class has none, so this
+// file registers one (pack tag 'test' so the restricted test listings see it).
+registerPack({
+  cards: [{ id: 'test_shared_riposte', name: 'Test Counter', cls: 'test_class', type: 'skill', rarity: 'common', cost: 1, target: 'self', keywords: ['riposte'],
+    text: 'Gain {block} Block. Riposte: deal {rdamage} damage to the attacker.', effects: [{ type: 'block', amount: 3 }],
+    riposte: [{ type: 'damage', amount: 3, target: 'attacker', key: 'rdamage' }], upgrade: {}, icon: 'card_parry' }],
+}, 'test');
 
 // ---------------------------------------------------------------------------
 // Expected roster (GDD §5)
@@ -40,31 +50,41 @@ import { combatOf, enemyUids, eventsOf, pacify, play, setHand } from '../engine/
 const IDS: Record<RelicDef['rarity'], string[]> = {
   starter: ['riven_gauntlet', 'heartseed', 'chrono_lens'],
   common: [
-    'glass_spurs', 'dampener_coil', 'cracked_prism', 'geode_heart', 'bulwark_rivets', 'stim_patch', 'scrap_magnet', 'surveyor_ink', 'field_dressing',
+    'glass_spurs', 'dampener_coil', 'cracked_prism', 'geode_heart', 'bulwark_rivets', 'scrap_magnet', 'surveyor_ink', 'field_dressing',
     'tally_stick', 'notched_buckler', 'chain_wraps', 'seed_pouch', 'pollen_sac', 'compost_heap', 'tuning_fork', 'sandglass_bead', 'star_pip',
+    'spare_fuse', 'antenna_wire', 'slag_bucket', 'storm_lantern',
   ],
   uncommon: [
-    'parry_charm', 'kept_fury', 'crowd_breaker', 'concussion_rig', 'slow_temper', 'pocket_star_chart', 'overwatch_drone', 'shard_lens', 'crystal_spine',
+    'parry_charm', 'kept_fury', 'crowd_breaker', 'concussion_rig', 'slow_temper', 'shard_lens',
     'hairline_saw', 'wayfinder_needle', 'rot_censer', 'grafting_knife', 'heartwood_ring', 'mycelial_net', 'offbeat_drum', 'timeline_spool', 'seers_veil',
+    'scar_engine', 'static_choir', 'whetstone', 'ash_wick', 'overture_engine', 'blood_rivets', 'blood_mulch', 'borrowed_time', 'coal_scuttle',
+    'husk_sac', 'reapers_sickle', 'astrolabe',
   ],
   rare: [
     'duelists_oath', 'stormbreak_gem', 'bastion_core', 'elder_seed', 'hollow_bough', 'plague_bloom', 'metronome_heart', 'prophet_glass', 'paradox_coil',
     'shard_crucible', 'fracture_engine', 'void_compass',
+    'reserve_coil', 'echo_bell', 'undertow_reliquary', 'kickback_governor', 'orbital_hammer', 'momentum_flywheel', 'refrain_pin', 'twin_scabbard',
+    'recoil_coil', 'trellis', 'festering_lens', 'conductors_baton',
   ],
   boss: [
     'binding_contract', 'cracked_hourglass', 'exposed_core', 'stasis_engine', 'ghost_lantern', 'tender_plating', 'fixed_star', 'heavy_heart', 'wild_growth',
-    'ascendant_prism', 'gravity_loom', 'star_atlas',
+    'ascendant_prism', 'gravity_loom', 'triage_locker', 'wanderers_compact', 'furnace_mantle', 'perpetual_calendar',
   ],
-  shop: ['shard_writ', 'vial_rack', 'practice_dummy', 'nursery_tray', 'timeline_clamp'],
+  shop: ['shard_writ', 'vial_rack', 'practice_dummy', 'nursery_tray', 'timeline_clamp', 'salvagers_licence'],
   event: ['oracle_pebble', 'engine_tooth', 'shard_debt', 'crown_fragment'],
 };
+/** docs/v2/shared-design.md §3 after the RULINGS 60 trim: 101 relics. */
+const RELIC_COUNT = 100; // Phase C: Crystal Spine merged into Shard Loupe
 
 const CLASS_LOCKED: Record<string, string[]> = {
-  breaker: ['riven_gauntlet', 'notched_buckler', 'chain_wraps', 'parry_charm', 'kept_fury', 'crowd_breaker', 'duelists_oath', 'stormbreak_gem', 'bastion_core', 'heavy_heart', 'practice_dummy'],
-  graft: ['heartseed', 'seed_pouch', 'pollen_sac', 'compost_heap', 'rot_censer', 'grafting_knife', 'heartwood_ring', 'mycelial_net', 'elder_seed', 'hollow_bough', 'plague_bloom', 'wild_growth', 'nursery_tray'],
-  chronist: ['chrono_lens', 'tuning_fork', 'sandglass_bead', 'star_pip', 'offbeat_drum', 'timeline_spool', 'seers_veil', 'metronome_heart', 'prophet_glass', 'paradox_coil', 'fixed_star', 'timeline_clamp'],
+  breaker: ['riven_gauntlet', 'notched_buckler', 'chain_wraps', 'parry_charm', 'kept_fury', 'crowd_breaker', 'duelists_oath', 'stormbreak_gem', 'bastion_core', 'heavy_heart', 'practice_dummy',
+    'slag_bucket', 'blood_rivets', 'coal_scuttle', 'momentum_flywheel', 'twin_scabbard', 'furnace_mantle'],
+  graft: ['heartseed', 'seed_pouch', 'pollen_sac', 'compost_heap', 'rot_censer', 'grafting_knife', 'heartwood_ring', 'mycelial_net', 'elder_seed', 'hollow_bough', 'plague_bloom', 'wild_growth', 'nursery_tray',
+    'blood_mulch', 'husk_sac', 'reapers_sickle', 'trellis', 'festering_lens'],
+  chronist: ['chrono_lens', 'tuning_fork', 'sandglass_bead', 'star_pip', 'offbeat_drum', 'timeline_spool', 'seers_veil', 'metronome_heart', 'prophet_glass', 'paradox_coil', 'fixed_star', 'timeline_clamp',
+    'storm_lantern', 'borrowed_time', 'astrolabe', 'refrain_pin', 'conductors_baton', 'perpetual_calendar'],
 };
-const NOT_CHRONIST = ['pocket_star_chart', 'star_atlas', 'oracle_pebble'];
+const NOT_CHRONIST = ['oracle_pebble', 'exposed_core'];
 
 // ---------------------------------------------------------------------------
 // Sandbox helpers
@@ -90,8 +110,11 @@ function settle(g: Game): void {
   for (let i = 0; i < 30; i++) {
     const pc = g.state.phase === 'combat' ? g.state.combat?.pendingChoice : g.state.pendingChoice;
     if (!pc) return;
-    const answers = g.legalActions().filter((a): a is Extract<Action, { type: 'resolve_choice' }> => a.type === 'resolve_choice');
-    const pick = answers.find((a) => a.uids.length > 0) ?? answers[0];
+    const legal = g.legalActions();
+    const answers = legal.filter((a): a is Extract<Action, { type: 'resolve_choice' }> => a.type === 'resolve_choice');
+    // Multi-pick choices: toggle picks until a non-empty answer (or the minimum) is resolvable.
+    const toggle = legal.find((a) => a.type === 'choice_toggle');
+    const pick = answers.find((a) => a.uids.length > 0) ?? (toggle && answers.every((a) => a.uids.length === 0) && pc.max > 0 && 'picked' in pc && pc.picked.length === 0 ? toggle : answers[0]) ?? toggle;
     if (!pick) throw new Error(`no answer for "${pc.prompt}"`);
     g.apply(pick);
   }
@@ -150,6 +173,12 @@ function hand(g: Game): CardInstance[] {
   return combatOf(g).hand;
 }
 
+/** Ruling 72: Scrap can't take the combat deck below 8, so Scrap tests pad the draw pile first. */
+function padDraw(g: Game, n = 10): void {
+  const c = combatOf(g);
+  for (let i = 0; i < n; i++) c.draw.push(makeCard(g.state, 'test_block'));
+}
+
 function uidOf(g: Game, id: string, nth = 0): number {
   const c = hand(g).filter((x) => x.id === id)[nth];
   if (!c) throw new Error(`no ${id} #${nth} in hand`);
@@ -189,12 +218,15 @@ function winCombat(g: Game): GameEvent[] {
     e.block = 0;
     e.guard = 0;
   }
-  setHand(g, living.map(() => 'test_strike'));
+  // One spare Strike: Cracked Hourglass Delays the turn's first play.
+  setHand(g, [...living.map(() => 'test_strike'), 'test_strike']);
   c.energy = 10;
   let ev: GameEvent[] = [];
-  for (const e of living) {
-    const s = uidOf(g, 'test_strike');
-    ev = [...ev, ...play(g, s, e.uid)];
+  for (let i = 0; i <= living.length && g.state.phase === 'combat' && c.enemies.some((e) => e.alive); i++) {
+    const e = c.enemies.find((x) => x.alive);
+    if (!e) break;
+    ev = [...ev, ...play(g, uidOf(g, 'test_strike'), e.uid)];
+    settle(g);
   }
   settle(g);
   return ev;
@@ -228,10 +260,10 @@ function restIndex(g: Game, id: string): number {
 // Roster
 
 describe('relic roster', () => {
-  it('has the 72 GDD relics, by rarity, all registered', () => {
-    expect(RELICS).toHaveLength(72);
+  it('has the v2 relic roster, by rarity, all registered', () => {
+    expect(RELICS).toHaveLength(RELIC_COUNT);
     for (const [rarity, ids] of Object.entries(IDS)) expect(RELICS.filter((r) => r.rarity === rarity).map((r) => r.id)).toEqual(ids);
-    expect(Object.values(IDS).flat()).toHaveLength(72);
+    expect(Object.values(IDS).flat()).toHaveLength(RELIC_COUNT);
     for (const r of RELICS) expect(getRelicDef(r.id)).toBe(r);
   });
 
@@ -273,10 +305,11 @@ describe('relic roster', () => {
       for (const text of [renderRelicText(r.id), renderRelicText(r.id, g.state), renderRelicText(r.id, map.state)]) expect(text, r.id).not.toMatch(/[{}]/);
     }
     for (const s of RELIC_STATUSES) for (const n of [1, 2]) expect(renderStatusText(s.id, n)).not.toMatch(/[{}]/);
-    expect(renderRelicText('bulwark_rivets')).toBe('Whenever you gain Guard, gain 1 more.');
+    expect(renderRelicText('bulwark_rivets')).toBe('At the start of your turn, gain Guard equal to 50% of the Block you lose (round down).');
+    expect(renderRelicText('triage_locker')).toBe('At the end of your turn, choose up to 2 cards in your hand to keep. Scrap the rest of your hand.');
     expect(renderRelicText('riven_gauntlet')).toBe('Whenever one of your Riposte effects triggers, gain 1 Onslaught and 2 Guard.');
-    expect(renderRelicText('metronome_heart')).toBe('The 12th card you play each turn is also on the beat.');
-    expect(renderRelicText('fixed_star')).toBe('+1 energy each turn. Only the 3rd card you play each turn is on the beat.');
+    expect(renderRelicText('metronome_heart')).toBe('Your first beat each turn comes sooner: the 2nd card you play is on the beat instead of the 3rd.');
+    expect(renderRelicText('fixed_star')).toBe("+1 energy each turn. At the end of your turn, if your beat count isn't on a beat, Strain 2.");
     expect(renderRelicText('geode_heart')).toBe('At the start of each combat, gain 1 Block per Shard you hold (max 10).');
     expect(renderRelicText('wild_growth')).toBe('Prune grants 1 additional Bloom. At the start of each combat, shuffle 2 Tangles into your draw pile.');
     expect(renderRelicText('shard_debt')).toBe('When you pick this up, gain 3 Shards. Your next 3 card rewards offer one fewer card.');
@@ -360,7 +393,7 @@ function tour(id: string): void {
   play(g, uidOf(g, 'test_graft'));
   const prune = pending(g);
   expect(prune?.resume.op).toBe('prune_scrap');
-  g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_burn')] });
+  answerChoice(g, [uidOf(g, 'test_burn')]);
   settle(g);
   play(g, uidOf(g, 'test_twin'), b);
   fx(g, [{ type: 'status', target: 'target', id: 'rot', amount: 4 }], a);
@@ -370,10 +403,31 @@ function tour(id: string): void {
   combatOf(g).energy = 3;
   play(g, uidOf(g, 'test_whirl')); // X = 3: every enemy hit 3 times by one play
   settle(g);
+  // Shared v2 hooks: Strain, Shed, Harvest, a shuffle with a non-empty Scrapheap, a Crescendo amount on the beat.
+  fx(g, [{ type: 'strain', amount: 2 }, { type: 'shed', n: 2, effects: [] }]);
+  fx(g, [{ type: 'harvest', mult: 1, target: 'target' }], a);
+  settle(g);
+  {
+    const c = combatOf(g);
+    c.discard.push(...c.draw.splice(0));
+    fx(g, [{ type: 'draw', n: 1 }]);
+    withEnv(g, (env) => enqueue(env, [{ kind: 'effect', effect: { type: 'block', amount: { scale: 'beat_index' } }, frame: { src: { kind: 'system' }, self: 'player', target: null, x: 0, onBeat: true, beatIndex: 1 } }]));
+  }
+  settle(g);
   endTurn(g); // prime, enemy attacks (Riposte), then turn 2 start (Guard decay, Timeline)
   settle(g);
   expect(g.state.phase).toBe('combat');
-  winCombat(g);
+  // Turn 2: Halt the Slime (a skipped move) and let a primed Parry kill the Jaw mid-declaration (a cancelled attack).
+  if (enemyAt(g, 0).alive && enemyAt(g, 1).alive) {
+    fx(g, [{ type: 'halt_enemy', target: 'target' }], b);
+    enemyAt(g, 0).hp = 1;
+    enemyAt(g, 0).block = 0;
+    enemyAt(g, 0).guard = 0;
+    setHand(g, ['test_parry']);
+    endTurn(g);
+    settle(g);
+  }
+  if (g.state.phase === 'combat') winCombat(g);
 
   // --- reward: gold, then skip (or take a card when skipping is not allowed)
   expect(g.state.phase).toBe('reward');
@@ -513,20 +567,6 @@ describe('common relics', () => {
     expect(combatOf(g).player.block).toBe(4);
   });
 
-  it('bulwark_rivets: +1 Guard on every Guard gain', () => {
-    const { g } = arena({ relics: ['bulwark_rivets'] });
-    setHand(g, ['test_brace']);
-    play(g, uidOf(g, 'test_brace'));
-    expect(combatOf(g).player.guard).toBe(7);
-  });
-
-  it('stim_patch: using a potion gains 4 Guard', () => {
-    const { g } = arena({ relics: ['stim_patch'] });
-    g.state.player.potions = ['pot_bastion_tonic'];
-    g.apply({ type: 'use_potion', index: 0 });
-    expect(combatOf(g).player.guard).toBe(14);
-  });
-
   it('scrap_magnet: a Status card drawn or put into hand gains 3 Guard; other cards do not', () => {
     const { g } = arena({ relics: ['scrap_magnet'] });
     fx(g, [{ type: 'add_card', card: 'test_burn', to: 'hand' }]);
@@ -543,15 +583,6 @@ describe('common relics', () => {
     expect(eventsOf(winCombat(elite), 'gold').map((e) => e.delta)).toEqual([15]);
     const normal = arena({ relics: ['surveyor_ink'] }).g;
     expect(eventsOf(winCombat(normal), 'gold')).toEqual([]);
-  });
-
-  it('field_dressing: heals 8 after an elite or boss win only', () => {
-    for (const [kind, healed] of [['elite', 8], ['boss', 8], ['monster', 0]] as const) {
-      const { g } = arena({ relics: ['field_dressing'], kind, encounter: kind === 'boss' ? 'test_enc_boss' : 'test_enc_slime' });
-      g.state.player.hp = 100;
-      winCombat(g);
-      expect(g.state.player.hp, kind).toBe(100 + healed);
-    }
   });
 
   it('tally_stick: skipping a card reward makes the next reward offer 4 cards', () => {
@@ -611,10 +642,10 @@ describe('common relics', () => {
     setHand(g, ['test_graft', 'test_strike', 'test_graft', 'test_strike']);
     combatOf(g).energy = 5;
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_strike')] });
+    answerChoice(g, [uidOf(g, 'test_strike')]);
     expect(hand(g)).toHaveLength(4);
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_strike')] });
+    answerChoice(g, [uidOf(g, 'test_strike')]);
     expect(hand(g)).toHaveLength(2);
   });
 
@@ -641,14 +672,14 @@ describe('common relics', () => {
     expect(combatOf(g).timeline.map((e) => e.dueTurn)).toEqual([2, 3]);
   });
 
-  it('star_pip: 3 Block per enemy whose next two intents are attacks', () => {
+  it('star_pip: 1 Block per enemy whose next two intents are attacks (Phase D: was 2)', () => {
     const { g } = arena({ relics: ['star_pip'], encounter: 'test_enc_elite' }); // Jaw always attacks; Cultist buffs first, then stabs
-    expect(combatOf(g).player.block).toBe(3);
+    expect(combatOf(g).player.block).toBe(1);
     pacify(g);
     setHand(g, []);
     combatOf(g).player.block = 100;
     endTurn(g);
-    expect(combatOf(g).player.block).toBe(6);
+    expect(combatOf(g).player.block).toBe(2);
   });
 });
 
@@ -705,37 +736,13 @@ describe('uncommon relics', () => {
       return combatOf(g).player.guard;
     };
     expect(run([])).toBe(15);
-    expect(run(['slow_temper'])).toBe(20);
+    expect(run(['slow_temper'])).toBe(20); // 30 loses a third (Phase E: no combat-start Guard)
   });
 
-  it('pocket_star_chart: grants Augury in elite and boss combats only', () => {
-    expect(relicFlashes(arena({ relics: ['pocket_star_chart'], kind: 'elite' }).ev, 'pocket_star_chart')).toBe(1);
-    expect(relicFlashes(arena({ relics: ['pocket_star_chart'], kind: 'boss', encounter: 'test_enc_boss' }).ev, 'pocket_star_chart')).toBe(1);
-    expect(relicFlashes(arena({ relics: ['pocket_star_chart'] }).ev, 'pocket_star_chart')).toBe(0);
-  });
-
-  it('overwatch_drone: 8 damage to the first enemy that attacks, once per combat', () => {
-    const { g } = arena({ relics: ['overwatch_drone'], encounter: 'test_enc_jaw' });
-    pacify(g, 100);
-    setHand(g, []);
-    combatOf(g).player.block = 100;
-    endTurn(g);
-    expect(enemyAt(g, 0).hp).toBe(92);
-    setHand(g, []);
-    combatOf(g).player.block = 100;
-    endTurn(g);
-    expect(enemyAt(g, 0).hp).toBe(92);
-  });
-
-  it('shard_lens: Purge costs 1 Shard', () => {
-    const g = mapRun({ relics: ['shard_lens'] });
-    expect(restOptionShardCost(g.state, getRestOptionDef('rest_purge'))).toBe(1);
-    expect(restOptionShardCost(g.state, getRestOptionDef('rest_transmute'))).toBe(1);
+  it('shard_lens: Purge costs 1 Shard; the first rest-site Transmute each act is free (Crystal Spine merged in)', () => {
     expect(restOptionShardCost(mapRun().state, getRestOptionDef('rest_purge'))).toBe(2);
-  });
-
-  it('crystal_spine: the first rest-site Transmute each act is free', () => {
-    const g = mapRun({ relics: ['crystal_spine'], setup: (s) => (s.player.counters.shards = 5) });
+    const g = mapRun({ relics: ['shard_lens'], setup: (s) => (s.player.counters.shards = 5) });
+    expect(restOptionShardCost(g.state, getRestOptionDef('rest_purge'))).toBe(1);
     const transmute = getRestOptionDef('rest_transmute');
     expect(restOptionShardCost(g.state, transmute)).toBe(0);
     enterRoom(g, 'rest');
@@ -795,10 +802,10 @@ describe('uncommon relics', () => {
     setHand(g, ['test_graft', 'test_burn', 'test_sprout', 'test_graft', 'test_strike']);
     combatOf(g).energy = 5;
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_burn')] });
+    answerChoice(g, [uidOf(g, 'test_burn')]);
     expect(hand(g).find((c) => c.id === 'test_sprout')?.vars?.bloom).toBe(2);
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_strike')] });
+    answerChoice(g, [uidOf(g, 'test_strike')]);
     expect(hand(g).find((c) => c.id === 'test_sprout')?.vars?.bloom).toBe(3);
   });
 
@@ -853,10 +860,6 @@ describe('uncommon relics', () => {
     expect([enemyAt(g, 0).hp, enemyAt(g, 1).hp]).toEqual([50, 37]);
   });
 
-  it("seers_veil: draws 1 when some enemy's intent after next is not an attack", () => {
-    expect(hand(arena({ relics: ['seers_veil'], encounter: 'test_enc_jaw' }).g)).toHaveLength(5);
-    expect(hand(arena({ relics: ['seers_veil'], encounter: 'test_enc_elite_mystic' }).g)).toHaveLength(6); // Mystic's next-but-one is hidden
-  });
 });
 
 describe('rare relics', () => {
@@ -920,13 +923,13 @@ describe('rare relics', () => {
     if (first === undefined || second === undefined) throw new Error('setup');
     combatOf(g).energy = 2;
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [first] });
+    answerChoice(g, [first]);
     expect(pending(g)?.kind).toBe('options');
-    const ev = g.apply({ type: 'resolve_choice', uids: [0] });
+    const ev = answerChoice(g, [0]);
     expect(eventsOf(ev, 'card_removed').map((e) => e.uid)).toEqual([first]);
     expect(g.state.player.deck).toHaveLength(deckSize - 1);
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [second] });
+    answerChoice(g, [second]);
     expect(pending(g)).toBeNull();
     expect(g.state.player.deck).toHaveLength(deckSize - 1);
   });
@@ -948,8 +951,9 @@ describe('rare relics', () => {
       combatOf(g).cardsPlayedThisTurn = Array.from({ length: played }, () => 'test_strike');
       return nextBeat(g.state).onBeat;
     };
-    expect([at([], 11), at(['metronome_heart'], 11), at(['metronome_heart'], 8)]).toEqual([false, true, true]);
-    expect([at(['fixed_star'], 2), at(['fixed_star'], 5), at(['fixed_star'], 8)]).toEqual([true, false, false]);
+    expect([at([], 1), at([], 2), at(['metronome_heart'], 1), at(['metronome_heart'], 2), at(['metronome_heart'], 5)]).toEqual([false, true, true, false, true]);
+    // RULINGS 68: Fixed Star no longer changes the beat positions.
+    expect([at(['fixed_star'], 2), at(['fixed_star'], 5), at(['fixed_star'], 8)]).toEqual([true, true, true]);
   });
 
   it('prophet_glass: forecasts reach 3 intents', () => {
@@ -967,7 +971,7 @@ describe('rare relics', () => {
     combatOf(g).player.block = 100;
     endTurn(g);
     expect(pending(g)?.prompt).toMatch(/Paradox Coil/);
-    g.apply({ type: 'resolve_choice', uids: [0] });
+    answerChoice(g, [0]);
     expect(combatOf(g).timeline.map((e) => [e.card.uid, e.dueTurn])).toEqual([[tock, 4]]);
     for (let i = 0; i < 2; i++) {
       setHand(g, []);
@@ -1000,7 +1004,7 @@ describe('rare relics', () => {
       return eventsOf(play(g, uidOf(g, 'test_strike'), firstEnemy(g)), 'damage')[0]?.amount;
     };
     expect(run([])).toBe(8);
-    expect(run(['fracture_engine'])).toBe(10);
+    expect(run(['fracture_engine'])).toBe(10); // Phase E: no arrival Exposed; 2 stacks at 2 each (1 each without it)
   });
 
   it('void_compass: an elite card reward is one common, one uncommon, one rare', () => {
@@ -1021,19 +1025,20 @@ describe('boss relics (bonus and drawback)', () => {
     expect(legal.some((a) => a.type === 'proceed')).toBe(false);
   });
 
-  it('cracked_hourglass: +1 energy; enemies act before your first turn', () => {
-    const { g, ev } = arena({ relics: ['cracked_hourglass'], encounter: 'test_enc_jaw' });
-    const firstMove = ev.findIndex((e) => e.t === 'enemy_move');
-    const firstTurn = ev.findIndex((e) => e.t === 'turn_start');
-    expect(firstMove).toBeGreaterThanOrEqual(0);
-    expect(firstMove).toBeLessThan(firstTurn);
-    expect(combatOf(g).energy).toBe(4);
-  });
-
-  it('exposed_core: +1 energy; start with 4 Exposed', () => {
+  it('exposed_core: +1 energy; 1 Exposed per card left in hand at turn end (Phase C)', () => {
     const { g } = arena({ relics: ['exposed_core'] });
     expect(combatOf(g).energy).toBe(4);
-    expect(combatOf(g).player.statuses.exposed).toBe(4);
+    expect(combatOf(g).player.statuses.exposed).toBeUndefined();
+    pacify(g);
+    combatOf(g).player.block = 100;
+    setHand(g, ['test_strike', 'test_strike', 'test_retainer']);
+    const ev = endTurn(g);
+    // 2 non-Keep cards left, the first is free (Phase D)
+    expect(eventsOf(ev, 'status').filter((e) => e.target === 'player' && e.status === 'exposed' && e.delta > 0).map((e) => e.delta)).toEqual([1]);
+  });
+
+  it('heavy_heart: no extra energy (Phase D)', () => {
+    expect(combatOf(arena({ relics: ['heavy_heart'] }).g).energy).toBe(3);
   });
 
   it('stasis_engine: +1 energy; draw 1 fewer', () => {
@@ -1066,15 +1071,32 @@ describe('boss relics (bonus and drawback)', () => {
     expect(combatOf(arena({ relics: ['fixed_star'] }).g).energy).toBe(4);
   });
 
-  it('heavy_heart: Onslaught halves instead of resetting; nothing is primed', () => {
+  it('heavy_heart: Onslaught halves instead of resetting; Riposte still primes; Guard is lost at turn start (Phase D)', () => {
     const { g } = arena({ relics: ['heavy_heart'], encounter: 'test_enc_jaw' });
     pacify(g);
-    fx(g, [{ type: 'status', target: 'self', id: 'onslaught', amount: 5 }]);
+    fx(g, [{ type: 'status', target: 'self', id: 'onslaught', amount: 5 }, { type: 'guard', amount: 10 }]);
     setHand(g, ['test_parry']);
     combatOf(g).player.block = 100;
     const ev = endTurn(g);
-    expect(eventsOf(ev, 'card_primed')).toEqual([]);
+    expect(eventsOf(ev, 'card_primed')).toHaveLength(1);
     expect(combatOf(g).player.statuses.onslaught).toBe(2);
+    expect(combatOf(g).player.guard).toBe(0);
+  });
+
+  it('fixed_star: +1 energy; a turn that ends off the beat Strains 2, one that ends on it does not (Phase D)', () => {
+    const { g } = arena({ relics: ['fixed_star'] });
+    pacify(g);
+    combatOf(g).player.block = 100;
+    setHand(g, []);
+    endTurn(g); // 0 cards played: off the beat
+    expect(g.state.player.hp).toBe(298);
+    setHand(g, ['test_beat', 'test_beat', 'test_beat']);
+    const t = firstEnemy(g);
+    for (let i = 0; i < 3; i++) play(g, uidOf(g, 'test_beat'), t);
+    combatOf(g).player.block = 100;
+    setHand(g, []);
+    endTurn(g); // 3 cards: on the beat
+    expect(g.state.player.hp).toBe(298);
   });
 
   it('wild_growth: 2 Tangles join the draw pile; Prune grants 1 more Bloom', () => {
@@ -1083,32 +1105,10 @@ describe('boss relics (bonus and drawback)', () => {
     expect([...c.hand, ...c.draw].filter((x) => x.id === 'status_tangle')).toHaveLength(2);
     setHand(g, ['test_graft', 'test_strike', 'test_sprout']);
     play(g, uidOf(g, 'test_graft'));
-    g.apply({ type: 'resolve_choice', uids: [uidOf(g, 'test_strike')] });
+    answerChoice(g, [uidOf(g, 'test_strike')]);
     expect(hand(g).find((x) => x.id === 'test_sprout')?.vars?.bloom).toBe(2);
   });
 
-  it('ascendant_prism: +4 Shards on pickup; skipping a card reward gives none', () => {
-    const { g } = arena();
-    withEnv(g, (env) => gainRelic(env, 'ascendant_prism'));
-    expect(g.state.player.counters.shards).toBe(4);
-    winCombat(g);
-    g.apply({ type: 'skip_reward', kind: 'card' });
-    expect(g.state.player.counters.shards).toBe(4);
-  });
-
-  it('gravity_loom: draw 7; hand limit 7', () => {
-    const { g } = arena({ relics: ['gravity_loom'] });
-    expect(hand(g)).toHaveLength(7);
-    expect(combatOf(g).handLimit).toBe(7);
-  });
-
-  it('star_atlas: Augury; enemies get 10% more Max HP (round up)', () => {
-    const plain = enemyAt(arena({ seed: 'atlas' }).g, 0).maxHp;
-    const { g, ev } = arena({ seed: 'atlas', relics: ['star_atlas'] });
-    expect(enemyAt(g, 0).maxHp).toBe(Math.ceil((plain * 110) / 100));
-    expect(enemyAt(g, 0).hp).toBe(enemyAt(g, 0).maxHp);
-    expect(relicFlashes(ev, 'star_atlas')).toBeGreaterThan(0);
-  });
 });
 
 describe('shop and event relics', () => {
@@ -1213,5 +1213,424 @@ describe('shop and event relics', () => {
     expect(combatOf(slow).turn).toBe(4);
     winCombat(slow);
     expect(slow.state.player.counters.shards).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Shared v2 (docs/v2/shared-design.md §3): reworks and new relics
+
+describe('shared v2 reworks', () => {
+  it('bulwark_rivets: half the Block lost at your turn start comes back as Guard (after the halving)', () => {
+    const { g } = arena({ relics: ['bulwark_rivets'] });
+    pacify(g);
+    setHand(g, []);
+    combatOf(g).player.block = 30; // more than the enemy hits for
+    endTurn(g);
+    const c = combatOf(g);
+    expect(c.player.block).toBe(0);
+    expect(c.player.guard).toBeGreaterThan(0);
+    const lostEv = eventsOf(endTurn(g), 'block_lost');
+    expect(lostEv).toEqual([]); // nothing left to lose the second time
+  });
+
+  it('field_dressing: after a win, heals half the HP Strained in that combat (round up)', () => {
+    const { g } = arena({ relics: ['field_dressing'] });
+    fx(g, [{ type: 'strain', amount: 5 }]);
+    expect(g.state.player.hp).toBe(295);
+    winCombat(g);
+    expect(g.state.player.hp).toBe(298);
+    const none = arena({ relics: ['field_dressing'] }).g;
+    expect(relicFlashes(winCombat(none), 'field_dressing')).toBe(0);
+  });
+
+  it('seers_veil: the first Goad each turn draws 1', () => {
+    const { g } = arena({ relics: ['seers_veil'] });
+    const t = firstEnemy(g);
+    const before = hand(g).length;
+    fx(g, [{ type: 'status', target: 'target', id: 'goaded', amount: 2 }], t);
+    fx(g, [{ type: 'status', target: 'target', id: 'goaded', amount: 2 }], t);
+    expect(hand(g).length).toBe(before + 1);
+  });
+
+  it('cracked_hourglass: +1 energy; the first non-Power, non-Delay card each turn resolves next turn', () => {
+    const { g } = arena({ relics: ['cracked_hourglass'] });
+    pacify(g);
+    expect(combatOf(g).energy).toBe(4);
+    const t = firstEnemy(g);
+    setHand(g, ['test_strike', 'test_strike']);
+    const hp0 = enemyAt(g, 0).hp;
+    play(g, uidOf(g, 'test_strike'), t);
+    expect(enemyAt(g, 0).hp).toBe(hp0);
+    expect(combatOf(g).timeline.map((e) => e.card.id)).toEqual(['test_strike']);
+    play(g, uidOf(g, 'test_strike'), t);
+    expect(enemyAt(g, 0).hp).toBe(hp0 - 6);
+    combatOf(g).player.block = 100;
+    endTurn(g);
+    expect(enemyAt(g, 0).hp).toBe(hp0 - 12); // the delayed Strike landed at turn start
+  });
+
+  it('ascendant_prism: +1 energy while holding 5+ Shards; Purge and Transmute are blocked', () => {
+    const rich = arena({ relics: ['ascendant_prism'], setup: (s) => { s.player.counters.shards = 5; } }).g;
+    expect(combatOf(rich).energy).toBe(4);
+    const poor = arena({ relics: ['ascendant_prism'], setup: (s) => { s.player.counters.shards = 4; } }).g;
+    expect(combatOf(poor).energy).toBe(3);
+    const g = mapRun({ relics: ['ascendant_prism'], setup: (s) => { s.player.counters.shards = 6; } });
+    enterRoom(g, 'rest');
+    expect(g.legalActions().some((a) => a.type === 'rest_special' && a.index === restIndex(g, 'rest_purge'))).toBe(false);
+  });
+
+
+});
+
+
+describe('Phase E: Gravity Loom draws 1 more every other turn', () => {
+  it('gravity_loom: 6 cards on turns 1 and 2, then 5; nothing is Scrapped (Phase E)', () => {
+    const { g } = arena({ relics: ['gravity_loom'] });
+    pacify(g);
+    padDraw(g, 20);
+    expect(hand(g)).toHaveLength(6);
+    const sizes: number[] = [];
+    for (let t = 0; t < 2; t++) {
+      combatOf(g).player.block = 100;
+      setHand(g, ['test_strike']);
+      expect(eventsOf(endTurn(g), 'exhaust')).toEqual([]);
+      sizes.push(hand(g).length);
+    }
+    expect(sizes).toEqual([6, 5]);
+  });
+});
+
+
+describe('shared v2 relics', () => {
+  it('spare_fuse: a Fuse starts in hand; playing it draws 1 and its Salvage gains 2 Guard', () => {
+    const { g } = arena({ relics: ['spare_fuse'] });
+    expect(hand(g).filter((c) => c.id === 'fuse')).toHaveLength(1);
+    const n = hand(g).length;
+    play(g, uidOf(g, 'fuse'));
+    expect(hand(g).length).toBe(n); // -1 played, +1 drawn
+    expect(combatOf(g).player.guard).toBe(2);
+  });
+
+  it('antenna_wire: playing a Power draws 1', () => {
+    const { g } = arena({ relics: ['antenna_wire'] });
+    setHand(g, ['test_ritual']);
+    play(g, uidOf(g, 'test_ritual'));
+    expect(hand(g)).toHaveLength(1);
+  });
+
+  it('slag_bucket: the first Shed each turn draws 1', () => {
+    const { g } = arena({ relics: ['slag_bucket'] });
+    setHand(g, []);
+    fx(g, [{ type: 'guard', amount: 10 }, { type: 'shed', n: 2, effects: [] }, { type: 'shed', n: 2, effects: [] }]);
+    expect(hand(g)).toHaveLength(1);
+  });
+
+  it('storm_lantern: applying Goad gains 3 Block; the Goad is unchanged (Phase D)', () => {
+    const { g } = arena({ relics: ['storm_lantern'] });
+    const t = firstEnemy(g);
+    fx(g, [{ type: 'status', target: 'target', id: 'goaded', amount: 2 }], t);
+    expect(enemyAt(g, 0).statuses.goaded).toBe(2);
+    expect(combatOf(g).player.block).toBe(3);
+  });
+
+  it('scar_engine / blood_rivets / borrowed_time: Strain payoffs', () => {
+    const { g } = arena({ relics: ['scar_engine', 'blood_rivets'], encounter: 'test_enc_slimes' });
+    fx(g, [{ type: 'strain', amount: 3 }]);
+    expect(combatOf(g).enemies.map((e) => e.statuses.exposed)).toEqual([1, 1]);
+    expect(combatOf(g).player.guard).toBe(6);
+    const t = arena({ relics: ['borrowed_time'] }).g;
+    setHand(t, ['test_tock']);
+    play(t, uidOf(t, 'test_tock'));
+    fx(t, [{ type: 'strain', amount: 1 }]);
+    expect(combatOf(t).timeline).toHaveLength(0); // Advance 1 resolved the Delay 1 card now
+  });
+
+  it('strain never takes you below 1 HP; Strain payoffs see only the HP actually lost', () => {
+    const { g } = arena({ relics: ['blood_rivets'] });
+    g.state.player.hp = 3;
+    fx(g, [{ type: 'strain', amount: 10 }]);
+    expect(g.state.player.hp).toBe(1);
+    expect(combatOf(g).player.guard).toBe(4);
+    expect(combatOf(g).counters.strained).toBe(2);
+    fx(g, [{ type: 'strain', amount: 10 }]);
+    expect(g.state.player.hp).toBe(1);
+    expect(combatOf(g).player.guard).toBe(4);
+  });
+
+  it('blood_mulch: the first Strain each turn grows a Bloom card', () => {
+    const { g } = arena({ relics: ['blood_mulch'] });
+    setHand(g, ['test_sprout']);
+    fx(g, [{ type: 'strain', amount: 1 }, { type: 'strain', amount: 1 }]);
+    expect(hand(g)[0]?.vars?.bloom).toBe(1);
+  });
+
+  it('static_choir: a Status card Scrapped deals 3 to ALL enemies', () => {
+    const { g } = arena({ relics: ['static_choir'], encounter: 'test_enc_slimes' });
+    pacify(g, 100);
+    setHand(g, ['test_burn']);
+    padDraw(g);
+    fx(g, [{ type: 'exhaust', from: 'hand', all: true }]);
+    expect(combatOf(g).enemies.map((e) => e.hp)).toEqual([97, 97]);
+  });
+
+  it('whetstone: Exposed you apply gets 1 more', () => {
+    const { g } = arena({ relics: ['whetstone'] });
+    fx(g, [{ type: 'status', target: 'target', id: 'exposed', amount: 2 }], firstEnemy(g));
+    expect(enemyAt(g, 0).statuses.exposed).toBe(3);
+  });
+
+  it('ash_wick: the 3rd Scrap in a turn gains 1 energy, once', () => {
+    const { g } = arena({ relics: ['ash_wick'] });
+    setHand(g, ['test_strike', 'test_strike', 'test_strike', 'test_strike']);
+    const e0 = combatOf(g).energy;
+    fx(g, [{ type: 'exhaust', from: 'hand', all: true }]);
+    expect(combatOf(g).energy).toBe(e0 + 1);
+  });
+
+  it('overture_engine: the highest-cost Power starts in hand at cost 0 and counts toward the opening hand', () => {
+    const { g } = arena({ relics: ['overture_engine'], deck: [...STRIKES.slice(0, 10), 'test_ritual', 'burn_bright'] });
+    const c = combatOf(g);
+    expect(c.hand).toHaveLength(5);
+    const bb = c.hand.find((x) => x.id === 'burn_bright');
+    expect(bb?.tempCost).toBe(0);
+  });
+
+  it('husk_sac: the first Prune each turn adds a Chaff', () => {
+    const { g } = arena({ relics: ['husk_sac'] });
+    setHand(g, ['test_graft', 'test_strike', 'test_sprout']);
+    play(g, uidOf(g, 'test_graft'));
+    answerChoice(g, [uidOf(g, 'test_strike')]);
+    settle(g);
+    expect(hand(g).filter((x) => x.id === 'chaff')).toHaveLength(1);
+  });
+
+  it("reapers_sickle: a Harvest gains Block equal to half the HP lost", () => {
+    const { g } = arena({ relics: ['reapers_sickle'] });
+    pacify(g, 100);
+    const t = firstEnemy(g);
+    fx(g, [{ type: 'status', target: 'target', id: 'rot', amount: 5 }], t);
+    fx(g, [{ type: 'harvest', mult: 1, target: 'target' }], t);
+    expect(combatOf(g).player.block).toBe(2);
+  });
+
+  it('reserve_coil: unspent energy becomes Reserve; an X card spends it', () => {
+    const { g } = arena({ relics: ['reserve_coil'] });
+    pacify(g);
+    setHand(g, []);
+    combatOf(g).player.block = 100;
+    endTurn(g);
+    expect(combatOf(g).player.statuses.reserve).toBe(3);
+    setHand(g, ['test_whirl']);
+    const ev = play(g, uidOf(g, 'test_whirl'));
+    expect(eventsOf(ev, 'damage').filter((e) => e.source === 'player')).toHaveLength(6); // X = 3 energy + 3 Reserve
+    expect(combatOf(g).player.statuses.reserve).toBeUndefined();
+  });
+
+  it('echo_bell: the last card in hand resolves twice, once per turn', () => {
+    const { g } = arena({ relics: ['echo_bell'] });
+    pacify(g, 100);
+    const t = firstEnemy(g);
+    setHand(g, ['test_strike']);
+    play(g, uidOf(g, 'test_strike'), t);
+    expect(enemyAt(g, 0).hp).toBe(88);
+    setHand(g, ['test_strike']);
+    play(g, uidOf(g, 'test_strike'), t);
+    expect(enemyAt(g, 0).hp).toBe(82);
+  });
+
+  it('orbital_hammer: an X card at X >= 3 resolves twice; never three times with Encore-style Reprise on top', () => {
+    const { g } = arena({ relics: ['orbital_hammer'] });
+    pacify(g);
+    setHand(g, ['test_whirl']);
+    fx(g, [{ type: 'status', target: 'self', id: 'reprise', amount: 1 }]);
+    const ev = play(g, uidOf(g, 'test_whirl'));
+    expect(eventsOf(ev, 'damage').filter((e) => e.source === 'player')).toHaveLength(6);
+    expect(combatOf(g).player.statuses.reprise).toBe(1); // the status was not spent: the relic already granted Reprise
+  });
+
+  it('undertow_reliquary: the first reshuffle also brings the Scrapheap back', () => {
+    const { g } = arena({ relics: ['undertow_reliquary'] });
+    const c = combatOf(g);
+    setHand(g, ['test_strike']);
+    fx(g, [{ type: 'exhaust', from: 'hand', all: true }]);
+    c.discard.push(...c.draw.splice(0));
+    fx(g, [{ type: 'draw', n: 1 }]);
+    expect(c.exhaust).toHaveLength(0);
+  });
+
+  it('kickback_governor: damage Stagger prevents is dealt back to the attacker', () => {
+    const { g } = arena({ relics: ['kickback_governor'] });
+    pacify(g, 100);
+    const slime = enemyAt(g, 0);
+    slime.intent = computeIntent(g.state, slime, 'tackle');
+    fx(g, [{ type: 'status', target: 'target', id: 'stagger', amount: 4 }], slime.uid);
+    setHand(g, []);
+    combatOf(g).player.block = 100;
+    endTurn(g);
+    expect(enemyAt(g, 0).hp).toBe(96);
+  });
+
+  it('recoil_coil: a halted enemy skipping its move gives 1 energy next turn', () => {
+    const { g } = arena({ relics: ['recoil_coil'] });
+    pacify(g);
+    fx(g, [{ type: 'halt_enemy', target: 'target' }], firstEnemy(g));
+    setHand(g, []);
+    endTurn(g);
+    expect(combatOf(g).energy).toBe(4);
+  });
+
+  it('twin_scabbard (Phase D): the first primed card to fire each turn shuffles a random class Riposte card into your draw pile', () => {
+    const { g } = arena({ relics: ['twin_scabbard'], encounter: 'test_enc_jaw_slime' });
+    pacify(g);
+    enemyAt(g, 0).intent = computeIntent(g.state, enemyAt(g, 0), 'flurry');
+    enemyAt(g, 1).intent = computeIntent(g.state, enemyAt(g, 1), 'tackle');
+    combatOf(g).player.statuses.riposte_capacity = 1; // prime 2
+    setHand(g, ['test_parry', 'test_parry']);
+    combatOf(g).player.block = 100;
+    const ev = endTurn(g);
+    expect(eventsOf(ev, 'riposte_triggered')).toHaveLength(2);
+    const c = combatOf(g);
+    const made = [...c.hand, ...c.draw, ...c.discard].filter((x) => x.id === 'test_shared_riposte');
+    expect(made).toHaveLength(1); // once per turn
+  });
+
+  it('wanderers_compact: +1 energy; rewards offer one card per listed class', () => {
+    const { g } = arena({ relics: ['wanderers_compact'] });
+    expect(combatOf(g).energy).toBe(4);
+    winCombat(g);
+    expect(g.state.reward?.cards).toHaveLength(1); // only the test class is listed in tests
+  });
+
+  it('salvagers_licence: an elite reward also offers a colourless card', () => {
+    const { g } = arena({ relics: ['salvagers_licence'], kind: 'elite' });
+    winCombat(g);
+    const cards = g.state.reward?.cards ?? [];
+    expect(cards).toHaveLength(4);
+    expect(getCardDef(cards[3]?.id ?? '').cls).toBe('colorless');
+  });
+
+  it('triage_locker: keep up to 2 hand cards; the rest are Scrapped', () => {
+    const { g } = arena({ relics: ['triage_locker'] });
+    pacify(g);
+    combatOf(g).player.block = 100;
+    setHand(g, ['test_strike', 'test_block', 'test_brace', 'test_sprout']);
+    const keep = [uidOf(g, 'test_block'), uidOf(g, 'test_sprout')];
+    g.apply({ type: 'end_turn' });
+    expect(pending(g)?.resume.op).toBe('triage');
+    // Multi-pick choices are answered step by step (choice_toggle, then resolve_choice).
+    for (let i = 0; i < 10; i++) {
+      const pc = pending(g);
+      if (!pc) break;
+      g.apply(choiceStep(pc, keep));
+    }
+    settle(g);
+    const c = combatOf(g);
+    expect(c.exhaust.map((x) => x.id).sort()).toEqual(['test_brace', 'test_strike']);
+    for (const uid of keep) expect(c.hand.some((x) => x.uid === uid)).toBe(true);
+  });
+
+  it('furnace_mantle: Guard is Shed at turn start instead of halving', () => {
+    const { g } = arena({ relics: ['furnace_mantle'] });
+    pacify(g);
+    expect(combatOf(g).energy).toBe(4);
+    fx(g, [{ type: 'guard', amount: 10 }]);
+    combatOf(g).player.block = 100;
+    setHand(g, []);
+    const ev = endTurn(g);
+    expect(eventsOf(ev, 'guard_shed').map((e) => e.amount)).toEqual([10]);
+    expect(combatOf(g).player.guard).toBe(0);
+  });
+
+  it('perpetual_calendar: a Timeline card goes to the bottom of the draw pile', () => {
+    const { g } = arena({ relics: ['perpetual_calendar'] });
+    pacify(g);
+    setHand(g, ['test_tock']);
+    const uid = uidOf(g, 'test_tock');
+    play(g, uid);
+    combatOf(g).player.block = 100;
+    endTurn(g);
+    const c = combatOf(g);
+    expect(c.discard.some((x) => x.uid === uid)).toBe(false);
+    expect(c.draw.some((x) => x.uid === uid) || c.hand.some((x) => x.uid === uid)).toBe(true);
+  });
+
+  it('conductors_baton: on-beat beat_index amounts count one more beat', () => {
+    const { g } = arena({ relics: ['conductors_baton'] });
+    withEnv(g, (env) => enqueue(env, [{ kind: 'effect', effect: { type: 'block', amount: { scale: 'beat_index' } }, frame: { src: { kind: 'system' }, self: 'player', target: null, x: 0, onBeat: true, beatIndex: 1 } }]));
+    expect(combatOf(g).player.block).toBe(2);
+  });
+});
+
+describe('shared v2 relics (class bridges)', () => {
+  it('momentum_flywheel: an X Attack gives X Onslaught in all (the relic adds X - 1)', () => {
+    const run = (relics: string[]): number => {
+      const { g } = arena({ relics });
+      pacify(g);
+      setHand(g, ['test_whirl']);
+      combatOf(g).energy = 3;
+      play(g, uidOf(g, 'test_whirl'));
+      return combatOf(g).player.statuses.onslaught ?? 0; // no Onslaught yet = 0
+    };
+    expect(run(['momentum_flywheel']) - run([])).toBe(2);
+  });
+
+  it('refrain_pin: the card on the second beat each turn runs its on-beat effects twice, not the whole card (Phase E)', () => {
+    const run = (relics: string[], plays: number): [number, number] => {
+      const { g } = arena({ relics });
+      pacify(g, 100);
+      const t = firstEnemy(g);
+      setHand(g, Array.from({ length: plays }, () => 'test_beat'));
+      for (let i = 0; i < plays; i++) play(g, uidOf(g, 'test_beat'), t);
+      return [enemyAt(g, 0).hp, hand(g).length];
+    };
+    // The first beat (3rd play) is no longer doubled.
+    expect(run(['refrain_pin'], 3)).toEqual(run([], 3));
+    const [hp0, hand0] = run([], 6);
+    const [hp1, hand1] = run(['refrain_pin'], 6);
+    expect(hp1).toBe(hp0); // the damage is not repeated
+    expect(hand1).toBe(hand0 + 1); // the second beat's on-beat draw runs twice
+  });
+
+  it('trellis: a Ripe card in the discard pile comes to hand at turn start', () => {
+    const { g } = arena({ relics: ['trellis'] });
+    pacify(g);
+    const c = combatOf(g);
+    const ripe = makeCard(g.state, 'test_sprout');
+    ripe.vars = { bloom: 10 };
+    c.discard.push(ripe);
+    c.player.block = 100;
+    setHand(g, []);
+    endTurn(g);
+    expect(combatOf(g).hand.some((x) => x.uid === ripe.uid)).toBe(true);
+  });
+
+  it('festering_lens: a Rot tick loses 1 more HP per Exposed', () => {
+    const run = (relics: string[]): number => {
+      const { g } = arena({ relics });
+      pacify(g, 100);
+      const e = enemyAt(g, 0);
+      e.statuses.rot = 3;
+      e.statuses.exposed = 2;
+      combatOf(g).player.block = 100;
+      setHand(g, []);
+      endTurn(g);
+      return enemyAt(g, 0).hp;
+    };
+    expect(run([]) - run(['festering_lens'])).toBe(2);
+  });
+
+  it('astrolabe: 3 cards resolving together give 1 energy, once a turn', () => {
+    const { g } = arena({ relics: ['astrolabe'] });
+    pacify(g);
+    setHand(g, ['test_tock', 'test_tock', 'test_tock']);
+    combatOf(g).energy = 3;
+    for (let i = 0; i < 3; i++) play(g, uidOf(g, 'test_tock'));
+    combatOf(g).player.block = 100;
+    endTurn(g);
+    expect(combatOf(g).energy).toBe(4);
+  });
+
+  it('coal_scuttle: combat starts with 1 Ember', () => {
+    expect(combatOf(arena({ relics: ['coal_scuttle'] }).g).player.statuses.embers).toBe(1);
   });
 });

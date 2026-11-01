@@ -3,7 +3,6 @@
 import { capHit } from './caps';
 import { cardDef, takeFrom } from './cards';
 import { emit, enqueue, requireCombat, stacksOf, type Env } from './core';
-import { effectItems } from './ctx';
 import { openChoice } from './queue';
 import { dispatch, playerRule } from './statuses';
 import { TUNING } from './tuning';
@@ -83,6 +82,8 @@ export function fizzlePrimed(env: Env): void {
   for (const p of c.primed.splice(0)) {
     c.discard.push(p.card);
     emit(env, { t: 'prime_fizzled', uid: p.card.uid });
+    // Shared v2 H10 (Notched Buckler rework, pending the v2 baseline).
+    dispatch(env, 'onPrimeFizzled', 'player', { card: p.card });
   }
 }
 
@@ -102,6 +103,14 @@ export function fireRiposte(env: Env, attacker: number, hits: number): void {
   emit(env, { t: 'riposte_triggered', uid: card.uid, attacker });
   dispatch(env, 'onRiposteTriggered', 'player', { card, attacker }, attacker);
   const def = cardDef(card);
-  enqueue(env, effectItems(def.riposte ?? [], { src: { kind: 'card', uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player', target: attacker, x: 0, hits, riposte: true, depth: 0 }));
+  const frame = { src: { kind: 'card' as const, uid: card.uid, id: card.id, upgraded: card.upgraded }, self: 'player' as const, target: attacker, x: 0, hits, riposte: true, depth: 0 };
+  // RULINGS 73: a Riposte resolution pays any Shard cost in its list when it starts, or is skipped
+  if (def.riposte) enqueue(env, [{ kind: 'step', step: { op: 'repeat_resolution', uid: card.uid, list: 'riposte', frame, why: 'the Riposte' } }]);
+  // Breaker v2 (Answer in Kind): the played effects resolve too, after the Riposte list, aimed at the attacker.
+  // Still not a play (no Onslaught, no onCardPlayed). Draw / energy here go to the next-turn bank (turnPhase 'enemy').
+  if (playerRule(env.state, false, (m, ctx, a) => a || (m.riposteResolvesPlayed ? m.riposteResolvesPlayed(ctx, card) : false), false)) {
+    // RULINGS 66: a non-play resolution of the played list pays its Shard cost, or is skipped.
+    enqueue(env, [{ kind: 'step', step: { op: 'repeat_resolution', uid: card.uid, list: 'effects', frame, why: 'Answer in Kind' } }]);
+  }
   if (done) enqueue(env, [{ kind: 'finish_card', uid: card.uid, target: attacker, via: 'riposte', onBeat: false, depth: 0, x: 0 }]);
 }

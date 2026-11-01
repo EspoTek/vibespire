@@ -16,6 +16,7 @@ import { createStreams } from '../../src/engine/rng';
 import { decayPhase, playerRule } from '../../src/engine/statuses';
 import { validateEffects } from '../../src/engine/validate';
 import type { CardDef, CardInstance, ClassDef, EnemyDef, EnemyState, RunState } from '../../src/engine/types';
+import { answerChoice } from '../answer-choice';
 
 const SANDBOX_CLASS: ClassDef = { id: '__colorless_class', name: 'Sandbox', maxHp: 5000, startingGold: 99,
   maxEnergy: 3, potionSlots: 3, startingDeck: [], startingRelics: [], icon: '' };
@@ -30,11 +31,14 @@ afterAll(() => { enemyLookup.mockRestore(); classLookup.mockRestore(); });
 
 const COLORLESS_IDS = ['relay_ping', 'shardfall', 'arc_lattice', 'salvage_kit', 'stress_fracture', 'gyro_jammer',
   'ballast_lock', 'jettison_pod', 'overdraft_cell', 'star_survey', 'fault_beacon', 'snare_line', 'cutting_torch',
-  'medbay_voucher', 'clean_manifest', 'salvage_kiln', 'prism_resonance', 'shard_cache', 'mirror_tether', 'grav_clamp'];
+  'clean_manifest', 'salvage_kiln', 'prism_resonance', 'shard_cache', 'mirror_tether', 'grav_clamp',
+  // shared v2 (docs/v2/shared-design.md §4)
+  'blood_tithe', 'vent_plasma', 'scar_tissue', 'last_light', 'spare_capacitor', 'shrapnel_charge', 'black_box', 'strip_for_parts',
+  'scrapheap_colossus', 'burn_bright', 'arc_discharge', 'capacitor_bank', 'starfall_lance', 'stasis_bolt', 'encore', 'second_verse', 'bait_flare', 'fuse'];
 const STATUS_IDS = ['status_jitter', 'status_backlash', 'status_tangle', 'status_drift'];
 const CURSE_IDS = ['curse_burden', 'curse_seized_joint', 'curse_static_ghost', 'curse_guilt', 'curse_vacuum_chill',
   'curse_debt_mark', 'curse_hollow_echo', 'curse_parasite_vine'];
-const POWER_IDS = ['guard_lock', 'salvage_kiln', 'prism_resonance', 'drift_energy', 'backlash_cards'];
+const POWER_IDS = ['guard_lock', 'salvage_kiln', 'prism_resonance', 'drift_energy', 'backlash_cards', 'reserve', 'reprise', 'reprise_big', 'scar_tissue', 'burn_bright'];
 const CARDS = [...COLORLESS_CARDS, ...STATUS_CARDS, ...CURSES];
 
 function combat(g: Game) {
@@ -47,7 +51,7 @@ function sandbox(enemyCount = 1): Game {
     hp: 5000, maxHp: 5000, block: 0, guard: 0, statuses: {}, intent: { kind: 'attack', moveId: 'attack', damage: 5, hits: 2 },
     intentTurn: 1, forecast: [], moveHistory: [], aiState: {}, alive: true, fled: false, leaderUid: null, withLeader: null, rng: [...rng.enemy] }));
   const state: RunState = {
-    version: 1, seed: 'colorless', classId: SANDBOX_CLASS.id, rng, act: 1, ascent: 0, floor: 1, phase: 'combat',
+    version: 1, seed: 'colorless', classId: SANDBOX_CLASS.id, rng, act: 1, ascent: 0, difficulty: 'standard', floor: 1, phase: 'combat',
     player: { hp: 5000, maxHp: 5000, gold: 99, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 5 } },
     map: { act: 1, rows: [], bossEncounter: '' }, mapPos: null, mapPath: [], room: 'monster', reward: null, shop: null, event: null,
     rest: null, treasure: null, startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null,
@@ -85,7 +89,7 @@ function settle(g: Game): void {
   for (let i = 0; i < 20; i++) {
     const choice = combat(g).pendingChoice;
     if (!choice) return;
-    g.apply({ type: 'resolve_choice', uids: choice.choices.slice(0, Math.max(choice.min, 1)) });
+    answerChoice(g, choice.choices.slice(0, Math.max(choice.min, 1)));
   }
   throw new Error('Choices never settled');
 }
@@ -104,16 +108,18 @@ function effect(g: Game, effects: Parameters<typeof execEffect>[1][]): void {
 }
 
 it('exports the complete assigned ids/counts, registered by index.ts', () => {
-  expect(COLORLESS_CARDS).toHaveLength(20);
+  expect(COLORLESS_CARDS).toHaveLength(COLORLESS_IDS.length);
   expect(STATUS_CARDS).toHaveLength(4);
   expect(CURSES).toHaveLength(8);
-  expect(COLORLESS_STATUSES).toHaveLength(5);
+  expect(COLORLESS_STATUSES).toHaveLength(POWER_IDS.length);
   expect(COLORLESS_CARDS.map((d) => d.id)).toEqual(COLORLESS_IDS);
   expect(STATUS_CARDS.map((d) => d.id)).toEqual(STATUS_IDS);
   expect(CURSES.map((d) => d.id)).toEqual(CURSE_IDS);
   expect(COLORLESS_STATUSES.map((d) => d.id)).toEqual(POWER_IDS);
-  expect(COLORLESS_CARDS.filter((d) => d.rarity === 'uncommon')).toHaveLength(12);
-  expect(COLORLESS_CARDS.filter((d) => d.rarity === 'rare')).toHaveLength(8);
+  // RULINGS 60: 21 uncommon / 14 rare (Medbay Voucher cut in Phase C).
+  expect(COLORLESS_CARDS.filter((d) => d.rarity === 'uncommon')).toHaveLength(23); // + Second Verse (RULINGS 70 follow-up), + Encore (Phase F)
+  expect(COLORLESS_CARDS.filter((d) => d.rarity === 'rare')).toHaveLength(13);
+  expect(COLORLESS_CARDS.filter((d) => d.rarity === 'special').map((d) => d.id)).toEqual(['fuse']);
   for (const d of CARDS) expect(content.getCardDef(d.id)).toBe(d);
   for (const d of COLORLESS_STATUSES) expect(content.getStatusDef(d.id)).toBe(d);
 });
@@ -126,6 +132,7 @@ it('validates every assigned card variant, delayed/riposte list and status trigg
     validateEffects(d.effects, where, errors);
     if (d.delay) validateEffects(d.delay.effects, where, errors);
     if (d.riposte) validateEffects(d.riposte, { ...where, hasTarget: true, riposte: true }, errors);
+    if (d.salvage) validateEffects(d.salvage, { ...where, hasTarget: false }, errors);
     if (d.cost === null) expect(d.keywords).toContain('unplayable');
     expect(d.keywords?.includes('delay') ?? false).toBe(d.delay !== undefined);
     expect(d.keywords?.includes('riposte') ?? false).toBe(d.riposte !== undefined);
@@ -194,7 +201,7 @@ it.each([false, true])('resolves every Salvage Kit branch (upgraded=%s)', (upgra
     hand(g, ['salvage_kit'], upgraded);
     play(g, cardInHand(g, 'salvage_kit'));
     expect(combat(g).pendingChoice?.labels.join(' ')).not.toMatch(/[{}]/);
-    g.apply({ type: 'resolve_choice', uids: [option] });
+    answerChoice(g, [option]);
     if (option === 0) expect(combat(g).player.block).toBe(upgraded ? 10 : 7);
     if (option === 1) expect(combat(g).hand).toHaveLength(upgraded ? 3 : 2);
     if (option === 2) expect(combat(g).enemies.map((e) => e.hp)).toEqual([5000 - (upgraded ? 8 : 5), 5000 - (upgraded ? 8 : 5)]);
@@ -236,7 +243,7 @@ it('Shardfall reads held Shards and Arc Lattice reads living enemy count', () =>
   expect(combat(g).enemies[0]!.hp).toBe(4974);
   expect(g.state.player.counters.shards).toBe(5);
   play(g, cardInHand(g, 'arc_lattice'));
-  expect(combat(g).enemies.map((e) => e.hp)).toEqual([4964, 4990, 4990]);
+  expect(combat(g).enemies.map((e) => e.hp)).toEqual([4958, 4984, 4984]); // Phase F: 7 + 3 per living enemy
 });
 
 it('Mirror Tether uses displayed current damage, including its upgrade base', () => {
@@ -270,29 +277,32 @@ it('Prism Resonance adds Guard after halving, and stacks', () => {
   expect(combat(g).player.guard).toBe(20); // (30 - 10) / 2 + 2 * 5
 });
 
-it('Salvage Kiln ignores played Powers and reacts to Scrap including Shard Cache', () => {
-  const g = sandbox();
-  const c = combat(g);
+it('Salvage Kiln (Phase F): at your turn end, 1 damage to ALL enemies per Scrapheap card; played Powers are not in the heap', () => {
+  const g = sandbox(2);
+  const hps = (): number[] => combat(g).enemies.map((e) => e.hp);
   hand(g, ['salvage_kiln', 'prism_resonance', 'shard_cache', 'status_jitter']);
   play(g, cardInHand(g, 'salvage_kiln'));
   play(g, cardInHand(g, 'prism_resonance'));
-  expect(c.exhaust).toHaveLength(0);
-  expect(c.enemies[0]!.statuses.exposed).toBeUndefined();
+  expect(combat(g).exhaust).toHaveLength(0);
   play(g, cardInHand(g, 'shard_cache'));
-  expect(c.enemies[0]!.statuses.exposed).toBe(1);
   play(g, cardInHand(g, 'status_jitter'));
-  expect(c.enemies[0]!.statuses.exposed).toBe(2);
+  expect(hps()).toEqual([5000, 5000]); // nothing on the Scrap itself
+  expect(combat(g).exhaust).toHaveLength(2);
+  g.apply({ type: 'end_turn' });
+  expect(hps()).toEqual([4998, 4998]);
 });
 
-it.each([false, true])('Fault Beacon resolves on the next Timeline step (upgraded=%s)', (upgraded) => {
+it.each([false, true])('Fault Beacon applies Exposed now and more on the next Timeline step (upgraded=%s)', (upgraded) => {
   const g = sandbox(2);
   hand(g, ['fault_beacon'], upgraded);
   play(g, cardInHand(g, 'fault_beacon'));
+  const n = upgraded ? 3 : 2;
   expect(combat(g).timeline).toHaveLength(1);
-  expect(combat(g).enemies.every((e) => !e.statuses.exposed)).toBe(true);
+  expect(combat(g).enemies.map((e) => e.statuses.exposed)).toEqual([n, n]);
   g.apply({ type: 'end_turn' });
   expect(combat(g).timeline).toHaveLength(0);
-  expect(combat(g).enemies.map((e) => e.statuses.exposed)).toEqual([upgraded ? 3 : 2, upgraded ? 3 : 2]);
+  // n decays by 1 at each enemy's turn end, then n more lands at your turn start
+  expect(combat(g).enemies.map((e) => e.statuses.exposed)).toEqual([2 * n - 1, 2 * n - 1]);
 });
 
 it.each([false, true])('Snare Line Ripostes before the enemy hits (upgraded=%s)', (upgraded) => {
@@ -331,59 +341,30 @@ it('Star Survey applies Augury and generated Jitter/Drift share cap_to_hand', ()
   expect(combat(g).hand.some((card) => card.id === 'status_drift')).toBe(false);
 });
 
-it('Cutting Torch excludes Bound/generated cards, charges only a successful removal, and shares the cap', () => {
+it('Cutting Torch removes a chosen deck card in hand (no Max HP cost), skips Bound/generated cards and shares the cap (Phase C)', () => {
   const g = sandbox();
   const c = combat(g);
   hand(g, ['cutting_torch', 'curse_guilt', 'curse_burden']);
   c.hand.push(makeCard(g.state, 'status_jitter'));
   const victim = cardInHand(g, 'curse_guilt');
-  const maxHp = g.state.player.maxHp;
   play(g, cardInHand(g, 'cutting_torch'));
-  g.apply({ type: 'resolve_choice', uids: [0] });
   expect(c.pendingChoice?.choices).toEqual([victim.uid]);
-  g.apply({ type: 'resolve_choice', uids: [victim.uid] });
+  answerChoice(g, [victim.uid]);
   expect(g.state.player.deck.some((card) => card.uid === victim.uid)).toBe(false);
   expect(c.exhaust.some((card) => card.uid === victim.uid)).toBe(true);
-  expect(g.state.player.maxHp).toBe(maxHp - 3);
+  expect(g.state.player.maxHp).toBe(5000);
   expect(c.counters.pruneAway).toBe(1);
-  // A second removal, from any source, cannot remove a deck card.
   const remaining = g.state.player.deck.length;
   effect(g, [{ type: 'remove_card', random: true }]);
   expect(g.state.player.deck).toHaveLength(remaining);
-  const torch = deckCard(g, 'cutting_torch');
-  c.hand.push(torch);
-  play(g, torch);
-  expect(c.pendingChoice).toBeNull();
-  expect(g.state.player.maxHp).toBe(maxHp - 3);
 });
 
-it('Cutting Torch can be declined, and no eligible target costs no Max HP', () => {
-  for (const decline of [false, true]) {
-    const g = sandbox();
-    hand(g, decline ? ['cutting_torch', 'curse_guilt'] : ['cutting_torch', 'curse_burden']);
-    play(g, cardInHand(g, 'cutting_torch'));
-    g.apply({ type: 'resolve_choice', uids: [decline ? 1 : 0] });
-    expect(combat(g).pendingChoice).toBeNull();
-    expect(g.state.player.maxHp).toBe(5000);
-  }
-});
-
-it.each([false, true])('Cutting Torch and Prune away consume the same slot (Prune first=%s)', (pruneFirst) => {
+it('Cutting Torch with no eligible target does nothing', () => {
   const g = sandbox();
-  hand(g, ['cutting_torch', 'curse_guilt', 'status_drift']);
-  if (pruneFirst) {
-    effect(g, [{ type: 'prune', variant: 'away' }]);
-    g.apply({ type: 'resolve_choice', uids: [cardInHand(g, 'curse_guilt').uid] });
-    play(g, cardInHand(g, 'cutting_torch'));
-  } else {
-    play(g, cardInHand(g, 'cutting_torch'));
-    settle(g);
-    effect(g, [{ type: 'prune', variant: 'away' }]);
-  }
+  hand(g, ['cutting_torch', 'curse_burden']);
+  play(g, cardInHand(g, 'cutting_torch'));
   expect(combat(g).pendingChoice).toBeNull();
-  expect(combat(g).counters.pruneAway).toBe(1);
-  expect(g.state.history.floors[0]!.cardsRemoved).toHaveLength(1);
-  expect(g.state.player.maxHp).toBe(pruneFirst ? 5000 : 4997);
+  expect(g.state.player.deck.some((c) => c.id === 'curse_burden')).toBe(true);
 });
 
 it.each([false, true])('Shard Cache removes itself once, Scraps, and grants resources (upgraded=%s)', (upgraded) => {
@@ -409,19 +390,6 @@ it('Shard Cache obeys a spent removal cap and still Scraps its combat copy', () 
   expect(combat(g).exhaust.map((copy) => copy.uid)).toContain(card.uid);
   expect(combat(g).counters.pruneAway).toBe(1);
   expect(g.state.history.floors[0]!.capHits.cap_prune_away).toBe(1);
-});
-
-it('Medbay Voucher spends only affordable gold, and Max HP gain heals', () => {
-  for (const gold of [34, 35]) {
-    const g = sandbox();
-    g.state.player.gold = gold;
-    g.state.player.hp = 4000;
-    hand(g, ['medbay_voucher']);
-    play(g, cardInHand(g, 'medbay_voucher'));
-    expect(g.state.player.gold).toBe(gold === 35 ? 0 : 34);
-    expect(g.state.player.maxHp).toBe(gold === 35 ? 5003 : 5000);
-    expect(g.state.player.hp).toBe(gold === 35 ? 4003 : 4000);
-  }
 });
 
 it('Jitter taxes only the next play and its tax expires at turn end', () => {
@@ -507,16 +475,13 @@ it('multiple Backlashes leave Riposte free and Scrap before the following enemy 
   }
 });
 
-it('Stress Fracture self-Exposed decays before the enemy phase and still adds damage', () => {
+it('Stress Fracture Strains 2 and applies 4 Exposed (Phase C)', () => {
   const g = sandbox();
   hand(g, ['stress_fracture']);
   play(g, cardInHand(g, 'stress_fracture'));
-  expect(combat(g).player.statuses.exposed).toBe(2);
-  expect(combat(g).enemies[0]!.statuses.exposed).toBe(3);
-  g.apply({ type: 'end_turn' });
-  expect(g.state.player.hp).toBe(4988);
-  expect(combat(g).player.statuses.exposed).toBe(1);
-  expect(combat(g).enemies[0]!.statuses.exposed).toBe(2);
+  expect(g.state.player.hp).toBe(4998);
+  expect(combat(g).player.statuses.exposed).toBeUndefined();
+  expect(combat(g).enemies[0]!.statuses.exposed).toBe(4);
 });
 
 it('Seized Joint taxes only the first play, Vacuum Chill reduces opening draw while kept', () => {
@@ -567,7 +532,7 @@ it('Burden is unplayable, filtered from normal removal and Transmute, but Purge 
   expect(g.state.pendingChoice).toBeNull();
   execEffect(env, { type: 'remove_card', choose: true, allowBound: true }, { src: { kind: 'system' }, self: 'player', target: null, x: 0 });
   expect(g.state.pendingChoice?.choices).toEqual([card.uid]);
-  g.apply({ type: 'resolve_choice', uids: [card.uid] });
+  answerChoice(g, [card.uid]);
   expect(g.state.player.deck).toHaveLength(0);
 });
 
@@ -579,7 +544,219 @@ it('Burden can be Scrapped by ordinary Prune, but is excluded from Prune away', 
   expect(combat(g).pendingChoice).toBeNull();
   effect(g, [{ type: 'prune' }]);
   expect(combat(g).pendingChoice?.choices).toEqual([card.uid]);
-  g.apply({ type: 'resolve_choice', uids: [card.uid] });
+  answerChoice(g, [card.uid]);
   expect(combat(g).exhaust.map((copy) => copy.uid)).toContain(card.uid);
   expect(g.state.player.deck.some((copy) => copy.uid === card.uid)).toBe(true);
+});
+
+// ---------------------------------------------------------------------------
+// Shared v2 colourless cards (docs/v2/shared-design.md §4)
+
+describe('shared v2 colourless cards', () => {
+  it('blood_tithe: Strain 2 (HP lost, counted), draw 3 (Phase F)', () => {
+    const g = sandbox();
+    hand(g, ['blood_tithe']);
+    play(g, cardInHand(g, 'blood_tithe'));
+    expect(g.state.player.hp).toBe(4998);
+    expect(combat(g).counters.strained).toBe(2);
+    expect(combat(g).hand).toHaveLength(3);
+  });
+
+  it('vent_plasma: Strain 2 and AoE damage', () => {
+    const g = sandbox(2);
+    hand(g, ['vent_plasma']);
+    play(g, cardInHand(g, 'vent_plasma'));
+    expect(combat(g).enemies.map((e) => e.hp)).toEqual([4990, 4990]); // Phase F: 10
+    expect(g.state.player.hp).toBe(4998);
+  });
+
+  it('scar_tissue: each Strain gives that much Guard and draws 1, at most 2 draws a turn', () => {
+    const g = sandbox();
+    hand(g, ['scar_tissue']);
+    play(g, cardInHand(g, 'scar_tissue'));
+    for (let i = 0; i < 3; i++) effect(g, [{ type: 'strain', amount: 2 }]);
+    expect(combat(g).player.guard).toBe(6);
+    expect(combat(g).hand).toHaveLength(2);
+  });
+
+  it('last_light: damage = 2 per missing HP; Scrapped', () => {
+    const g = sandbox();
+    g.state.player.hp = 4980;
+    hand(g, ['last_light']);
+    play(g, cardInHand(g, 'last_light'));
+    expect(combat(g).enemies[0]?.hp).toBe(4960);
+    expect(combat(g).exhaust.map((c) => c.id)).toEqual(['last_light']);
+  });
+
+  it('spare_capacitor: Guard, Scrap, Salvage +1 energy and draw 1 (Phase F)', () => {
+    const g = sandbox();
+    hand(g, ['spare_capacitor']);
+    const e = combat(g).energy;
+    play(g, cardInHand(g, 'spare_capacitor'));
+    expect(combat(g).player.guard).toBe(4);
+    expect(combat(g).energy).toBe(e + 1);
+    expect(combat(g).hand).toHaveLength(1);
+  });
+
+  it('shrapnel_charge / black_box: Salvage fires when another card Scraps them; off-turn draw/energy bank', () => {
+    const g = sandbox(2);
+    hand(g, ['shrapnel_charge', 'black_box']);
+    const e = combat(g).energy;
+    effect(g, [{ type: 'exhaust', from: 'hand', all: true }]);
+    expect(combat(g).enemies.map((x) => x.hp)).toEqual([4992, 4992]);
+    expect(combat(g).energy).toBe(e + 1);
+    expect(combat(g).hand).toHaveLength(2);
+    // Scrapped during the turn-end steps: the Black Box's draw / energy wait for next turn.
+    hand(g, ['black_box']);
+    combat(g).counters.turnEnding = 1;
+    effect(g, [{ type: 'exhaust', from: 'hand', all: true }]);
+    delete combat(g).counters.turnEnding;
+    expect(combat(g).counters.bankDraw).toBe(2);
+    expect(combat(g).counters.bankEnergy).toBe(1);
+  });
+
+  it('black_box (Phase F): costs 0, Scraps itself, and its Salvage gains 1 energy and draws 2 (3 upgraded)', () => {
+    for (const [upgraded, draws] of [[false, 2], [true, 3]] as const) {
+      const g = sandbox();
+      const [box] = hand(g, ['black_box'], upgraded);
+      if (!box) throw new Error('no black box');
+      const e = combat(g).energy;
+      play(g, box);
+      expect(combat(g).exhaust.map((c) => c.id)).toEqual(['black_box']);
+      expect(combat(g).energy).toBe(e + 1);
+      expect(combat(g).hand).toHaveLength(draws);
+    }
+  });
+
+  it('an upgrade\'s Salvage replaces the base Salvage (getCardDef merged it from Phase E on)', () => {
+    expect(content.getCardDef('shrapnel_charge', true).salvage).toEqual([{ type: 'damage', amount: 11, target: 'all_enemies', key: 'sdamage' }]);
+    expect(content.getCardDef('shrapnel_charge').salvage).toEqual([{ type: 'damage', amount: 8, target: 'all_enemies', key: 'sdamage' }]);
+  });
+
+  it('encore (Phase F): no longer Scraps itself; it goes to the discard pile', () => {
+    const g = sandbox();
+    const [enc] = hand(g, ['encore', 'shrapnel_charge']);
+    if (!enc) throw new Error('no encore');
+    play(g, enc);
+    expect(combat(g).exhaust.map((c) => c.id)).not.toContain('encore');
+    expect(combat(g).discard.map((c) => c.id)).toContain('encore');
+    expect(combat(g).player.statuses.reprise).toBe(1);
+  });
+
+  it('relay_ping (Phase F): draws 3 (4 upgraded) and adds one Jitter', () => {
+    for (const [upgraded, n] of [[false, 3], [true, 4]] as const) {
+      const g = sandbox();
+      const [ping] = hand(g, ['relay_ping'], upgraded);
+      if (!ping) throw new Error('no ping');
+      play(g, ping);
+      // The sandbox draw pile is all Jitters, so count: n drawn + the one added.
+      expect(combat(g).hand).toHaveLength(n + 1);
+      expect(combat(g).draw).toHaveLength(12 - n);
+    }
+  });
+
+  it('strip_for_parts: Scrap up to 2, 5 Guard each (may pick none; Phase F)', () => {
+    const g = sandbox();
+    hand(g, ['strip_for_parts', 'curse_guilt', 'status_jitter']);
+    play(g, cardInHand(g, 'strip_for_parts'));
+    expect(combat(g).pendingChoice?.min).toBe(0);
+    answerChoice(g, combat(g).hand.map((c) => c.uid));
+    expect(combat(g).player.guard).toBe(10);
+    expect(combat(g).hand).toHaveLength(1); // then draws 1 (Phase F)
+  });
+
+  it('shrapnel_charge (Phase F): +1 damage per Scrapheap card', () => {
+    const g = sandbox();
+    hand(g, ['shrapnel_charge', 'curse_guilt', 'status_jitter']);
+    effect(g, [{ type: 'exhaust', from: 'hand', choose: true, n: 2 }]);
+    answerChoice(g, combat(g).hand.filter((c) => c.id !== 'shrapnel_charge').map((c) => c.uid));
+    play(g, cardInHand(g, 'shrapnel_charge'));
+    expect(combat(g).enemies[0]?.hp).toBe(5000 - 10);
+  });
+
+  it('scrapheap_colossus: +3 per card in the Scrapheap (Phase F)', () => {
+    const g = sandbox();
+    hand(g, ['scrapheap_colossus', 'curse_guilt', 'status_jitter']);
+    effect(g, [{ type: 'exhaust', from: 'hand', choose: true, n: 2 }]);
+    answerChoice(g, combat(g).hand.filter((c) => c.id !== 'scrapheap_colossus').map((c) => c.uid));
+    play(g, cardInHand(g, 'scrapheap_colossus'));
+    expect(combat(g).enemies[0]?.hp).toBe(5000 - 14); // Phase F: 8 + 3 per Scrapheap card
+  });
+
+  it('burn_bright: Scrap cards cost 1 less', () => {
+    const g = sandbox();
+    hand(g, ['burn_bright', 'mirror_tether']);
+    play(g, cardInHand(g, 'burn_bright'));
+    expect(getCardCost(g.state, cardInHand(g, 'mirror_tether'))).toBe(1);
+  });
+
+  it('capacitor_bank + arc_discharge: Reserve adds to X; Reserve caps at 5', () => {
+    const g = sandbox();
+    hand(g, ['capacitor_bank', 'arc_discharge']);
+    play(g, cardInHand(g, 'capacitor_bank'));
+    expect(combat(g).player.statuses.reserve).toBe(2);
+    effect(g, [{ type: 'status', target: 'self', id: 'reserve', amount: 10 }]);
+    expect(combat(g).player.statuses.reserve).toBe(5);
+    combat(g).energy = 2;
+    const hp = combat(g).enemies[0]?.hp ?? 0;
+    play(g, cardInHand(g, 'arc_discharge'));
+    expect(hp - (combat(g).enemies[0]?.hp ?? 0)).toBe(6 * 8); // X = 2 + 5, X+1 hits of 6 (Phase F)
+    expect(combat(g).player.statuses.reserve).toBeUndefined();
+  });
+
+  it('starfall_lance / stasis_bolt: X AoE now; X stamped on the Timeline', () => {
+    const g = sandbox(2);
+    hand(g, ['starfall_lance', 'stasis_bolt']);
+    combat(g).energy = 2;
+    play(g, cardInHand(g, 'starfall_lance'));
+    expect(combat(g).enemies.map((e) => e.hp)).toEqual([4984, 4984]);
+    combat(g).energy = 3;
+    play(g, cardInHand(g, 'stasis_bolt'));
+    expect(combat(g).timeline[0]?.x).toBe(3);
+  });
+
+  it('encore: the next card resolves twice, once only', () => {
+    const g = sandbox();
+    hand(g, ['encore', 'shardfall', 'shardfall']);
+    play(g, cardInHand(g, 'encore'));
+    const hp0 = combat(g).enemies[0]?.hp ?? 0;
+    const shards = combat(g).hand.filter((c) => c.id === 'shardfall');
+    const [a, b] = shards;
+    if (!a || !b) throw new Error('setup');
+    play(g, a);
+    const one = hp0 - (combat(g).enemies[0]?.hp ?? 0);
+    play(g, b);
+    const two = hp0 - one - (combat(g).enemies[0]?.hp ?? 0);
+    expect(one).toBe(2 * two);
+  });
+
+  it('bait_flare: Goad 3 and draw', () => {
+    const g = sandbox();
+    hand(g, ['bait_flare']);
+    play(g, cardInHand(g, 'bait_flare'));
+    expect(combat(g).enemies[0]?.statuses.goaded).toBe(3);
+    expect(combat(g).hand).toHaveLength(1);
+  });
+});
+
+describe('Second Verse (RULINGS 70 follow-up)', () => {
+  it('gives Reprise to the next card if it costs 2 or more; a cheaper next card uses it up without Reprise', () => {
+    const g = sandbox();
+    hand(g, ['second_verse', 'shardfall', 'second_verse', 'jettison_pod', 'shardfall']);
+    combat(g).energy = 20;
+    const hp = (): number => combat(g).enemies[0]!.hp;
+    play(g, combat(g).hand[0]!);
+    expect(combat(g).player.block).toBe(7); // Phase F
+    expect(combat(g).player.statuses.reprise_big).toBe(1);
+    const h0 = hp();
+    play(g, cardInHand(g, 'shardfall'));
+    const twice = h0 - hp();
+    expect(combat(g).player.statuses.reprise_big).toBeUndefined();
+    play(g, cardInHand(g, 'second_verse'));
+    play(g, cardInHand(g, 'jettison_pod')); // costs 0: uses Second Verse up, no Reprise
+    expect(combat(g).player.statuses.reprise_big).toBeUndefined();
+    const h1 = hp();
+    play(g, cardInHand(g, 'shardfall'));
+    expect(twice).toBe(2 * (h1 - hp()));
+  });
 });

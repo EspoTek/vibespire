@@ -52,6 +52,14 @@ function scaleGuess(scale: AmountScale, bloom: number): number {
         return 2;
       case 'spent':
         return 3;
+      case 'shed': // Breaker v2: Guard Shed
+        return 6;
+      case 'scrapped': // shared v2: cards Scrapped by an exhaust `then`
+        return 1.5;
+      case 'strained_this_combat': // shared v2: HP Strained so far this fight
+        return 6;
+      case 'energy': // unspent energy at turn end
+        return 1;
       case 'stacks':
         return 2;
       case 'bloom_cards_in_deck':
@@ -71,6 +79,10 @@ function scaleGuess(scale: AmountScale, bloom: number): number {
         return 8;
       case 'triggered_riposte':
         return 0.5;
+      case 'beat_index':
+        return 1.5;
+      case 'chorus':
+        return 1;
     }
   }
   if ('cardVar' in scale) return scale.cardVar === 'bloom' ? bloom : 1;
@@ -164,7 +176,8 @@ function effectValue(e: Effect, bloom: number): number {
       const def = getCardDef(e.card);
       const n = estAmount(e.n, bloom);
       if (def.type === 'curse') return -8 * n;
-      if (def.type === 'status') return -3 * n;
+      // A Status token tagged as an engine's fodder (Graft's Chaff: engine:compost) is a resource, not junk.
+      if (def.type === 'status') return (def.tags ?? []).some((tag) => tag.startsWith('engine:')) ? 1 * n : -3 * n;
       return (e.to === 'hand' ? 3 : 2) * n;
     }
     case 'upgrade':
@@ -186,6 +199,8 @@ function effectValue(e: Effect, bloom: number): number {
     }
     case 'spend_status':
       return 0.55 * effectsValue(e.effects, bloom);
+    case 'shed': // Breaker v2: the clause minus the Guard it costs (1 Guard ≈ 1 d)
+      return 0.6 * effectsValue(e.effects, bloom) - (typeof e.n === 'number' ? e.n : 6) * 0.6;
     case 'bloom':
       return 3 * estAmount(e.amount, bloom);
     case 'prune':
@@ -224,6 +239,23 @@ function effectValue(e: Effect, bloom: number): number {
       return 9;
     case 'halt_enemy':
       return 9;
+    case 'gather':
+      return 1;
+    case 'quicken':
+      return 2 * e.n;
+    case 'schedule':
+      return 4;
+    // shared v2 (docs/v2/shared-design.md)
+    case 'strain': // HP as fuel: 1.5 d per HP (GDD §8.5)
+      return -1.5 * estAmount(e.amount, bloom);
+    case 'triage':
+      return 2;
+    case 'copy_card':
+      return 6;
+    case 'add_random_card':
+      return (e.to === 'hand' ? 4 : 2) * estAmount(e.n, bloom);
+    case 'harvest': // Graft v2: mult × an expected Rot of 6, less the halving
+      return estAmount(e.mult, bloom) * 6 - 3;
     case 'lose_defence':
     case 'lose_guard':
       return -2;
@@ -273,6 +305,8 @@ export interface CardInfo {
   damage: number;
   defense: number;
   riposteValue: number;
+  /** Has a Shed effect (spends carried Guard for value). */
+  sheds: boolean;
   junk: boolean;
   basic: boolean;
   tags: readonly string[];
@@ -307,6 +341,7 @@ export function cardInfo(id: string, upgraded: boolean): CardInfo {
   const kws = def.keywords ?? [];
   const costNum = def.cost === null ? 0 : def.cost === 'X' ? 3 : def.cost;
   let draws = false;
+  let sheds = false;
   let onBeat = 0;
   let perOnslaught = 0;
   let spends = false;
@@ -317,6 +352,7 @@ export function cardInfo(id: string, upgraded: boolean): CardInfo {
   const all = [...def.effects, ...(def.delay?.effects ?? [])];
   walk(all, (e) => {
     if (e.type === 'draw' || e.type === 'fetch_card') draws = true;
+    if (e.type === 'shed') sheds = true;
     if (e.type === 'on_beat') onBeat += effectsValue(e.effects);
     if (e.type === 'conditional' && e.if.type === 'on_beat') onBeat += effectsValue(e.then);
     if (e.type === 'spend_status' && e.id === 'onslaught') spends = true;
@@ -354,6 +390,7 @@ export function cardInfo(id: string, upgraded: boolean): CardInfo {
     efficiency: (value - SLOT) / Math.max(0.5, costNum) + SLOT,
     costNum,
     draws,
+    sheds,
     onBeatValue: onBeat * 0.6,
     perOnslaught,
     spendsOnslaught: spends,

@@ -44,7 +44,11 @@ export class Tweener {
   private runs: Run[] = [];
   private timers: Timer[] = [];
   private tickers: Ticker[] = [];
+  /** Tickers that keep running through hit-stop (the impact flash must end while the pose is frozen). */
+  private rawTickers: Ticker[] = [];
   private _speed = 1;
+  /** Hit-stop time left (speed-scaled ms): while > 0 every tween, timer and ticker is frozen. */
+  private freezeLeft = 0;
 
   get speed(): number { return this._speed; }
   set speed(s: number) {
@@ -79,6 +83,9 @@ export class Tweener {
   /** Run `fn(dtMs)` every frame until it returns false. */
   every(fn: (dtMs: number) => boolean): void { this.tickers.push({ tick: fn }); }
 
+  /** Like every(), but not frozen by hit-stop (still speed-scaled). */
+  everyUnfrozen(fn: (dtMs: number) => boolean): void { this.rawTickers.push({ tick: fn }); }
+
   /** Finish nothing, drop everything targeting `target` (e.g. when a widget is disposed). */
   cancel(target: object): void {
     const gone = this.runs.filter((r) => r.target === target);
@@ -86,10 +93,34 @@ export class Tweener {
     for (const r of gone) r.done();
   }
 
-  get active(): number { return this.runs.length + this.timers.length + this.tickers.length; }
+  get active(): number { return this.runs.length + this.timers.length + this.tickers.length + this.rawTickers.length; }
+
+  /**
+   * Hit-stop: freeze everything driven by this Tweener (tweens, delays, tickers: flashes hold, shakes
+   * pause, awaiting animation steps wait) for `ms` of speed-scaled time. Overlapping stops keep the
+   * longest remaining one; they do not add up.
+   */
+  hitStop(ms: number): void {
+    if (!(ms >= 0)) throw new Error(`Tweener.hitStop: bad ms ${ms}`);
+    this.freezeLeft = Math.max(this.freezeLeft, ms);
+  }
+
+  get frozen(): boolean { return this.freezeLeft > 0; }
 
   update(dtMsRaw: number): void {
-    const dt = dtMsRaw * this._speed;
+    let dt = dtMsRaw * this._speed;
+    if (this.rawTickers.length > 0) {
+      const raw = this.rawTickers;
+      this.rawTickers = [];
+      const keptRaw = raw.filter((tk) => tk.tick(dt));
+      this.rawTickers = keptRaw.concat(this.rawTickers);
+    }
+    if (this.freezeLeft > 0) {
+      const used = Math.min(this.freezeLeft, dt);
+      this.freezeLeft -= used;
+      dt -= used;
+      if (dt <= 0) return;
+    }
     for (const r of this.runs) {
       r.t = Math.min(r.t + dt, r.dur);
       r.target[r.key] = r.from + (r.to - r.from) * r.ease(r.t / r.dur);
@@ -103,7 +134,11 @@ export class Tweener {
     this.timers = this.timers.filter((tm) => tm.left > 0);
     for (const tm of fired) tm.done();
 
-    this.tickers = this.tickers.filter((tk) => tk.tick(dt));
+    // a ticker may register new tickers (a cue key spawning particles): those must survive this pass
+    const running = this.tickers;
+    this.tickers = [];
+    const kept = running.filter((tk) => tk.tick(dt));
+    this.tickers = kept.concat(this.tickers);
   }
 }
 
@@ -133,14 +168,14 @@ export function shake(tw: Tweener, obj: Positioned, px: number, ms: number): Pro
 /** Anything that can be flashed white (Sprite in sprite.ts). */
 export interface Flashable { setFlash(on: boolean): void }
 
-/** SMS-style hit flash: hard on/off blink at `hz` for `ms`, ends off. */
-export function flash(tw: Tweener, target: Flashable, ms = 240, hz = 15): Promise<void> {
+/** SMS-style hit flash: hard on/off blink at `hz` for `ms`, ends off. `startOff`: begin with the normal sprite (after an impact flash). */
+export function flash(tw: Tweener, target: Flashable, ms = 240, hz = 15, startOff = false): Promise<void> {
   let t = 0;
   return new Promise((done) => {
     tw.every((dt) => {
       t += dt;
       if (t >= ms) { target.setFlash(false); done(); return false; }
-      target.setFlash(Math.floor((t / 1000) * hz * 2) % 2 === 0);
+      target.setFlash(Math.floor((t / 1000) * hz * 2) % 2 === (startOff ? 1 : 0));
       return true;
     });
   });

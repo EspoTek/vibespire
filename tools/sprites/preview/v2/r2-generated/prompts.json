@@ -1,0 +1,26 @@
+[
+  {
+    "id": "antenna_wire",
+    "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic, depicted as a crisp nearest-neighbour enlarged sprite. Subject: antenna_wire: A thick coil of steel antenna wire with a broad circular winding, a short upright antenna tip, and a bronze plug. The coil is the large dominant mass; never a thin single stick. Large simple shapes, flat 2–3 tone shading, no texture noise. Full-cell scale, centered physical object, overall black outlined silhouette 13–14 pixels long inside a 16x16 logical canvas with a one pixel transparent margin; substantial body, bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Phantasy Star and Ys item art with hard material planes. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, tiny objects, thin sticks or additional props. Transparent background.",
+    "tool": "built-in image_gen",
+    "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-80c8b378-da54-4e7b-9f55-d2bfc9bae472.png"
+  },
+  {
+    "id": "ash_wick",
+    "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic, depicted as a crisp nearest-neighbour enlarged sprite. Subject: ash_wick: A squat brass candle holder with a thick half-melted wax pillar and one large amber flame. Thick stem and wide foot, modeled brass and ivory wax. Large simple shapes, flat 2–3 tone shading, no texture noise. Full-cell scale, centered physical object, overall black outlined silhouette 13–14 pixels long inside a 16x16 logical canvas with a one pixel transparent margin; substantial body, bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Phantasy Star and Ys item art with hard material planes. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, tiny objects, thin sticks or additional props. Transparent background.",
+    "tool": "built-in image_gen",
+    "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-653b7f76-5fd4-4abd-8b33-3ae48da60674.png"
+  },
+  {
+    "id": "echo_bell",
+    "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic, depicted as a crisp nearest-neighbour enlarged sprite. Subject: echo_bell: A large broad steel hand bell with a clear flared skirt, dark bell opening, a thick bronze handle on top and a visible clapper. Large simple shapes, flat 2–3 tone shading, no texture noise. Full-cell scale, centered physical object, overall black outlined silhouette 13–14 pixels long inside a 16x16 logical canvas with a one pixel transparent margin; substantial body, bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Phantasy Star and Ys item art with hard material planes. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, tiny objects, thin sticks or additional props. Transparent background.",
+    "tool": "built-in image_gen",
+    "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-8fdc31c8-3f8c-4243-8b96-9a277b1eb00e.png"
+  },
+  {
+    "id": "reapers_sickle",
+    "prompt": "Use case: illustration-story. Asset type: ONE Sega Master System 16x16 inventory relic, depicted as a crisp nearest-neighbour enlarged sprite. Subject: reapers_sickle: A stout curved reaper's sickle: a broad silver crescent blade at the top, dark steel underside and a short chunky purple wrapped handle extending to bottom right. Large two-pixel-wide interior cutting blade. Large simple shapes, flat 2–3 tone shading, no texture noise. Full-cell scale, centered physical object, overall black outlined silhouette 13–14 pixels long inside a 16x16 logical canvas with a one pixel transparent margin; substantial body, bold one logical pixel BLACK outline, upper-left highlights. Maximum eight opaque colours, exact SMS channels 00/55/AA/FF. Phantasy Star and Ys item art with hard material planes. No scattered pixels, checkerboard, dithering, antialiasing, glow, text, tiny objects, thin sticks or additional props. Transparent background.",
+    "tool": "built-in image_gen",
+    "source": "/Users/chrises/.codex/generated_images/01a18eee-6849-7890-bc03-6cd192011cdd/exec-6eba5698-afbf-4d4a-aa7a-74545d7564fb.png"
+  }
+]

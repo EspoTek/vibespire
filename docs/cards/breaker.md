@@ -1,5 +1,7 @@
 # The Breaker — class card pool (56)
 
+> **v2 (2026-10-30):** the v2 pool, engines, new mechanics (Embers, Shed) and every new or reworked card are in `docs/v2/breaker-design.md`, which wins where the two differ. Kept cards still use the YAML below. Breach Hammer, Plate Ram, En Garde, Shed Plating, Cinder Heart and Iron Avalanche are reworked there; Overhand Drive, Find the Seam, Planted Feet and Prism Edge are cut (Phase C); Read the Line, Recoil Spring, Parry Ledger, Anvil Heart, Forge Oath and Vent Pressure are reworked there too.
+
 Status: v1, card designer (Breaker). Source of truth for the Breaker's 56 class cards: 4 starters (verbatim from `docs/GDD.md` §4.1) + 20 common + 20 uncommon + 12 rare. Rules, terms and pricing come from `docs/GDD.md` (§0, §2, §3, §8.5) and `docs/ENGINE_SPEC.md` §6–§8; where a card needs something those documents do not define, it is listed in §D (engine asks) and §F (ambiguities). Enemy questions referenced in notes are from `docs/ENEMIES.md`.
 
 ## 0. Conventions used in this file

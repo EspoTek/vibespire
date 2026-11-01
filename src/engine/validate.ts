@@ -29,7 +29,9 @@ const RUN_HOOKS: readonly string[] = ['onPickup', 'onRest', 'onShopEnter', 'onFl
 /** Effects that only make sense inside combat. */
 const COMBAT_ONLY: ReadonlySet<Effect['type']> = new Set([
   'damage', 'block', 'guard', 'lose_defence', 'lose_guard', 'draw', 'discard', 'exhaust', 'energy', 'status', 'scry', 'prune', 'advance', 'postpone',
-  'on_beat', 'fetch_card', 'spend_status', 'autoplay', 'summon', 'transform', 'reroll_forecast', 'ai_state', 'halt_enemy', 'prime', 'cancel_attack',
+  'on_beat', 'fetch_card', 'spend_status', 'shed', 'autoplay', 'harvest', 'summon', 'transform', 'reroll_forecast', 'ai_state', 'halt_enemy', 'prime', 'cancel_attack',
+  'gather', 'quicken', 'schedule',
+  'strain', 'triage', 'copy_card', 'add_random_card',
 ]);
 /** Effects only an enemy (self) may use. */
 const ENEMY_ONLY: ReadonlySet<Effect['type']> = new Set(['summon', 'transform', 'reroll_forecast', 'ai_state']);
@@ -62,13 +64,14 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
       bad(`${what}: ${e instanceof Error ? e.message : String(e)}`);
     }
   };
-  const amount = (a: Amount | 'all' | undefined): void => {
+  /** targeted: the amount is resolved with a frame target (perTarget effects) even if the source has none. */
+  const amount = (a: Amount | 'all' | undefined, targeted = w.hasTarget): void => {
     if (a === undefined || a === 'all' || typeof a === 'number' || a === 'X') return;
     const s = a.scale;
     if (typeof s === 'object' && 'fn' in s && !w.tables.amounts?.[s.fn]) bad(`amount fn '${s.fn}' missing`);
     if (typeof s === 'object' && 'status' in s) {
       exists(() => getStatusDef(s.status), 'amount status');
-      if (s.of === 'target' && !w.hasTarget) bad(`amount of target status but no target`);
+      if (s.of === 'target' && !targeted) bad(`amount of target status but no target`);
     }
     if (typeof s === 'object' && 'ai' in s && !w.enemy) bad(`amount scale ai:${s.ai} outside an enemy`);
     if (s === 'trigger_hits' && !w.riposte) bad("amount scale 'trigger_hits' outside a Riposte list");
@@ -110,6 +113,7 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
       case 'timeline_nonempty':
       case 'is_class':
       case 'removed_self':
+      case 'ripe':
         return;
     }
   };
@@ -129,11 +133,16 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
         break;
       case 'status':
         exists(() => getStatusDef(e.id), 'status');
-        amount(e.amount);
+        // perTarget (shared v2): each target is the frame target for its own amount.
+        amount(e.amount, w.hasTarget || e.perTarget === true);
         if ((e.target === 'target' || e.target === 'attacker') && !w.hasTarget) bad(`status targets '${e.target}' but the source has no target`);
         break;
       case 'halt_enemy':
         if ((e.target === 'target' || e.target === 'attacker') && !w.hasTarget) bad('halt_enemy targets a target but the source has no target');
+        break;
+      case 'harvest':
+        amount(e.mult);
+        if ((e.target === 'target' || e.target === 'attacker') && !w.hasTarget) bad('harvest targets a target but the source has no target');
         break;
       case 'discard':
         oneMode(e, ['random', 'choose', 'all']);
@@ -142,6 +151,23 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
       case 'exhaust':
         oneMode(e, ['random', 'choose', 'all', 'self']);
         amount(e.n);
+        if (e.upTo === true && e.choose !== true) bad('exhaust upTo needs choose');
+        if (e.self === true && (e.then !== undefined || e.filter !== undefined)) bad('exhaust self takes no then / filter');
+        if (e.filter?.ripe !== undefined) bad("exhaust filter 'ripe' is not supported (fetch_card only)");
+        if (e.then) validateEffects(e.then, w, out);
+        break;
+      // --- Shared v2
+      case 'strain':
+        amount(e.amount);
+        break;
+      case 'triage':
+        if (!Number.isInteger(e.keep) || e.keep < 0) bad('triage keep must be a non-negative integer');
+        break;
+      case 'copy_card':
+        break;
+      case 'add_random_card':
+        amount(e.n);
+        if (e.filter?.ripe !== undefined) bad("add_random_card filter 'ripe' is not supported");
         break;
       case 'remove_card':
         oneMode(e, ['random', 'choose', 'all', 'self']);
@@ -205,6 +231,11 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
         exists(() => getStatusDef(e.id), 'spend_status');
         validateEffects(e.effects, w, out);
         break;
+      case 'shed':
+        if (w.enemy) bad('shed is player-only');
+        if (typeof e.n === 'number' && e.n <= 0) bad('shed n must be > 0');
+        validateEffects(e.effects, w, out);
+        break;
       case 'on_beat':
         validateEffects(e.effects, w, out);
         break;
@@ -213,7 +244,11 @@ export function validateEffects(effects: readonly Effect[], w: Where, out: strin
         break;
       case 'advance':
       case 'postpone':
+      case 'quicken':
         if (e.n <= 0) bad(`${e.type} n must be > 0`);
+        break;
+      case 'schedule':
+        if (e.turns < 1 || e.turns > TUNING.caps.delayMax) bad(`schedule turns must be 1..${TUNING.caps.delayMax}`);
         break;
       case 'fetch_card':
         amount(e.n);
@@ -283,6 +318,8 @@ export function validateAllContent(): void {
         if (def.delay.turns < 1 || def.delay.turns > TUNING.caps.delayMax) out.push(`${label}: delay turns must be 1-${TUNING.caps.delayMax}`);
         validateEffects(def.delay.effects, { label: `${label} delay`, tables: def, hasTarget, combat: true, run: false, enemy: false }, out);
       }
+      // Shared v2 H2: Salvage runs with no chosen target (single-target effects must say random_enemy).
+      if (def.salvage) validateEffects(def.salvage, { label: `${label} salvage`, tables: def, hasTarget: false, combat: true, run: false, enemy: false }, out);
       if (def.cost === null && !def.keywords?.includes('unplayable')) out.push(`${label}: cost null but no 'unplayable' keyword`);
       if ((def.keywords ?? []).includes('riposte') !== (def.riposte !== undefined)) out.push(`${label}: 'riposte' keyword and riposte list must go together`);
       if ((def.keywords ?? []).includes('delay') !== (def.delay !== undefined)) out.push(`${label}: 'delay' keyword and delay block must go together`);

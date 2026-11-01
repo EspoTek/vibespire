@@ -22,6 +22,7 @@ export class Sprite extends THREE.Mesh<THREE.BufferGeometry, SpriteMaterial> imp
     this._frameName = frameName;
     this._scale = scale;
     setFrameUv(this.material, f, atlas.width, atlas.height);
+    this.material.uniforms.uTexSize.value.set(atlas.width, atlas.height);
   }
 
   get frameName(): string { return this._frameName; }
@@ -56,6 +57,13 @@ export class Sprite extends THREE.Mesh<THREE.BufferGeometry, SpriteMaterial> imp
   /** Step colours down by whole SMS levels (0..3): palette-safe darkening. */
   setDim(levels: number): void { this.material.uniforms.uDim.value = levels; }
   setFlash(on: boolean): void { this.material.uniforms.uFlash.value = on ? 1 : 0; }
+  /** Colour of the flash silhouette (palette flashes: white, red, yellow...). Default white. */
+  setFlashColor(color: number): void { this.material.uniforms.uFlashColor.value.setHex(color); }
+  /** Ordered-dither dissolve, 0 (whole) .. 1 (gone), in whole source pixels. */
+  setDissolve(k: number): void {
+    if (!(k >= 0 && k <= 1)) throw new Error(`Sprite.setDissolve: k must be in 0..1, got ${k}`);
+    this.material.uniforms.uDissolve.value = k;
+  }
   setFlipX(on: boolean): void { this.material.uniforms.uFlip.value.x = on ? -1 : 1; }
   setOpacity(a: number): void { this.material.uniforms.uOpacity.value = a; }
 

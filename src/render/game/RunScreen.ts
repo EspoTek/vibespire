@@ -21,12 +21,14 @@ import { ListMenu } from '../ui/ListMenu.ts';
 import { Panel } from '../ui/Panel.ts';
 import { Label } from '../ui/Label.ts';
 import { Z, type Widget } from '../ui/Widget.ts';
+import { InfoLayer } from '../ui/InfoLayer.ts';
+import { TipLayer } from './tips.ts';
 import { openDeckView, type DeckTab } from './deckView.ts';
 import { TopBar } from './hud.ts';
-import { confirmDialog, openHelp, openPause } from './overlays.ts';
+import { CardDetail, confirmDialog, openHelp, openPause } from './overlays.ts';
 import { routeAfter, screenKind } from './router.ts';
 import type { RunSession } from './session.ts';
-import { cardFace } from './view.ts';
+import { cardFace, shardsOf } from './view.ts';
 import { actSong, type SongName } from '../music.ts';
 
 export abstract class RunScreen extends Screen {
@@ -39,6 +41,8 @@ export abstract class RunScreen extends Screen {
   private choiceOpen = false;
   /** An action routed away: no more input or per-frame work on this screen. */
   protected leaving = false;
+  /** Tooltips + keyword boxes for the focused widget (relics, potions, rows, buttons...), every screen. */
+  protected readonly infoLayer: InfoLayer;
 
   constructor(app: App, session: RunSession, name: string, backdrop: BackdropKey, withHud = true) {
     super(app, name);
@@ -54,6 +58,16 @@ export abstract class RunScreen extends Screen {
       }));
       this.scope.add(...this.hud.focusables());
     }
+    this.infoLayer = new InfoLayer(this);
+    this.tips = new TipLayer(app, this);
+  }
+
+  /** One-time contextual tips (game/tips.ts): screens offer them when a mechanic first shows up. */
+  protected readonly tips: TipLayer;
+
+  /** Tips any run screen can trigger from the run state (Shards...). Screens add their own. */
+  protected offerRunTips(): void {
+    if (shardsOf(this.state) > 0) this.tips.offer('shards');
   }
 
   /** Build the screen's content from `this.session.state` (called on enter). */
@@ -63,6 +77,7 @@ export abstract class RunScreen extends Screen {
 
   override enter(): void {
     this.build();
+    this.offerRunTips();
     this.focusContent();
     this.checkChoice();
   }
@@ -104,10 +119,31 @@ export abstract class RunScreen extends Screen {
       return events;
     }
     this.refresh(events);
+    this.offerRunTips();
     this.focusContent();
     this.checkChoice();
     return events;
   }
+
+  /**
+   * Apply `a` the way this screen's own controls do (the e2e hook in src/render/debug calls this).
+   * A resolve_choice first closes the open choice modal, as answering it would; any other action
+   * needs the screen without a modal, like a player's input.
+   */
+  uiDispatch(a: Action): void {
+    if (this.busy) throw new Error(`${this.name}: uiDispatch(${a.type}) while busy`);
+    // a multi-pick step only changes the engine's selection (the open modal keeps its own)
+    if (a.type === 'choice_toggle') { this.session.apply(a); return; }
+    if (a.type === 'resolve_choice') { this.closeAllModals(); this.choiceOpen = false; }
+    else if (this.focus.depth !== 1) throw new Error(`${this.name}: uiDispatch(${a.type}) with a modal open`);
+    this.act(a);
+  }
+
+  /** The run this screen shows (read-only use by the e2e hook). */
+  get runSession(): RunSession { return this.session; }
+
+  /** Not accepting input: on the way out, or (combat) animating. */
+  get busy(): boolean { return this.leaving; }
 
   /** Narrative events → toasts (outside combat; the combat screen animates its own). */
   protected toastEvents(events: readonly GameEvent[]): void {
@@ -130,11 +166,21 @@ export abstract class RunScreen extends Screen {
   }
 
   override update(_dtMs: number = 16): void {
+    this.updateInfo();
     if (this.focus.depth !== 1 || this.leaving) return; // a modal is open, or we are on our way out
     const inp = this.app.input;
     if (inp.pressed('menu')) this.openPauseMenu();
     else if (inp.pressed('deck')) this.openDeck();
     else if (inp.pressed('help')) openHelp(this, this.app);
+  }
+
+  /**
+   * Tooltip + keyword boxes for whatever is focused in the top scope (modals included). Cards are
+   * explained by the screen's CardDetail, so they are skipped here.
+   */
+  protected updateInfo(): void {
+    const f = this.leaving ? null : this.focus.focused;
+    this.infoLayer.update(f instanceof CardFrame ? null : f);
   }
 
   protected openPauseMenu(): void {
@@ -177,7 +223,7 @@ export abstract class RunScreen extends Screen {
     this.choiceOpen = true;
     const resolve = (uids: number[]) => {
       this.choiceOpen = false;
-      this.act({ type: 'resolve_choice', uids });
+      this.act(this.session.answerChoice(uids));
     };
     openChoiceModal(this, this.app, this.state, pc, resolve);
   }
@@ -206,15 +252,21 @@ export function openChoiceModal(screen: Screen, app: App, state: RunState, pc: P
       const w = Math.min(W - 16, Math.max(220, n * 74 + 24, measureLine(fonts.ui.data, title) + 24)); // the title stays one line
       const x = Math.floor((W - w) / 2), y = 90;
       const cardsX = x + Math.floor((w - (n * 74 - 10)) / 2);
-      const panel = new Panel(rect(x, y, w, pc.min === 0 ? 150 : 128), { title });
+      const ph = pc.min === 0 ? 150 : 128;
+      const panel = new Panel(rect(x, y, w, ph), { title });
       panel.setZ(Z.MODAL + 20);
       const widgets: Widget[] = [panel];
+      // full text + keyword boxes for the focused offer, under the panel
+      const detail = panel.addChild(new CardDetail(x, y + ph + 4, Math.min(w, 200)), 40);
+      detail.keywordSide = 'right';
       pc.choices.forEach((c, i) => {
         const offer = pc.offers[c];
         if (!offer) throw new Error(`offers choice ${c} has no offer`);
         const cw = panel.addChild(new CardFrame(cardsX + i * 74, y + 30, cardFace(app, offer, { state })), 5);
         cw.list = { key: 'offers', index: i, axis: 'x', wrap: true };
         cw.onActivate = () => { close(); resolve([c]); };
+        cw.onFocus = () => detail.show(cw.cardFace, '', [cw.ringRect(), panel.rect]);
+        cw.onBlur = () => detail.hide();
       });
       if (pc.min === 0) panel.addChild(new Button(rect(x + w - 80, y + 126, 66, 0), 'SKIP', { onActivate: () => { close(); resolve([]); } }), 5);
       return widgets;

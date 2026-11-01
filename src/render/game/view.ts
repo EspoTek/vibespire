@@ -12,16 +12,17 @@
  *    buff/debuff icon (logged once).
  */
 import {
-  canPlayCard, getCardCost, hasKeyword, isRiposteCard, primeCapacity, renderCardTextParts, TUNING,
+  canPlayCard, cardTextValues, effectiveBloomOf, getCardCost, isRipe, hasKeyword, isRiposteCard, primeCapacity, renderCardTextParts, TUNING,
   type CardInstance, type CardOffer, type RunState, type TextPart,
 } from '../../engine/index.ts';
-import { allClasses, getCardDef, getEnemyDef, getStatusDef } from '../../content/index.ts';
+import { allClasses, getCardDef, getEnemyDef, getStatusDef, keywordsFor } from '../../content/index.ts';
 import type { App } from '../app.ts';
 import { atlasFromPixels, type Atlas } from '../gfx.ts';
 import { PixelBuffer } from '../pixels.ts';
 import { C } from '../palette.ts';
 import { FONT_8X8 } from '../textLayout.ts';
 import type { CardFace, CostState } from '../ui/CardFrame.ts';
+import { ICONS } from '../ui/iconArt.ts';
 
 const warned = new Set<string>();
 function warnOnce(key: string, msg: string): void {
@@ -99,15 +100,40 @@ export function portraitOrNull(app: App, classId: string, small = false): Atlas 
 const esc = (s: string): string => s.replace(/\[/g, '[[');
 
 /** Card text with live numbers coloured: lime = above printed, pink = below, yellow = as printed. */
-export function partsToMarkup(parts: readonly TextPart[], beatLit: boolean): string {
+/**
+ * Card text with live numbers coloured: lime = above printed, pink = below, yellow = as printed.
+ * `ripe` (Graft v2): true lights "Ripe:" lime; false greys the whole Ripe clause (to the end of its
+ * sentence, numbers included) because it won't happen; null = unknown (no live state), unchanged.
+ */
+export function partsToMarkup(parts: readonly TextPart[], beatLit: boolean, ripe: boolean | null = null): string {
   let out = '';
-  for (const p of parts) {
-    if (p.kind === 'text') {
-      const t = esc(p.text);
-      out += beatLit ? t.replace(/On beat:/g, '[amber]On beat:[/]') : t;
-      continue;
+  let inRipe = false;
+  const plain = (t: string): string => {
+    const e = esc(t);
+    return beatLit ? e.replace(/On beat:/g, '[amber]On beat:[/]') : e;
+  };
+  const text = (t: string): void => {
+    let rest = t;
+    while (rest.length > 0) {
+      if (!inRipe) {
+        const i = ripe === null ? -1 : rest.indexOf('Ripe:');
+        if (i < 0) { out += plain(rest); return; }
+        out += `${plain(rest.slice(0, i))}[${ripe ? 'lime' : 'grey'}]Ripe:[/]`;
+        inRipe = true;
+        rest = rest.slice(i + 'Ripe:'.length);
+      } else {
+        const j = rest.indexOf('.');
+        const seg = j < 0 ? rest : rest.slice(0, j + 1);
+        out += ripe ? plain(seg) : `[grey]${esc(seg)}[/]`;
+        if (j >= 0) inRipe = false;
+        rest = j < 0 ? '' : rest.slice(j + 1);
+      }
     }
+  };
+  for (const p of parts) {
+    if (p.kind === 'text') { text(p.text); continue; }
     const v = String(p.value);
+    if (inRipe && ripe === false) { out += `[grey]${esc(v)}[/]`; continue; }
     const cmp = typeof p.value === 'number' && typeof p.base === 'number' ? Math.sign(p.value - p.base) : 0;
     out += `[${cmp > 0 ? 'lime' : cmp < 0 ? 'pink' : 'yellow'}]${esc(v)}[/]`;
   }
@@ -121,6 +147,32 @@ export interface FaceOptions {
   target?: number | null;
   /** Highlight "On beat:" (this card would land on the beat). */
   beat?: boolean;
+  /**
+   * VIEW UPGRADE (STS's checkbox): show the upgraded version of a card that can be upgraded, with
+   * every number the upgrade changes in lime. Ignored for cards already upgraded or not upgradable.
+   */
+  upgradePreview?: boolean;
+}
+
+/** The card can be upgraded (not yet upgraded and its def has an upgrade). */
+export function canUpgradeCard(card: CardInstance | CardOffer): boolean {
+  return !card.upgraded && Object.keys(getCardDef(card.id).upgrade).length > 0;
+}
+
+/**
+ * Upgraded card text with the numbers the upgrade changes in lime (others yellow). Printed values
+ * (no combat modifiers), so before and after compare like for like.
+ */
+export function upgradeDiffMarkup(id: string): string {
+  const before = cardTextValues({ id, upgraded: false }, null);
+  const parts = renderCardTextParts({ id, upgraded: true }, null);
+  let out = '';
+  for (const p of parts) {
+    if (p.kind === 'text') { out += esc(p.text); continue; }
+    const changed = before[p.key] !== p.value;
+    out += `[${changed ? 'lime' : 'yellow'}]${esc(String(p.value))}[/]`;
+  }
+  return out;
 }
 
 export function cardIsBloom(id: string, upgraded: boolean): boolean {
@@ -135,6 +187,7 @@ export function bloomOf(card: CardInstance | CardOffer): number | null {
 }
 
 export function cardFace(app: App, card: CardInstance | CardOffer, opts: FaceOptions = {}): CardFace {
+  if (opts.upgradePreview && canUpgradeCard(card)) return upgradePreviewFace(app, card);
   const def = getCardDef(card.id, card.upgraded);
   const state = opts.state ?? null;
   const inCombatHand = state?.combat?.hand.some((c) => 'uid' in card && c.uid === card.uid) ?? false;
@@ -147,8 +200,12 @@ export function cardFace(app: App, card: CardInstance | CardOffer, opts: FaceOpt
     if (combat && typeof cost === 'number' && cost > combat.energy) costState = 'unaffordable';
   }
   const ref = 'uid' in card ? { id: card.id, upgraded: card.upgraded, uid: card.uid } : { id: card.id, upgraded: card.upgraded };
-  const body = partsToMarkup(renderCardTextParts(ref, state, opts.target ?? null), opts.beat ?? false);
-  const bloom = bloomOf(card);
+  // Ripe and Rootstock-lifted Bloom need a real card copy and the run; offers / the Compendium don't know
+  const live = state !== null && 'uid' in card;
+  const ripe = live && cardIsBloom(card.id, card.upgraded) ? isRipe(state, card) : null;
+  const body = partsToMarkup(renderCardTextParts(ref, state, opts.target ?? null), opts.beat ?? false, ripe);
+  const raw = bloomOf(card);
+  const bloom = raw !== null && live ? effectiveBloomOf(state, card) : raw;
   const art = cardArtOrNull(app, card.id);
   const kind = def.type;
   const kw = def.keywords ?? [];
@@ -163,9 +220,20 @@ export function cardFace(app: App, card: CardInstance | CardOffer, opts: FaceOpt
     ...(art ? { art } : {}),
     upgraded: card.upgraded,
     bloom,
-    bloomCapped: bloom !== null && bloom >= TUNING.caps.bloom,
+    ...(raw !== null && bloom !== raw ? { bloomOwn: raw } : {}),
+    bloomCapped: raw !== null && raw >= TUNING.caps.bloom,
     costState,
+    keywords: keywordsFor(getCardDef(card.id), card.upgraded),
   };
+}
+
+/** Face of the upgraded version of `card` (VIEW UPGRADE / Smith preview): changed numbers lime, a cheaper cost lime. */
+function upgradePreviewFace(app: App, card: CardInstance | CardOffer): CardFace {
+  const base = getCardDef(card.id, false);
+  const up = getCardDef(card.id, true);
+  const face = cardFace(app, { id: card.id, upgraded: true });
+  const cheaper = typeof up.cost === 'number' && typeof base.cost === 'number' && up.cost < base.cost;
+  return { ...face, body: upgradeDiffMarkup(card.id), costState: cheaper ? 'reduced' : 'normal', bloom: bloomOf(card) };
 }
 
 /** Shards held (GDD §2.12). The engine always creates the counter, so a missing key is a bug. */
@@ -183,13 +251,14 @@ export function unplayableReasonOrNull(state: RunState, card: CardInstance): str
 
 // ------------------------------------------------------------------ statuses
 
-export const STATUS_ICONS: ReadonlySet<string> = new Set([
-  'onslaught', 'exposed', 'stagger', 'rot', 'augury', 'riposte_capacity', 'might', 'elite_hunted', 'backlash_primed', 'cost_tax',
-]);
+/** Status ids with a dedicated icon: every ICONS entry named after a status (iconArt.ts + statusIconArt.ts). */
+export function hasStatusIcon(id: string): boolean {
+  return Object.prototype.hasOwnProperty.call(ICONS, id);
+}
 
 /** Icon frame for a status id. Unknown ids → generic buff/debuff icon (logged once). */
 export function statusIcon(id: string): string {
-  if (STATUS_ICONS.has(id)) return id;
+  if (hasStatusIcon(id)) return id; // tests/render/statusicons.test.ts: every visible status has one
   const def = getStatusDef(id);
   warnOnce(`status:${id}`, `[view] status "${id}" has no icon; using the generic ${def.isDebuff ? 'debuff' : 'buff'} icon`);
   return def.isDebuff ? 'debuff' : 'buff';

@@ -32,6 +32,11 @@ export interface Segment {
     | null;
   /** 4-bit volume per frame of this segment (length = frames). */
   volumes: number[];
+  /**
+   * The note continues in the next segment (a held note split at a bar line by the music
+   * scheduler): no re-articulation gap at its end. Absent = a normal note end.
+   */
+  tie?: boolean;
 }
 
 const NOTE_OFFSETS: Readonly<Record<string, number>> = { C: -9, D: -7, E: -5, F: -4, G: -2, A: 0, B: 2 };
@@ -104,29 +109,183 @@ export function compileTrack(src: string, channel: Channel): Segment[] {
   return out;
 }
 
-export type SfxName = 'confirm' | 'cancel' | 'move' | 'hit' | 'block' | 'draw' | 'hurt' | 'win' | 'lose';
 export type SfxDef = Partial<Record<Channel, string>>;
 
-export const SFX: Readonly<Record<SfxName, SfxDef>> = {
+/**
+ * The SFX table. Each entry is a few frames of PSG writes; the channel use matters (a new SFX on
+ * a channel cuts what was there, unless that was higher priority: see SFX_PRIORITY).
+ * Pitchable ones (onslaught, resolve, draw, rot) are played transposed by audio.ts.
+ */
+export const SFX = {
+  // ---- UI
   move: { t0: '@B84 A5:3' },
   confirm: { t0: '@FC8 C6:2 G6:5', t1: '@9 r:2 E6:5' },
   cancel: { t0: '@FC96 G5~C5:7' },
+  // ---- hits (light / medium / heavy / overkill) and defence
+  hitLight: { n: '@EB963 w1:5', t0: '@D96 E4~B3:4' },
   hit: { n: '@FDB97531 w1:8', t0: '@FA6 A3~A2:5' },
+  hitHeavy: { n: '@FFED p1:3 @EDCBA987654 w2:11', t0: '@FFDB97 C3~A2:10', t1: '@C96 G3~C3:6' },
+  overkill: { n: '@FFFEEDDCCBBAA99887766 w2:20', t0: '@F A5:2 @FEDCBA98765 A6~A3:14', t1: '@D r:2 C3~A2:14' },
   block: { n: '@CA8 p0:4', t0: '@FB74 C5:2 C4:4' },
-  draw: { n: '@8530 w0:4', t0: '@A6 E6:1 B6:2' },
+  blockBreak: { n: '@FDB975 w0:7', t0: '@EC97 C7~C5:6', t1: '@A86 r:1 G6~G4:5' },
+  blockLost: { t0: '@964 E5~B4:4' },
+  guard: { n: '@C96 p0:3', t0: '@FB8 F4:2 C4:5', t1: '@9 r:2 A4:5' },
+  guardDecay: { t0: '@B975 A4~E4:6' },
   hurt: { t0: '@FFDB9 E3~A2:12', n: '@DB97 w2:10' },
+  hurtLight: { t0: '@DB97 C4~G3:6', n: '@B97 w1:5' },
+  // ---- card motion
+  draw: { n: '@8530 w0:4', t0: '@A6 E6:1 B6:2' },
+  discard: { n: '@7530 w0:5', t0: '@853 B5~E5:4' },
+  scrap: { n: '@DB975310 p1:8', t0: '@C962 C3~A2:6' },
+  snip: { n: '@F w0:1 r:2 @E8 w0:2', t0: '@B6 E7:1 r:2 @A5 G7:2' },
+  shuffle: {
+    n: '@A w0:1 r:1 @9 w0:1 r:1 @A w0:1 r:1 @9 w0:1 r:1 @B w0:1 r:1 @A8 w0:2',
+    t0: '@6 C6:1 r:1 D6:1 r:1 E6:1 r:1 F6:1 r:1 G6:1 r:1 @64 C7:2',
+  },
+  playAttack: { n: '@68ACA864 w0:8', t0: '@8A86 C4~C6:6' },
+  playSkill: { t0: '@A86 E5:2 B5:2 E6:3', t1: '@64 r:1 G#5:2 E6:3' },
+  playPower: { t0: '@C A4:3 C#5:3 E5:3 @CBA9876 A5:10', t1: '@8 r:3 E4:3 A4:3 @8765 C#5:10' },
+  cardAdd: { t0: '@A E6:2 A6:4' },
+  upgrade: { t0: '@C C5:2 G5:2 C6:2 @CBA9 E6:6' },
+  energy: { t0: '@C A5:2 E6:2 A6:3' },
+  // ---- class signatures
+  onslaught: { n: '@A6 w0:2', t0: '@E C5:2 @DCA G5:4' },
+  parry: { t0: '@FFEDCBA98765 B6:12', t1: '@FEDCBA98765 C7:11', t2: '@D A5~A4:8', n: '@FC96 w0:5' },
+  prime: { n: '@8 w0:2', t0: '@D C6:2 G6:2 @DCBA C7:6' },
+  fizzle: { n: '@9876543 w1:7', t0: '@964 C5~F4:7' },
+  bloom: { t0: '@D C6:2 E6:2 G6:2 @DCBA98765 C7:9', t1: '@8 r:2 G5:2 C6:2 @87654 E6:9' },
+  rot: { n: '@ACA86 p2:6', t0: '@CA864 D3~A2:8' },
+  rotSpread: { n: '@9A9A87 p2:6', t0: '@A8 F3~C4:3 @A86 C4~F3:5' },
+  delay: {
+    t0: '@C A5:2 r:3 @A E5:2 r:3 @C A5:2 r:3 @D E6~A6:5',
+    n: '@A w0:1 r:4 @8 w0:1 r:4 @A w0:1 r:4 @C8 w0:2',
+  },
+  tick: { t0: '@B A6:1 r:1 @6 A6:1', n: '@9 w0:1' },
+  resolve: { t0: '@E E6:2 B6:2 @EDCBA9 E7:8', t1: '@9 r:2 G#6:2 @98765 B6:8', n: '@C964 w0:4' },
+  // ---- statuses, healing, items
+  heal: { t0: '@B C5:3 E5:3 G5:3 @BA987 C6:8', t1: '@7 r:3 G4:3 C5:3 @7654 E5:8' },
+  buff: { t0: '@C C5~C6:6 @A8 C6:3' },
+  debuff: { t0: '@C C5~C4:8', n: '@8642 w1:4' },
+  relic: { t0: '@C E6:2 A6:3', n: '@6 w0:1' },
+  potion: { t0: '@B C4~G4:3 r:1 @B D4~A4:3 r:1 @A E4~B4:4' },
+  gold: { t0: '@D B5:2 @DCBA E6:6' },
+  purchase: { t0: '@E C6:3 E6:3 G6:3 @EDCBA9 C7:10', t1: '@A r:3 G5:3 C6:3 @A987 E6:10', n: '@A6 w0:2' },
+  step: { n: '@B85 p1:3', t0: '@7 C3:2' },
+  // ---- reward reveals by rarity
+  common: { t0: '@A G5:2 C6:4' },
+  uncommon: { t0: '@C C6:2 E6:2 @CBA987 G6:8', t1: '@7 r:2 G5:2 @7654 C6:8' },
+  rare: {
+    t0: '@C E6:2 G#6:2 B6:2 E7:2 @CBA98765 G#7:12', t1: '@8 r:1 B5:2 E6:2 G#6:2 @876 B6:12', n: '@6543 w0:6',
+  },
+  // ---- v2 mechanics
+  /** Shed: armour plates clank off. */
+  shed: { n: '@FC96 p0:3 r:3 @DA7 p0:3 r:2 @B85 p0:3', t0: '@EB8 G4:2 D4:4 r:2 @C96 F4:2 C4:4' },
+  /** Embers convert to Onslaught: a coal crackle. */
+  crackle: { n: '@C0C09 w0:2 r:1 @A07 w0:2 r:2 @C0 w0:1 r:1 @B86 w0:3', t0: '@A8 C5~G5:4' },
+  /** Strain: a heavy heartbeat thump. */
+  thump: { n: '@FEC9 p2:5 r:4 @C96 p2:4', t0: '@FDA7 A2:5 r:4 @C96 A2:4' },
+  /** Salvage: scrap sparks and a pick-up chime. */
+  salvage: { n: '@DB97 p1:5', t0: '@C r:3 E6:2 @CBA9 B6:6' },
+  /** Reprise: the play sound's ghost, up a fifth. */
+  reprise: { t0: '@9 r:2 @8765 G5:3 D6:3 G6:5', t1: '@5 r:4 @54 G5:3 D6:3 G6:4' },
+  /** A token puff (Chaff added). */
+  puff: { n: '@9A8642 w1:6', t0: '@6 C6~G5:3' },
+  /** Gather: Timeline chips slide together and lock. */
+  gather: { n: '@4689A w0:5 @E p0:2', t0: '@8 E5~A5:5 @D A5:3' },
+  /** Total Eclipse: a dark doubled bell. */
+  eclipse: { t0: '@E E4:3 @EDCBA9876 E5:12', t1: '@B r:2 B3:3 @BA98765 B4:12', t2: '@C E3:15', n: '@A8 p2:4' },
+  /** Goad applied: a sharp taunt. */
+  taunt: { t0: '@F E5:2 r:1 E5:2 @FDB9 A5~E5:6', n: '@C8 w1:3' },
+  /** A Bloom card ripens: a golden bell. */
+  ripe: { t0: '@E G5:3 B5:3 D6:3 @EDCBA98765 G6:14', t1: '@9 r:3 D5:3 G5:3 @98765432 B5:14', n: '@85 w0:2' },
+  /** Harvest: Rot is ripped out of the enemy. */
+  harvest: { n: '@FDDBB97 p2:7', t0: '@F A3~A4:4 @EC A4~C3:8' },
+  /** The next-turn bank pays out. */
+  bank: { t0: '@C E5:2 A5:2 @CBA E6:5', n: '@6 w0:2' },
+  // ---- enemies
+  enemyAttack: { n: '@46ACA w1:5', t0: '@89A G3~D4:5' },
+  enemyBuff: { t0: '@A G4:2 C5:2 G5:4' },
+  cancelled: { t0: '@D G5~C4:10', n: '@A8 w1:4' },
+  spawn: { t0: '@A C4~C5:6', n: '@6 w0:3' },
+  flee: { t0: '@C C5~C7:10', n: '@8642 w0:5' },
+  death: {
+    t0: '@F C5:2 A4:2 F4:2 D4:2 @FEDCBA987654321 C4~C3:16',
+    t1: '@B r:1 A4:2 F4:2 D4:2 B3:2',
+    n: '@FEDCBA9876543210 w1:16',
+  },
+  bossDeath: {
+    t0: '@F E5:3 C5:3 A4:3 E4:3 @F E5:3 C5:3 A4:3 E4:3 @FFEEDDCCBBAA99887766554433221 C4~A2:30',
+    t1: '@C r:1 C5:3 A4:3 E4:3 C4:3 C5:3 A4:3 E4:3 C4:2',
+    n: '@FFFFEEEEDDDDCCCCBBBBAAAA9999888877776666 w2:40',
+  },
+  phase: { t0: '@F E4:4 @FEDCBA98 F4:14', t1: '@E Bb3:4 @EDCBA98 B3:14', t2: '@F A2:18', n: '@FDB97 p2:8' },
+  bossIntro: {
+    t0: '@F A4:4 r:2 A4:4 r:2 @FEDCBA9 C5:6 B4:6 @FFEEDDCCBBAA99887766 A4:30',
+    t1: '@C E4:6 r:6 @C F4:12 @CCBBAA9988776655 E4:30',
+    t2: '@F A2:24 @FFEEDDCCBBAA99887766 A2:30',
+    n: '@FDB9 p2:6 r:6 @FDB9 p2:6 r:36',
+  },
+  eliteIntro: { t0: '@E E5:3 r:1 E5:3 @EDCBA987 G5:12', t2: '@D E3:7 @DCBA98 E3:12', n: '@DB9 p2:4 r:3 @DB9 p2:4' },
+  // ---- turns and fanfares
+  turnPlayer: { t0: '@D C5:3 G5:6', t1: '@8 E4:3 E5:6' },
+  turnEnemy: { t0: '@D E4:3 B3:6', t1: '@9 G3:3 E3:6' },
   win: {
     t0: '@D C5:6 E5:6 G5:6 @DDCCBBAA99887766 C6:20',
     t1: '@9 E4:6 G4:6 B4:6 @99887766554433 E5:20',
     t2: '@A C3:18 @AA998877665544 C3:20',
   },
+  fanfareElite: {
+    t0: '@E G4:5 C5:5 E5:5 G5:5 @E E5:4 G5:4 @EEDDCCBBAA99887766 C6:28',
+    t1: '@A E4:5 G4:5 C5:5 E5:5 @A C5:4 E5:4 @AA998877665544 G5:28',
+    t2: '@B C3:10 G3:10 C3:8 @BBAA99887766 C3:28',
+    n: '@C96 w0:3 r:7 @C96 w0:3 r:7 @C96 w0:3 r:5 @EDCBA98765 w1:10',
+  },
+  fanfareBoss: {
+    t0: '@E C5:4 C5:4 C5:4 @E G5:12 @E F5:4 E5:4 D5:4 @E C6:12 @E B5:4 A5:4 B5:4 @EEDDCCBBAA9988776655 C6:36',
+    t1: '@A E4:12 @A E5:12 @A A4:12 @A G5:12 @A G4:12 @AA99887766554433 E5:36',
+    t2: '@C C3:12 C3:12 F3:12 E3:12 G3:12 @CCBBAA99887766 C3:36',
+    n: '@D9 w0:4 r:8 @D9 w0:4 r:8 @D9 w0:4 r:8 @D9 w0:4 r:8 @D9 w0:4 r:8 @FEDCBA9876543 w1:36',
+  },
   lose: {
     t0: '@C C5:10 B4:10 Bb4:10 @CCBBAA9988776655443322 A4~F4:36',
-    t2: '@A A2:30 @AA9988776655443322 F2:36',
+    t2: '@A A2:30 @AA9988776655443322 F3:36', // F2 is below the tone register's floor (~109 Hz)
   },
-};
+} as const satisfies Readonly<Record<string, SfxDef>>;
+
+export type SfxName = keyof typeof SFX;
 
 export const SFX_NAMES: readonly SfxName[] = Object.keys(SFX) as SfxName[];
+
+/**
+ * Channel priority (SMS sound drivers did this): a new SFX takes a channel only if nothing of
+ * HIGHER priority is still sounding on it. Absent = 1. 0 = UI chatter, 3 = big moments.
+ */
+export const SFX_PRIORITY: Readonly<Partial<Record<SfxName, number>>> = {
+  move: 0, draw: 0, discard: 0, tick: 0, gold: 0, step: 0, blockLost: 0,
+  hitHeavy: 2, overkill: 3, parry: 3, death: 2, bossDeath: 3, phase: 3, bossIntro: 3, eliteIntro: 3,
+  eclipse: 2, ripe: 2, thump: 2, harvest: 2,
+  win: 3, fanfareElite: 3, fanfareBoss: 3, lose: 3, hurt: 2, blockBreak: 2, rare: 2,
+};
+
+export function sfxPriority(name: SfxName): number { return SFX_PRIORITY[name] ?? 1; }
+
+/**
+ * Transpose compiled segments by `semis` semitones (tone channels only; noise is unchanged),
+ * re-quantised to the tone register. Pure: returns new segments.
+ */
+export function transposeSegments(segs: readonly Segment[], semis: number): Segment[] {
+  if (semis === 0) return segs.map((s) => ({ ...s }));
+  const k = 2 ** (semis / 12);
+  return segs.map((s) => (s.sound?.kind === 'tone'
+    ? { ...s, sound: { kind: 'tone', from: psgQuantize(s.sound.from * k), to: psgQuantize(s.sound.to * k) } }
+    : { ...s }));
+}
+
+/** Attenuate a segment list by `steps` volume steps (2 dB each); a sounding frame never drops below 1. */
+export function attenuateSegments(segs: readonly Segment[], steps: number): Segment[] {
+  if (!Number.isInteger(steps) || steps < 0) throw new Error(`attenuateSegments: bad steps ${steps}`);
+  return segs.map((s) => ({ ...s, volumes: s.volumes.map((v) => (v === 0 ? 0 : Math.max(1, v - steps))) }));
+}
 
 /** Compile a whole SFX (all channels). */
 export function compileSfx(def: SfxDef): Partial<Record<Channel, Segment[]>> {

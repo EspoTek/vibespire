@@ -114,17 +114,27 @@ export function cardQuality(id: string, upgraded: boolean): number {
   return Math.min(i.efficiency, 14) * 0.75 + (RARITY_BONUS[i.def.rarity] ?? 0) + (upgraded ? 0.5 : 0);
 }
 
+/** Margin an offer must clear over the (shrunk) mean quality of the deck's non-starter cards. */
+const SKIP_MARGIN = 1.5;
+/** Pseudo-cards at the floor's quality that the deck mean is shrunk toward. */
+const SKIP_PRIOR_CARDS = 6;
+
 /**
  * Skip threshold for this deck: an offer must beat the floor and the mean quality of the deck's
- * non-starter cards by a margin, so early picks are easy and a strong deck skips more.
+ * non-starter cards by a margin, so early picks are easy and a strong deck skips more. The mean is shrunk
+ * toward the floor by SKIP_PRIOR_CARDS pseudo-cards. With the raw mean, a starter deck plus one strong
+ * rare set the bar at that rare's quality + 1.5, and the bot skipped every later reward. A traced card
+ * counterfactual, one extra Molten Shell on cf-6-breaker, skipped every card through Act 1 and died on
+ * floor 32 with 11 cards. That made strong rares measure as traps (Phase E Breaker cards -11 to -19 win).
  */
 export function skipThreshold(s: RunState): number {
   const qs = s.player.deck.filter((c) => {
     const i = infoOf(c);
     return !i.junk && i.def.rarity !== 'starter';
   }).map((c) => cardQuality(c.id, c.upgraded));
-  const mean = qs.length ? qs.reduce((a, b) => a + b, 0) / qs.length : 0;
-  return Math.max(SKIP_THRESHOLD, mean + 1.5);
+  const base = SKIP_THRESHOLD - SKIP_MARGIN;
+  const mean = (qs.reduce((a, b) => a + b, 0) + SKIP_PRIOR_CARDS * base) / (qs.length + SKIP_PRIOR_CARDS);
+  return Math.max(SKIP_THRESHOLD, mean + SKIP_MARGIN);
 }
 
 export function bestOffer(s: RunState, offers: readonly CardOffer[]): { index: number; score: number } {

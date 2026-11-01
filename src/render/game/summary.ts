@@ -13,6 +13,8 @@ export interface SummaryFloor {
 export interface SummaryInput {
   phase: 'victory' | 'defeat';
   classId: string;
+  /** Difficulty tier name (ruling 71), e.g. 'HEROIC'. */
+  tier: string;
   seed: string;
   act: number;
   floor: number;
@@ -60,6 +62,7 @@ export function summarizeRun(s: SummaryInput, n: SummaryNames): RunSummary {
   const cause = s.phase === 'victory' ? '-' : lastFight?.encounterId ? n.encounterName(lastFight.encounterId) : 'unknown';
   const rows: [string, string][] = [
     ['CLASS', n.className(s.classId)],
+    ['TIER', s.tier],
     ['SEED', s.seed],
     ['REACHED', `ACT ${s.act}  FLOOR ${s.floor}`],
     [s.phase === 'victory' ? 'HP LEFT' : 'FELL TO', s.phase === 'victory' ? `${s.hp}/${s.maxHp}` : cause],

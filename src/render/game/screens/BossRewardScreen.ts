@@ -20,25 +20,28 @@ export class BossRewardScreen extends RunScreen {
   constructor(app: App, session: RunSession) { super(app, session, 'boss-reward', actBackdrop(session.state.act)); }
 
   protected build(): void {
+    this.tips.offer('boss_relic');
     this.bg.setDim(2);
     const choices = this.state.bossRelicChoices;
     if (!choices) throw new Error('BossRewardScreen: no bossRelicChoices');
-    const panel = this.add(new Panel(rect(90, 50, W - 180, 280), { title: 'BOSS RELIC' }));
+    const panel = this.add(new Panel(rect(90, 50, W - 180, 296), { title: 'BOSS RELIC' }));
     panel.setZ(Z.PANEL);
     let y = 74;
     if (choices.length === 0) panel.addChild(new Label(W / 2, 150, 'NO BOSS RELICS LEFT TO OFFER.', { align: 'center', color: C.textMuted }), 2);
     choices.forEach((id, i) => {
       const def = getRelicDef(id);
       const text = `[cyan]${def.name.toUpperCase()}[/]\n${renderRelicText(id, this.state)}`;
-      const h = Math.max(40, ChoiceRow.heightFor(text, W - 212, { icon: true, small: true }));
+      // a boss relic is a big moment: icon at 2x, text in the 8x8 font (16 px more icon width than heightFor assumes)
+      const h = Math.max(44, ChoiceRow.heightFor(text, W - 212 - 16, { icon: true }));
       const a = this.session.findOrNull('choose_boss_relic', (x) => x.index === i);
-      const row = panel.addChild(new ChoiceRow(rect(106, y, W - 212, h), { text, icon: itemIcon(this.app, 'relic', id), font: 'small', reason: a ? null : 'Not available.' }), 3);
+      const row = panel.addChild(new ChoiceRow(rect(106, y, W - 212, h), { text, icon: itemIcon(this.app, 'relic', id), iconScale: 2, reason: a ? null : 'Not available.' }), 3);
       row.list = { key: 'boss-relics', index: i, axis: 'y', wrap: false };
       row.onActivate = () => { if (a) this.act(a); };
       y += h + 6;
     });
+    this.rowsBottom = y;
     const skip = this.session.findOrNull('skip_boss_relic');
-    panel.addChild(new Button(rect(W / 2 - 60, 300, 120, 0), `SKIP +${TUNING.shards.skipBossRelic} ◆`, {
+    panel.addChild(new Button(rect(W / 2 - 60, 322, 120, 0), `SKIP +${TUNING.shards.skipBossRelic} ◆`, {
       onActivate: () => { if (skip) this.act(skip); },
       hint: `Take no relic: gain ${TUNING.shards.skipBossRelic} Shards.`,
     }), 3).setEnabled(skip !== null);
@@ -46,4 +49,16 @@ export class BossRewardScreen extends RunScreen {
   }
 
   protected refresh(_e: readonly GameEvent[]): void { /* routes to the act transition */ }
+
+  /** Bottom of the relic rows: the focused relic's keyword boxes go under them, side by side, above SKIP. */
+  private rowsBottom = 0;
+
+  protected override updateInfo(): void {
+    const f = this.focus.focused;
+    if (this.focus.depth === 1 && !this.leaving && f instanceof ChoiceRow) {
+      this.infoLayer.update(f, { anchor: rect(106, this.rowsBottom - 4, W - 212, 1), side: 'below', maxHeight: 318 - this.rowsBottom });
+      return;
+    }
+    super.updateInfo();
+  }
 }

@@ -4,6 +4,7 @@
 // augury (forecast display), halted (skip next move), elite_hunted (applied by pact_hunted).
 // Stack caps live in TUNING.caps.status (onslaught 30, exposed 20, stagger 20, rot 15).
 import type { StatusDef } from '../engine/types';
+import { FESTERING_LENS } from './relics';
 
 const HUNTED = { hp_pct: 25, dmg: 2 };
 const BACKLASH = { per: 4 };
@@ -87,6 +88,14 @@ export const STATUSES: StatusDef[] = [
       ],
     },
     hooks: {
+      // Shared v2 Festering Lens (relics.ts): a Rot tick on an enemy also loses 1 HP per Exposed on it.
+      onTick: (c) => {
+        if (c.owner === 'player' || !c.state.player.relics.some((r) => r.id === 'festering_lens')) return;
+        const exposed = c.combat?.enemies.find((e) => e.uid === c.owner)?.statuses.exposed ?? 0; // no Exposed = 0
+        if (exposed <= 0) return;
+        c.emit({ t: 'relic_trigger', relic: 'festering_lens' });
+        c.queue([{ type: 'lose_hp', amount: exposed * FESTERING_LENS.per, target: 'self' }]);
+      },
       // GDD §2.6 spread: floor(Rot / 2) (Rot Censer: all of it) to a random living ally of the dead enemy.
       onDeath: (c) => {
         const combat = c.combat;

@@ -12,23 +12,23 @@ import { createStreams } from '../../src/engine/rng';
 import { applyStatus, tickEntity, tickPhase } from '../../src/engine/statuses';
 import { renderMoveText, renderStatusText } from '../../src/engine/text';
 import { validateEffects } from '../../src/engine/validate';
-import type { EnemyState, RunState } from '../../src/engine/types';
+import type { EnemyState, RunState, TimelineEntry } from '../../src/engine/types';
 
 const ENEMY_IDS = ['furnace_drone', 'rivet_gnasher', 'cog_acolyte', 'riveter', 'slag_golem', 'loom_oracle', 'the_auditor', 'anvil_warden', 'hammer_warden', 'boiler_tyrant'];
-const STATUS_IDS = ['sealed_pattern', 'inventory', 'bonded', 'overpressure'];
+const STATUS_IDS = ['scour_rite', 'sealed_pattern', 'inventory', 'bonded', 'overpressure'];
 // Exact roster order, pools, HP sums, weights and action order (independent of implementation).
 const ENCOUNTERS = [
-  ['enc_a2_rivet_pair', 'easy', 60, 68, 1, ['rivet_gnasher', 'rivet_gnasher']],
-  ['enc_a2_drone_gnasher', 'easy', 64, 74, 1, ['furnace_drone', 'rivet_gnasher']],
+  ['enc_a2_rivet_pair', 'easy', 56, 64, 1, ['rivet_gnasher', 'rivet_gnasher']],
+  ['enc_a2_drone_gnasher', 'easy', 62, 72, 1, ['furnace_drone', 'rivet_gnasher']],
   ['enc_a2_riveter', 'easy', 64, 70, 1, ['riveter']],
-  ['enc_a2_drone_riveter', 'hard', 98, 110, 15, ['furnace_drone', 'riveter']],
-  ['enc_a2_acolyte_golem', 'hard', 126, 138, 14, ['cog_acolyte', 'slag_golem']],
-  ['enc_a2_oracle_pack', 'hard', 118, 132, 15, ['loom_oracle', 'rivet_gnasher', 'rivet_gnasher']],
-  ['enc_a2_drone_trio', 'hard', 102, 120, 13, ['furnace_drone', 'furnace_drone', 'furnace_drone']],
-  ['enc_a2_acolyte_pack', 'hard', 106, 120, 14, ['cog_acolyte', 'rivet_gnasher', 'rivet_gnasher']],
+  ['enc_a2_drone_riveter', 'hard', 98, 110, 14, ['furnace_drone', 'riveter']],
+  ['enc_a2_acolyte_golem', 'hard', 126, 138, 16, ['cog_acolyte', 'slag_golem']],
+  ['enc_a2_oracle_pack', 'hard', 114, 128, 11, ['loom_oracle', 'rivet_gnasher', 'rivet_gnasher']],
+  ['enc_a2_drone_trio', 'hard', 102, 120, 16, ['furnace_drone', 'furnace_drone', 'furnace_drone']],
+  ['enc_a2_acolyte_pack', 'hard', 102, 116, 16, ['cog_acolyte', 'rivet_gnasher', 'rivet_gnasher']],
   ['enc_a2_golem_riveter', 'hard', 144, 156, 14, ['slag_golem', 'riveter']],
-  ['enc_a2_oracle_golem', 'hard', 138, 150, 15, ['loom_oracle', 'slag_golem']],
-  ['enc_a2_auditor', 'elite', 140, 148, 1, ['the_auditor']],
+  ['enc_a2_oracle_golem', 'hard', 138, 150, 13, ['loom_oracle', 'slag_golem']],
+  ['enc_a2_auditor', 'elite', 150, 158, 1, ['the_auditor']],
   ['enc_a2_anvil_hammer', 'elite', 160, 172, 1, ['anvil_warden', 'hammer_warden']],
   ['enc_a2_boiler', 'elite', 150, 158, 1, ['boiler_tyrant']],
 ] as const;
@@ -36,7 +36,7 @@ const ENCOUNTERS = [
 /** Fully typed combat fixture: no class, cards, relics or encounters are registered by this test. */
 function sandbox(ids: readonly string[], seed = 'act2') {
   const state: RunState = {
-    version: 1, seed, classId: 'breaker', rng: createStreams(seed), act: 2, ascent: 0, floor: 1,
+    version: 1, seed, classId: 'breaker', rng: createStreams(seed), act: 2, ascent: 0, difficulty: 'standard', floor: 1,
     phase: 'combat', player: { hp: 100000, maxHp: 100000, gold: 0, deck: [], relics: [], potions: [], potionSlots: 3, counters: { shards: 0 } },
     map: { act: 2, rows: [], bossEncounter: 'unused' }, mapPos: null, mapPath: [], room: 'monster',
     reward: null, shop: null, event: null, rest: null, treasure: null, startChoices: null, bossRelicChoices: null,
@@ -94,7 +94,7 @@ describe('Act 2 roster and validators', () => {
   it('contains exactly the assigned enemies, statuses and non-boss encounters', () => {
     expect(ACT2_ENEMIES).toHaveLength(10);
     expect(ACT2_ENEMIES.map((d) => d.id)).toEqual(ENEMY_IDS);
-    expect(ACT2_STATUSES).toHaveLength(4);
+    expect(ACT2_STATUSES).toHaveLength(5);
     expect(ACT2_STATUSES.map((d) => d.id)).toEqual(STATUS_IDS);
     expect(ACT2_ENCOUNTERS).toHaveLength(13);
     expect(ACT2_ENCOUNTERS.map((d) => d.id)).toEqual(ENCOUNTERS.map(([id]) => id));
@@ -111,7 +111,8 @@ describe('Act 2 roster and validators', () => {
       expect(m.text).toBeTypeOf('string');
       expect(m.text?.replace(/\{[^}]+\}/g, '')).not.toMatch(/\d/);
     }
-    for (const sid of Object.keys(def.spawnStatuses ?? {})) expect(getStatusDef(sid).stacks).toBe('flag');
+    // Seething (shared, bosses.ts) carries its HP threshold as stacks; every other passive is a flag.
+    for (const sid of Object.keys(def.spawnStatuses ?? {})) expect(getStatusDef(sid).stacks).toBe(sid === 'seething' ? 'amount' : 'flag');
     expect(errors).toEqual([]);
   });
 
@@ -238,12 +239,12 @@ describe('seeded AI contract', () => {
 describe('Act 2 mechanics and custom tables', () => {
   for (const [id, moveId, damage, hits] of [
     ['furnace_drone', 'scorch', 10, 1],
-    ['rivet_gnasher', 'nip', 3, 3], ['rivet_gnasher', 'lunge', 10, 1],
+    ['rivet_gnasher', 'nip', 3, 3], ['rivet_gnasher', 'lunge', 9, 1],
     ['cog_acolyte', 'censer', 9, 1],
-    ['riveter', 'rivet_burst', 3, 5], ['riveter', 'pin_down', 7, 1],
-    ['slag_golem', 'ingot_slam', 17, 1], ['slag_golem', 'spatter', 6, 2],
-    ['loom_oracle', 'shuttle_strike', 6, 2], ['loom_oracle', 'unravel', 16, 1],
-    ['the_auditor', 'ledger_lash', 4, 1], ['the_auditor', 'stamp', 15, 1],
+    ['riveter', 'rivet_burst', 3, 4], ['riveter', 'pin_down', 7, 1],
+    ['slag_golem', 'ingot_slam', 15, 1], ['slag_golem', 'spatter', 6, 2],
+    ['loom_oracle', 'shuttle_strike', 6, 2], ['loom_oracle', 'unravel', 14, 1],
+    ['the_auditor', 'ledger_lash', 5, 2], ['the_auditor', 'stamp', 16, 1],
     ['anvil_warden', 'ring_out', 10, 1], ['anvil_warden', 'crush', 18, 1],
     ['hammer_warden', 'hammerfall', 18, 1], ['hammer_warden', 'rapid_strikes', 4, 4],
     ['boiler_tyrant', 'piston_punch', 14, 1], ['boiler_tyrant', 'steam_jet', 5, 3], ['boiler_tyrant', 'blowout', 24, 1],
@@ -253,7 +254,7 @@ describe('Act 2 mechanics and custom tables', () => {
   });
 
   for (const [id, moveId, status, stacks] of [
-    ['furnace_drone', 'target_lock', 'exposed', 3],
+    ['furnace_drone', 'target_lock', 'exposed', 2],
     ['riveter', 'pin_down', 'stagger', 2],
     ['loom_oracle', 'thread_snare', 'stagger', 2],
     ['loom_oracle', 'thread_snare', 'exposed', 2],
@@ -280,11 +281,23 @@ describe('Act 2 mechanics and custom tables', () => {
   });
 
   for (const [id, moveId, block] of [
-    ['cog_acolyte', 'litany', 9], ['loom_oracle', 'weave_ward', 8],
+    ['cog_acolyte', 'litany', 9], ['loom_oracle', 'weave_ward', 6],
   ] as const) it(`${id}.${moveId} shields every living ally`, () => {
     const { env, e, c } = sandbox([id, 'rivet_gnasher']);
     move(env, e, moveId);
     expect(c.enemies.map((a) => a.block)).toEqual([block, block]);
+  });
+
+  it('Weave Ward reacts to the Timeline: +2 Block per card waiting on it, live in its text', () => {
+    const { env, e, c, state } = sandbox(['loom_oracle', 'rivet_gnasher']);
+    expect(renderStatusText('sealed_pattern', 1)).toContain('Weave Ward gives 2 more Block per card on your Timeline.');
+    expect(renderMoveText(state, e.uid, 'weave_ward')).toBe('Every living enemy gains 6 Block (6 + 2 per card on your Timeline).');
+    c.timeline = [1, 2, 3].map((i): TimelineEntry => ({
+      card: { uid: 900 + i, id: 'status_jitter', upgraded: false }, dueTurn: 2, seq: i, onBeat: false, target: null, x: 0, advancedThisTurn: false,
+    }));
+    expect(renderMoveText(state, e.uid, 'weave_ward')).toBe('Every living enemy gains 12 Block (6 + 2 per card on your Timeline).');
+    move(env, e, 'weave_ward');
+    expect(c.enemies.map((a) => a.block)).toEqual([12, 12]);
   });
 
   for (const [id, moveId, pool, amount] of [
@@ -340,9 +353,26 @@ describe('Act 2 mechanics and custom tables', () => {
     dead.hp = 0;
     move(env, e, 'anoint');
     expect(e.hp).toBe(ownHp);
-    expect(a.hp).toBe(a.maxHp - 4);
+    expect(a.hp).toBe(a.maxHp - 6);
     expect(b.hp).toBe(b.maxHp);
     expect(dead.hp).toBe(0);
+  });
+
+  it('Anoint scours up to 4 Rot off every other enemy, never off the Acolyte itself (Scour Rite)', () => {
+    const { env, c, e, state } = sandbox(['cog_acolyte', 'rivet_gnasher', 'riveter']);
+    const [, a, b] = c.enemies;
+    if (!a || !b) throw new Error('missing allies');
+    expect(e.statuses.scour_rite).toBe(1);
+    expect(renderStatusText('scour_rite', 1)).toBe('Its Anoint washes up to 4 Rot off every other enemy. It never scours itself: Rot it first.');
+    expect(renderMoveText(state, e.uid, 'anoint')).toBe('Every other living enemy loses up to 4 Rot and heals 6 HP.');
+    applyStatus(env, e.uid, 'rot', 6);
+    applyStatus(env, a.uid, 'rot', 6);
+    applyStatus(env, b.uid, 'rot', 3);
+    drain(env);
+    move(env, e, 'anoint');
+    expect(a.statuses.rot).toBe(2);
+    expect(b.statuses.rot ?? 0).toBe(0);
+    expect(e.statuses.rot).toBeGreaterThanOrEqual(6); // its own Rot ticked, never scoured
   });
 
   it('Reload increases the next Burst to seven hits, then clears loaded', () => {
@@ -350,22 +380,23 @@ describe('Act 2 mechanics and custom tables', () => {
     move(env, e, 'reload');
     expect(e.block).toBe(12);
     expect(e.aiState.loaded).toBe(2);
-    expect(computeIntent(state, e, 'rivet_burst')).toMatchObject({ damage: 3, hits: 7 });
+    expect(computeIntent(state, e, 'rivet_burst')).toMatchObject({ damage: 3, hits: 6 });
     move(env, e, 'rivet_burst');
     expect(e.aiState.loaded).toBe(0);
-    expect(computeIntent(state, e, 'rivet_burst')).toMatchObject({ damage: 3, hits: 5 });
+    expect(computeIntent(state, e, 'rivet_burst')).toMatchObject({ damage: 3, hits: 4 });
   });
 
   it('Ledger Lash clamps and floors the live draw-pile count, independent of AI selection', () => {
     const { env, c, e, state } = sandbox(['the_auditor']);
-    for (const [cards, hits] of [[0, 1], [3, 1], [4, 1], [7, 1], [8, 2], [20, 5], [31, 7], [32, 8], [100, 8]]) {
+    delete e.statuses.seething; // isolate Inventory: an unhurt Auditor would otherwise gain Might every move
+    for (const [cards, hits] of [[0, 2], [3, 2], [4, 2], [7, 2], [8, 2], [20, 5], [31, 7], [32, 8], [100, 8]]) {
       if (cards === undefined || hits === undefined) throw new Error('bad case');
       // Real registered status cards; this does not add a content pack.
       c.draw = Array.from({ length: cards }, (_, i) => ({ uid: i + 1000, id: 'status_jitter', upgraded: false }));
-      expect(computeIntent(state, e, 'ledger_lash')).toMatchObject({ damage: 4, hits });
+      expect(computeIntent(state, e, 'ledger_lash')).toMatchObject({ damage: 5, hits });
       const hp = state.player.hp;
       move(env, e, 'ledger_lash');
-      expect(hp - state.player.hp).toBe(4 * hits);
+      expect(hp - state.player.hp).toBe(5 * hits);
     }
   });
 
@@ -402,11 +433,11 @@ describe('Act 2 mechanics and custom tables', () => {
     e.block = 10;
     hit(env, e, 10);
     expect(e.aiState.pressure).toBeUndefined();
-    hit(env, e, 24);
+    hit(env, e, 29);
     expect(e.intent.moveId).toBe('stoke');
     hit(env, e, 1);
     expect(e.intent).toMatchObject({ moveId: 'blowout', damage: 24, hits: 1 });
-    expect(e.aiState.pressure).toBe(25);
+    expect(e.aiState.pressure).toBe(30);
     const overrides = () => env.events.filter((ev) => ev.t === 'enemy_intent' && ev.intent.moveId === 'blowout').length;
     expect(overrides()).toBe(1);
     hit(env, e, 40);
@@ -415,17 +446,17 @@ describe('Act 2 mechanics and custom tables', () => {
     applyStatus(env, e.uid, 'rot', 5);
     tickEntity(env, e.uid, 'end_own_turn');
     drain(env);
-    expect(e.aiState.pressure).toBe(65);
+    expect(e.aiState.pressure).toBe(70);
     c.turnPhase = 'player';
     tickPhase(env, 'start_player_turn');
     drain(env);
     expect(e.aiState.pressure).toBe(0);
     expect(e.aiState.blown).toBe(0);
     // Same source/tag as a Timeline hit, after the reset and before the normal draw.
-    enqueue(env, effectItems([{ type: 'damage', target: 'target', amount: 25, tags: ['delayed'] }], { src: { kind: 'system' }, self: 'player', target: e.uid, x: 0 }));
+    enqueue(env, effectItems([{ type: 'damage', target: 'target', amount: 30, tags: ['delayed'] }], { src: { kind: 'system' }, self: 'player', target: e.uid, x: 0 }));
     drain(env);
     expect(overrides()).toBe(2);
-    expect(e.aiState.pressure).toBe(25);
+    expect(e.aiState.pressure).toBe(30);
     move(env, e, 'stoke');
     expect(computeIntent(state, e, 'blowout').damage).toBe(26);
   });

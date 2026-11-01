@@ -47,11 +47,15 @@ export class HpBar extends Widget {
 export interface StatusView { id: string; stacks: number; text: string }
 
 /** 12x12 status icons with their stack number; each icon has a tooltip hint (statusText). */
+/** Horizontal pitch of status icons (12 px icon + room for the overlaid stack number). */
+export const STATUS_PITCH = 16;
+
 export class StatusRow extends Widget {
   private readonly app: App;
   private icons: { icon: HintIcon; num: Label }[] = [];
   private key = '';
-  onIconsChanged: (() => void) | null = null;
+  /** The icons were rebuilt: the owner (re)registers them for focus (removed ones are already disposed). */
+  onIconsChanged: ((removed: Widget[], added: Widget[]) => void) | null = null;
 
   constructor(app: App, x: number, y: number, w: number) {
     super(rect(x, y, w, 14), 'statusrow');
@@ -66,21 +70,24 @@ export class StatusRow extends Widget {
       return;
     }
     this.key = key;
+    const removed: Widget[] = this.icons.map((i) => i.icon);
     for (const { icon, num } of this.icons) { icon.dispose(); num.dispose(); }
     this.icons = [];
-    const perRow = Math.max(1, Math.floor(this.rect.w / 22));
+    // 16 px pitch with the stack number over the icon's bottom-right corner (STS style): six fit an
+    // enemy plate's width in one row, so the row never reaches the primed rack or the hand
+    const perRow = Math.max(1, Math.floor(this.rect.w / STATUS_PITCH));
     shown.forEach((s, i) => {
-      const x = this.rect.x + (i % perRow) * 22, y = this.rect.y + Math.floor(i / perRow) * 14;
+      const x = this.rect.x + (i % perRow) * STATUS_PITCH, y = this.rect.y + Math.floor(i / perRow) * 14;
       const icon = this.addChild(new HintIcon(x, y, this.app, statusIcon(s.id)), 1);
       const def = getStatusDef(s.id);
       icon.hint = s.text;
       icon.label = `${def.name} ${s.stacks}: ${s.text.replace(/\[[^\]]*\]/g, '')}`;
-      const num = this.addChild(new Label(x + 12, y + 6, def.stacks === 'flag' ? '' : String(s.stacks), {
-        font: fonts.small, color: def.isDebuff ? C.pink : C.lime, outline: C.black,
+      const num = this.addChild(new Label(x + STATUS_PITCH - 1, y + 7, def.stacks === 'flag' ? '' : String(s.stacks), {
+        font: fonts.small, color: def.isDebuff ? C.pink : C.lime, outline: C.black, align: 'right',
       }), 2);
       this.icons.push({ icon, num });
     });
-    this.onIconsChanged?.();
+    this.onIconsChanged?.(removed, this.icons.map((i) => i.icon));
   }
 
   focusables(): Widget[] { return this.icons.map((i) => i.icon); }
@@ -169,15 +176,18 @@ export class EnemyPlate extends Widget {
     this.hp = this.addChild(new HpBar(x + 4, y + 11, w - 8, 6), 2);
     this.hpText = this.addChild(new Label(x + 4, y + 18, '', { font: fonts.small, color: C.text }), 2);
     this.def = this.addChild(new Label(x + w - 4, y + 18, '', { font: fonts.small, align: 'right', markup: true }), 2);
-    this.rot = this.addChild(new Label(cx, y + 44, '', { font: fonts.small, align: 'center', color: C.lilac, outline: C.black }), 2);
-    this.statuses = this.addChild(new StatusRow(app, x, y + 30, w), 3);
+    // Rot's end-of-turn HP loss sits in the plate's HP row, between HP and defence (never under it,
+    // where it collided with the status row and the controls hint)
+    this.rot = this.addChild(new Label(cx, y + 18, '', { font: fonts.small, align: 'center', color: C.lilac }), 2);
+    this.statuses = this.addChild(new StatusRow(app, x, y + 29, w), 3);
   }
 
   set(hp: number, maxHp: number, block: number, guard: number, rot: number): void {
     this.hp.set(hp, maxHp, block, guard);
     this.hpText.setText(`${hp}/${maxHp}`);
     this.def.setText(`${block > 0 ? `[skyBlue]◆${block}[/]` : ''}${guard > 0 ? ` [amber]◆${guard}[/]` : ''}`);
-    this.rot.setText(rot > 0 ? `-${rot} AT END OF TURN` : '');
+    this.rot.setText(rot > 0 ? `-${rot} ROT` : '');
+    this.rot.label = rot > 0 ? `Loses ${rot} HP to Rot at the end of its turn` : '';
   }
 }
 
@@ -227,10 +237,18 @@ export class Metronome extends Widget {
     if (flash) this.flashT = 360;
     this.label = `Cadence: ${lit} of 3 toward the next beat`;
   }
+  private pulseT = 0;
+  /** A music beat: the pips blink for a couple of frames (longer when the next play lands on the beat). */
+  pulse(strong: boolean): void { if (this.flashT <= 0) this.pulseT = strong ? 100 : 40; }
   override update(dtMs: number): void {
-    if (this.flashT <= 0) return;
-    this.flashT -= dtMs;
-    const on = Math.floor(this.flashT / 60) % 2 === 0 && this.flashT > 0;
+    let on: boolean;
+    if (this.flashT > 0) {
+      this.flashT -= dtMs;
+      on = Math.floor(this.flashT / 60) % 2 === 0 && this.flashT > 0;
+    } else if (this.pulseT > 0) {
+      this.pulseT -= dtMs;
+      on = this.pulseT > 0;
+    } else return;
     this.pips.forEach((m) => { ((m.material as THREE.ShaderMaterial).uniforms['uFlash'] as THREE.IUniform<number>).value = on ? 1 : 0; });
   }
 }
@@ -249,11 +267,11 @@ export class MiniCard extends Widget {
   private readonly box: Panel;
   private readonly text: Label;
   readonly uid: number;
-  constructor(x: number, y: number, uid: number, name: string, opts: { gold?: boolean; value?: string; w?: number } = {}) {
+  constructor(x: number, y: number, uid: number, name: string, opts: { gold?: boolean; value?: string; w?: number; border?: number } = {}) {
     const w = opts.w ?? 50;
     super(rect(x, y, w, 12), 'mini');
     this.uid = uid;
-    this.box = this.addChild(new Panel(rect(x, y, w, 12), { fill: C.navy, border: opts.gold ? C.yellow : C.skyBlue, thickness: 1 }), 0);
+    this.box = this.addChild(new Panel(rect(x, y, w, 12), { fill: C.navy, border: opts.gold ? C.yellow : opts.border ?? C.skyBlue, thickness: 1 }), 0);
     this.text = this.addChild(new Label(x + 3, y + 3, `${name}${opts.value ? ` ${opts.value}` : ''}`.toUpperCase(), { font: fonts.small, maxWidth: w - 5, overflow: 'ellipsis', maxLines: 1 }), 2);
     this.label = name;
     this.focusable = true;

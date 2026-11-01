@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compileSfx, compileTrack, lfsrBits, noteHz, psgQuantize, SFX, SFX_NAMES, sfxFrames, volumeGain } from '../../src/render/psg.ts';
+import { attenuateSegments, compileSfx, compileTrack, lfsrBits, noteHz, psgQuantize, SFX, SFX_NAMES, SFX_PRIORITY, sfxFrames, sfxPriority, transposeSegments, volumeGain } from '../../src/render/psg.ts';
 
 describe('PSG model', () => {
   it('tunes notes to A4 = 440 Hz', () => {
@@ -43,12 +43,39 @@ describe('envelope language', () => {
     expect(() => compileTrack('C5:0', 't1')).toThrow(/zero-length/);
   });
 
-  it('every named SFX compiles and is short', () => {
-    expect([...SFX_NAMES].sort()).toEqual(['block', 'cancel', 'confirm', 'draw', 'hit', 'hurt', 'lose', 'move', 'win']);
-    for (const name of SFX_NAMES) {
-      expect(() => compileSfx(SFX[name])).not.toThrow();
-      expect(sfxFrames(SFX[name])).toBeLessThan(120);
+  it('every named SFX compiles, is short, and stays inside the tone range', () => {
+    for (const must of ['hit', 'hitHeavy', 'overkill', 'parry', 'bloom', 'snip', 'rot', 'delay', 'resolve', 'death', 'bossIntro', 'fanfareBoss', 'gold', 'purchase', 'step', 'rare'] as const) {
+      expect(SFX_NAMES).toContain(must);
     }
+    const lowest = 3579545 / (32 * 1023);
+    for (const name of SFX_NAMES) {
+      const segs = compileSfx(SFX[name]);
+      expect(sfxFrames(SFX[name])).toBeLessThan(120);
+      for (const ch of ['t0', 't1', 't2'] as const) {
+        for (const sg of segs[ch] ?? []) if (sg.sound?.kind === 'tone') expect(sg.sound.from, `${name} ${ch}`).toBeGreaterThan(lowest);
+      }
+    }
+  });
+
+  it('priorities: big moments outrank UI chatter; unknown = 1', () => {
+    expect(sfxPriority('parry')).toBeGreaterThan(sfxPriority('draw'));
+    expect(sfxPriority('confirm')).toBe(1);
+    for (const k of Object.keys(SFX_PRIORITY)) expect(SFX_NAMES).toContain(k);
+  });
+
+  it('transposes tone segments (noise untouched) and attenuates without silencing', () => {
+    const segs = compileTrack('A4:2 r:1 A4~A5:2', 't0');
+    const up = transposeSegments(segs, 12);
+    const a = up[0]?.sound, g = up[2]?.sound;
+    if (a?.kind !== 'tone' || g?.kind !== 'tone') throw new Error('expected tones');
+    expect(a.from).toBeCloseTo(psgQuantize(880), 3);
+    expect(g.to).toBeCloseTo(psgQuantize(1760), 3);
+    expect(up[1]?.sound).toBeNull();
+    const n = compileTrack('w1:2', 'n');
+    expect(transposeSegments(n, 7)[0]?.sound).toEqual(n[0]?.sound);
+    const quiet = attenuateSegments(compileTrack('@F21 C5:3', 't0'), 3);
+    expect(quiet[0]?.volumes).toEqual([12, 1, 1]);
+    expect(() => attenuateSegments(segs, -1)).toThrow();
   });
 
   it('LFSR: periodic noise has period 16, white noise is not trivially periodic', () => {

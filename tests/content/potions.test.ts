@@ -9,17 +9,23 @@ import { makeCard } from '../../src/engine/cards';
 import { refreshIntents, startCombat } from '../../src/engine/combat';
 import { makeEnv } from '../../src/engine/core';
 import { newFloorRecord } from '../../src/engine/history';
-import { drain } from '../../src/engine/queue';
+import { choiceStep, drain } from '../../src/engine/queue';
 import { combatOf, eventsOf, pacify, setHand } from '../engine/helpers';
+import { answerChoice } from '../answer-choice';
 
 const IDS: Record<PotionDef['rarity'], string[]> = {
-  common: ['pot_flare_cell', 'pot_shield_gel', 'pot_bastion_tonic', 'pot_quicksilver', 'pot_charge_cell', 'pot_fault_dust', 'pot_concussion_gas', 'pot_shard_tincture'],
-  uncommon: ['pot_blight_vial', 'pot_seers_draught', 'pot_fury_draught', 'pot_growth_sap', 'pot_tempo_draught'],
-  rare: ['pot_mending_ampoule', 'pot_rewind_phial', 'pot_halt_ampoule'],
+  common: ['pot_flare_cell', 'pot_shield_gel', 'pot_bastion_tonic', 'pot_quicksilver', 'pot_charge_cell', 'pot_fault_dust', 'pot_concussion_gas', 'pot_shard_tincture',
+    'pot_riposte_salts'],
+  uncommon: ['pot_blight_vial', 'pot_seers_draught', 'pot_fury_draught', 'pot_growth_sap', 'pot_tempo_draught',
+    'pot_blood_ampoule', 'pot_surge_flask', 'pot_kiln_salts', 'pot_fracture_serum', 'pot_ember_tonic', 'pot_fester_draught', 'pot_hourglass_tonic'],
+  rare: ['pot_mending_ampoule', 'pot_rewind_phial', 'pot_echo_draught', 'pot_mimic_gel', 'pot_halt_ampoule'],
 };
 const ANYWHERE = ['pot_shard_tincture', 'pot_mending_ampoule'];
-const ENEMY_TARGETED = ['pot_flare_cell', 'pot_blight_vial', 'pot_halt_ampoule'];
-const CLASS_POTIONS: Record<string, string> = { pot_fury_draught: 'breaker', pot_growth_sap: 'graft', pot_tempo_draught: 'chronist' };
+const ENEMY_TARGETED = ['pot_flare_cell', 'pot_blight_vial', 'pot_halt_ampoule', 'pot_fester_draught'];
+const CLASS_POTIONS: Record<string, string> = {
+  pot_fury_draught: 'breaker', pot_growth_sap: 'graft', pot_tempo_draught: 'chronist',
+  pot_riposte_salts: 'breaker', pot_ember_tonic: 'breaker', pot_fester_draught: 'graft', pot_hourglass_tonic: 'chronist',
+};
 
 const STRIKES = Array.from({ length: 12 }, () => 'test_strike');
 
@@ -61,6 +67,16 @@ function use(g: Game, id: string, target?: number): GameEvent[] {
   return ev;
 }
 
+/** Answer the pending choice with `uids` (multi-pick choices take toggle steps first). */
+function answer(g: Game, uids: readonly number[]): void {
+  for (let i = 0; i < 20; i++) {
+    const pc = combatOf(g).pendingChoice;
+    if (!pc) return;
+    g.apply(choiceStep(pc, uids));
+  }
+  throw new Error('choice never resolved');
+}
+
 function enemy(g: Game, i: number) {
   const e = combatOf(g).enemies[i];
   if (!e) throw new Error(`no enemy #${i}`);
@@ -68,8 +84,8 @@ function enemy(g: Game, i: number) {
 }
 
 describe('potion roster', () => {
-  it('has the 16 GDD potions by rarity, all registered', () => {
-    expect(POTIONS).toHaveLength(16);
+  it('has the 16 GDD potions plus the 10 shared-v2 potions by rarity, all registered', () => {
+    expect(POTIONS).toHaveLength(26);
     expect(POTION_STATUSES).toEqual([]);
     for (const [rarity, ids] of Object.entries(IDS)) expect(POTIONS.filter((p) => p.rarity === rarity).map((p) => p.id)).toEqual(ids);
     for (const p of POTIONS) {
@@ -201,7 +217,7 @@ describe('each potion', () => {
     expect(pc?.resume.op).toBe('bloom_pick');
     const pick = sprouts[1]?.uid;
     if (pick === undefined) throw new Error('setup');
-    g.apply({ type: 'resolve_choice', uids: [pick] });
+    answerChoice(g, [pick]);
     expect(combatOf(g).hand.map((x) => x.vars?.bloom)).toEqual([undefined, 2]);
     for (const e of combatOf(g).enemies) {
       e.hp = 1;
@@ -245,7 +261,7 @@ describe('each potion', () => {
     const pc = combatOf(g).pendingChoice;
     expect([pc?.min, pc?.max]).toEqual([0, 3]);
     const uids = combatOf(g).discard.slice(0, 3).map((x) => x.uid);
-    g.apply({ type: 'resolve_choice', uids });
+    answer(g, uids);
     expect(combatOf(g).hand.map((x) => [x.uid, x.tempCost])).toEqual(uids.map((u) => [u, 0]));
     expect(combatOf(g).discard).toHaveLength(1);
     combatOf(g).energy = 0;
@@ -266,5 +282,99 @@ describe('each potion', () => {
     const ev = use(b, 'pot_halt_ampoule', enemy(b, 0).uid);
     expect(enemy(b, 0).statuses.halted).toBeUndefined();
     expect(ev.some((e) => e.t === 'text' && /immune/i.test(e.text))).toBe(true);
+  });
+});
+
+describe('shared v2 potions', () => {
+  it('pot_blood_ampoule: Strain 3, gain 2 energy', () => {
+    const g = arena();
+    const e = combatOf(g).energy;
+    use(g, 'pot_blood_ampoule');
+    expect(g.state.player.hp).toBe(297);
+    expect(combatOf(g).energy).toBe(e + 2);
+    expect(combatOf(g).counters.strained).toBe(3);
+  });
+
+  it('pot_surge_flask: 3 Reserve', () => {
+    const g = arena();
+    use(g, 'pot_surge_flask');
+    expect(combatOf(g).player.statuses.reserve).toBe(3);
+  });
+
+  it('pot_kiln_salts: Scrap up to 3 chosen hand cards, draw that many', () => {
+    const g = arena();
+    setHand(g, ['test_strike', 'test_strike', 'test_block']);
+    use(g, 'pot_kiln_salts');
+    const pc = combatOf(g).pendingChoice;
+    expect(pc?.min).toBe(0);
+    answer(g, combatOf(g).hand.slice(0, 2).map((c) => c.uid));
+    expect(combatOf(g).exhaust).toHaveLength(2);
+    expect(combatOf(g).hand).toHaveLength(3);
+  });
+
+  it('pot_fracture_serum: doubles each enemy\'s own Exposed', () => {
+    const g = arena();
+    combatOf(g).enemies.forEach((e, i) => { e.statuses.exposed = i + 2; });
+    use(g, 'pot_fracture_serum');
+    expect(combatOf(g).enemies.map((e) => e.statuses.exposed)).toEqual([4, 6]);
+  });
+
+  it('pot_fester_draught: doubles the target\'s Rot', () => {
+    const g = arena();
+    enemy(g, 0).statuses.rot = 5;
+    use(g, 'pot_fester_draught', enemy(g, 0).uid);
+    expect(enemy(g, 0).statuses.rot).toBe(10);
+  });
+
+  it('pot_echo_draught: the next card resolves twice', () => {
+    const g = arena();
+    setHand(g, ['test_strike']);
+    use(g, 'pot_echo_draught');
+    const strike = combatOf(g).hand[0];
+    if (!strike) throw new Error('setup');
+    g.apply({ type: 'play_card', uid: strike.uid, target: enemy(g, 0).uid });
+    expect(enemy(g, 0).hp).toBe(188);
+  });
+
+  it('pot_mimic_gel: a copy of the chosen hand card costs 0 this turn', () => {
+    const g = arena();
+    setHand(g, ['test_bash', 'test_strike']);
+    use(g, 'pot_mimic_gel');
+    const bash = combatOf(g).hand.find((c) => c.id === 'test_bash');
+    if (!bash) throw new Error('setup');
+    answerChoice(g, [bash.uid]);
+    const copies = combatOf(g).hand.filter((c) => c.id === 'test_bash');
+    expect(copies).toHaveLength(2);
+    expect(copies[1]?.tempCost).toBe(0);
+  });
+
+  it('pot_riposte_salts primes Riposte cards now; pot_ember_tonic gains 2 Embers; pot_hourglass_tonic Gathers then Advances', () => {
+    const g = arena('test_enc_jaw');
+    setHand(g, ['test_parry']);
+    use(g, 'pot_riposte_salts');
+    expect(combatOf(g).primed).toHaveLength(1);
+    use(g, 'pot_ember_tonic');
+    expect(combatOf(g).player.statuses.embers).toBe(2);
+    setHand(g, ['test_tock']);
+    const tock = combatOf(g).hand[0];
+    if (!tock) throw new Error('setup');
+    g.apply({ type: 'play_card', uid: tock.uid });
+    use(g, 'pot_hourglass_tonic');
+    expect(combatOf(g).timeline).toHaveLength(0);
+  });
+});
+
+describe('RULINGS 66 regression (sim repro)', () => {
+  it('Echo Draught + Crystal Graft with exactly 1 Shard: pays once, the Reprise is skipped, nothing throws', () => {
+    const g = arena();
+    g.state.player.counters.shards = 1;
+    setHand(g, ['crystal_graft', 'seed_bite']); // Crystal Graft counts only Graft Bloom cards
+    use(g, 'pot_echo_draught');
+    const graft = combatOf(g).hand.find((c) => c.id === 'crystal_graft');
+    if (!graft) throw new Error('setup');
+    const ev = g.apply({ type: 'play_card', uid: graft.uid });
+    expect(g.state.player.counters.shards).toBe(0);
+    expect(combatOf(g).hand.find((c) => c.id === 'seed_bite')?.vars?.bloom).toBe(3); // one resolution's +3 only
+    expect(ev.some((e) => e.t === 'text' && /Reprise skipped/.test(e.text))).toBe(true);
   });
 });

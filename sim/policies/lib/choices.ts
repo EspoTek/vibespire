@@ -2,7 +2,7 @@
 // look-ahead simulations. Every answer is matched against legalActions (never invented).
 
 import { getCardDef, getPotionDef } from '../../../src/content';
-import { bloomCapFor, isAttackIntent, type Action, type CardInstance, type PendingChoice, type RunState } from '../../../src/engine';
+import { choiceStep, bloomCapFor, isAttackIntent, type Action, type CardInstance, type PendingChoice, type RunState } from '../../../src/engine';
 import { bestOffer, offerScore } from './archetype';
 import { effectsValue, infoOf, keepValue, upgradeGain } from './cards';
 import { sameAction } from './clone';
@@ -40,6 +40,23 @@ function handWorth(c: CardInstance): number {
   const i = infoOf(c);
   if (i.junk) return i.def.cost === null ? -10 : -6;
   return i.value - i.costNum * 1.5;
+}
+
+/** Damage cards left in the draw + discard piles below which the last damage sources are protected. */
+const SCARCE_DAMAGE = 4;
+
+/**
+ * Keep bonus for a damage card when the fight is running out of them: 100 when fewer than SCARCE_DAMAGE
+ * damage cards remain in the draw and discard piles, else 0. Used by choices that Scrap or exhaust hand
+ * cards (Triage, exhausts), so the bot never deletes its own way to win.
+ */
+export function scarceDamageBonus(s: RunState): number {
+  const c = s.combat;
+  if (!c) throw new Error('scarceDamageBonus outside combat');
+  let n = 0;
+  for (const x of c.draw) if (infoOf(x).damage > 0) n += 1;
+  for (const x of c.discard) if (infoOf(x).damage > 0) n += 1;
+  return n < SCARCE_DAMAGE ? 100 : 0;
 }
 
 function incoming(s: RunState): number {
@@ -80,9 +97,12 @@ export function answerChoice(s: RunState, pc: PendingChoice): number[] {
   const r = pc.resume;
   switch (r.op) {
     case 'discard':
-    case 'exhaust': {
+    case 'exhaust':
+    case 'exhaust_then': {
       const m = lookup(s, pc);
-      const w = (id: number): number => -handWorth(m.get(id) as CardInstance);
+      // An exhaust removes the card for the fight: never pick one of the last damage sources first.
+      const guard = r.op === 'discard' ? 0 : scarceDamageBonus(s);
+      const w = (id: number): number => -(handWorth(m.get(id) as CardInstance) + (infoOf(m.get(id) as CardInstance).damage > 0 ? guard : 0));
       return pickRange(pc, w, (id) => infoOf(m.get(id) as CardInstance).junk);
     }
     case 'scry': {
@@ -99,6 +119,23 @@ export function answerChoice(s: RunState, pc: PendingChoice): number[] {
     case 'transmute_choose': {
       const m = lookup(s, pc);
       return pickRange(pc, (id) => -keepValue(m.get(id) as CardInstance), (id) => keepValue(m.get(id) as CardInstance) < 0);
+    }
+    case 'triage': {
+      // shared v2 Triage Locker: keep the most valuable cards (up to max); the rest are Scrapped. When the
+      // fight is running out of damage, damage cards are kept first: scrapping the last attacks leaves a deck
+      // that cannot win (the Phase D Triage stalemates).
+      const m = lookup(s, pc);
+      const guard = scarceDamageBonus(s);
+      return topK(pc.choices, (id) => handWorth(m.get(id) as CardInstance) + (infoOf(m.get(id) as CardInstance).damage > 0 ? guard : 0), pc.max);
+    }
+    case 'copy_card': {
+      const m = lookup(s, pc);
+      return topK(pc.choices, (id) => handWorth(m.get(id) as CardInstance), pc.min);
+    }
+    case 'schedule': {
+      // Put the most valuable hand card on the Timeline (it resolves for free later).
+      const m = lookup(s, pc);
+      return topK(pc.choices, (id) => handWorth(m.get(id) as CardInstance) + infoOf(m.get(id) as CardInstance).costNum * 1.5, pc.min);
     }
     case 'prime': {
       const m = lookup(s, pc);
@@ -220,9 +257,13 @@ export function answerChoice(s: RunState, pc: PendingChoice): number[] {
   }
 }
 
-/** The legal resolve_choice action for the heuristic answer (throws if it is not legal). */
+/**
+ * The next legal step toward the heuristic answer (throws if it is not legal): the answer itself for a
+ * single-pick choice; for a multi-pick one a choice_toggle, then the confirming resolve_choice
+ * (engine choiceStep; multi-pick answers are built one card at a time).
+ */
 export function choiceAction(s: RunState, pc: PendingChoice, legal: readonly Action[]): Action {
-  const want: Action = { type: 'resolve_choice', uids: answerChoice(s, pc) };
+  const want: Action = choiceStep(pc, answerChoice(s, pc));
   const hit = legal.find((a) => sameAction(a, want));
   if (!hit) throw new Error(`greedy: heuristic answer ${JSON.stringify(want)} to "${pc.prompt}" (${pc.resume.op}) is not legal`);
   return hit;

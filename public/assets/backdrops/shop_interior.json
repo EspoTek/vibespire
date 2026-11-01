@@ -1,30 +1,39 @@
 {
-  "source": "raw/backdrops/shop_interior-v4.png",
+  "source": "/Users/chrises/.codex/generated_images/01a189d9-b462-7220-8830-e662faedfd2e/exec-6f33a0e1-02c7-4248-8ad2-8fceec13bee7.png",
   "source_size": [
-    1536,
-    1024
+    1672,
+    941
   ],
   "crop": [
     0,
-    80,
-    1536,
-    944
+    0,
+    1672,
+    940
   ],
-  "pitch": 11.57,
+  "pitch": 5.975,
   "phase": [
-    10.218,
-    1.446
+    4.894,
+    3.049
   ],
-  "grid_score": 0.28059661848357287,
+  "grid_score": null,
   "recovered_size": [
-    133,
-    75
+    280,
+    158
   ],
   "size": [
     640,
     360
   ],
-  "colors": 15,
-  "output": "../../public/assets/backdrops/shop_interior.png",
-  "preview": "../../public/assets/backdrops/shop_interior@2x.png"
+  "colors": 16,
+  "output": "/Users/chrises/git/vibespire/public/assets/backdrops/shop_interior.png",
+  "preview": "/Users/chrises/git/vibespire/public/assets/backdrops/shop_interior@2x.png",
+  "final_cleanup": "ui_retouch.py: 320x180 construction grid, flat calm centre and jar repairs",
+  "recovered_size_before_cleanup": [
+    280,
+    158
+  ],
+  "construction_grid": [
+    320,
+    180
+  ]
 }

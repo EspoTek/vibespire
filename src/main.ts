@@ -3,6 +3,7 @@
  * Any uncaught error (startup or later) is shown on screen as well as in the console: a loud
  * failure beats a silently frozen canvas.
  */
+import { AI_PURITY } from './engine/index.ts';
 import { App } from './render/app.ts';
 import { GALLERY_PAGES, GalleryScreen, isGalleryPage } from './render/screens/GalleryScreen.ts';
 import { GateScreen } from './render/screens/GateScreen.ts';
@@ -29,6 +30,10 @@ window.addEventListener('unhandledrejection', (e) => showFatal(e.reason));
 
 // Dev content switch: ?content=test registers the engine's test pack (src/content/testpack/) when it
 // exists. Looked up with a glob so the build doesn't depend on a module another agent is adding.
+// Dev builds (and so the e2e harness) check enemy AI purity strictly: deep-frozen snapshots throw on any
+// write. Production uses the cheaper copies (src/engine/enemies.ts AI_PURITY).
+if (import.meta.env.DEV) AI_PURITY.mode = 'frozen';
+
 const params = new URLSearchParams(location.search);
 if (params.get('content') === 'test') {
   const mods = import.meta.glob<{ registerTestPack?: () => void }>('/src/content/testpack/index.ts');
@@ -52,9 +57,11 @@ if (screen === 'gallery') {
   if (page !== null && !isGalleryPage(page)) throw new Error(`?page=${page}: expected one of ${GALLERY_PAGES.join(', ')}`);
   void app.screens.push(new TitleScreen(app)).then(() => app.screens.push(new GalleryScreen(app, page ?? 'palette')));
 } else if (screen === 'continue') {
-  const session = RunSession.loadOrNull(app.storage);
-  if (!session) throw new Error('?screen=continue: there is no saved run');
-  void app.screens.push(new TitleScreen(app)).then(() => app.screens.push(screenFor(app, session)));
+  const slot = RunSession.open(app.storage);
+  if (slot.kind === 'none') throw new Error('?screen=continue: there is no saved run');
+  // an incompatible save was discarded by open(): the title tells the player (its enter() finds none now, so say it here)
+  if (slot.kind === 'incompatible') void app.screens.push(new TitleScreen(app)).then(() => app.toasts.show('OLD SAVE DISCARDED', 4000));
+  else void app.screens.push(new TitleScreen(app)).then(() => app.screens.push(screenFor(app, slot.session)));
 } else if (screen !== null) {
   throw new Error(`?screen=${screen}: expected gallery or continue`);
 } else {
@@ -67,6 +74,12 @@ if (testContentActive()) {
   app.toasts.topY = 10; // toasts start below the watermark instead of covering it
 }
 app.start();
+
+// e2e test hook (tests/e2e): only with ?e2e=1; the module is not even loaded otherwise.
+if (params.get('e2e') === '1') {
+  const { installE2E } = await import('./render/debug/e2e.ts');
+  installE2E(app);
+}
 
 // Debug handle for the browser console / automated checks (renderer-only, no game state).
 Object.assign(window, { vibespire: app });

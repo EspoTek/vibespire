@@ -1,0 +1,357 @@
+[
+  {
+    "kind": "cards",
+    "id": "clean_manifest",
+    "changed_pixels": 2,
+    "opaque_pixels": 393,
+    "identical_opaque_percent": 99.49,
+    "material_pixels_before": 190,
+    "material_pixels_after": 190,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#FFAA55": "#FFAA00",
+        "#FFFFAA": "#FFFF55"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "gyro_jammer",
+    "changed_pixels": 6,
+    "opaque_pixels": 434,
+    "identical_opaque_percent": 98.62,
+    "material_pixels_before": 231,
+    "material_pixels_after": 231,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#550055": "#000055"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "jettison_pod",
+    "changed_pixels": 1,
+    "opaque_pixels": 500,
+    "identical_opaque_percent": 99.8,
+    "material_pixels_before": 320,
+    "material_pixels_after": 320,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#5555AA": "#0055AA"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "read_the_line",
+    "changed_pixels": 1,
+    "opaque_pixels": 333,
+    "identical_opaque_percent": 99.7,
+    "material_pixels_before": 149,
+    "material_pixels_after": 149,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#FF5555": "#FFAA55"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "salvage_kit",
+    "changed_pixels": 3,
+    "opaque_pixels": 457,
+    "identical_opaque_percent": 99.34,
+    "material_pixels_before": 236,
+    "material_pixels_after": 236,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#55FFFF": "#AAFFFF"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "snare_line",
+    "changed_pixels": 1,
+    "opaque_pixels": 423,
+    "identical_opaque_percent": 99.76,
+    "material_pixels_before": 157,
+    "material_pixels_after": 157,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#AAAAFF": "#AAFFFF"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "stress_fracture",
+    "changed_pixels": 2,
+    "opaque_pixels": 435,
+    "identical_opaque_percent": 99.54,
+    "material_pixels_before": 288,
+    "material_pixels_after": 288,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#55AAFF": "#AAAAFF",
+        "#555555": "#005555"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "tourbillon",
+    "changed_pixels": 7,
+    "opaque_pixels": 312,
+    "identical_opaque_percent": 97.76,
+    "material_pixels_before": 103,
+    "material_pixels_after": 103,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#0000FF": "#000055",
+        "#550055": "#000055"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "cards",
+    "id": "hairline_mark",
+    "changed_pixels": 1,
+    "opaque_pixels": 334,
+    "identical_opaque_percent": 99.7,
+    "material_pixels_before": 206,
+    "material_pixels_after": 206,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#FFAA55": "#FFFFAA"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "binding_contract",
+    "changed_pixels": 4,
+    "opaque_pixels": 154,
+    "identical_opaque_percent": 97.4,
+    "material_pixels_before": 63,
+    "material_pixels_after": 63,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#AAAA00": "#FFAA00"
+      },
+      "pixels": [
+        [
+          13,
+          3,
+          "#FFFFAA",
+          "#FFAA55"
+        ]
+      ]
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "bulwark_rivets",
+    "changed_pixels": 6,
+    "opaque_pixels": 163,
+    "identical_opaque_percent": 96.32,
+    "material_pixels_before": 55,
+    "material_pixels_after": 55,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#550055": "#550000",
+        "#555555": "#AA5500"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "heartwood_ring",
+    "changed_pixels": 2,
+    "opaque_pixels": 221,
+    "identical_opaque_percent": 99.1,
+    "material_pixels_before": 71,
+    "material_pixels_after": 73,
+    "detail_density_ratio": 1.0282,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {},
+      "pixels": [
+        [
+          4,
+          3,
+          "#000000",
+          "#005555"
+        ],
+        [
+          9,
+          11,
+          "#000000",
+          "#550000"
+        ]
+      ]
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "paradox_coil",
+    "changed_pixels": 2,
+    "opaque_pixels": 160,
+    "identical_opaque_percent": 98.75,
+    "material_pixels_before": 57,
+    "material_pixels_after": 59,
+    "detail_density_ratio": 1.0351,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {},
+      "pixels": [
+        [
+          10,
+          4,
+          "#000000",
+          "#0055AA"
+        ],
+        [
+          9,
+          4,
+          "#000000",
+          "#000055"
+        ]
+      ]
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "timeline_clamp",
+    "changed_pixels": 2,
+    "opaque_pixels": 180,
+    "identical_opaque_percent": 98.89,
+    "material_pixels_before": 65,
+    "material_pixels_after": 65,
+    "detail_density_ratio": 1.0,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {
+        "#55AAAA": "#00AAAA"
+      },
+      "pixels": []
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "gravity_loom",
+    "changed_pixels": 2,
+    "opaque_pixels": 218,
+    "identical_opaque_percent": 99.08,
+    "material_pixels_before": 76,
+    "material_pixels_after": 78,
+    "detail_density_ratio": 1.0263,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {},
+      "pixels": [
+        [
+          3,
+          7,
+          "#000000",
+          "#550055"
+        ],
+        [
+          12,
+          6,
+          "#000000",
+          "#550055"
+        ]
+      ]
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "shard_crucible",
+    "changed_pixels": 3,
+    "opaque_pixels": 216,
+    "identical_opaque_percent": 98.61,
+    "material_pixels_before": 86,
+    "material_pixels_after": 89,
+    "detail_density_ratio": 1.0349,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {},
+      "pixels": [
+        [
+          5,
+          7,
+          "#000000",
+          "#FFFFFF"
+        ],
+        [
+          6,
+          7,
+          "#000000",
+          "#555555"
+        ],
+        [
+          9,
+          7,
+          "#000000",
+          "#555555"
+        ]
+      ]
+    }
+  },
+  {
+    "kind": "relics",
+    "id": "field_dressing",
+    "changed_pixels": 1,
+    "opaque_pixels": 182,
+    "identical_opaque_percent": 99.45,
+    "material_pixels_before": 83,
+    "material_pixels_after": 84,
+    "detail_density_ratio": 1.012,
+    "silhouette_identical": true,
+    "recipe": {
+      "map": {},
+      "pixels": [
+        [
+          3,
+          6,
+          "#000000",
+          "#AAAA55"
+        ]
+      ]
+    }
+  }
+]

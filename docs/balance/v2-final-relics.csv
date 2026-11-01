@@ -1,0 +1,22 @@
+relic,name,rarity,cls,class,n,cf_win_pts,cf_win_ci,cf_progress,cf_progress_ci,triggers_per_run,treated_win_rate
+twin_scabbard,"Twin Scabbard",rare,breaker,breaker,60,-2.3,14.7,0.94,3.38,77.90,0.300
+heavy_heart,"Heavy Heart",boss,breaker,breaker,60,1.0,16.1,-0.81,3.38,0.00,0.333
+shard_crucible,"Shard Crucible",rare,any,breaker,60,9.3,9.7,1.72,1.54,0.00,0.417
+exposed_core,"Exposed Core",boss,any,breaker,60,-2.3,15.4,2.25,3.57,43.42,0.300
+gravity_loom,"Gravity Loom",boss,any,breaker,60,24.3,13.5,8.52,3.31,73.63,0.567
+slow_temper,"Slow-Temper Alloy",uncommon,any,breaker,60,17.7,11.6,5.24,2.92,24.95,0.500
+fracture_engine,"Fracture Engine",rare,any,breaker,60,14.3,12.7,4.82,3.22,52.38,0.467
+slow_temper,"Slow-Temper Alloy",uncommon,any,graft,60,16.3,13.7,5.20,5.09,23.02,0.500
+exposed_core,"Exposed Core",boss,any,graft,60,13.0,16.2,8.34,4.56,37.97,0.467
+shard_crucible,"Shard Crucible",rare,any,graft,60,1.3,7.7,-2.43,1.47,0.00,0.350
+fracture_engine,"Fracture Engine",rare,any,graft,60,11.3,15.3,4.97,4.40,49.10,0.450
+gravity_loom,"Gravity Loom",boss,any,graft,60,31.3,13.3,9.90,4.39,60.18,0.650
+star_pip,"Star Pip",common,chronist,chronist,60,7.7,16.2,3.63,3.94,63.32,0.533
+shard_crucible,"Shard Crucible",rare,any,chronist,60,1.0,11.8,1.30,2.06,0.00,0.467
+slow_temper,"Slow-Temper Alloy",uncommon,any,chronist,60,21.0,15.9,6.93,4.06,26.65,0.667
+gravity_loom,"Gravity Loom",boss,any,chronist,60,16.0,16.7,5.21,3.90,59.27,0.617
+refrain_pin,"Refrain Pin",rare,chronist,chronist,60,21.0,15.9,6.56,4.15,102.75,0.667
+perpetual_calendar,"Perpetual Calendar",boss,chronist,chronist,60,6.0,16.6,2.25,3.99,0.00,0.517
+storm_lantern,"Storm Lantern",common,chronist,chronist,60,1.0,14.3,0.51,3.56,2.28,0.467
+fracture_engine,"Fracture Engine",rare,any,chronist,60,12.7,16.3,5.80,3.94,53.88,0.583
+fixed_star,"Fixed Star",boss,chronist,chronist,60,-2.3,15.8,3.06,3.25,41.67,0.433

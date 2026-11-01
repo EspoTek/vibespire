@@ -25,6 +25,8 @@ export abstract class Screen {
   /** Song while this screen is on top: a loop, null = silence, undefined = keep whatever plays. */
   get music(): SongName | null | undefined { return undefined; }
   private readonly widgets: Widget[] = [];
+  /** close() of every open modal, oldest first. */
+  private readonly modalClosers: (() => void)[] = [];
 
   constructor(app: App, name: string) {
     this.app = app;
@@ -32,6 +34,9 @@ export abstract class Screen {
     this.root.name = `screen:${name}`;
     this.focus = new FocusManager(this.root, { input: app.input, sfx: app.sfx, announce: app.announce });
   }
+
+  /** Top-level widgets of this screen (read-only; the e2e probe in src/render/debug walks them). */
+  get topWidgets(): readonly Widget[] { return this.widgets; }
 
   /** Add a top-level widget to this screen's scene (does NOT register it for focus). */
   add<T extends Widget>(w: T): T {
@@ -58,15 +63,25 @@ export abstract class Screen {
     const close = () => {
       if (!open) return;
       open = false;
+      this.modalClosers.splice(this.modalClosers.indexOf(close), 1);
       this.focus.popScope(scope);
       for (const w of widgets) this.removeWidget(w);
       onClose?.();
     };
     const scope = this.focus.pushScope(name, cancellable ? close : null);
+    this.modalClosers.push(close);
     widgets = build(close);
     for (const w of widgets) { this.add(w); scope.add(w); }
     this.focus.ensureFocus();
     return close;
+  }
+
+  /**
+   * Close every open modal, topmost first. Used when an action is answered from outside the modal
+   * (the e2e hook's dispatch of a resolve_choice); a player always answers through the modal itself.
+   */
+  closeAllModals(): void {
+    for (let c = this.modalClosers.at(-1); c; c = this.modalClosers.at(-1)) c();
   }
 
   /** Called once after the root joins the scene, before the fade-in. */
@@ -156,8 +171,14 @@ export class ScreenManager {
 
   private transition(change: () => void): Promise<void> {
     const run = this.chain.then(() => this.runTransition(change));
-    // the chain survives a failed transition; the failure itself still rejects `run` for the caller
-    this.chain = run.catch(() => undefined);
+    // The chain survives a failed transition, but the failure must stay loud: most callers `void` the
+    // promise, and this catch handler marks `run` handled, so without the rethrow a screen whose
+    // build() threw left a silent black screen (docs/v2/bugs.md BUG-8). Rethrown in a task, it reaches
+    // the crash screen (main.ts window 'error').
+    this.chain = run.catch((e: unknown) => {
+      console.error('[screens] screen transition failed', e);
+      setTimeout(() => { throw e; }, 0);
+    });
     return run;
   }
 

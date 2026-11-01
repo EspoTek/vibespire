@@ -10,7 +10,7 @@ import { refreshIntents } from '../../src/engine/combat';
 import { enqueue, makeEnv } from '../../src/engine/core';
 import { Game } from '../../src/engine/game';
 import { drain } from '../../src/engine/queue';
-import { combatOf, eventsOf, sandbox, setHand } from '../engine/helpers';
+import { combatOf, eventsOf, padDraw, sandbox, setHand } from '../engine/helpers';
 
 // --- helpers ---------------------------------------------------------------------------------------------
 
@@ -118,10 +118,10 @@ const SEEDS = Array.from({ length: 5 }, (_, i) => `boss-ai-${i}`);
 const BOSS_IDS = ['bramble_ram', 'mother_orchid', 'gloam_empress', 'grand_assembler', 'furnace_heart', 'trihammer', 'tether_sovereign', 'star_archivist', 'leukarch'];
 const MINION_IDS = ['orchid_bud', 'assembly_frame', 'welded_horror', 'trihammer_arm', 'antibody'];
 const ROSTER_HP: Record<string, [number, number]> = {
-  bramble_ram: [200, 210], mother_orchid: [165, 175], orchid_bud: [8, 10], gloam_empress: [195, 205],
-  grand_assembler: [290, 300], assembly_frame: [18, 22], welded_horror: [38, 42], furnace_heart: [370, 390],
-  trihammer: [240, 250], trihammer_arm: [32, 36], tether_sovereign: [550, 570], star_archivist: [510, 530],
-  leukarch: [470, 490], antibody: [20, 24],
+  bramble_ram: [200, 210], mother_orchid: [165, 175], orchid_bud: [8, 10], gloam_empress: [205, 215],
+  grand_assembler: [290, 300], assembly_frame: [18, 22], welded_horror: [38, 42], furnace_heart: [340, 360],
+  trihammer: [240, 250], trihammer_arm: [32, 36], tether_sovereign: [530, 550], star_archivist: [510, 530],
+  leukarch: [450, 470], antibody: [20, 24],
 };
 const ENCOUNTER_OF: Record<string, { id: string; act: number; extra: string[] }> = {
   bramble_ram: { id: 'enc_a1_ram', act: 1, extra: [] },
@@ -146,8 +146,7 @@ describe('boss roster', () => {
     }
     for (const id of MINION_IDS) expect(getEnemyDef(id).onLeaderDeath, id).toBe('die');
     expect(BOSS_STATUSES.map((s) => s.id).sort()).toEqual([
-      'archive_page', 'assembly_line', 'brace_transfer', 'catalogue', 'catalogue_watch', 'charge_meter', 'furnace_core', 'furnace_vent',
-      'heat', 'overflow', 'overflow_stored', 'progress', 'ripening',
+      'archive_page', 'assembly_line', 'brace_transfer', 'catalogue', 'catalogue_watch', 'charge_meter', 'crown_rage', 'furnace_core', 'furnace_vent', 'heat', 'overflow', 'overflow_stored', 'progress', 'ripening', 'seed_bank', 'seething', 'white_fever',
     ]);
     for (const s of BOSS_STATUSES) expect(renderStatusText(s.id, 1)).not.toMatch(/[{}]/);
   });
@@ -437,7 +436,7 @@ describe('phase transitions at HP thresholds never rewrite the current intent', 
     hit(g, ram.uid, 5);
     expect(ram.intent.moveId).toBe('thorn_volley'); // unchanged
     expect(ram.intent.damage).toBe(4 + 2); // rage 2 shows live
-    expect(ram.aiState.break_at).toBe(26);
+    expect(ram.aiState.break_at).toBe(24);
     const seen: string[] = [];
     for (let i = 0; i < 7; i++) {
       seen.push(ram.intent.moveId);
@@ -490,12 +489,12 @@ describe('Bramble Ram: "Can you hit hard on cue?"', () => {
     return { g, ram };
   }
 
-  it('the charge breaks at 22 HP lost in the window: intent becomes Stumble at once', () => {
+  it('the charge breaks at 20 HP lost in the window: intent becomes Stumble at once', () => {
     const { g, ram } = toCharge('break');
-    expect(ram.intent.damage).toBe(30);
+    expect(ram.intent.damage).toBe(27);
     ram.block = 0;
-    hit(g, ram.uid, 21);
-    expect([ram.intent.moveId, ram.aiState.meter]).toEqual(['bramble_charge', 21]);
+    hit(g, ram.uid, 19);
+    expect([ram.intent.moveId, ram.aiState.meter]).toEqual(['bramble_charge', 19]);
     const ev = hit(g, ram.uid, 1);
     expect(ram.intent.moveId).toBe('stumble');
     expect(eventsOf(ev, 'enemy_intent').some((i) => i.uid === ram.uid && i.intent.moveId === 'stumble')).toBe(true);
@@ -521,33 +520,44 @@ describe('Bramble Ram: "Can you hit hard on cue?"', () => {
     expect(ram.intent.moveId).toBe('stomp');
   });
 
-  it('each unbroken Charge grows by 6 (30, 36, ...)', () => {
+  it('each unbroken Charge grows by 4 (27, 31, ...)', () => {
     const { g, ram } = toCharge('grow');
     const ev = pass(g);
-    expect(eventsOf(ev, 'damage').find((d) => d.source === ram.uid)?.amount).toBe(30);
+    expect(eventsOf(ev, 'damage').find((d) => d.source === ram.uid)?.amount).toBe(27);
     for (let i = 0; i < 3; i++) pass(g);
     combatOf(g).player.statuses = {};
     refreshIntents(makeEnv(g.state));
     expect(ram.intent.moveId).toBe('bramble_charge');
-    expect(ram.intent.damage).toBe(36);
+    expect(ram.intent.damage).toBe(31);
     expect(renderMoveText(g.state, ram.uid, 'bramble_charge')).toBe(
-      'Deal 36 damage; +6 for each Charge you did not break. Breaks if it loses 22 HP during your turn (26 in phase 2).',
+      'Deal 31 damage; +4 for each Charge you did not break. Breaks if it loses 20 HP during your turn (24 in phase 2).',
     );
   });
 
-  it('phase 2 raises the break line to 26', () => {
+  it('phase 2 raises the break line to 24', () => {
     const { g, ram } = toCharge('p2-break');
     ram.block = 0;
     ram.hp = Math.floor(ram.maxHp / 2) + 1;
-    hit(g, ram.uid, 22); // crosses 50% and fills 22 of 26
+    hit(g, ram.uid, 22); // crosses 50% and fills 22 of 24
     expect(ram.aiState.phase).toBe(2);
     expect(ram.intent.moveId).toBe('bramble_charge');
-    hit(g, ram.uid, 4);
+    hit(g, ram.uid, 2);
     expect(ram.intent.moveId).toBe('stumble');
   });
 });
 
 describe('Mother Orchid: "Can you keep the garden mowed while you cut the root?"', () => {
+  it('Vine Crush grows +1 per use (a stall breaker that never punishes mowing the Buds)', () => {
+    const g = fight('enc_a1_orchid', 'crush');
+    const o = enemyOf(g, 'mother_orchid');
+    expect(computeIntent(g.state, o, 'vine_crush').damage).toBe(15);
+    o.intent = computeIntent(g.state, o, 'vine_crush');
+    pass(g);
+    combatOf(g).player.statuses = {};
+    expect(computeIntent(g.state, o, 'vine_crush').damage).toBe(16);
+    expect(renderMoveText(g.state, o.uid, 'vine_crush')).toBe('Deal 16 damage (+1 each use).');
+  });
+
   it('Sow, Nectar ripens Buds, Full Bloom buds ripen after 1, cap 4, Buds die with her', () => {
     const g = fight('enc_a1_orchid', 'garden');
     const o = enemyOf(g, 'mother_orchid');
@@ -584,7 +594,7 @@ describe('Mother Orchid: "Can you keep the garden mowed while you cut the root?"
 });
 
 describe('Gloam Empress: "Can your damage survive being blunted?"', () => {
-  it('Silk Cocoon adds one Wing Buffet hit, then it resets', () => {
+  it('every Silk Cocoon adds a Wing Buffet hit for the rest of the fight (a scaling attack)', () => {
     const g = fight('enc_a1_empress', 'cocoon');
     const e = enemyOf(g, 'gloam_empress');
     expect(computeIntent(g.state, e, 'wing_buffet').hits).toBe(3);
@@ -594,7 +604,11 @@ describe('Gloam Empress: "Can your damage survive being blunted?"', () => {
     e.intent = computeIntent(g.state, e, 'wing_buffet');
     const ev = pass(g);
     expect(eventsOf(ev, 'damage').filter((d) => d.source === e.uid)).toHaveLength(4);
-    expect(computeIntent(g.state, e, 'wing_buffet').hits).toBe(3);
+    expect(computeIntent(g.state, e, 'wing_buffet').hits).toBe(4);
+    e.intent = computeIntent(g.state, e, 'silk_cocoon');
+    pass(g);
+    expect(computeIntent(g.state, e, 'wing_buffet').hits).toBe(5);
+    expect(renderMoveText(g.state, e.uid, 'silk_cocoon')).toBe('Gain 18 Block. Wing Buffet hits 1 more time for the rest of the fight.');
   });
 });
 
@@ -646,12 +660,13 @@ describe('Furnace Heart: "Can your deck run hot?"', () => {
   function furnace(seed: string): { g: Game; f: EnemyState } {
     const g = fight('enc_a2_furnace', seed);
     const f = enemyOf(g, 'furnace_heart');
+    delete f.statuses.seething; // isolate Heat: these passes never hurt it (Seething has its own test)
     return { g, f };
   }
   /** Keep Slag Tide (blocked on pending status cards) off the schedule while testing Heat. */
   const swing = (g: Game, f: EnemyState): void => { f.intent = computeIntent(g.state, f, 'crucible_swing'); };
 
-  it('Heat +2 at the end of each of its turns (+4 in phase 2), capped at 15; Meltdown = 3 × Heat, then 0', () => {
+  it('Heat +2 at the end of each of its turns (+3 in phase 2), capped at 15; Meltdown = 3 × Heat, then 0', () => {
     const { g, f } = furnace('heat');
     const heats: number[] = [];
     for (let i = 0; i < 3; i++) {
@@ -690,6 +705,7 @@ describe('Furnace Heart: "Can your deck run hot?"', () => {
     const burn = makeCard(g.state, 'test_burn'); // a test-pack card of type 'status'
     const strike = makeCard(g.state, 'test_strike');
     c.hand = [burn, strike];
+    padDraw(g); // RULINGS 72 Scrap floor
     const env = makeEnv(g.state);
     exhaustCards(env, 'hand', [burn.uid, strike.uid]);
     drain(env);
@@ -703,12 +719,12 @@ describe('Furnace Heart: "Can your deck run hot?"', () => {
     expect(combatOf(g).exhaust.some((x) => x.uid === jitter)).toBe(true);
   });
 
-  it('phase 2 numbers: Slag Tide 3 Backlash + 1 Jitter, Crucible Swing 12 x 2', () => {
+  it('phase 2 numbers: Slag Tide 3 Backlash + 1 Jitter, Crucible Swing 11 x 2', () => {
     const { g, f } = furnace('white-hot');
     f.hp = Math.floor(f.maxHp / 2) + 1;
     hit(g, f.uid, 1);
     combatOf(g).player.statuses = {};
-    expect(computeIntent(g.state, f, 'crucible_swing').damage).toBe(12);
+    expect(computeIntent(g.state, f, 'crucible_swing').damage).toBe(11);
     f.intent = computeIntent(g.state, f, 'slag_tide');
     const ev = pass(g);
     const added = eventsOf(ev, 'card_added').map((a) => [a.card.id, a.where]);
@@ -789,7 +805,12 @@ describe('Tether Sovereign: "Can you finish what you start?"', () => {
     pass(g);
     combatOf(g).player.statuses = {};
     expect(computeIntent(g.state, s, 'tether_lash').damage).toBe(9);
-    expect(computeIntent(g.state, s, 'anchor_drop').damage).toBe(31);
+    expect(computeIntent(g.state, s, 'anchor_drop').damage).toBe(28);
+    // Phase D: Rage is a visible status, capped at 12.
+    expect(s.statuses.crown_rage).toBe(3);
+    expect(renderStatusText('crown_rage', 3, s.uid, g.state)).toBe('Each hit of its attacks deals 3 more damage. Crownlight adds 3 (phase 1); in phase 3 each Anchor Drop adds 2. At most 12.');
+    for (let i = 0; i < 5; i++) run(g, { type: 'status', target: 'self', id: 'crown_rage', amount: 3 }, s.uid, 'player');
+    expect(s.statuses.crown_rage).toBe(12);
   });
 });
 
@@ -813,6 +834,20 @@ describe('Star Archivist: "Can your deck afford to loop?"', () => {
     expect(computeIntent(g.state, a, 'index_barrage').hits).toBe(10);
   });
 
+  it('every Redact writes a Page too (the archive grows even if you never reshuffle), within the cap', () => {
+    const g = fight('enc_a3_archivist', 'redact');
+    const a = enemyOf(g, 'star_archivist');
+    expect(a.intent.moveId).toBe('redact');
+    expect(renderMoveText(g.state, a.uid, 'redact')).toBe('Apply 2 Exposed to you. Gain 20 Block. Write 1 Page.');
+    pass(g);
+    expect(a.statuses.archive_page).toBe(1);
+    combatOf(g).player.statuses = {};
+    expect(computeIntent(g.state, a, 'index_barrage').hits).toBe(3);
+    a.statuses.archive_page = 6;
+    run(g, { type: 'custom', fn: 'write_page' }, a.uid, 'player');
+    expect(a.statuses.archive_page).toBe(6);
+  });
+
   it('a real reshuffle during play writes a Page', () => {
     const g = fight('enc_a3_archivist', 'pages-live');
     const a = enemyOf(g, 'star_archivist');
@@ -823,9 +858,10 @@ describe('Star Archivist: "Can your deck afford to loop?"', () => {
 });
 
 describe('Leukarch: "Can your scaling outpace the response?"', () => {
-  it('Muster fills to 2 (3 in phase 2); Calcify Guard grows by 10; Consume kills the Antibodies for Fever; Storm hits 3 + phase', () => {
+  it('Muster fills to 2 (3 in phase 2); Calcify Guard grows by 5; Consume kills the Antibodies for Fever; Storm hits 3 + phase', () => {
     const g = fight('enc_a3_leukarch', 'response');
     const l = enemyOf(g, 'leukarch');
+    delete l.statuses.seething; // isolate the phase machine: these passes never hurt it (Seething has its own test)
     expect(l.intent.moveId).toBe('muster');
     pass(g);
     expect(alive(g, 'antibody')).toHaveLength(2);
@@ -845,7 +881,7 @@ describe('Leukarch: "Can your scaling outpace the response?"', () => {
       const ev = pass(g);
       guards.push(eventsOf(ev, 'block').find((b) => b.target === l.uid && b.pool === 'guard')?.amount ?? -1);
     }
-    expect(guards).toEqual([20, 30]);
+    expect(guards).toEqual([20, 25]);
     const n = alive(g, 'antibody').length;
     l.hp = 161;
     l.block = 0;
@@ -855,7 +891,7 @@ describe('Leukarch: "Can your scaling outpace the response?"', () => {
     expect(l.forecast[0]?.moveId).toBe('consume');
     const ev = run(g, { type: 'custom', fn: 'consume' }, l.uid, 'player');
     expect(eventsOf(ev, 'enemy_died')).toHaveLength(n);
-    expect(l.aiState.fever).toBe(2 * n);
+    expect(l.statuses.white_fever).toBe(2 * n);
     combatOf(g).player.statuses = {};
     expect(computeIntent(g.state, l, 'engulf').damage).toBe(24 + 2 * n);
   });
@@ -873,5 +909,123 @@ describe('Leukarch: "Can your scaling outpace the response?"', () => {
     l.guard = 0;
     const kill = hit(g, l.uid, 10);
     expect(eventsOf(kill, 'enemy_died')).toHaveLength(3);
+  });
+});
+
+describe('v2 encounter pass: the Frame timer and Seething', () => {
+  it('a Frame left alone builds itself: +1 Progress each of its turns, a Welded Horror at 3 (a visible timer)', () => {
+    const g = fight('enc_a2_assembler', 'frame-timer');
+    const a = enemyOf(g, 'grand_assembler');
+    pass(g); // lay_frame
+    const frames = alive(g, 'assembly_frame');
+    expect(frames).toHaveLength(2);
+    const f = frames[0] as EnemyState;
+    expect(f.intent).toMatchObject({ kind: 'buff', moveId: 'idle' });
+    expect(renderMoveText(g.state, f.uid, 'idle')).toBe('It assembles itself: +1 Progress.');
+    expect(renderStatusText('assembly_line', 1)).toBe('It gains 1 Progress on each of its turns, and Weld adds more. At 3 Progress it becomes a Welded Horror at full HP, at the end of that move.');
+    // Keep the Assembler from Welding, so only the Frames' own turns count.
+    a.statuses.halted = 1;
+    pass(g);
+    expect(f.statuses.progress).toBe(1);
+    a.statuses.halted = 1;
+    pass(g);
+    expect(f.statuses.progress).toBe(2);
+    a.statuses.halted = 1;
+    const ev = pass(g);
+    expect(eventsOf(ev, 'enemy_transformed').map((x) => [x.uid, x.to])).toEqual(frames.map((x) => [x.uid, 'welded_horror']));
+    expect(f.id).toBe('welded_horror');
+    expect(f.intent.moveId).toBe('weld_claw');
+  });
+
+  it('Seething: a calm enemy turn (less damage taken than its stacks) gains Might; a hit one does not, even into Block; Rot counts', () => {
+    const g = fight('enc_a3_leukarch', 'seethe');
+    const l = enemyOf(g, 'leukarch');
+    expect(l.statuses.seething).toBe(12);
+    expect(renderStatusText('seething', 12, l.uid, g.state)).toBe('At the end of its turn, if it took less than 12 damage since its last turn, it gains 1 Might. Hits soaked by its Block or Guard still count.');
+    pass(g); // nothing hits it
+    expect(l.statuses.might).toBe(1);
+    combatOf(g).player.statuses = {};
+    expect(computeIntent(g.state, l, 'engulf').damage).toBe(24 + 1); // Might shows live in its intents
+    l.block = 0;
+    l.guard = 0;
+    hit(g, l.uid, 11); // one short of the line
+    pass(g);
+    expect(l.statuses.might).toBe(2);
+    l.block = 0;
+    l.guard = 0;
+    hit(g, l.uid, 12);
+    pass(g);
+    expect(l.statuses.might).toBe(2);
+    // Rot is HP loss too: it counts toward the next window.
+    l.block = 0;
+    l.guard = 0;
+    hit(g, l.uid, 7);
+    l.statuses.rot = 5;
+    pass(g); // 7 this window, then its Rot tick (after Seething's own check) seeds the next window with 5
+    expect(l.statuses.might).toBe(3);
+    l.block = 0;
+    l.guard = 0;
+    hit(g, l.uid, 7);
+    l.statuses.rot = 0;
+    pass(g); // 5 (last Rot tick) + 7
+    expect(l.statuses.might).toBe(3);
+    // Phase D: hits soaked by its Block still count, so its own Block turns never feed it.
+    l.block = 50;
+    hit(g, l.uid, 12);
+    pass(g);
+    expect(l.statuses.might).toBe(3);
+  });
+
+  it('Seething sits on the anti-stall elites and Leukarch, with its threshold as stacks', () => {
+    expect(getEnemyDef('leukarch').spawnStatuses).toMatchObject({ seething: 12 });
+    expect(getEnemyDef('the_auditor').spawnStatuses).toMatchObject({ seething: 15 });
+    expect(getEnemyDef('boiler_tyrant').spawnStatuses).toMatchObject({ seething: 12 });
+    expect(getEnemyDef('mirror_knight').spawnStatuses).toMatchObject({ seething: 22 });
+    expect(getEnemyDef('phage_mother').spawnStatuses).toMatchObject({ seething: 10 });
+    // Summoner bosses never seethe: mowing their minions is a legitimate answer (v2 sim: Seething there doubled deaths).
+    for (const id of ['mother_orchid', 'grand_assembler', 'trihammer', 'furnace_heart', 'star_archivist']) expect(getEnemyDef(id).spawnStatuses?.seething, id).toBeUndefined();
+    expect(getStatusDef('seething').stacks).toBe('amount');
+  });
+});
+
+describe('Phase D fairness passes', () => {
+  it('Mother Orchid: a finite Seed Bank (10) pays for Sow and Full Bloom; empty, she stops sowing; Nectar wilts by 3 a Feast', () => {
+    const g = fight('enc_a1_orchid', 'seedbank');
+    const o = enemyOf(g, 'mother_orchid');
+    expect(o.statuses.seed_bank).toBe(10);
+    expect(renderStatusText('seed_bank', 10, o.uid, g.state)).toBe('10 Buds left to sow. Each Bud she summons spends one; once the bank is empty she sows no more. Each Nectar Feast heals 3 less.');
+    pass(g); // Sow
+    expect(alive(g, 'orchid_bud')).toHaveLength(2);
+    expect(o.statuses.seed_bank).toBe(8);
+    // Nectar heals 10, 7, 4, 1, 0: the text shows the live number.
+    const heals: number[] = [];
+    for (let i = 0; i < 5; i++) {
+      o.hp = o.maxHp - 20;
+      o.intent = computeIntent(g.state, o, 'nectar');
+      heals.push(eventsOf(pass(g), 'heal').find((h) => h.target === o.uid)?.amount ?? 0);
+    }
+    expect(heals).toEqual([10, 7, 4, 1, 0]); // a 0-heal Feast emits no heal event (counted as 0)
+    expect(renderMoveText(g.state, o.uid, 'nectar')).toBe('Heal 0 HP (3 less each Feast). Every Bud is 1 turn closer to ripe.');
+    // Kill the Buds and drain the bank: Sow only spends what is left, then the AI never picks it again.
+    o.statuses.seed_bank = 1;
+    for (const b of alive(g, 'orchid_bud')) { b.hp = 1; b.block = 0; hit(g, b.uid, 5); }
+    run(g, { type: 'custom', fn: 'sow' }, o.uid, 'player');
+    expect(alive(g, 'orchid_bud')).toHaveLength(1);
+    expect(o.statuses.seed_bank ?? 0).toBe(0);
+    const s = simulate(g, o, 60);
+    expect(s).not.toContain('sow');
+    expect(s).not.toContain('full_bloom');
+  });
+
+  it('Leukarch: Fever is a visible status capped at 9, so its peak storm is telegraphed and bounded', () => {
+    const g = fight('enc_a3_leukarch', 'fever-cap');
+    const l = enemyOf(g, 'leukarch');
+    delete l.statuses.seething; // isolate Fever (Seething is the separate stall breaker)
+    for (let i = 0; i < 5; i++) run(g, { type: 'status', target: 'self', id: 'white_fever', amount: 3 }, l.uid, 'player');
+    expect(l.statuses.white_fever).toBe(9);
+    expect(renderStatusText('white_fever', 9, l.uid, g.state)).toBe('Each hit of its attacks deals 9 more damage. It rises 2 per Antibody consumed and 3 per pitch. At most 9.');
+    combatOf(g).player.statuses = {};
+    expect(computeIntent(g.state, l, 'engulf').damage).toBe(33);
+    expect(renderMoveText(g.state, l.uid, 'fever_pitch')).toBe('Fever +3 (at most 9). Gain 20 Block.');
   });
 });

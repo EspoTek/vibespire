@@ -1,10 +1,11 @@
-// REAL CONTENT: the 16 potions of docs/GDD.md §7.1. Combat-only unless marked "anywhere"
+// REAL CONTENT: the 16 potions of docs/GDD.md §7.1, plus the 10 shared-v2 potions (docs/v2/shared-design.md §5). Combat-only unless marked "anywhere"
 // (combatOnly: false, target 'none'). Class potions set `cls` and only drop for that class.
 import type { PotionDef, StatusDef } from '../engine/types';
 
 const TEMPO = { beat: 1 };
 const MENDING = { pct: 25 };
 const REWIND = { cost: 0 };
+const MIMIC = { cost: 0 };
 
 export const POTIONS: PotionDef[] = [
   // --- common
@@ -60,18 +61,54 @@ export const POTIONS: PotionDef[] = [
     effects: [{ type: 'bloom', amount: 2, target: 'choose_hand' }], icon: 'potion_growth_sap',
   },
   {
-    // GDD §2.7: the beat count is cardsPlayedThisTurn + combat.counters.beatOffset (engine-owned key).
-    id: 'pot_tempo_draught', name: 'Tempo Draught', rarity: 'uncommon', cls: 'chronist', target: 'none', combatOnly: true, values: TEMPO,
-    text: 'Advance the beat by {beat}: the next card you play this turn counts one position later.',
-    effects: [{ type: 'custom', fn: 'advance_beat' }],
-    custom: {
-      advance_beat: (c) => {
-        const combat = c.combat;
-        if (!combat) throw new Error('pot_tempo_draught outside combat');
-        combat.counters.beatOffset = (combat.counters.beatOffset ?? 0) + TEMPO.beat; // no offset yet this turn = 0
-      },
-    },
+    // Shared v2: the same beatOffset mechanic, now through the Chronist's Quicken effect (chronist H3).
+    id: 'pot_tempo_draught', name: 'Tempo Draught', rarity: 'uncommon', cls: 'chronist', target: 'none', combatOnly: true,
+    text: 'Quicken {quicken}.',
+    effects: [{ type: 'quicken', n: TEMPO.beat }],
     icon: 'potion_tempo_draught',
+  },
+  // --- Shared v2 (docs/v2/shared-design.md §5)
+  {
+    id: 'pot_blood_ampoule', name: 'Blood Ampoule', rarity: 'uncommon', target: 'none', combatOnly: true,
+    text: 'Strain {strain}. Gain {energy} energy.',
+    effects: [{ type: 'strain', amount: 3 }, { type: 'energy', n: 2 }], icon: 'potion_blood_ampoule',
+  },
+  {
+    id: 'pot_surge_flask', name: 'Surge Flask', rarity: 'uncommon', target: 'none', combatOnly: true,
+    text: 'Gain {status} Reserve.',
+    effects: [{ type: 'status', target: 'self', id: 'reserve', amount: 3 }], icon: 'potion_surge_flask',
+  },
+  {
+    id: 'pot_kiln_salts', name: 'Kiln Salts', rarity: 'uncommon', target: 'none', combatOnly: true,
+    text: 'Scrap up to {exhaust} cards in your hand. Draw that many cards.',
+    effects: [{ type: 'exhaust', from: 'hand', choose: true, upTo: true, n: 3, then: [{ type: 'draw', n: { scale: 'scrapped' } }] }],
+    icon: 'potion_kiln_salts',
+  },
+  {
+    id: 'pot_fracture_serum', name: 'Fracture Serum', rarity: 'uncommon', target: 'none', combatOnly: true,
+    text: 'Double the Exposed on ALL enemies.',
+    effects: [{ type: 'status', target: 'all_enemies', id: 'exposed', perTarget: true, amount: { scale: { status: 'exposed', of: 'target' } } }],
+    icon: 'potion_fracture_serum',
+  },
+  {
+    id: 'pot_riposte_salts', name: 'Riposte Salts', rarity: 'common', cls: 'breaker', target: 'none', combatOnly: true,
+    text: 'Prime up to {prime} Riposte cards from your hand now, beyond your capacity.',
+    effects: [{ type: 'prime', n: 3 }], icon: 'potion_riposte_salts',
+  },
+  {
+    id: 'pot_ember_tonic', name: 'Ember Tonic', rarity: 'uncommon', cls: 'breaker', target: 'none', combatOnly: true,
+    text: 'Gain {status} Embers.',
+    effects: [{ type: 'status', target: 'self', id: 'embers', amount: 2 }], icon: 'potion_ember_tonic',
+  },
+  {
+    id: 'pot_fester_draught', name: 'Fester Draught', rarity: 'uncommon', cls: 'graft', target: 'enemy', combatOnly: true,
+    text: 'Double the Rot on an enemy.',
+    effects: [{ type: 'status', target: 'target', id: 'rot', amount: { scale: { status: 'rot', of: 'target' } } }], icon: 'potion_fester_draught',
+  },
+  {
+    id: 'pot_hourglass_tonic', name: 'Hourglass Tonic', rarity: 'uncommon', cls: 'chronist', target: 'none', combatOnly: true,
+    text: 'Gather, then Advance {advance}.',
+    effects: [{ type: 'gather' }, { type: 'advance', n: 1 }], icon: 'potion_hourglass_tonic',
   },
   // --- rare
   {
@@ -84,6 +121,16 @@ export const POTIONS: PotionDef[] = [
     text: 'Put up to {fetch_card} cards from your discard pile into your hand. They cost {cost} this turn.',
     effects: [{ type: 'fetch_card', from: 'discard', select: 'choose', to: 'hand', n: 3, upTo: true, costThisTurn: REWIND.cost }],
     icon: 'potion_rewind_phial',
+  },
+  {
+    id: 'pot_echo_draught', name: 'Echo Draught', rarity: 'rare', target: 'none', combatOnly: true,
+    text: 'Your next card this turn has Reprise.',
+    effects: [{ type: 'status', target: 'self', id: 'reprise', amount: 1 }], icon: 'potion_echo_draught',
+  },
+  {
+    id: 'pot_mimic_gel', name: 'Mimic Gel', rarity: 'rare', target: 'none', combatOnly: true, values: MIMIC,
+    text: 'Choose a card in your hand. Add a copy of it to your hand. The copy costs {cost} this turn.',
+    effects: [{ type: 'copy_card', costThisTurn: MIMIC.cost }], icon: 'potion_mimic_gel',
   },
   {
     id: 'pot_halt_ampoule', name: 'Halt Ampoule', rarity: 'rare', target: 'enemy', combatOnly: true,

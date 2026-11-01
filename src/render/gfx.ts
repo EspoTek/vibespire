@@ -119,7 +119,10 @@ void main() {
 const spriteFragment = /* glsl */ `
 uniform sampler2D map;
 uniform vec3 uTint;
-uniform float uFlash;    // 1 = solid white silhouette (hit flash)
+uniform float uFlash;    // 1 = solid silhouette in uFlashColor (hit flash; white by default)
+uniform vec3 uFlashColor;
+uniform float uDissolve; // 0..1: ordered-dither dissolve in source texels (death); 0 = off
+uniform vec2 uTexSize;   // texture size in texels (dissolve grid)
 uniform float uOpacity;
 uniform float uDim;      // whole SMS levels to step every channel down (0 = off): palette-safe dimming
 varying vec2 vUv;
@@ -128,7 +131,16 @@ vec3 toLinear(vec3 c) { return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)
 void main() {
   vec4 c = texture2D(map, vUv);
   if (c.a < 0.5) discard;  // hard cut-out: the SMS had no alpha
-  vec3 rgb = mix(c.rgb * uTint, vec3(1.0), uFlash);
+  if (uDissolve > 0.0) {
+    // 4x4 Bayer threshold per source texel: whole art pixels drop out in a fixed checker order
+    vec2 p = floor(vUv * uTexSize);
+    vec2 q = mod(p, 4.0);
+    // Bayer 4x4 = 4 * b2(low bit) + b2(high bit), with b2(x, y) = (2x + 3y) mod 4 the 2x2 matrix [0 2; 3 1]
+    vec2 lo = mod(q, 2.0), hi = floor(q / 2.0);
+    float t = (4.0 * mod(2.0 * lo.x + 3.0 * lo.y, 4.0) + mod(2.0 * hi.x + 3.0 * hi.y, 4.0)) / 16.0;
+    if (t < uDissolve) discard;
+  }
+  vec3 rgb = mix(c.rgb * uTint, uFlashColor, uFlash);
   if (uDim > 0.0) rgb = toLinear(max(floor(toSRGB(rgb) * 3.0 + 0.5) - uDim, 0.0) / 3.0);
   gl_FragColor = vec4(rgb, uOpacity);
   #include <colorspace_fragment>
@@ -143,6 +155,9 @@ export interface SpriteUniforms {
   uFlash: THREE.IUniform<number>;
   uOpacity: THREE.IUniform<number>;
   uDim: THREE.IUniform<number>;
+  uFlashColor: THREE.IUniform<THREE.Color>;
+  uDissolve: THREE.IUniform<number>;
+  uTexSize: THREE.IUniform<THREE.Vector2>;
 }
 
 export type SpriteMaterial = THREE.ShaderMaterial & { uniforms: SpriteUniforms };
@@ -156,6 +171,9 @@ export function spriteMaterial(map: THREE.Texture): SpriteMaterial {
     uFlash: { value: 0 },
     uOpacity: { value: 1 },
     uDim: { value: 0 },
+    uFlashColor: { value: new THREE.Color(0xffffff) },
+    uDissolve: { value: 0 },
+    uTexSize: { value: new THREE.Vector2(1, 1) },
   };
   const m = new THREE.ShaderMaterial({
     uniforms,

@@ -1,0 +1,575 @@
+class,card,name,rarity,type,cost,archetypes,persona,runs,offers,offer_rate,pick_rate,pick_delta_pts,pick_delta_ci,drawn,played,plays_per_draw,value_per_play,value_per_energy,cf_n,cf_win_pts,cf_win_ci,cf_progress,cf_progress_ci,cf_plays_per_run
+breaker,hew,"Hew",starter,attack,1,S,all,300,0,0.000,n/a,n/a,n/a,47826,33968,0.710,6.05,5.99,,,,,,
+breaker,bulwark,"Bulwark",starter,skill,1,B,all,300,0,0.000,n/a,n/a,n/a,53360,17952,0.336,4.65,4.61,,,,,,
+breaker,shoulder_check,"Shoulder Check",starter,attack,1,SD,all,300,0,0.000,n/a,n/a,n/a,15053,11506,0.764,16.95,17.14,,,,,,
+breaker,brace,"Brace",starter,skill,1,B,all,300,0,0.000,n/a,n/a,n/a,13629,7180,0.527,5.56,5.51,,,,,,
+breaker,piston_jab,"Piston Jab",common,attack,0,SG,all,300,506,1.687,0.077,12.3,14.3,769,714,0.928,9.28,18.56,18,-19.0,28.6,-3.33,6.64,36.83
+breaker,chain_driver,"Chain Driver",common,attack,1,SG,all,300,487,1.623,0.053,7.4,17.6,707,550,0.778,9.71,9.66,18,-30.1,26.5,-6.00,5.86,26.56
+breaker,breach_hammer,"Breach Hammer",common,attack,1,S,all,300,488,1.627,0.041,0.2,17.3,236,171,0.725,12.41,12.34,18,-2.3,31.7,0.72,7.83,35.61
+breaker,thresher_arc,"Thresher Arc",common,attack,1,S,all,300,464,1.547,0.116,-1.1,13.3,1596,1351,0.846,14.42,14.38,18,3.2,24.9,-0.44,6.05,42.11
+breaker,fault_line,"Fault Line",common,attack,1,DG,all,300,484,1.613,0.264,10.6,9.8,4353,3781,0.869,11.86,11.80,18,-7.9,24.9,-1.94,5.52,40.44
+breaker,rivet_flurry,"Rivet Flurry",common,attack,1,G,all,300,495,1.650,0.044,7.9,18.8,454,402,0.885,17.88,17.84,18,-13.4,31.2,-1.72,7.54,35.28
+breaker,counterweight,"Counterweight",common,attack,1,D,all,300,504,1.680,0.153,6.2,11.0,2767,1765,0.638,11.99,12.56,18,-2.3,27.4,3.22,7.83,31.50
+breaker,plate_ram,"Plate Ram",common,attack,1,B,all,300,487,1.623,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,23.8,-8.55,6.20,25.44
+breaker,return_stroke,"Return Stroke",common,attack,1,SD,all,300,501,1.670,0.248,1.6,9.7,4047,2448,0.605,12.75,13.49,18,-13.4,21.8,-1.22,6.61,28.56
+breaker,gauntlet_tap,"Gauntlet Tap",common,attack,0,SB,all,300,499,1.663,0.086,5.2,14.2,1055,978,0.927,6.73,13.46,18,-2.3,27.4,-2.61,8.11,39.33
+breaker,catch_blade,"Catch Blade",common,skill,1,DB,all,300,469,1.563,0.269,4.3,10.3,4775,1477,0.309,14.45,15.58,18,3.2,19.2,-1.16,4.72,14.67
+breaker,cool_the_steel,"Cool the Steel",common,skill,1,SB,all,300,499,1.663,0.317,8.2,9.2,5620,4300,0.765,12.99,12.93,18,-7.9,33.5,-3.55,8.58,35.33
+breaker,read_the_line,"Read the Line",common,skill,0,SG,all,300,530,1.767,0.068,14.2,13.0,694,551,0.794,8.83,17.66,18,-13.4,31.2,-6.78,6.95,23.78
+breaker,pivot_sweep,"Pivot Sweep",common,skill,1,D,all,300,479,1.597,0.301,12.3,9.9,5876,1533,0.261,26.56,31.04,18,-2.3,27.4,-0.22,5.58,13.89
+breaker,rivet_wall,"Rivet Wall",common,skill,2,B,all,300,518,1.727,0.185,-3.9,10.5,3052,2011,0.659,14.49,7.23,18,-24.6,25.3,-2.61,8.23,27.33
+breaker,loaded_spring,"Loaded Spring",common,skill,1,SD,all,300,471,1.570,0.316,-4.1,9.9,5700,2346,0.412,11.47,12.31,18,-13.4,26.9,-3.83,6.54,18.67
+breaker,sabre_rattle,"Sabre Rattle",common,skill,1,G,all,300,535,1.783,0.075,10.9,13.8,899,594,0.661,11.78,11.80,18,-30.1,26.5,-9.16,7.31,17.17
+breaker,stoke,"Stoke",common,skill,1,-,all,300,491,1.637,0.196,1.8,11.0,3142,2266,0.721,5.38,5.36,18,-2.3,27.4,-0.11,7.73,28.44
+breaker,hair_trigger,"Hair Trigger",common,skill,0,-,all,300,484,1.613,0.250,7.6,10.3,4658,2212,0.475,5.96,11.91,18,-19.0,32.7,-6.22,7.54,18.00
+breaker,loosen_straps,"Loosen Straps",common,skill,1,-,all,300,470,1.567,0.072,4.5,16.0,964,520,0.539,12.69,12.62,18,-13.4,26.9,-6.89,5.49,13.67
+breaker,hammerfall,"Hammerfall",uncommon,attack,2,S,all,300,264,0.880,0.030,-10.1,32.8,243,231,0.951,21.84,10.97,18,-2.3,27.4,1.28,6.82,37.33
+breaker,piston_volley,"Piston Volley",uncommon,attack,1,SG,all,300,303,1.010,0.330,-1.6,11.3,2693,2448,0.909,18.90,18.87,18,-13.4,31.2,-3.33,7.98,35.67
+breaker,answering_steel,"Answering Steel",uncommon,attack,1,D,all,300,284,0.947,0.423,3.6,11.4,4221,2895,0.686,14.50,15.24,18,14.3,23.8,0.84,5.81,35.83
+breaker,rampart_crash,"Rampart Crash",uncommon,attack,1,B,all,300,301,1.003,0.392,-9.9,11.1,3620,2852,0.788,12.75,12.70,18,-13.4,35.0,-4.44,10.57,32.28
+breaker,coiled_strike,"Coiled Strike",uncommon,attack,2,D,all,300,275,0.917,0.400,10.1,11.3,4159,2410,0.579,26.52,14.40,18,-19.0,32.7,-1.44,8.26,32.22
+breaker,seam_ripper,"Seam Ripper",uncommon,attack,0,SG,all,300,250,0.833,0.064,15.7,21.3,410,374,0.912,6.47,12.93,18,-13.4,31.2,-4.66,10.29,38.17
+breaker,quake_hammer,"Quake Hammer",uncommon,attack,1,S,all,300,253,0.843,0.289,9.1,13.2,2475,1965,0.794,14.72,14.68,18,8.8,26.9,1.17,7.44,38.33
+breaker,feint_step,"Feint Step",uncommon,skill,0,D,all,300,261,0.870,0.590,5.9,12.1,5833,2599,0.446,8.68,17.35,18,3.2,29.5,0.84,9.07,23.50
+breaker,bind_the_blade,"Bind the Blade",uncommon,skill,1,SD,all,300,268,0.893,0.575,12.5,12.5,6996,1116,0.160,36.82,47.73,18,19.9,29.9,5.17,7.73,9.67
+breaker,anneal,"Anneal",uncommon,skill,1,B,all,300,276,0.920,0.366,-2.6,11.6,3162,2218,0.701,3.49,3.47,18,-7.9,33.5,-3.16,9.20,32.33
+breaker,quench,"Quench",uncommon,skill,1,SB,all,300,279,0.930,0.226,-8.4,13.5,2058,1157,0.562,10.43,10.33,18,-13.4,31.2,-2.50,7.17,25.89
+breaker,ride_the_surge,"Ride the Surge",uncommon,skill,1,SG,all,300,277,0.923,0.249,3.7,12.2,1770,936,0.529,10.25,10.24,18,-19.0,23.8,-7.00,6.14,16.33
+breaker,hairline_mark,"Hairline Mark",uncommon,skill,1,G,all,300,271,0.903,0.395,6.0,11.6,3373,2586,0.767,13.79,13.73,18,-7.9,24.9,-4.05,6.18,35.33
+breaker,read_the_blow,"Read the Blow",uncommon,skill,1,DB,all,300,280,0.933,0.518,5.7,12.6,5210,3399,0.652,8.15,8.09,18,-24.6,25.3,-4.28,6.87,29.00
+breaker,cinder_heart,"Cinder Heart",uncommon,power,1,-,all,300,282,0.940,0.493,-3.6,11.2,2458,1664,0.677,0.77,0.81,18,-19.0,23.8,-1.22,6.87,19.56
+breaker,crossed_blades,"Crossed Blades",uncommon,power,1,D,all,300,263,0.877,0.247,-1.5,13.2,1281,773,0.603,0.85,1.69,18,-2.3,27.4,-5.16,7.93,13.94
+breaker,parry_ledger,"Parry Ledger",uncommon,power,1,DG,all,300,232,0.773,0.349,-0.4,12.8,1638,1380,0.842,1.04,2.08,18,-24.6,33.8,-5.83,7.23,21.50
+breaker,anvil_heart,"Anvil Heart",uncommon,power,1,SB,all,300,246,0.820,0.541,8.0,12.0,2391,2063,0.863,0.91,1.82,18,-19.0,28.6,-6.55,6.93,24.44
+breaker,fault_reader,"Fault Reader",uncommon,power,1,G,all,300,263,0.877,0.202,5.5,14.4,1083,910,0.840,0.83,0.85,18,-24.6,29.9,-7.28,5.80,19.33
+breaker,en_garde,"En Garde",uncommon,skill,1,D,all,300,298,0.993,0.443,-1.3,11.0,3530,1524,0.432,3.68,3.67,18,-35.7,27.4,-9.33,8.44,13.72
+breaker,shed_plating,"Shed Plating",uncommon,skill,0,SB,all,300,268,0.893,0.119,8.0,17.5,809,604,0.747,10.77,21.54,18,-24.6,19.8,-5.89,7.10,25.94
+breaker,kindle,"Kindle",uncommon,skill,1,-,all,300,283,0.943,0.258,-4.9,13.1,2374,1171,0.493,6.04,12.08,18,-24.6,33.8,-5.44,7.30,21.33
+breaker,spark_gap,"Spark Gap",uncommon,power,1,-,all,300,277,0.923,0.769,-16.6,13.8,3879,3063,0.790,0.83,1.66,18,-7.9,33.5,-6.00,7.86,21.78
+breaker,iron_patience,"Iron Patience",uncommon,power,1,-,all,300,264,0.880,0.731,-0.6,14.5,3673,2559,0.697,0.87,0.91,18,-30.1,26.5,-7.28,8.77,18.39
+breaker,jackhammer,"Jackhammer",rare,attack,1,SG,all,300,162,0.540,0.278,8.6,16.2,1044,796,0.762,27.10,26.93,18,-19.0,23.8,-6.50,6.22,28.61
+breaker,steal_the_swing,"Steal the Swing",rare,attack,1,D,all,300,177,0.590,0.446,-0.5,14.3,1178,617,0.524,15.17,15.17,18,-2.3,22.4,0.06,7.54,16.72
+breaker,iron_avalanche,"Iron Avalanche",rare,attack,2,B,all,300,152,0.507,0.039,-26.7,34.9,82,71,0.866,26.46,13.05,18,-30.1,26.5,-10.33,6.42,18.11
+breaker,endless_maul,"Endless Maul",rare,attack,1,S,all,300,155,0.517,0.458,-5.3,14.5,2131,3269,1.534,17.42,17.42,18,-13.4,26.9,-3.22,6.28,61.78
+breaker,forge_oath,"Forge Oath",rare,skill,0,S,all,300,158,0.527,0.076,14.1,27.6,114,108,0.947,0.00,0.00,18,-13.4,31.2,-2.55,8.30,21.06
+breaker,vent_pressure,"Vent Pressure",rare,skill,1,S,all,300,153,0.510,0.092,4.9,23.9,372,139,0.374,10.86,10.86,18,-19.0,23.8,-4.55,5.62,15.72
+breaker,iron_rhythm,"Iron Rhythm",rare,skill,0,SB,all,300,145,0.483,0.938,-12.7,25.9,3685,3359,0.912,6.97,13.95,18,3.2,33.5,-1.22,9.89,47.44
+breaker,smouldering_core,"Smouldering Core",rare,power,2,S,all,300,162,0.540,0.185,-21.6,19.6,417,248,0.595,0.91,0.64,18,-7.9,29.5,-7.94,7.24,14.33
+breaker,recoil_spring,"Recoil Spring",rare,power,1,D,all,300,151,0.503,0.709,-14.8,16.7,1401,1193,0.852,3.81,7.63,18,-19.0,28.6,-5.16,8.60,21.67
+breaker,reactive_plate,"Reactive Plate",rare,power,2,B,all,300,143,0.477,0.049,0.8,36.0,130,72,0.554,1.08,0.74,18,-7.9,29.5,-5.28,7.25,13.33
+breaker,worldbreaker,"Worldbreaker",rare,attack,X,-,all,300,144,0.480,0.347,-2.9,16.3,938,752,0.802,31.71,11.66,18,-24.6,25.3,-6.16,5.60,28.28
+breaker,turnabout,"Turnabout",rare,skill,2,-,all,300,170,0.567,0.129,9.4,20.4,625,174,0.278,36.56,21.78,18,8.8,26.9,1.45,7.92,11.72
+breaker,bellows,"Bellows",rare,power,0,-,all,300,170,0.567,0.776,-0.8,18.0,1667,1643,0.986,3.97,7.94,18,-13.4,31.2,0.17,7.31,31.11
+breaker,crazing,"Crazing",rare,power,0,-,all,300,150,0.500,0.920,-18.8,22.9,1834,1788,0.975,12.04,24.08,18,-2.3,31.7,-1.66,8.73,28.39
+breaker,answer_in_kind,"Answer in Kind",rare,power,2,-,all,300,149,0.497,0.248,12.3,17.9,593,434,0.732,0.88,0.68,18,-30.1,26.5,-3.00,8.34,18.00
+breaker,molten_shell,"Molten Shell",rare,power,1,-,all,300,145,0.483,0.669,7.5,15.7,1295,1252,0.967,11.80,23.59,18,-2.3,22.4,0.78,7.97,25.39
+breaker,relay_ping,"Relay Ping",uncommon,skill,0,colourless,all,300,32,0.107,0.063,0.0,84.9,161,133,0.826,12.49,24.98,18,3.2,29.5,-3.11,7.83,33.94
+breaker,shardfall,"Shardfall",uncommon,attack,2,colourless,all,300,29,0.097,0.103,-33.3,53.6,134,119,0.888,21.60,10.80,18,-7.9,24.9,3.34,6.27,41.50
+breaker,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,all,300,20,0.067,0.050,50.0,98.0,48,31,0.646,19.97,9.98,18,-19.0,32.7,-2.50,8.71,26.17
+breaker,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,all,300,33,0.110,0.212,32.6,47.4,214,166,0.776,0.00,0.00,18,-24.6,25.3,-3.55,8.02,31.50
+breaker,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,all,300,107,0.357,0.308,8.1,19.8,1159,934,0.806,16.09,32.18,18,-30.1,26.5,-9.00,8.20,27.28
+breaker,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,all,300,26,0.087,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-24.6,25.3,-10.28,6.13,7.39
+breaker,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,all,300,20,0.067,0.250,13.8,55.9,146,113,0.774,11.13,5.62,18,-24.6,25.3,-6.05,7.42,26.06
+breaker,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,all,300,22,0.073,0.227,-35.3,49.2,109,98,0.899,6.77,13.53,18,-19.0,28.6,-6.28,6.27,18.61
+breaker,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,all,300,32,0.107,0.031,-75.0,96.0,3,3,1.000,11.00,22.00,18,-30.1,26.5,-10.83,6.97,17.11
+breaker,star_survey,"Star Survey",uncommon,skill,0,colourless,all,300,26,0.087,0.077,50.0,77.5,12,8,0.667,3.00,6.00,18,-2.3,27.4,-4.94,8.08,15.06
+breaker,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,all,300,23,0.077,0.826,-66.7,71.0,734,603,0.822,39.43,39.30,18,-2.3,27.4,0.06,7.75,33.00
+breaker,snare_line,"Snare Line",uncommon,skill,1,colourless,all,300,32,0.107,0.250,37.3,38.2,354,114,0.322,17.56,17.72,18,25.4,21.3,6.17,6.80,18.11
+breaker,cutting_torch,"Cutting Torch",rare,attack,1,colourless,all,300,9,0.030,0.333,-46.4,56.7,238,208,0.874,8.70,8.66,18,-7.9,24.9,-1.28,6.82,39.67
+breaker,clean_manifest,"Clean Manifest",rare,attack,2,colourless,all,300,8,0.027,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,28.6,-4.22,6.65,17.39
+breaker,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,all,300,58,0.193,0.172,-50.7,33.1,160,125,0.781,0.36,0.36,18,-30.1,26.5,-7.55,7.49,15.56
+breaker,prism_resonance,"Prism Resonance",rare,power,2,colourless,all,300,7,0.023,0.143,n/a,n/a,41,11,0.268,1.64,0.82,18,-13.4,26.9,-7.11,6.80,11.78
+breaker,shard_cache,"Shard Cache",rare,skill,0,colourless,all,300,9,0.030,0.333,100.0,120.0,67,11,0.164,9.00,18.00,18,-13.4,31.2,-3.33,8.76,0.89
+breaker,mirror_tether,"Mirror Tether",rare,attack,2,colourless,all,300,5,0.017,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-13.4,21.8,-5.44,6.84,9.00
+breaker,grav_clamp,"Grav Clamp",rare,skill,2,colourless,all,300,13,0.043,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,23.8,-5.55,5.80,4.28
+breaker,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,all,300,95,0.317,0.053,2.5,40.3,124,92,0.742,15.77,31.54,18,-30.1,21.3,-7.78,7.99,21.89
+breaker,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,all,300,104,0.347,0.038,-29.1,44.0,50,41,0.820,28.32,28.32,18,-24.6,25.3,-8.33,5.08,25.61
+breaker,scar_tissue,"Scar Tissue",rare,power,1,colourless,all,300,49,0.163,0.245,26.5,32.7,156,120,0.769,1.23,1.23,18,-19.0,32.7,-4.83,8.31,16.00
+breaker,last_light,"Last Light",rare,attack,3,colourless,all,300,56,0.187,0.607,-3.3,24.4,445,283,0.636,53.23,19.24,18,19.9,37.3,4.17,8.84,22.50
+breaker,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,all,300,120,0.400,0.008,-72.7,86.9,5,5,1.000,13.50,27.00,18,3.2,29.5,1.11,8.48,25.50
+breaker,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,all,300,123,0.410,0.081,11.9,30.3,348,290,0.833,10.49,10.46,18,-13.4,31.2,-3.50,6.68,38.11
+breaker,black_box,"Black Box",uncommon,skill,0,colourless,all,300,110,0.367,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-7.9,29.5,-7.11,8.70,3.78
+breaker,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,all,300,116,0.387,0.009,7.1,86.3,10,3,0.300,0.00,0.00,18,-19.0,32.7,-5.78,9.64,1.39
+breaker,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,all,300,40,0.133,0.200,10.2,41.1,274,239,0.872,13.04,13.04,18,-35.7,27.4,-7.22,8.30,36.83
+breaker,burn_bright,"Burn Bright",rare,power,2,colourless,all,300,64,0.213,0.016,-71.4,88.2,12,4,0.333,0.00,0.00,18,-41.2,28.1,-11.66,8.26,9.06
+breaker,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,all,300,71,0.237,0.042,0.0,47.9,20,20,1.000,32.25,11.52,18,-13.4,35.0,-0.39,7.79,44.89
+breaker,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,all,300,67,0.223,0.239,-13.7,29.3,458,316,0.690,3.02,6.04,18,-24.6,29.9,-9.50,8.29,20.17
+breaker,starfall_lance,"Starfall Lance",rare,attack,X,colourless,all,300,25,0.083,0.120,25.4,58.3,45,26,0.578,47.73,12.41,18,3.2,24.9,-0.50,7.39,22.50
+breaker,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,all,300,29,0.097,0.207,11.4,41.3,183,153,0.836,38.69,30.05,18,-30.1,30.9,-6.00,8.52,34.94
+breaker,encore,"Encore",uncommon,skill,1,colourless,all,300,66,0.220,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-30.1,30.9,-6.11,6.79,27.94
+breaker,second_verse,"Second Verse",uncommon,skill,1,colourless,all,300,51,0.170,0.039,-34.3,63.8,91,64,0.703,6.50,6.50,18,-7.9,33.5,-2.11,9.89,31.22
+breaker,bait_flare,"Bait Flare",uncommon,skill,0,colourless,all,300,25,0.083,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-7.9,29.5,-1.61,8.69,10.56
+chronist,pulse_shot,"Pulse Shot",starter,attack,1,G,all,300,0,0.000,n/a,n/a,n/a,50590,29829,0.590,6.69,6.95,,,,,,
+chronist,ward,"Ward",starter,skill,1,G,all,300,0,0.000,n/a,n/a,n/a,39344,13903,0.353,5.08,5.25,,,,,,
+chronist,tick,"Tick",starter,attack,0,K,all,300,0,0.000,n/a,n/a,n/a,10433,8942,0.857,7.19,14.38,,,,,,
+chronist,tock,"Tock",starter,skill,1,J,all,300,0,0.000,n/a,n/a,n/a,9930,6699,0.675,18.05,18.89,,,,,,
+chronist,pinion_jab,"Pinion Jab",common,attack,0,K,all,300,409,1.363,0.130,-3.0,14.4,1611,1438,0.893,7.05,14.11,18,-3.7,28.6,0.39,5.90,29.22
+chronist,gear_train,"Gear Train",common,attack,1,K,all,300,430,1.433,0.093,-5.8,14.6,870,634,0.729,14.22,17.44,18,-9.2,26.9,5.00,5.62,29.67
+chronist,downbeat,"Downbeat",common,attack,1,K,all,300,466,1.553,0.328,-7.8,8.9,3682,3174,0.862,16.95,20.57,18,1.9,19.8,1.66,5.05,37.56
+chronist,noon_gun,"Noon Gun",common,attack,1,J,all,300,442,1.473,0.242,-3.4,11.4,2591,2089,0.806,22.74,23.30,18,1.9,29.9,0.33,7.96,25.56
+chronist,afterpeal,"Afterpeal",common,attack,1,J,all,300,419,1.397,0.069,3.0,18.3,639,538,0.842,19.51,20.78,18,1.9,25.3,2.27,6.98,27.72
+chronist,spring_tide,"Spring Tide",common,attack,1,J,all,300,437,1.457,0.343,-2.9,11.7,3247,2754,0.848,23.88,24.49,18,1.9,29.9,1.39,7.63,25.33
+chronist,carillon,"Carillon",common,attack,0,K,all,300,444,1.480,0.394,0.6,9.8,4634,4100,0.885,12.70,25.40,18,-9.2,21.8,0.77,7.53,33.61
+chronist,storm_glass,"Storm Glass",common,skill,1,J,all,300,432,1.440,0.060,-8.2,19.1,392,277,0.707,19.13,19.85,18,7.4,26.5,2.72,7.14,20.06
+chronist,almanac,"Almanac",common,skill,0,J,all,300,400,1.333,0.292,-0.6,10.5,2731,2284,0.836,16.68,33.35,18,13.0,22.4,4.11,4.97,33.22
+chronist,ephemeris,"Ephemeris",common,skill,1,K,all,300,481,1.603,0.443,1.3,9.2,4874,2453,0.503,9.53,10.24,18,-9.2,26.9,-1.45,6.67,16.61
+chronist,upbeat,"Upbeat",common,skill,0,K,all,300,437,1.457,0.046,-2.1,20.6,298,237,0.795,4.35,8.70,18,7.4,21.3,2.33,5.79,23.72
+chronist,weather_eye,"Weather Eye",common,skill,1,S,all,300,440,1.467,0.127,3.9,13.6,1401,936,0.668,7.34,7.59,18,-3.7,28.6,0.77,5.84,24.89
+chronist,balance_wheel,"Balance Wheel",common,skill,1,K,all,300,444,1.480,0.173,8.2,11.6,1469,893,0.608,10.65,13.07,18,24.1,28.4,5.66,6.82,21.06
+chronist,dead_reckoning,"Dead Reckoning",common,skill,0,K,all,300,438,1.460,0.304,-2.5,9.9,2088,1461,0.700,6.05,12.10,18,29.7,28.6,9.22,7.38,29.89
+chronist,wind_forward,"Wind Forward",common,skill,0,J,all,300,459,1.530,0.172,-0.5,11.2,1376,1038,0.754,1.82,3.64,18,7.4,30.9,5.94,5.63,26.39
+chronist,hold_the_hour,"Hold the Hour",common,skill,0,J,all,300,445,1.483,0.337,-0.6,9.6,3208,2238,0.698,4.49,8.98,18,-3.7,17.7,-0.84,6.33,23.39
+chronist,ripple,"Ripple",common,attack,0,J,all,300,437,1.457,0.320,2.2,10.3,3629,3113,0.858,17.82,35.64,18,13.0,27.4,3.61,6.28,31.06
+chronist,whistle_for_wind,"Whistle for Wind",common,skill,0,S,all,300,442,1.473,0.002,46.3,86.2,0,0,n/a,n/a,n/a,18,-14.8,24.9,-3.28,8.50,4.83
+chronist,red_sky,"Red Sky",common,skill,1,S,all,300,447,1.490,0.150,-0.9,12.3,1162,593,0.510,16.97,17.41,18,-14.8,24.9,1.27,6.08,16.00
+chronist,undertow,"Undertow",common,attack,1,S,all,300,451,1.503,0.024,-14.9,23.8,159,94,0.591,8.00,8.26,18,-20.3,27.4,-6.45,6.02,18.56
+chronist,fermata,"Fermata",uncommon,attack,1,K,all,300,290,0.967,0.103,7.5,18.1,684,613,0.896,16.98,20.25,18,-9.2,21.8,0.44,8.09,27.67
+chronist,appointed_hour,"Appointed Hour",uncommon,attack,2,P,all,300,254,0.847,0.626,-5.1,13.6,3131,2400,0.767,36.69,20.12,18,18.6,23.2,5.50,5.27,26.72
+chronist,knell,"Knell",uncommon,attack,1,J,all,300,282,0.940,0.472,1.3,12.8,2716,2416,0.890,27.04,27.65,18,13.0,31.7,5.33,8.27,27.11
+chronist,turn_the_tide,"Turn the Tide",uncommon,attack,1,S,all,300,287,0.957,0.042,14.6,27.4,377,295,0.782,13.95,14.44,18,-9.2,21.8,-1.84,6.20,25.89
+chronist,confluence,"Confluence",uncommon,attack,0,J,all,300,304,1.013,0.303,-5.1,12.8,2470,2210,0.895,7.40,14.80,18,-3.7,23.8,2.55,7.62,37.33
+chronist,second_hand,"Second Hand",uncommon,attack,0,K,all,300,307,1.023,0.440,1.9,11.1,2975,2600,0.874,16.26,32.52,18,13.0,22.4,4.22,7.04,36.44
+chronist,mainspring,"Mainspring",uncommon,skill,0,K,all,300,256,0.853,0.371,-8.0,12.5,2461,1649,0.670,6.27,12.55,18,-3.7,23.8,2.16,5.81,23.44
+chronist,quarter_chime,"Quarter Chime",uncommon,skill,0,K,all,300,274,0.913,0.179,16.4,15.1,1019,645,0.633,8.00,15.99,18,7.4,30.9,-0.78,9.85,16.17
+chronist,hasten,"Hasten",uncommon,skill,0,J,all,300,271,0.903,0.107,2.5,18.0,428,310,0.724,2.24,4.47,18,-9.2,26.9,-3.34,7.06,17.28
+chronist,banked_hours,"Banked Hours",uncommon,skill,1,P,all,300,297,0.990,0.653,-4.4,11.2,4002,2900,0.725,19.72,20.88,18,-9.2,21.8,-3.95,7.10,24.50
+chronist,breakwater,"Breakwater",uncommon,skill,2,P,all,300,276,0.920,0.420,0.1,11.4,2320,1521,0.656,21.31,12.23,18,18.6,23.2,1.83,8.83,19.61
+chronist,heave_to,"Heave To",uncommon,skill,1,S,all,300,309,1.030,0.372,2.3,11.3,2598,1415,0.545,7.80,8.13,18,7.4,30.9,2.05,8.56,17.50
+chronist,striking_train,"Striking Train",uncommon,power,1,K,all,300,302,1.007,0.354,-3.1,12.4,1907,1750,0.918,1.86,1.97,18,1.9,25.3,2.16,6.84,21.89
+chronist,tide_table,"Tide Table",uncommon,power,1,J,all,300,282,0.940,0.713,3.2,13.5,3420,2695,0.788,1.35,2.70,18,-3.7,28.6,0.44,8.51,22.06
+chronist,escapement,"Escapement",uncommon,power,1,K,all,300,301,1.003,0.515,3.0,11.1,2676,2069,0.773,1.50,1.71,18,1.9,29.9,-1.23,7.10,17.50
+chronist,accelerando,"Accelerando",uncommon,power,0,K,all,300,282,0.940,0.028,19.5,30.6,168,163,0.970,1.67,3.35,18,-3.7,23.8,-2.56,6.71,18.33
+chronist,bell_choir,"Bell Choir",uncommon,attack,1,J,all,300,270,0.900,0.159,-0.8,16.6,1153,836,0.725,22.09,23.67,18,1.9,25.3,1.00,8.42,27.83
+chronist,set_the_hour,"Set the Hour",uncommon,skill,1,J,all,300,253,0.843,0.036,-0.1,27.6,118,61,0.517,1.23,1.74,18,13.0,27.4,2.72,8.24,19.78
+chronist,gathering_storm,"Gathering Storm",uncommon,skill,1,S,all,300,294,0.980,0.020,-3.7,37.3,27,14,0.519,15.43,15.43,18,1.9,29.9,2.05,6.30,12.00
+chronist,squall_line,"Squall Line",uncommon,power,0,S,all,300,308,1.027,0.276,2.5,12.6,1290,1230,0.953,1.04,2.09,18,7.4,26.5,0.33,7.97,20.50
+chronist,zenith,"Zenith",rare,attack,0,K,all,300,149,0.497,0.745,3.8,17.3,1965,1654,0.842,14.29,28.58,18,-9.2,26.9,0.27,7.30,34.83
+chronist,syzygy,"Syzygy",rare,attack,2,J,all,300,155,0.517,0.097,-7.3,26.1,199,145,0.729,35.11,19.89,18,-3.7,23.8,0.44,6.48,19.89
+chronist,culmination,"Culmination",rare,attack,2,K,all,300,143,0.477,0.007,0.0,89.8,2,1,0.500,15.00,7.50,18,-3.7,23.8,-0.39,6.21,13.50
+chronist,toll_the_hours,"Toll the Hours",rare,attack,X,P,all,300,158,0.527,0.557,-12.8,16.1,1581,1458,0.922,33.82,13.99,18,-9.2,31.2,0.61,6.53,32.94
+chronist,seen_it_coming,"Seen It Coming",rare,skill,1,S,all,300,160,0.533,0.212,-11.8,17.9,335,245,0.731,16.04,27.48,18,13.0,22.4,2.94,7.11,17.61
+chronist,tourbillon,"Tourbillon",rare,skill,0,K,all,300,157,0.523,0.713,-6.6,17.1,1381,935,0.677,8.65,17.30,18,13.0,22.4,6.11,6.25,20.28
+chronist,lighthouse,"Lighthouse",rare,skill,2,S,all,300,164,0.547,0.299,3.7,16.5,870,440,0.506,12.50,6.93,18,-3.7,23.8,-0.73,5.70,14.17
+chronist,polyrhythm,"Polyrhythm",rare,power,1,K,all,300,145,0.483,0.290,-25.8,16.1,424,346,0.816,1.81,3.62,18,7.4,26.5,2.05,8.04,18.39
+chronist,watch_bell,"Watch Bell",rare,power,2,J,all,300,152,0.507,0.059,7.8,30.0,88,63,0.716,2.10,1.78,18,7.4,21.3,-1.84,8.67,12.06
+chronist,perpetual_motion,"Perpetual Motion",rare,power,1,K,all,300,172,0.573,0.610,6.2,14.7,1241,1093,0.881,1.11,2.22,18,18.6,23.2,6.72,4.78,26.22
+chronist,total_eclipse,"Total Eclipse",rare,power,1,J,all,300,166,0.553,0.663,-3.7,16.0,1269,1064,0.838,1.62,3.25,18,-14.8,29.5,0.05,8.98,19.06
+chronist,eternal_return,"Eternal Return",rare,power,1,P,all,300,155,0.517,0.510,11.7,15.7,958,811,0.847,1.27,2.54,18,18.6,32.2,5.00,8.47,21.17
+chronist,reckoning,"Reckoning",rare,attack,1,S,all,300,141,0.470,0.177,-10.8,19.6,268,228,0.851,25.27,25.38,18,-9.2,26.9,-2.28,6.59,16.39
+chronist,eye_of_the_storm,"Eye of the Storm",rare,power,2,S,all,300,145,0.483,0.007,-76.5,86.1,3,2,0.667,0.00,0.00,18,1.9,19.8,-0.61,4.36,14.72
+chronist,relay_ping,"Relay Ping",uncommon,skill,0,colourless,all,300,20,0.067,0.050,66.7,101.0,45,40,0.889,8.93,17.85,18,-3.7,28.6,1.00,6.28,27.72
+chronist,shardfall,"Shardfall",uncommon,attack,2,colourless,all,300,29,0.097,0.000,n/a,n/a,15,7,0.467,21.86,10.93,18,-3.7,23.8,0.50,5.34,28.94
+chronist,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,all,300,15,0.050,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,7.4,30.9,1.33,7.40,22.33
+chronist,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,all,300,23,0.077,0.217,6.8,48.5,180,122,0.678,0.25,0.25,18,7.4,26.5,0.55,7.21,25.89
+chronist,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,all,300,65,0.217,0.046,10.6,53.1,138,110,0.797,13.44,26.87,18,-3.7,28.6,1.44,7.67,23.61
+chronist,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,all,300,30,0.100,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,1.9,25.3,1.22,6.23,7.61
+chronist,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,all,300,17,0.057,0.176,100.0,120.0,200,148,0.740,11.20,6.40,18,7.4,26.5,-0.50,9.07,25.28
+chronist,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,all,300,35,0.117,0.086,20.3,57.9,72,65,0.903,6.98,13.97,18,18.6,23.2,5.00,8.14,20.39
+chronist,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,all,300,28,0.093,0.107,26.3,62.0,34,32,0.941,10.13,20.25,18,18.6,28.1,4.00,6.52,20.83
+chronist,star_survey,"Star Survey",uncommon,skill,0,colourless,all,300,31,0.103,0.065,-66.7,101.0,28,18,0.643,3.83,7.67,18,24.1,23.6,4.27,5.90,16.00
+chronist,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,all,300,28,0.093,0.857,25.6,55.2,837,736,0.879,34.00,35.29,18,29.7,23.8,10.05,6.32,31.39
+chronist,snare_line,"Snare Line",uncommon,skill,1,colourless,all,300,25,0.083,0.080,0.0,76.6,98,39,0.398,13.41,14.14,18,40.8,23.2,11.89,6.43,12.22
+chronist,cutting_torch,"Cutting Torch",rare,attack,1,colourless,all,300,7,0.023,0.143,0.0,120.0,40,33,0.825,8.79,8.79,18,1.9,33.8,0.50,8.86,28.89
+chronist,clean_manifest,"Clean Manifest",rare,attack,2,colourless,all,300,4,0.013,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-25.9,19.2,-8.34,6.42,12.89
+chronist,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,all,300,42,0.140,0.048,29.4,71.0,61,48,0.787,1.71,1.82,18,7.4,21.3,0.22,6.47,16.00
+chronist,prism_resonance,"Prism Resonance",rare,power,2,colourless,all,300,5,0.017,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-3.7,17.7,-2.11,7.86,12.44
+chronist,shard_cache,"Shard Cache",rare,skill,0,colourless,all,300,5,0.017,0.000,n/a,n/a,41,4,0.098,10.50,21.00,18,7.4,30.9,2.33,7.03,1.00
+chronist,mirror_tether,"Mirror Tether",rare,attack,2,colourless,all,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-14.8,24.9,-5.34,7.93,7.22
+chronist,grav_clamp,"Grav Clamp",rare,skill,2,colourless,all,300,4,0.013,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-3.7,28.6,-0.73,7.18,5.78
+chronist,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,all,300,93,0.310,0.011,38.5,88.9,11,8,0.727,18.13,36.25,17,-8.6,23.1,-2.29,8.21,17.53
+chronist,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,all,300,83,0.277,0.072,-21.7,40.0,120,87,0.725,16.31,16.89,18,7.4,21.3,0.83,6.61,19.83
+chronist,scar_tissue,"Scar Tissue",rare,power,1,colourless,all,300,38,0.127,0.158,31.0,41.9,62,51,0.823,2.47,2.74,18,1.9,25.3,-1.39,9.15,13.56
+chronist,last_light,"Last Light",rare,attack,3,colourless,all,300,36,0.120,0.556,11.9,36.4,229,177,0.773,49.75,22.58,18,13.0,27.4,2.39,8.11,18.39
+chronist,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,all,300,83,0.277,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,13.0,22.4,4.05,5.87,19.17
+chronist,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,all,300,92,0.307,0.043,-8.1,44.0,151,129,0.854,9.68,9.76,17,-2.7,25.1,-2.11,9.04,26.41
+chronist,black_box,"Black Box",uncommon,skill,0,colourless,all,300,93,0.310,0.011,-45.5,87.4,3,3,1.000,16.50,33.00,18,13.0,27.4,5.22,6.37,12.50
+chronist,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,all,300,99,0.330,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,9.1,22.3,1.36,7.59,5.06
+chronist,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,all,300,49,0.163,0.143,-34.3,40.2,114,102,0.895,11.30,11.53,18,-9.2,21.8,-3.45,7.45,25.61
+chronist,burn_bright,"Burn Bright",rare,power,2,colourless,all,300,38,0.127,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-14.5,26.4,-4.70,9.25,8.18
+chronist,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,all,300,39,0.130,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-8.6,23.1,0.47,6.96,29.47
+chronist,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,all,300,51,0.170,0.098,-13.2,47.9,220,157,0.714,3.17,6.34,18,13.0,27.4,4.72,8.26,26.56
+chronist,starfall_lance,"Starfall Lance",rare,attack,X,colourless,all,300,12,0.040,0.500,0.0,92.8,107,82,0.766,43.66,17.21,18,1.9,25.3,1.61,6.16,19.44
+chronist,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,all,300,13,0.043,0.385,-50.0,64.2,79,72,0.911,29.08,18.21,17,9.1,27.9,2.77,8.38,30.53
+chronist,encore,"Encore",uncommon,skill,1,colourless,all,300,57,0.190,0.018,0.0,99.4,9,9,1.000,0.33,0.67,17,9.1,27.9,1.36,7.43,24.88
+chronist,second_verse,"Second Verse",uncommon,skill,1,colourless,all,300,59,0.197,0.102,-23.1,38.3,97,71,0.732,7.36,8.04,17,-8.6,23.1,-0.88,5.89,24.94
+chronist,bait_flare,"Bait Flare",uncommon,skill,0,colourless,all,300,22,0.073,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-2.7,25.1,-2.17,6.04,15.88
+graft,lash,"Lash",starter,attack,1,-,all,300,0,0.000,n/a,n/a,n/a,28556,15155,0.531,6.25,6.20,,,,,,
+graft,husk,"Husk",starter,skill,1,-,all,300,0,0.000,n/a,n/a,n/a,28927,9007,0.311,4.62,4.59,,,,,,
+graft,seed_bite,"Seed Bite",starter,attack,1,G,all,300,0,0.000,n/a,n/a,n/a,10000,7230,0.723,12.76,12.86,,,,,,
+graft,graft_hide,"Graft Hide",starter,skill,1,C,all,300,0,0.000,n/a,n/a,n/a,8800,4701,0.534,4.57,4.55,,,,,,
+graft,thornwhirl,"Thornwhirl",common,attack,2,M,all,300,431,1.437,0.032,13.5,26.6,442,243,0.550,23.93,12.09,18,5.6,35.0,-5.39,10.32,15.83
+graft,barb_flick,"Barb Flick",common,attack,0,M,all,300,469,1.563,0.245,11.0,10.2,2283,1908,0.836,11.57,23.15,18,5.6,26.9,0.22,8.70,28.61
+graft,grafting_cut,"Grafting Cut",common,attack,1,C,all,300,453,1.510,0.196,-0.5,11.1,1913,1381,0.722,11.16,11.17,18,11.1,28.6,-2.22,7.22,22.39
+graft,hivestrike,"Hivestrike",common,attack,1,M,all,300,442,1.473,0.143,12.2,12.4,1021,714,0.699,10.46,10.45,18,22.2,30.9,-0.16,11.48,19.44
+graft,shear,"Shear",common,attack,1,C,all,300,410,1.367,0.205,6.8,11.5,1755,1461,0.832,6.07,6.06,18,11.1,28.6,3.17,8.43,28.83
+graft,spore_lash,"Spore Lash",common,attack,1,B,all,300,441,1.470,0.252,-4.8,10.4,2135,1482,0.694,10.83,10.85,18,0.0,33.5,-6.39,8.88,17.33
+graft,canker_bite,"Canker Bite",common,attack,1,B,all,300,433,1.443,0.053,-9.6,18.6,369,281,0.762,13.38,13.43,18,0.0,29.5,-2.78,7.51,20.61
+graft,mulch_maul,"Mulch Maul",common,attack,1,C,all,300,448,1.493,0.348,5.2,9.6,3167,2464,0.778,13.79,13.77,18,0.0,24.9,-2.55,8.34,24.67
+graft,sap_shell,"Sap Shell",common,skill,1,M,all,300,468,1.560,0.201,13.8,10.4,1489,780,0.524,12.07,12.07,18,11.1,32.7,-2.05,10.01,16.28
+graft,blightcap,"Blightcap",common,skill,1,B,all,300,437,1.457,0.021,-5.6,29.0,77,39,0.506,21.15,21.15,18,5.6,35.0,-1.89,10.31,21.44
+graft,tendril_reach,"Tendril Reach",common,skill,1,M,all,300,430,1.433,0.421,4.8,9.2,3156,1861,0.590,12.38,12.36,18,5.6,31.2,0.84,10.10,20.11
+graft,root_mesh,"Root Mesh",common,skill,1,M,all,300,456,1.520,0.132,10.0,12.6,1108,585,0.528,7.90,7.84,18,0.0,33.5,4.50,8.81,18.17
+graft,deep_graft,"Deep Graft",common,skill,1,G,all,300,436,1.453,0.321,2.0,9.4,2383,1206,0.506,4.01,3.99,18,5.6,31.2,1.39,9.46,15.78
+graft,spore_haze,"Spore Haze",common,skill,1,B,all,300,428,1.427,0.096,-8.6,14.9,624,239,0.383,12.24,12.24,18,0.0,24.9,-6.00,8.39,8.61
+graft,mire_carapace,"Mire Carapace",common,skill,1,B,all,300,432,1.440,0.065,17.3,19.0,512,292,0.570,11.88,11.80,18,11.1,28.6,-0.39,8.49,16.28
+graft,shed_husk,"Shed Husk",common,skill,1,C,all,300,421,1.403,0.793,1.6,11.8,6255,3348,0.535,4.76,4.74,18,5.6,31.2,-0.28,8.89,26.83
+graft,sap_drip,"Sap Drip",common,skill,0,G,all,300,429,1.430,0.084,-13.4,15.1,358,279,0.779,3.18,6.35,18,16.7,25.3,-1.44,9.47,15.67
+graft,leaf_litter,"Leaf Litter",common,skill,1,C,all,300,414,1.380,0.377,2.7,9.9,2809,1434,0.511,0.15,0.15,18,-16.7,26.9,-6.22,6.54,14.11
+graft,molt,"Molt",common,skill,1,C,all,300,465,1.550,0.032,8.5,22.4,235,188,0.800,7.05,6.98,18,27.8,27.4,7.67,7.50,26.72
+graft,burst_pod,"Burst Pod",common,skill,0,B,all,300,394,1.313,0.297,0.5,10.4,1776,1611,0.907,27.56,55.12,18,5.6,31.2,2.28,8.96,24.94
+graft,twin_thorn,"Twin Thorn",uncommon,attack,2,G,all,300,280,0.933,0.361,8.5,12.4,1654,1220,0.738,49.06,24.78,18,11.1,32.7,-0.89,9.64,25.94
+graft,canopy_crush,"Canopy Crush",uncommon,attack,2,M,all,300,257,0.857,0.070,-12.5,21.9,243,145,0.597,25.38,12.69,18,-5.6,27.4,-4.28,7.47,11.44
+graft,miasma_sweep,"Miasma Sweep",uncommon,attack,2,B,all,300,307,1.023,0.456,-6.3,11.4,2845,1831,0.644,30.01,15.14,18,0.0,24.9,0.11,7.38,22.72
+graft,uproot,"Uproot",uncommon,attack,2,C,all,300,298,0.993,0.279,4.0,12.3,1282,553,0.431,11.26,5.69,18,5.6,31.2,1.00,8.56,11.00
+graft,pollen_sting,"Pollen Sting",uncommon,attack,1,G,all,300,277,0.923,0.097,5.6,19.3,581,478,0.823,11.75,11.75,18,11.1,28.6,-1.33,6.95,23.72
+graft,patient_thorn,"Patient Thorn",uncommon,attack,1,G,all,300,292,0.973,0.312,14.8,11.6,1948,1785,0.916,20.37,20.57,18,0.0,24.9,1.11,8.72,34.78
+graft,burl_wall,"Burl Wall",uncommon,skill,2,M,all,300,261,0.870,0.307,16.9,12.6,1616,626,0.387,20.82,10.54,18,-5.6,27.4,-4.22,9.31,10.94
+graft,choking_spores,"Choking Spores",uncommon,skill,1,B,all,300,299,0.997,0.532,1.6,11.8,3399,2138,0.629,12.81,12.81,18,11.1,32.7,1.84,11.32,26.11
+graft,propagate,"Propagate",uncommon,skill,1,M,all,300,269,0.897,0.007,-28.5,61.0,5,2,0.400,0.00,0.00,18,-16.7,26.9,-9.55,8.77,2.94
+graft,seed_rain,"Seed Rain",uncommon,skill,1,M,all,300,279,0.930,0.233,-0.1,13.0,1173,467,0.398,3.13,3.09,18,0.0,29.5,-1.33,9.52,8.61
+graft,puffball,"Puffball",uncommon,skill,2,B,all,300,288,0.960,0.260,-1.8,13.2,1298,661,0.509,64.85,32.52,18,11.1,23.8,-2.05,8.11,13.22
+graft,sporeburst,"Sporeburst",uncommon,skill,1,B,all,300,286,0.953,0.483,2.1,11.9,2957,2378,0.804,25.49,25.39,18,-5.6,35.4,-1.28,9.27,26.22
+graft,decomposer,"Decomposer",uncommon,power,1,C,all,300,285,0.950,0.695,-0.3,12.6,2870,2041,0.711,0.65,1.10,18,-11.1,24.9,-4.33,8.75,16.67
+graft,dusk_pruning,"Dusk Pruning",uncommon,power,1,C,all,300,290,0.967,0.576,2.8,11.1,2457,1732,0.705,0.53,0.88,18,0.0,24.9,-1.28,8.43,16.22
+graft,living_hedge,"Living Hedge",uncommon,power,1,M,all,300,285,0.950,0.639,1.9,12.1,2500,1859,0.744,0.79,1.33,18,5.6,26.9,-3.78,8.22,19.28
+graft,thorn_halo,"Thorn Halo",uncommon,power,1,G,all,300,288,0.960,0.576,-1.1,11.9,2758,1314,0.476,0.62,0.65,18,-22.2,23.8,-11.83,7.22,11.78
+graft,ripening_rot,"Ripening Rot",uncommon,power,1,B,all,300,275,0.917,0.429,-18.5,11.4,1754,1490,0.849,0.58,1.17,18,0.0,29.5,-5.11,8.65,17.78
+graft,reap,"Reap",uncommon,attack,2,B,all,300,315,1.050,0.311,2.0,11.2,1883,1313,0.697,28.17,14.14,18,0.0,29.5,-1.00,7.81,20.28
+graft,second_flush,"Second Flush",uncommon,skill,1,G,all,300,274,0.913,0.058,17.4,23.5,202,117,0.579,5.79,10.27,18,0.0,24.9,-2.61,7.41,12.61
+graft,heartwood_spear,"Heartwood Spear",rare,attack,2,G,all,300,148,0.493,0.236,18.7,19.1,609,492,0.808,41.07,40.01,18,38.9,23.6,8.56,8.92,34.22
+graft,death_cap,"Death Cap",rare,attack,2,B,all,300,188,0.627,0.649,-7.1,15.7,1480,623,0.421,31.03,15.50,18,0.0,29.5,-2.61,7.56,9.78
+graft,reaping_vine,"Reaping Vine",rare,attack,2,C,all,300,197,0.657,0.208,-12.8,16.4,555,203,0.366,1.76,0.89,18,0.0,19.2,-2.61,6.16,8.06
+graft,verdant_tide,"Verdant Tide",rare,attack,2,M,all,300,176,0.587,0.006,78.6,87.7,25,7,0.280,16.00,8.00,18,-11.1,33.5,-4.11,8.91,8.39
+graft,humus_rite,"Humus Rite",rare,skill,1,C,all,300,156,0.520,0.237,-3.8,18.0,357,148,0.415,0.72,0.93,18,-5.6,27.4,-4.11,10.03,7.83
+graft,crystal_graft,"Crystal Graft",rare,skill,0,G,all,300,166,0.553,0.199,-9.8,17.2,312,90,0.288,0.52,1.03,18,11.1,23.8,3.00,9.27,5.83
+graft,thresher,"Thresher",uncommon,power,2,C,all,300,282,0.940,0.450,-4.1,12.4,2110,784,0.372,0.41,0.24,18,-5.6,22.4,-7.33,8.47,8.33
+graft,hyphal_web,"Hyphal Web",rare,power,1,M,all,300,153,0.510,0.601,-6.0,16.1,953,707,0.742,0.73,0.74,18,11.1,28.6,-0.11,9.50,17.50
+graft,thornstorm,"Thornstorm",rare,attack,X,M,all,300,153,0.510,0.359,24.1,16.5,792,675,0.852,56.48,21.76,18,27.8,27.4,9.39,8.41,36.17
+graft,grim_harvest,"Grim Harvest",rare,skill,2,B,all,300,174,0.580,0.540,7.7,15.3,1392,1295,0.930,42.27,21.14,18,11.1,32.7,2.28,9.78,29.22
+graft,clear_cut,"Clear-Cut",rare,power,1,C,all,300,166,0.553,0.898,-7.2,24.5,1494,1008,0.675,0.93,1.64,18,11.1,28.6,-2.16,9.57,15.39
+graft,deep_rot,"Deep Rot",rare,power,1,B,all,300,181,0.603,0.033,-33.2,32.6,27,23,0.852,0.00,0.00,18,-5.6,31.7,-8.72,8.72,11.33
+graft,rootstock,"Rootstock",rare,power,2,M,all,300,173,0.577,0.029,-7.2,45.2,14,7,0.500,0.00,0.00,18,-5.6,22.4,-3.78,6.50,8.44
+graft,perennial,"Perennial",rare,power,1,G,all,300,162,0.540,0.574,-2.2,14.8,981,742,0.756,0.93,1.54,18,0.0,19.2,-5.05,7.35,15.61
+graft,relay_ping,"Relay Ping",uncommon,skill,0,colourless,all,300,19,0.063,0.000,n/a,n/a,23,22,0.957,9.00,18.00,18,16.7,29.9,0.00,9.99,26.61
+graft,shardfall,"Shardfall",uncommon,attack,2,colourless,all,300,23,0.077,0.087,7.7,75.0,63,38,0.603,22.18,11.71,18,0.0,33.5,-2.94,9.04,19.33
+graft,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,all,300,23,0.077,0.000,n/a,n/a,1,1,1.000,24.00,12.00,18,-16.7,26.9,-7.11,9.68,15.28
+graft,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,all,300,22,0.073,0.091,0.0,92.8,46,32,0.696,0.00,0.00,18,0.0,33.5,-3.55,11.25,18.33
+graft,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,all,300,72,0.240,0.056,10.0,57.7,218,147,0.674,12.69,25.39,18,-5.6,22.4,-3.61,5.92,19.33
+graft,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,all,300,22,0.073,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-11.1,29.5,-4.94,10.42,4.28
+graft,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,all,300,30,0.100,0.133,14.3,57.6,105,65,0.619,10.37,5.18,18,0.0,29.5,-3.16,8.49,17.44
+graft,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,all,300,25,0.083,0.040,100.0,92.8,39,30,0.769,7.00,14.00,18,11.1,32.7,2.72,9.99,17.00
+graft,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,all,300,17,0.057,0.000,n/a,n/a,11,10,0.909,11.70,23.40,18,5.6,35.0,1.67,10.66,19.39
+graft,star_survey,"Star Survey",uncommon,skill,0,colourless,all,300,30,0.100,0.033,66.7,101.0,31,16,0.516,4.31,8.63,18,0.0,29.5,2.89,9.45,13.89
+graft,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,all,300,16,0.053,0.000,n/a,n/a,152,91,0.599,34.45,34.08,18,-11.1,19.2,-6.94,7.04,18.17
+graft,snare_line,"Snare Line",uncommon,skill,1,colourless,all,300,20,0.067,0.100,0.0,74.6,37,11,0.297,27.70,25.39,18,22.2,26.5,4.06,9.09,7.11
+graft,cutting_torch,"Cutting Torch",rare,attack,1,colourless,all,300,6,0.020,0.333,-100.0,84.9,73,55,0.753,12.95,12.95,18,0.0,19.2,-1.16,7.69,20.11
+graft,clean_manifest,"Clean Manifest",rare,attack,2,colourless,all,300,3,0.010,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,31.7,-5.33,9.57,10.78
+graft,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,all,300,47,0.157,0.085,35.2,43.5,62,41,0.661,1.17,1.17,18,5.6,26.9,2.67,6.06,16.89
+graft,prism_resonance,"Prism Resonance",rare,power,2,colourless,all,300,11,0.037,0.000,n/a,n/a,15,4,0.267,0.00,0.00,18,-11.1,29.5,-9.39,7.90,6.17
+graft,shard_cache,"Shard Cache",rare,skill,0,colourless,all,300,6,0.020,0.333,n/a,n/a,45,5,0.111,9.00,18.00,18,-5.6,35.4,-4.44,11.85,0.94
+graft,mirror_tether,"Mirror Tether",rare,attack,2,colourless,all,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,0.0,29.5,-4.05,9.87,3.94
+graft,grav_clamp,"Grav Clamp",rare,skill,2,colourless,all,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,28.6,-1.72,8.73,3.39
+graft,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,all,300,73,0.243,0.014,66.7,93.1,33,22,0.667,9.00,18.00,18,-5.6,27.4,-4.78,8.72,13.67
+graft,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,all,300,68,0.227,0.015,-40.0,95.2,12,10,0.833,13.90,13.90,18,-11.1,19.2,-3.94,7.15,16.83
+graft,scar_tissue,"Scar Tissue",rare,power,1,colourless,all,300,38,0.127,0.053,-82.4,71.0,3,1,0.333,0.00,0.00,18,-16.7,21.8,-7.61,8.21,10.17
+graft,last_light,"Last Light",rare,attack,3,colourless,all,300,39,0.130,0.051,29.4,71.9,14,6,0.429,42.00,14.82,18,11.1,28.6,6.06,8.64,17.06
+graft,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,all,300,122,0.407,0.016,-16.7,72.7,10,8,0.800,12.50,25.00,18,22.2,30.9,5.67,7.97,16.72
+graft,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,all,300,95,0.317,0.021,-10.0,62.4,7,2,0.286,13.50,13.50,18,-5.6,15.8,-1.16,4.50,20.44
+graft,black_box,"Black Box",uncommon,skill,0,colourless,all,300,102,0.340,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,0.0,10.9,-0.66,4.20,5.72
+graft,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,all,300,100,0.333,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,27.4,-5.05,9.52,1.17
+graft,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,all,300,40,0.133,0.150,-1.7,39.1,48,39,0.813,17.85,17.85,18,11.1,23.8,0.11,5.24,22.33
+graft,burn_bright,"Burn Bright",rare,power,2,colourless,all,300,44,0.147,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,27.4,-2.28,6.50,8.00
+graft,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,all,300,40,0.133,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,23.8,0.84,7.52,26.78
+graft,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,all,300,40,0.133,0.125,4.6,45.7,68,40,0.588,3.00,6.00,18,5.6,21.8,-0.22,5.39,13.50
+graft,starfall_lance,"Starfall Lance",rare,attack,X,colourless,all,300,7,0.023,0.143,n/a,n/a,2,2,1.000,59.00,16.86,18,16.7,29.9,4.06,6.75,16.67
+graft,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,all,300,13,0.043,0.154,0.0,120.0,15,12,0.800,29.92,44.88,18,-5.6,22.4,-2.39,7.21,21.50
+graft,encore,"Encore",uncommon,skill,1,colourless,all,300,77,0.257,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,23.8,-2.78,7.99,19.11
+graft,second_verse,"Second Verse",uncommon,skill,1,colourless,all,300,66,0.220,0.197,5.7,30.5,189,142,0.751,6.63,6.63,18,5.6,21.8,-1.22,6.28,22.50
+graft,bait_flare,"Bait Flare",uncommon,skill,0,colourless,all,300,27,0.090,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,31.7,-0.05,8.89,4.78
+breaker,hew,"Hew",starter,attack,1,S,spike,300,0,0.000,n/a,n/a,n/a,47826,33968,0.710,6.05,5.99,,,,,,
+breaker,bulwark,"Bulwark",starter,skill,1,B,spike,300,0,0.000,n/a,n/a,n/a,53360,17952,0.336,4.65,4.61,,,,,,
+breaker,shoulder_check,"Shoulder Check",starter,attack,1,SD,spike,300,0,0.000,n/a,n/a,n/a,15053,11506,0.764,16.95,17.14,,,,,,
+breaker,brace,"Brace",starter,skill,1,B,spike,300,0,0.000,n/a,n/a,n/a,13629,7180,0.527,5.56,5.51,,,,,,
+breaker,piston_jab,"Piston Jab",common,attack,0,SG,spike,300,506,1.687,0.077,12.3,14.3,769,714,0.928,9.28,18.56,18,-19.0,28.6,-3.33,6.64,36.83
+breaker,chain_driver,"Chain Driver",common,attack,1,SG,spike,300,487,1.623,0.053,7.4,17.6,707,550,0.778,9.71,9.66,18,-30.1,26.5,-6.00,5.86,26.56
+breaker,breach_hammer,"Breach Hammer",common,attack,1,S,spike,300,488,1.627,0.041,0.2,17.3,236,171,0.725,12.41,12.34,18,-2.3,31.7,0.72,7.83,35.61
+breaker,thresher_arc,"Thresher Arc",common,attack,1,S,spike,300,464,1.547,0.116,-1.1,13.3,1596,1351,0.846,14.42,14.38,18,3.2,24.9,-0.44,6.05,42.11
+breaker,fault_line,"Fault Line",common,attack,1,DG,spike,300,484,1.613,0.264,10.6,9.8,4353,3781,0.869,11.86,11.80,18,-7.9,24.9,-1.94,5.52,40.44
+breaker,rivet_flurry,"Rivet Flurry",common,attack,1,G,spike,300,495,1.650,0.044,7.9,18.8,454,402,0.885,17.88,17.84,18,-13.4,31.2,-1.72,7.54,35.28
+breaker,counterweight,"Counterweight",common,attack,1,D,spike,300,504,1.680,0.153,6.2,11.0,2767,1765,0.638,11.99,12.56,18,-2.3,27.4,3.22,7.83,31.50
+breaker,plate_ram,"Plate Ram",common,attack,1,B,spike,300,487,1.623,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,23.8,-8.55,6.20,25.44
+breaker,return_stroke,"Return Stroke",common,attack,1,SD,spike,300,501,1.670,0.248,1.6,9.7,4047,2448,0.605,12.75,13.49,18,-13.4,21.8,-1.22,6.61,28.56
+breaker,gauntlet_tap,"Gauntlet Tap",common,attack,0,SB,spike,300,499,1.663,0.086,5.2,14.2,1055,978,0.927,6.73,13.46,18,-2.3,27.4,-2.61,8.11,39.33
+breaker,catch_blade,"Catch Blade",common,skill,1,DB,spike,300,469,1.563,0.269,4.3,10.3,4775,1477,0.309,14.45,15.58,18,3.2,19.2,-1.16,4.72,14.67
+breaker,cool_the_steel,"Cool the Steel",common,skill,1,SB,spike,300,499,1.663,0.317,8.2,9.2,5620,4300,0.765,12.99,12.93,18,-7.9,33.5,-3.55,8.58,35.33
+breaker,read_the_line,"Read the Line",common,skill,0,SG,spike,300,530,1.767,0.068,14.2,13.0,694,551,0.794,8.83,17.66,18,-13.4,31.2,-6.78,6.95,23.78
+breaker,pivot_sweep,"Pivot Sweep",common,skill,1,D,spike,300,479,1.597,0.301,12.3,9.9,5876,1533,0.261,26.56,31.04,18,-2.3,27.4,-0.22,5.58,13.89
+breaker,rivet_wall,"Rivet Wall",common,skill,2,B,spike,300,518,1.727,0.185,-3.9,10.5,3052,2011,0.659,14.49,7.23,18,-24.6,25.3,-2.61,8.23,27.33
+breaker,loaded_spring,"Loaded Spring",common,skill,1,SD,spike,300,471,1.570,0.316,-4.1,9.9,5700,2346,0.412,11.47,12.31,18,-13.4,26.9,-3.83,6.54,18.67
+breaker,sabre_rattle,"Sabre Rattle",common,skill,1,G,spike,300,535,1.783,0.075,10.9,13.8,899,594,0.661,11.78,11.80,18,-30.1,26.5,-9.16,7.31,17.17
+breaker,stoke,"Stoke",common,skill,1,-,spike,300,491,1.637,0.196,1.8,11.0,3142,2266,0.721,5.38,5.36,18,-2.3,27.4,-0.11,7.73,28.44
+breaker,hair_trigger,"Hair Trigger",common,skill,0,-,spike,300,484,1.613,0.250,7.6,10.3,4658,2212,0.475,5.96,11.91,18,-19.0,32.7,-6.22,7.54,18.00
+breaker,loosen_straps,"Loosen Straps",common,skill,1,-,spike,300,470,1.567,0.072,4.5,16.0,964,520,0.539,12.69,12.62,18,-13.4,26.9,-6.89,5.49,13.67
+breaker,hammerfall,"Hammerfall",uncommon,attack,2,S,spike,300,264,0.880,0.030,-10.1,32.8,243,231,0.951,21.84,10.97,18,-2.3,27.4,1.28,6.82,37.33
+breaker,piston_volley,"Piston Volley",uncommon,attack,1,SG,spike,300,303,1.010,0.330,-1.6,11.3,2693,2448,0.909,18.90,18.87,18,-13.4,31.2,-3.33,7.98,35.67
+breaker,answering_steel,"Answering Steel",uncommon,attack,1,D,spike,300,284,0.947,0.423,3.6,11.4,4221,2895,0.686,14.50,15.24,18,14.3,23.8,0.84,5.81,35.83
+breaker,rampart_crash,"Rampart Crash",uncommon,attack,1,B,spike,300,301,1.003,0.392,-9.9,11.1,3620,2852,0.788,12.75,12.70,18,-13.4,35.0,-4.44,10.57,32.28
+breaker,coiled_strike,"Coiled Strike",uncommon,attack,2,D,spike,300,275,0.917,0.400,10.1,11.3,4159,2410,0.579,26.52,14.40,18,-19.0,32.7,-1.44,8.26,32.22
+breaker,seam_ripper,"Seam Ripper",uncommon,attack,0,SG,spike,300,250,0.833,0.064,15.7,21.3,410,374,0.912,6.47,12.93,18,-13.4,31.2,-4.66,10.29,38.17
+breaker,quake_hammer,"Quake Hammer",uncommon,attack,1,S,spike,300,253,0.843,0.289,9.1,13.2,2475,1965,0.794,14.72,14.68,18,8.8,26.9,1.17,7.44,38.33
+breaker,feint_step,"Feint Step",uncommon,skill,0,D,spike,300,261,0.870,0.590,5.9,12.1,5833,2599,0.446,8.68,17.35,18,3.2,29.5,0.84,9.07,23.50
+breaker,bind_the_blade,"Bind the Blade",uncommon,skill,1,SD,spike,300,268,0.893,0.575,12.5,12.5,6996,1116,0.160,36.82,47.73,18,19.9,29.9,5.17,7.73,9.67
+breaker,anneal,"Anneal",uncommon,skill,1,B,spike,300,276,0.920,0.366,-2.6,11.6,3162,2218,0.701,3.49,3.47,18,-7.9,33.5,-3.16,9.20,32.33
+breaker,quench,"Quench",uncommon,skill,1,SB,spike,300,279,0.930,0.226,-8.4,13.5,2058,1157,0.562,10.43,10.33,18,-13.4,31.2,-2.50,7.17,25.89
+breaker,ride_the_surge,"Ride the Surge",uncommon,skill,1,SG,spike,300,277,0.923,0.249,3.7,12.2,1770,936,0.529,10.25,10.24,18,-19.0,23.8,-7.00,6.14,16.33
+breaker,hairline_mark,"Hairline Mark",uncommon,skill,1,G,spike,300,271,0.903,0.395,6.0,11.6,3373,2586,0.767,13.79,13.73,18,-7.9,24.9,-4.05,6.18,35.33
+breaker,read_the_blow,"Read the Blow",uncommon,skill,1,DB,spike,300,280,0.933,0.518,5.7,12.6,5210,3399,0.652,8.15,8.09,18,-24.6,25.3,-4.28,6.87,29.00
+breaker,cinder_heart,"Cinder Heart",uncommon,power,1,-,spike,300,282,0.940,0.493,-3.6,11.2,2458,1664,0.677,0.77,0.81,18,-19.0,23.8,-1.22,6.87,19.56
+breaker,crossed_blades,"Crossed Blades",uncommon,power,1,D,spike,300,263,0.877,0.247,-1.5,13.2,1281,773,0.603,0.85,1.69,18,-2.3,27.4,-5.16,7.93,13.94
+breaker,parry_ledger,"Parry Ledger",uncommon,power,1,DG,spike,300,232,0.773,0.349,-0.4,12.8,1638,1380,0.842,1.04,2.08,18,-24.6,33.8,-5.83,7.23,21.50
+breaker,anvil_heart,"Anvil Heart",uncommon,power,1,SB,spike,300,246,0.820,0.541,8.0,12.0,2391,2063,0.863,0.91,1.82,18,-19.0,28.6,-6.55,6.93,24.44
+breaker,fault_reader,"Fault Reader",uncommon,power,1,G,spike,300,263,0.877,0.202,5.5,14.4,1083,910,0.840,0.83,0.85,18,-24.6,29.9,-7.28,5.80,19.33
+breaker,en_garde,"En Garde",uncommon,skill,1,D,spike,300,298,0.993,0.443,-1.3,11.0,3530,1524,0.432,3.68,3.67,18,-35.7,27.4,-9.33,8.44,13.72
+breaker,shed_plating,"Shed Plating",uncommon,skill,0,SB,spike,300,268,0.893,0.119,8.0,17.5,809,604,0.747,10.77,21.54,18,-24.6,19.8,-5.89,7.10,25.94
+breaker,kindle,"Kindle",uncommon,skill,1,-,spike,300,283,0.943,0.258,-4.9,13.1,2374,1171,0.493,6.04,12.08,18,-24.6,33.8,-5.44,7.30,21.33
+breaker,spark_gap,"Spark Gap",uncommon,power,1,-,spike,300,277,0.923,0.769,-16.6,13.8,3879,3063,0.790,0.83,1.66,18,-7.9,33.5,-6.00,7.86,21.78
+breaker,iron_patience,"Iron Patience",uncommon,power,1,-,spike,300,264,0.880,0.731,-0.6,14.5,3673,2559,0.697,0.87,0.91,18,-30.1,26.5,-7.28,8.77,18.39
+breaker,jackhammer,"Jackhammer",rare,attack,1,SG,spike,300,162,0.540,0.278,8.6,16.2,1044,796,0.762,27.10,26.93,18,-19.0,23.8,-6.50,6.22,28.61
+breaker,steal_the_swing,"Steal the Swing",rare,attack,1,D,spike,300,177,0.590,0.446,-0.5,14.3,1178,617,0.524,15.17,15.17,18,-2.3,22.4,0.06,7.54,16.72
+breaker,iron_avalanche,"Iron Avalanche",rare,attack,2,B,spike,300,152,0.507,0.039,-26.7,34.9,82,71,0.866,26.46,13.05,18,-30.1,26.5,-10.33,6.42,18.11
+breaker,endless_maul,"Endless Maul",rare,attack,1,S,spike,300,155,0.517,0.458,-5.3,14.5,2131,3269,1.534,17.42,17.42,18,-13.4,26.9,-3.22,6.28,61.78
+breaker,forge_oath,"Forge Oath",rare,skill,0,S,spike,300,158,0.527,0.076,14.1,27.6,114,108,0.947,0.00,0.00,18,-13.4,31.2,-2.55,8.30,21.06
+breaker,vent_pressure,"Vent Pressure",rare,skill,1,S,spike,300,153,0.510,0.092,4.9,23.9,372,139,0.374,10.86,10.86,18,-19.0,23.8,-4.55,5.62,15.72
+breaker,iron_rhythm,"Iron Rhythm",rare,skill,0,SB,spike,300,145,0.483,0.938,-12.7,25.9,3685,3359,0.912,6.97,13.95,18,3.2,33.5,-1.22,9.89,47.44
+breaker,smouldering_core,"Smouldering Core",rare,power,2,S,spike,300,162,0.540,0.185,-21.6,19.6,417,248,0.595,0.91,0.64,18,-7.9,29.5,-7.94,7.24,14.33
+breaker,recoil_spring,"Recoil Spring",rare,power,1,D,spike,300,151,0.503,0.709,-14.8,16.7,1401,1193,0.852,3.81,7.63,18,-19.0,28.6,-5.16,8.60,21.67
+breaker,reactive_plate,"Reactive Plate",rare,power,2,B,spike,300,143,0.477,0.049,0.8,36.0,130,72,0.554,1.08,0.74,18,-7.9,29.5,-5.28,7.25,13.33
+breaker,worldbreaker,"Worldbreaker",rare,attack,X,-,spike,300,144,0.480,0.347,-2.9,16.3,938,752,0.802,31.71,11.66,18,-24.6,25.3,-6.16,5.60,28.28
+breaker,turnabout,"Turnabout",rare,skill,2,-,spike,300,170,0.567,0.129,9.4,20.4,625,174,0.278,36.56,21.78,18,8.8,26.9,1.45,7.92,11.72
+breaker,bellows,"Bellows",rare,power,0,-,spike,300,170,0.567,0.776,-0.8,18.0,1667,1643,0.986,3.97,7.94,18,-13.4,31.2,0.17,7.31,31.11
+breaker,crazing,"Crazing",rare,power,0,-,spike,300,150,0.500,0.920,-18.8,22.9,1834,1788,0.975,12.04,24.08,18,-2.3,31.7,-1.66,8.73,28.39
+breaker,answer_in_kind,"Answer in Kind",rare,power,2,-,spike,300,149,0.497,0.248,12.3,17.9,593,434,0.732,0.88,0.68,18,-30.1,26.5,-3.00,8.34,18.00
+breaker,molten_shell,"Molten Shell",rare,power,1,-,spike,300,145,0.483,0.669,7.5,15.7,1295,1252,0.967,11.80,23.59,18,-2.3,22.4,0.78,7.97,25.39
+breaker,relay_ping,"Relay Ping",uncommon,skill,0,colourless,spike,300,32,0.107,0.063,0.0,84.9,161,133,0.826,12.49,24.98,18,3.2,29.5,-3.11,7.83,33.94
+breaker,shardfall,"Shardfall",uncommon,attack,2,colourless,spike,300,29,0.097,0.103,-33.3,53.6,134,119,0.888,21.60,10.80,18,-7.9,24.9,3.34,6.27,41.50
+breaker,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,spike,300,20,0.067,0.050,50.0,98.0,48,31,0.646,19.97,9.98,18,-19.0,32.7,-2.50,8.71,26.17
+breaker,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,spike,300,33,0.110,0.212,32.6,47.4,214,166,0.776,0.00,0.00,18,-24.6,25.3,-3.55,8.02,31.50
+breaker,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,spike,300,107,0.357,0.308,8.1,19.8,1159,934,0.806,16.09,32.18,18,-30.1,26.5,-9.00,8.20,27.28
+breaker,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,spike,300,26,0.087,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-24.6,25.3,-10.28,6.13,7.39
+breaker,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,spike,300,20,0.067,0.250,13.8,55.9,146,113,0.774,11.13,5.62,18,-24.6,25.3,-6.05,7.42,26.06
+breaker,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,spike,300,22,0.073,0.227,-35.3,49.2,109,98,0.899,6.77,13.53,18,-19.0,28.6,-6.28,6.27,18.61
+breaker,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,spike,300,32,0.107,0.031,-75.0,96.0,3,3,1.000,11.00,22.00,18,-30.1,26.5,-10.83,6.97,17.11
+breaker,star_survey,"Star Survey",uncommon,skill,0,colourless,spike,300,26,0.087,0.077,50.0,77.5,12,8,0.667,3.00,6.00,18,-2.3,27.4,-4.94,8.08,15.06
+breaker,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,spike,300,23,0.077,0.826,-66.7,71.0,734,603,0.822,39.43,39.30,18,-2.3,27.4,0.06,7.75,33.00
+breaker,snare_line,"Snare Line",uncommon,skill,1,colourless,spike,300,32,0.107,0.250,37.3,38.2,354,114,0.322,17.56,17.72,18,25.4,21.3,6.17,6.80,18.11
+breaker,cutting_torch,"Cutting Torch",rare,attack,1,colourless,spike,300,9,0.030,0.333,-46.4,56.7,238,208,0.874,8.70,8.66,18,-7.9,24.9,-1.28,6.82,39.67
+breaker,clean_manifest,"Clean Manifest",rare,attack,2,colourless,spike,300,8,0.027,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,28.6,-4.22,6.65,17.39
+breaker,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,spike,300,58,0.193,0.172,-50.7,33.1,160,125,0.781,0.36,0.36,18,-30.1,26.5,-7.55,7.49,15.56
+breaker,prism_resonance,"Prism Resonance",rare,power,2,colourless,spike,300,7,0.023,0.143,n/a,n/a,41,11,0.268,1.64,0.82,18,-13.4,26.9,-7.11,6.80,11.78
+breaker,shard_cache,"Shard Cache",rare,skill,0,colourless,spike,300,9,0.030,0.333,100.0,120.0,67,11,0.164,9.00,18.00,18,-13.4,31.2,-3.33,8.76,0.89
+breaker,mirror_tether,"Mirror Tether",rare,attack,2,colourless,spike,300,5,0.017,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-13.4,21.8,-5.44,6.84,9.00
+breaker,grav_clamp,"Grav Clamp",rare,skill,2,colourless,spike,300,13,0.043,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-19.0,23.8,-5.55,5.80,4.28
+breaker,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,spike,300,95,0.317,0.053,2.5,40.3,124,92,0.742,15.77,31.54,18,-30.1,21.3,-7.78,7.99,21.89
+breaker,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,spike,300,104,0.347,0.038,-29.1,44.0,50,41,0.820,28.32,28.32,18,-24.6,25.3,-8.33,5.08,25.61
+breaker,scar_tissue,"Scar Tissue",rare,power,1,colourless,spike,300,49,0.163,0.245,26.5,32.7,156,120,0.769,1.23,1.23,18,-19.0,32.7,-4.83,8.31,16.00
+breaker,last_light,"Last Light",rare,attack,3,colourless,spike,300,56,0.187,0.607,-3.3,24.4,445,283,0.636,53.23,19.24,18,19.9,37.3,4.17,8.84,22.50
+breaker,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,spike,300,120,0.400,0.008,-72.7,86.9,5,5,1.000,13.50,27.00,18,3.2,29.5,1.11,8.48,25.50
+breaker,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,spike,300,123,0.410,0.081,11.9,30.3,348,290,0.833,10.49,10.46,18,-13.4,31.2,-3.50,6.68,38.11
+breaker,black_box,"Black Box",uncommon,skill,0,colourless,spike,300,110,0.367,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-7.9,29.5,-7.11,8.70,3.78
+breaker,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,spike,300,116,0.387,0.009,7.1,86.3,10,3,0.300,0.00,0.00,18,-19.0,32.7,-5.78,9.64,1.39
+breaker,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,spike,300,40,0.133,0.200,10.2,41.1,274,239,0.872,13.04,13.04,18,-35.7,27.4,-7.22,8.30,36.83
+breaker,burn_bright,"Burn Bright",rare,power,2,colourless,spike,300,64,0.213,0.016,-71.4,88.2,12,4,0.333,0.00,0.00,18,-41.2,28.1,-11.66,8.26,9.06
+breaker,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,spike,300,71,0.237,0.042,0.0,47.9,20,20,1.000,32.25,11.52,18,-13.4,35.0,-0.39,7.79,44.89
+breaker,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,spike,300,67,0.223,0.239,-13.7,29.3,458,316,0.690,3.02,6.04,18,-24.6,29.9,-9.50,8.29,20.17
+breaker,starfall_lance,"Starfall Lance",rare,attack,X,colourless,spike,300,25,0.083,0.120,25.4,58.3,45,26,0.578,47.73,12.41,18,3.2,24.9,-0.50,7.39,22.50
+breaker,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,spike,300,29,0.097,0.207,11.4,41.3,183,153,0.836,38.69,30.05,18,-30.1,30.9,-6.00,8.52,34.94
+breaker,encore,"Encore",uncommon,skill,1,colourless,spike,300,66,0.220,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-30.1,30.9,-6.11,6.79,27.94
+breaker,second_verse,"Second Verse",uncommon,skill,1,colourless,spike,300,51,0.170,0.039,-34.3,63.8,91,64,0.703,6.50,6.50,18,-7.9,33.5,-2.11,9.89,31.22
+breaker,bait_flare,"Bait Flare",uncommon,skill,0,colourless,spike,300,25,0.083,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-7.9,29.5,-1.61,8.69,10.56
+chronist,pulse_shot,"Pulse Shot",starter,attack,1,G,spike,300,0,0.000,n/a,n/a,n/a,50590,29829,0.590,6.69,6.95,,,,,,
+chronist,ward,"Ward",starter,skill,1,G,spike,300,0,0.000,n/a,n/a,n/a,39344,13903,0.353,5.08,5.25,,,,,,
+chronist,tick,"Tick",starter,attack,0,K,spike,300,0,0.000,n/a,n/a,n/a,10433,8942,0.857,7.19,14.38,,,,,,
+chronist,tock,"Tock",starter,skill,1,J,spike,300,0,0.000,n/a,n/a,n/a,9930,6699,0.675,18.05,18.89,,,,,,
+chronist,pinion_jab,"Pinion Jab",common,attack,0,K,spike,300,409,1.363,0.130,-3.0,14.4,1611,1438,0.893,7.05,14.11,18,-3.7,28.6,0.39,5.90,29.22
+chronist,gear_train,"Gear Train",common,attack,1,K,spike,300,430,1.433,0.093,-5.8,14.6,870,634,0.729,14.22,17.44,18,-9.2,26.9,5.00,5.62,29.67
+chronist,downbeat,"Downbeat",common,attack,1,K,spike,300,466,1.553,0.328,-7.8,8.9,3682,3174,0.862,16.95,20.57,18,1.9,19.8,1.66,5.05,37.56
+chronist,noon_gun,"Noon Gun",common,attack,1,J,spike,300,442,1.473,0.242,-3.4,11.4,2591,2089,0.806,22.74,23.30,18,1.9,29.9,0.33,7.96,25.56
+chronist,afterpeal,"Afterpeal",common,attack,1,J,spike,300,419,1.397,0.069,3.0,18.3,639,538,0.842,19.51,20.78,18,1.9,25.3,2.27,6.98,27.72
+chronist,spring_tide,"Spring Tide",common,attack,1,J,spike,300,437,1.457,0.343,-2.9,11.7,3247,2754,0.848,23.88,24.49,18,1.9,29.9,1.39,7.63,25.33
+chronist,carillon,"Carillon",common,attack,0,K,spike,300,444,1.480,0.394,0.6,9.8,4634,4100,0.885,12.70,25.40,18,-9.2,21.8,0.77,7.53,33.61
+chronist,storm_glass,"Storm Glass",common,skill,1,J,spike,300,432,1.440,0.060,-8.2,19.1,392,277,0.707,19.13,19.85,18,7.4,26.5,2.72,7.14,20.06
+chronist,almanac,"Almanac",common,skill,0,J,spike,300,400,1.333,0.292,-0.6,10.5,2731,2284,0.836,16.68,33.35,18,13.0,22.4,4.11,4.97,33.22
+chronist,ephemeris,"Ephemeris",common,skill,1,K,spike,300,481,1.603,0.443,1.3,9.2,4874,2453,0.503,9.53,10.24,18,-9.2,26.9,-1.45,6.67,16.61
+chronist,upbeat,"Upbeat",common,skill,0,K,spike,300,437,1.457,0.046,-2.1,20.6,298,237,0.795,4.35,8.70,18,7.4,21.3,2.33,5.79,23.72
+chronist,weather_eye,"Weather Eye",common,skill,1,S,spike,300,440,1.467,0.127,3.9,13.6,1401,936,0.668,7.34,7.59,18,-3.7,28.6,0.77,5.84,24.89
+chronist,balance_wheel,"Balance Wheel",common,skill,1,K,spike,300,444,1.480,0.173,8.2,11.6,1469,893,0.608,10.65,13.07,18,24.1,28.4,5.66,6.82,21.06
+chronist,dead_reckoning,"Dead Reckoning",common,skill,0,K,spike,300,438,1.460,0.304,-2.5,9.9,2088,1461,0.700,6.05,12.10,18,29.7,28.6,9.22,7.38,29.89
+chronist,wind_forward,"Wind Forward",common,skill,0,J,spike,300,459,1.530,0.172,-0.5,11.2,1376,1038,0.754,1.82,3.64,18,7.4,30.9,5.94,5.63,26.39
+chronist,hold_the_hour,"Hold the Hour",common,skill,0,J,spike,300,445,1.483,0.337,-0.6,9.6,3208,2238,0.698,4.49,8.98,18,-3.7,17.7,-0.84,6.33,23.39
+chronist,ripple,"Ripple",common,attack,0,J,spike,300,437,1.457,0.320,2.2,10.3,3629,3113,0.858,17.82,35.64,18,13.0,27.4,3.61,6.28,31.06
+chronist,whistle_for_wind,"Whistle for Wind",common,skill,0,S,spike,300,442,1.473,0.002,46.3,86.2,0,0,n/a,n/a,n/a,18,-14.8,24.9,-3.28,8.50,4.83
+chronist,red_sky,"Red Sky",common,skill,1,S,spike,300,447,1.490,0.150,-0.9,12.3,1162,593,0.510,16.97,17.41,18,-14.8,24.9,1.27,6.08,16.00
+chronist,undertow,"Undertow",common,attack,1,S,spike,300,451,1.503,0.024,-14.9,23.8,159,94,0.591,8.00,8.26,18,-20.3,27.4,-6.45,6.02,18.56
+chronist,fermata,"Fermata",uncommon,attack,1,K,spike,300,290,0.967,0.103,7.5,18.1,684,613,0.896,16.98,20.25,18,-9.2,21.8,0.44,8.09,27.67
+chronist,appointed_hour,"Appointed Hour",uncommon,attack,2,P,spike,300,254,0.847,0.626,-5.1,13.6,3131,2400,0.767,36.69,20.12,18,18.6,23.2,5.50,5.27,26.72
+chronist,knell,"Knell",uncommon,attack,1,J,spike,300,282,0.940,0.472,1.3,12.8,2716,2416,0.890,27.04,27.65,18,13.0,31.7,5.33,8.27,27.11
+chronist,turn_the_tide,"Turn the Tide",uncommon,attack,1,S,spike,300,287,0.957,0.042,14.6,27.4,377,295,0.782,13.95,14.44,18,-9.2,21.8,-1.84,6.20,25.89
+chronist,confluence,"Confluence",uncommon,attack,0,J,spike,300,304,1.013,0.303,-5.1,12.8,2470,2210,0.895,7.40,14.80,18,-3.7,23.8,2.55,7.62,37.33
+chronist,second_hand,"Second Hand",uncommon,attack,0,K,spike,300,307,1.023,0.440,1.9,11.1,2975,2600,0.874,16.26,32.52,18,13.0,22.4,4.22,7.04,36.44
+chronist,mainspring,"Mainspring",uncommon,skill,0,K,spike,300,256,0.853,0.371,-8.0,12.5,2461,1649,0.670,6.27,12.55,18,-3.7,23.8,2.16,5.81,23.44
+chronist,quarter_chime,"Quarter Chime",uncommon,skill,0,K,spike,300,274,0.913,0.179,16.4,15.1,1019,645,0.633,8.00,15.99,18,7.4,30.9,-0.78,9.85,16.17
+chronist,hasten,"Hasten",uncommon,skill,0,J,spike,300,271,0.903,0.107,2.5,18.0,428,310,0.724,2.24,4.47,18,-9.2,26.9,-3.34,7.06,17.28
+chronist,banked_hours,"Banked Hours",uncommon,skill,1,P,spike,300,297,0.990,0.653,-4.4,11.2,4002,2900,0.725,19.72,20.88,18,-9.2,21.8,-3.95,7.10,24.50
+chronist,breakwater,"Breakwater",uncommon,skill,2,P,spike,300,276,0.920,0.420,0.1,11.4,2320,1521,0.656,21.31,12.23,18,18.6,23.2,1.83,8.83,19.61
+chronist,heave_to,"Heave To",uncommon,skill,1,S,spike,300,309,1.030,0.372,2.3,11.3,2598,1415,0.545,7.80,8.13,18,7.4,30.9,2.05,8.56,17.50
+chronist,striking_train,"Striking Train",uncommon,power,1,K,spike,300,302,1.007,0.354,-3.1,12.4,1907,1750,0.918,1.86,1.97,18,1.9,25.3,2.16,6.84,21.89
+chronist,tide_table,"Tide Table",uncommon,power,1,J,spike,300,282,0.940,0.713,3.2,13.5,3420,2695,0.788,1.35,2.70,18,-3.7,28.6,0.44,8.51,22.06
+chronist,escapement,"Escapement",uncommon,power,1,K,spike,300,301,1.003,0.515,3.0,11.1,2676,2069,0.773,1.50,1.71,18,1.9,29.9,-1.23,7.10,17.50
+chronist,accelerando,"Accelerando",uncommon,power,0,K,spike,300,282,0.940,0.028,19.5,30.6,168,163,0.970,1.67,3.35,18,-3.7,23.8,-2.56,6.71,18.33
+chronist,bell_choir,"Bell Choir",uncommon,attack,1,J,spike,300,270,0.900,0.159,-0.8,16.6,1153,836,0.725,22.09,23.67,18,1.9,25.3,1.00,8.42,27.83
+chronist,set_the_hour,"Set the Hour",uncommon,skill,1,J,spike,300,253,0.843,0.036,-0.1,27.6,118,61,0.517,1.23,1.74,18,13.0,27.4,2.72,8.24,19.78
+chronist,gathering_storm,"Gathering Storm",uncommon,skill,1,S,spike,300,294,0.980,0.020,-3.7,37.3,27,14,0.519,15.43,15.43,18,1.9,29.9,2.05,6.30,12.00
+chronist,squall_line,"Squall Line",uncommon,power,0,S,spike,300,308,1.027,0.276,2.5,12.6,1290,1230,0.953,1.04,2.09,18,7.4,26.5,0.33,7.97,20.50
+chronist,zenith,"Zenith",rare,attack,0,K,spike,300,149,0.497,0.745,3.8,17.3,1965,1654,0.842,14.29,28.58,18,-9.2,26.9,0.27,7.30,34.83
+chronist,syzygy,"Syzygy",rare,attack,2,J,spike,300,155,0.517,0.097,-7.3,26.1,199,145,0.729,35.11,19.89,18,-3.7,23.8,0.44,6.48,19.89
+chronist,culmination,"Culmination",rare,attack,2,K,spike,300,143,0.477,0.007,0.0,89.8,2,1,0.500,15.00,7.50,18,-3.7,23.8,-0.39,6.21,13.50
+chronist,toll_the_hours,"Toll the Hours",rare,attack,X,P,spike,300,158,0.527,0.557,-12.8,16.1,1581,1458,0.922,33.82,13.99,18,-9.2,31.2,0.61,6.53,32.94
+chronist,seen_it_coming,"Seen It Coming",rare,skill,1,S,spike,300,160,0.533,0.212,-11.8,17.9,335,245,0.731,16.04,27.48,18,13.0,22.4,2.94,7.11,17.61
+chronist,tourbillon,"Tourbillon",rare,skill,0,K,spike,300,157,0.523,0.713,-6.6,17.1,1381,935,0.677,8.65,17.30,18,13.0,22.4,6.11,6.25,20.28
+chronist,lighthouse,"Lighthouse",rare,skill,2,S,spike,300,164,0.547,0.299,3.7,16.5,870,440,0.506,12.50,6.93,18,-3.7,23.8,-0.73,5.70,14.17
+chronist,polyrhythm,"Polyrhythm",rare,power,1,K,spike,300,145,0.483,0.290,-25.8,16.1,424,346,0.816,1.81,3.62,18,7.4,26.5,2.05,8.04,18.39
+chronist,watch_bell,"Watch Bell",rare,power,2,J,spike,300,152,0.507,0.059,7.8,30.0,88,63,0.716,2.10,1.78,18,7.4,21.3,-1.84,8.67,12.06
+chronist,perpetual_motion,"Perpetual Motion",rare,power,1,K,spike,300,172,0.573,0.610,6.2,14.7,1241,1093,0.881,1.11,2.22,18,18.6,23.2,6.72,4.78,26.22
+chronist,total_eclipse,"Total Eclipse",rare,power,1,J,spike,300,166,0.553,0.663,-3.7,16.0,1269,1064,0.838,1.62,3.25,18,-14.8,29.5,0.05,8.98,19.06
+chronist,eternal_return,"Eternal Return",rare,power,1,P,spike,300,155,0.517,0.510,11.7,15.7,958,811,0.847,1.27,2.54,18,18.6,32.2,5.00,8.47,21.17
+chronist,reckoning,"Reckoning",rare,attack,1,S,spike,300,141,0.470,0.177,-10.8,19.6,268,228,0.851,25.27,25.38,18,-9.2,26.9,-2.28,6.59,16.39
+chronist,eye_of_the_storm,"Eye of the Storm",rare,power,2,S,spike,300,145,0.483,0.007,-76.5,86.1,3,2,0.667,0.00,0.00,18,1.9,19.8,-0.61,4.36,14.72
+chronist,relay_ping,"Relay Ping",uncommon,skill,0,colourless,spike,300,20,0.067,0.050,66.7,101.0,45,40,0.889,8.93,17.85,18,-3.7,28.6,1.00,6.28,27.72
+chronist,shardfall,"Shardfall",uncommon,attack,2,colourless,spike,300,29,0.097,0.000,n/a,n/a,15,7,0.467,21.86,10.93,18,-3.7,23.8,0.50,5.34,28.94
+chronist,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,spike,300,15,0.050,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,7.4,30.9,1.33,7.40,22.33
+chronist,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,spike,300,23,0.077,0.217,6.8,48.5,180,122,0.678,0.25,0.25,18,7.4,26.5,0.55,7.21,25.89
+chronist,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,spike,300,65,0.217,0.046,10.6,53.1,138,110,0.797,13.44,26.87,18,-3.7,28.6,1.44,7.67,23.61
+chronist,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,spike,300,30,0.100,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,1.9,25.3,1.22,6.23,7.61
+chronist,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,spike,300,17,0.057,0.176,100.0,120.0,200,148,0.740,11.20,6.40,18,7.4,26.5,-0.50,9.07,25.28
+chronist,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,spike,300,35,0.117,0.086,20.3,57.9,72,65,0.903,6.98,13.97,18,18.6,23.2,5.00,8.14,20.39
+chronist,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,spike,300,28,0.093,0.107,26.3,62.0,34,32,0.941,10.13,20.25,18,18.6,28.1,4.00,6.52,20.83
+chronist,star_survey,"Star Survey",uncommon,skill,0,colourless,spike,300,31,0.103,0.065,-66.7,101.0,28,18,0.643,3.83,7.67,18,24.1,23.6,4.27,5.90,16.00
+chronist,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,spike,300,28,0.093,0.857,25.6,55.2,837,736,0.879,34.00,35.29,18,29.7,23.8,10.05,6.32,31.39
+chronist,snare_line,"Snare Line",uncommon,skill,1,colourless,spike,300,25,0.083,0.080,0.0,76.6,98,39,0.398,13.41,14.14,18,40.8,23.2,11.89,6.43,12.22
+chronist,cutting_torch,"Cutting Torch",rare,attack,1,colourless,spike,300,7,0.023,0.143,0.0,120.0,40,33,0.825,8.79,8.79,18,1.9,33.8,0.50,8.86,28.89
+chronist,clean_manifest,"Clean Manifest",rare,attack,2,colourless,spike,300,4,0.013,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-25.9,19.2,-8.34,6.42,12.89
+chronist,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,spike,300,42,0.140,0.048,29.4,71.0,61,48,0.787,1.71,1.82,18,7.4,21.3,0.22,6.47,16.00
+chronist,prism_resonance,"Prism Resonance",rare,power,2,colourless,spike,300,5,0.017,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-3.7,17.7,-2.11,7.86,12.44
+chronist,shard_cache,"Shard Cache",rare,skill,0,colourless,spike,300,5,0.017,0.000,n/a,n/a,41,4,0.098,10.50,21.00,18,7.4,30.9,2.33,7.03,1.00
+chronist,mirror_tether,"Mirror Tether",rare,attack,2,colourless,spike,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-14.8,24.9,-5.34,7.93,7.22
+chronist,grav_clamp,"Grav Clamp",rare,skill,2,colourless,spike,300,4,0.013,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-3.7,28.6,-0.73,7.18,5.78
+chronist,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,spike,300,93,0.310,0.011,38.5,88.9,11,8,0.727,18.13,36.25,17,-8.6,23.1,-2.29,8.21,17.53
+chronist,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,spike,300,83,0.277,0.072,-21.7,40.0,120,87,0.725,16.31,16.89,18,7.4,21.3,0.83,6.61,19.83
+chronist,scar_tissue,"Scar Tissue",rare,power,1,colourless,spike,300,38,0.127,0.158,31.0,41.9,62,51,0.823,2.47,2.74,18,1.9,25.3,-1.39,9.15,13.56
+chronist,last_light,"Last Light",rare,attack,3,colourless,spike,300,36,0.120,0.556,11.9,36.4,229,177,0.773,49.75,22.58,18,13.0,27.4,2.39,8.11,18.39
+chronist,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,spike,300,83,0.277,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,13.0,22.4,4.05,5.87,19.17
+chronist,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,spike,300,92,0.307,0.043,-8.1,44.0,151,129,0.854,9.68,9.76,17,-2.7,25.1,-2.11,9.04,26.41
+chronist,black_box,"Black Box",uncommon,skill,0,colourless,spike,300,93,0.310,0.011,-45.5,87.4,3,3,1.000,16.50,33.00,18,13.0,27.4,5.22,6.37,12.50
+chronist,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,spike,300,99,0.330,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,9.1,22.3,1.36,7.59,5.06
+chronist,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,spike,300,49,0.163,0.143,-34.3,40.2,114,102,0.895,11.30,11.53,18,-9.2,21.8,-3.45,7.45,25.61
+chronist,burn_bright,"Burn Bright",rare,power,2,colourless,spike,300,38,0.127,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-14.5,26.4,-4.70,9.25,8.18
+chronist,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,spike,300,39,0.130,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-8.6,23.1,0.47,6.96,29.47
+chronist,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,spike,300,51,0.170,0.098,-13.2,47.9,220,157,0.714,3.17,6.34,18,13.0,27.4,4.72,8.26,26.56
+chronist,starfall_lance,"Starfall Lance",rare,attack,X,colourless,spike,300,12,0.040,0.500,0.0,92.8,107,82,0.766,43.66,17.21,18,1.9,25.3,1.61,6.16,19.44
+chronist,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,spike,300,13,0.043,0.385,-50.0,64.2,79,72,0.911,29.08,18.21,17,9.1,27.9,2.77,8.38,30.53
+chronist,encore,"Encore",uncommon,skill,1,colourless,spike,300,57,0.190,0.018,0.0,99.4,9,9,1.000,0.33,0.67,17,9.1,27.9,1.36,7.43,24.88
+chronist,second_verse,"Second Verse",uncommon,skill,1,colourless,spike,300,59,0.197,0.102,-23.1,38.3,97,71,0.732,7.36,8.04,17,-8.6,23.1,-0.88,5.89,24.94
+chronist,bait_flare,"Bait Flare",uncommon,skill,0,colourless,spike,300,22,0.073,0.000,n/a,n/a,0,0,n/a,n/a,n/a,17,-2.7,25.1,-2.17,6.04,15.88
+graft,lash,"Lash",starter,attack,1,-,spike,300,0,0.000,n/a,n/a,n/a,28556,15155,0.531,6.25,6.20,,,,,,
+graft,husk,"Husk",starter,skill,1,-,spike,300,0,0.000,n/a,n/a,n/a,28927,9007,0.311,4.62,4.59,,,,,,
+graft,seed_bite,"Seed Bite",starter,attack,1,G,spike,300,0,0.000,n/a,n/a,n/a,10000,7230,0.723,12.76,12.86,,,,,,
+graft,graft_hide,"Graft Hide",starter,skill,1,C,spike,300,0,0.000,n/a,n/a,n/a,8800,4701,0.534,4.57,4.55,,,,,,
+graft,thornwhirl,"Thornwhirl",common,attack,2,M,spike,300,431,1.437,0.032,13.5,26.6,442,243,0.550,23.93,12.09,18,5.6,35.0,-5.39,10.32,15.83
+graft,barb_flick,"Barb Flick",common,attack,0,M,spike,300,469,1.563,0.245,11.0,10.2,2283,1908,0.836,11.57,23.15,18,5.6,26.9,0.22,8.70,28.61
+graft,grafting_cut,"Grafting Cut",common,attack,1,C,spike,300,453,1.510,0.196,-0.5,11.1,1913,1381,0.722,11.16,11.17,18,11.1,28.6,-2.22,7.22,22.39
+graft,hivestrike,"Hivestrike",common,attack,1,M,spike,300,442,1.473,0.143,12.2,12.4,1021,714,0.699,10.46,10.45,18,22.2,30.9,-0.16,11.48,19.44
+graft,shear,"Shear",common,attack,1,C,spike,300,410,1.367,0.205,6.8,11.5,1755,1461,0.832,6.07,6.06,18,11.1,28.6,3.17,8.43,28.83
+graft,spore_lash,"Spore Lash",common,attack,1,B,spike,300,441,1.470,0.252,-4.8,10.4,2135,1482,0.694,10.83,10.85,18,0.0,33.5,-6.39,8.88,17.33
+graft,canker_bite,"Canker Bite",common,attack,1,B,spike,300,433,1.443,0.053,-9.6,18.6,369,281,0.762,13.38,13.43,18,0.0,29.5,-2.78,7.51,20.61
+graft,mulch_maul,"Mulch Maul",common,attack,1,C,spike,300,448,1.493,0.348,5.2,9.6,3167,2464,0.778,13.79,13.77,18,0.0,24.9,-2.55,8.34,24.67
+graft,sap_shell,"Sap Shell",common,skill,1,M,spike,300,468,1.560,0.201,13.8,10.4,1489,780,0.524,12.07,12.07,18,11.1,32.7,-2.05,10.01,16.28
+graft,blightcap,"Blightcap",common,skill,1,B,spike,300,437,1.457,0.021,-5.6,29.0,77,39,0.506,21.15,21.15,18,5.6,35.0,-1.89,10.31,21.44
+graft,tendril_reach,"Tendril Reach",common,skill,1,M,spike,300,430,1.433,0.421,4.8,9.2,3156,1861,0.590,12.38,12.36,18,5.6,31.2,0.84,10.10,20.11
+graft,root_mesh,"Root Mesh",common,skill,1,M,spike,300,456,1.520,0.132,10.0,12.6,1108,585,0.528,7.90,7.84,18,0.0,33.5,4.50,8.81,18.17
+graft,deep_graft,"Deep Graft",common,skill,1,G,spike,300,436,1.453,0.321,2.0,9.4,2383,1206,0.506,4.01,3.99,18,5.6,31.2,1.39,9.46,15.78
+graft,spore_haze,"Spore Haze",common,skill,1,B,spike,300,428,1.427,0.096,-8.6,14.9,624,239,0.383,12.24,12.24,18,0.0,24.9,-6.00,8.39,8.61
+graft,mire_carapace,"Mire Carapace",common,skill,1,B,spike,300,432,1.440,0.065,17.3,19.0,512,292,0.570,11.88,11.80,18,11.1,28.6,-0.39,8.49,16.28
+graft,shed_husk,"Shed Husk",common,skill,1,C,spike,300,421,1.403,0.793,1.6,11.8,6255,3348,0.535,4.76,4.74,18,5.6,31.2,-0.28,8.89,26.83
+graft,sap_drip,"Sap Drip",common,skill,0,G,spike,300,429,1.430,0.084,-13.4,15.1,358,279,0.779,3.18,6.35,18,16.7,25.3,-1.44,9.47,15.67
+graft,leaf_litter,"Leaf Litter",common,skill,1,C,spike,300,414,1.380,0.377,2.7,9.9,2809,1434,0.511,0.15,0.15,18,-16.7,26.9,-6.22,6.54,14.11
+graft,molt,"Molt",common,skill,1,C,spike,300,465,1.550,0.032,8.5,22.4,235,188,0.800,7.05,6.98,18,27.8,27.4,7.67,7.50,26.72
+graft,burst_pod,"Burst Pod",common,skill,0,B,spike,300,394,1.313,0.297,0.5,10.4,1776,1611,0.907,27.56,55.12,18,5.6,31.2,2.28,8.96,24.94
+graft,twin_thorn,"Twin Thorn",uncommon,attack,2,G,spike,300,280,0.933,0.361,8.5,12.4,1654,1220,0.738,49.06,24.78,18,11.1,32.7,-0.89,9.64,25.94
+graft,canopy_crush,"Canopy Crush",uncommon,attack,2,M,spike,300,257,0.857,0.070,-12.5,21.9,243,145,0.597,25.38,12.69,18,-5.6,27.4,-4.28,7.47,11.44
+graft,miasma_sweep,"Miasma Sweep",uncommon,attack,2,B,spike,300,307,1.023,0.456,-6.3,11.4,2845,1831,0.644,30.01,15.14,18,0.0,24.9,0.11,7.38,22.72
+graft,uproot,"Uproot",uncommon,attack,2,C,spike,300,298,0.993,0.279,4.0,12.3,1282,553,0.431,11.26,5.69,18,5.6,31.2,1.00,8.56,11.00
+graft,pollen_sting,"Pollen Sting",uncommon,attack,1,G,spike,300,277,0.923,0.097,5.6,19.3,581,478,0.823,11.75,11.75,18,11.1,28.6,-1.33,6.95,23.72
+graft,patient_thorn,"Patient Thorn",uncommon,attack,1,G,spike,300,292,0.973,0.312,14.8,11.6,1948,1785,0.916,20.37,20.57,18,0.0,24.9,1.11,8.72,34.78
+graft,burl_wall,"Burl Wall",uncommon,skill,2,M,spike,300,261,0.870,0.307,16.9,12.6,1616,626,0.387,20.82,10.54,18,-5.6,27.4,-4.22,9.31,10.94
+graft,choking_spores,"Choking Spores",uncommon,skill,1,B,spike,300,299,0.997,0.532,1.6,11.8,3399,2138,0.629,12.81,12.81,18,11.1,32.7,1.84,11.32,26.11
+graft,propagate,"Propagate",uncommon,skill,1,M,spike,300,269,0.897,0.007,-28.5,61.0,5,2,0.400,0.00,0.00,18,-16.7,26.9,-9.55,8.77,2.94
+graft,seed_rain,"Seed Rain",uncommon,skill,1,M,spike,300,279,0.930,0.233,-0.1,13.0,1173,467,0.398,3.13,3.09,18,0.0,29.5,-1.33,9.52,8.61
+graft,puffball,"Puffball",uncommon,skill,2,B,spike,300,288,0.960,0.260,-1.8,13.2,1298,661,0.509,64.85,32.52,18,11.1,23.8,-2.05,8.11,13.22
+graft,sporeburst,"Sporeburst",uncommon,skill,1,B,spike,300,286,0.953,0.483,2.1,11.9,2957,2378,0.804,25.49,25.39,18,-5.6,35.4,-1.28,9.27,26.22
+graft,decomposer,"Decomposer",uncommon,power,1,C,spike,300,285,0.950,0.695,-0.3,12.6,2870,2041,0.711,0.65,1.10,18,-11.1,24.9,-4.33,8.75,16.67
+graft,dusk_pruning,"Dusk Pruning",uncommon,power,1,C,spike,300,290,0.967,0.576,2.8,11.1,2457,1732,0.705,0.53,0.88,18,0.0,24.9,-1.28,8.43,16.22
+graft,living_hedge,"Living Hedge",uncommon,power,1,M,spike,300,285,0.950,0.639,1.9,12.1,2500,1859,0.744,0.79,1.33,18,5.6,26.9,-3.78,8.22,19.28
+graft,thorn_halo,"Thorn Halo",uncommon,power,1,G,spike,300,288,0.960,0.576,-1.1,11.9,2758,1314,0.476,0.62,0.65,18,-22.2,23.8,-11.83,7.22,11.78
+graft,ripening_rot,"Ripening Rot",uncommon,power,1,B,spike,300,275,0.917,0.429,-18.5,11.4,1754,1490,0.849,0.58,1.17,18,0.0,29.5,-5.11,8.65,17.78
+graft,reap,"Reap",uncommon,attack,2,B,spike,300,315,1.050,0.311,2.0,11.2,1883,1313,0.697,28.17,14.14,18,0.0,29.5,-1.00,7.81,20.28
+graft,second_flush,"Second Flush",uncommon,skill,1,G,spike,300,274,0.913,0.058,17.4,23.5,202,117,0.579,5.79,10.27,18,0.0,24.9,-2.61,7.41,12.61
+graft,heartwood_spear,"Heartwood Spear",rare,attack,2,G,spike,300,148,0.493,0.236,18.7,19.1,609,492,0.808,41.07,40.01,18,38.9,23.6,8.56,8.92,34.22
+graft,death_cap,"Death Cap",rare,attack,2,B,spike,300,188,0.627,0.649,-7.1,15.7,1480,623,0.421,31.03,15.50,18,0.0,29.5,-2.61,7.56,9.78
+graft,reaping_vine,"Reaping Vine",rare,attack,2,C,spike,300,197,0.657,0.208,-12.8,16.4,555,203,0.366,1.76,0.89,18,0.0,19.2,-2.61,6.16,8.06
+graft,verdant_tide,"Verdant Tide",rare,attack,2,M,spike,300,176,0.587,0.006,78.6,87.7,25,7,0.280,16.00,8.00,18,-11.1,33.5,-4.11,8.91,8.39
+graft,humus_rite,"Humus Rite",rare,skill,1,C,spike,300,156,0.520,0.237,-3.8,18.0,357,148,0.415,0.72,0.93,18,-5.6,27.4,-4.11,10.03,7.83
+graft,crystal_graft,"Crystal Graft",rare,skill,0,G,spike,300,166,0.553,0.199,-9.8,17.2,312,90,0.288,0.52,1.03,18,11.1,23.8,3.00,9.27,5.83
+graft,thresher,"Thresher",uncommon,power,2,C,spike,300,282,0.940,0.450,-4.1,12.4,2110,784,0.372,0.41,0.24,18,-5.6,22.4,-7.33,8.47,8.33
+graft,hyphal_web,"Hyphal Web",rare,power,1,M,spike,300,153,0.510,0.601,-6.0,16.1,953,707,0.742,0.73,0.74,18,11.1,28.6,-0.11,9.50,17.50
+graft,thornstorm,"Thornstorm",rare,attack,X,M,spike,300,153,0.510,0.359,24.1,16.5,792,675,0.852,56.48,21.76,18,27.8,27.4,9.39,8.41,36.17
+graft,grim_harvest,"Grim Harvest",rare,skill,2,B,spike,300,174,0.580,0.540,7.7,15.3,1392,1295,0.930,42.27,21.14,18,11.1,32.7,2.28,9.78,29.22
+graft,clear_cut,"Clear-Cut",rare,power,1,C,spike,300,166,0.553,0.898,-7.2,24.5,1494,1008,0.675,0.93,1.64,18,11.1,28.6,-2.16,9.57,15.39
+graft,deep_rot,"Deep Rot",rare,power,1,B,spike,300,181,0.603,0.033,-33.2,32.6,27,23,0.852,0.00,0.00,18,-5.6,31.7,-8.72,8.72,11.33
+graft,rootstock,"Rootstock",rare,power,2,M,spike,300,173,0.577,0.029,-7.2,45.2,14,7,0.500,0.00,0.00,18,-5.6,22.4,-3.78,6.50,8.44
+graft,perennial,"Perennial",rare,power,1,G,spike,300,162,0.540,0.574,-2.2,14.8,981,742,0.756,0.93,1.54,18,0.0,19.2,-5.05,7.35,15.61
+graft,relay_ping,"Relay Ping",uncommon,skill,0,colourless,spike,300,19,0.063,0.000,n/a,n/a,23,22,0.957,9.00,18.00,18,16.7,29.9,0.00,9.99,26.61
+graft,shardfall,"Shardfall",uncommon,attack,2,colourless,spike,300,23,0.077,0.087,7.7,75.0,63,38,0.603,22.18,11.71,18,0.0,33.5,-2.94,9.04,19.33
+graft,arc_lattice,"Arc Lattice",uncommon,attack,2,colourless,spike,300,23,0.077,0.000,n/a,n/a,1,1,1.000,24.00,12.00,18,-16.7,26.9,-7.11,9.68,15.28
+graft,salvage_kit,"Salvage Kit",uncommon,skill,1,colourless,spike,300,22,0.073,0.091,0.0,92.8,46,32,0.696,0.00,0.00,18,0.0,33.5,-3.55,11.25,18.33
+graft,stress_fracture,"Stress Fracture",uncommon,skill,0,colourless,spike,300,72,0.240,0.056,10.0,57.7,218,147,0.674,12.69,25.39,18,-5.6,22.4,-3.61,5.92,19.33
+graft,gyro_jammer,"Gyro Jammer",uncommon,skill,1,colourless,spike,300,22,0.073,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-11.1,29.5,-4.94,10.42,4.28
+graft,ballast_lock,"Ballast Lock",uncommon,skill,2,colourless,spike,300,30,0.100,0.133,14.3,57.6,105,65,0.619,10.37,5.18,18,0.0,29.5,-3.16,8.49,17.44
+graft,jettison_pod,"Jettison Pod",uncommon,skill,0,colourless,spike,300,25,0.083,0.040,100.0,92.8,39,30,0.769,7.00,14.00,18,11.1,32.7,2.72,9.99,17.00
+graft,overdraft_cell,"Overdraft Cell",uncommon,skill,0,colourless,spike,300,17,0.057,0.000,n/a,n/a,11,10,0.909,11.70,23.40,18,5.6,35.0,1.67,10.66,19.39
+graft,star_survey,"Star Survey",uncommon,skill,0,colourless,spike,300,30,0.100,0.033,66.7,101.0,31,16,0.516,4.31,8.63,18,0.0,29.5,2.89,9.45,13.89
+graft,fault_beacon,"Fault Beacon",uncommon,skill,1,colourless,spike,300,16,0.053,0.000,n/a,n/a,152,91,0.599,34.45,34.08,18,-11.1,19.2,-6.94,7.04,18.17
+graft,snare_line,"Snare Line",uncommon,skill,1,colourless,spike,300,20,0.067,0.100,0.0,74.6,37,11,0.297,27.70,25.39,18,22.2,26.5,4.06,9.09,7.11
+graft,cutting_torch,"Cutting Torch",rare,attack,1,colourless,spike,300,6,0.020,0.333,-100.0,84.9,73,55,0.753,12.95,12.95,18,0.0,19.2,-1.16,7.69,20.11
+graft,clean_manifest,"Clean Manifest",rare,attack,2,colourless,spike,300,3,0.010,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,31.7,-5.33,9.57,10.78
+graft,salvage_kiln,"Salvage Kiln",rare,power,1,colourless,spike,300,47,0.157,0.085,35.2,43.5,62,41,0.661,1.17,1.17,18,5.6,26.9,2.67,6.06,16.89
+graft,prism_resonance,"Prism Resonance",rare,power,2,colourless,spike,300,11,0.037,0.000,n/a,n/a,15,4,0.267,0.00,0.00,18,-11.1,29.5,-9.39,7.90,6.17
+graft,shard_cache,"Shard Cache",rare,skill,0,colourless,spike,300,6,0.020,0.333,n/a,n/a,45,5,0.111,9.00,18.00,18,-5.6,35.4,-4.44,11.85,0.94
+graft,mirror_tether,"Mirror Tether",rare,attack,2,colourless,spike,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,0.0,29.5,-4.05,9.87,3.94
+graft,grav_clamp,"Grav Clamp",rare,skill,2,colourless,spike,300,6,0.020,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,28.6,-1.72,8.73,3.39
+graft,blood_tithe,"Blood Tithe",uncommon,skill,0,colourless,spike,300,73,0.243,0.014,66.7,93.1,33,22,0.667,9.00,18.00,18,-5.6,27.4,-4.78,8.72,13.67
+graft,vent_plasma,"Vent Plasma",uncommon,attack,1,colourless,spike,300,68,0.227,0.015,-40.0,95.2,12,10,0.833,13.90,13.90,18,-11.1,19.2,-3.94,7.15,16.83
+graft,scar_tissue,"Scar Tissue",rare,power,1,colourless,spike,300,38,0.127,0.053,-82.4,71.0,3,1,0.333,0.00,0.00,18,-16.7,21.8,-7.61,8.21,10.17
+graft,last_light,"Last Light",rare,attack,3,colourless,spike,300,39,0.130,0.051,29.4,71.9,14,6,0.429,42.00,14.82,18,11.1,28.6,6.06,8.64,17.06
+graft,spare_capacitor,"Spare Capacitor",uncommon,skill,0,colourless,spike,300,122,0.407,0.016,-16.7,72.7,10,8,0.800,12.50,25.00,18,22.2,30.9,5.67,7.97,16.72
+graft,shrapnel_charge,"Shrapnel Charge",uncommon,attack,1,colourless,spike,300,95,0.317,0.021,-10.0,62.4,7,2,0.286,13.50,13.50,18,-5.6,15.8,-1.16,4.50,20.44
+graft,black_box,"Black Box",uncommon,skill,0,colourless,spike,300,102,0.340,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,0.0,10.9,-0.66,4.20,5.72
+graft,strip_for_parts,"Strip for Parts",uncommon,skill,1,colourless,spike,300,100,0.333,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,27.4,-5.05,9.52,1.17
+graft,scrapheap_colossus,"Scrapheap Colossus",rare,attack,1,colourless,spike,300,40,0.133,0.150,-1.7,39.1,48,39,0.813,17.85,17.85,18,11.1,23.8,0.11,5.24,22.33
+graft,burn_bright,"Burn Bright",rare,power,2,colourless,spike,300,44,0.147,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,27.4,-2.28,6.50,8.00
+graft,arc_discharge,"Arc Discharge",uncommon,attack,X,colourless,spike,300,40,0.133,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,23.8,0.84,7.52,26.78
+graft,capacitor_bank,"Capacitor Bank",uncommon,skill,0,colourless,spike,300,40,0.133,0.125,4.6,45.7,68,40,0.588,3.00,6.00,18,5.6,21.8,-0.22,5.39,13.50
+graft,starfall_lance,"Starfall Lance",rare,attack,X,colourless,spike,300,7,0.023,0.143,n/a,n/a,2,2,1.000,59.00,16.86,18,16.7,29.9,4.06,6.75,16.67
+graft,stasis_bolt,"Stasis Bolt",rare,attack,X,colourless,spike,300,13,0.043,0.154,0.0,120.0,15,12,0.800,29.92,44.88,18,-5.6,22.4,-2.39,7.21,21.50
+graft,encore,"Encore",uncommon,skill,1,colourless,spike,300,77,0.257,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,11.1,23.8,-2.78,7.99,19.11
+graft,second_verse,"Second Verse",uncommon,skill,1,colourless,spike,300,66,0.220,0.197,5.7,30.5,189,142,0.751,6.63,6.63,18,5.6,21.8,-1.22,6.28,22.50
+graft,bait_flare,"Bait Flare",uncommon,skill,0,colourless,spike,300,27,0.090,0.000,n/a,n/a,0,0,n/a,n/a,n/a,18,-5.6,31.7,-0.05,8.89,4.78

@@ -37,10 +37,27 @@ function deepFreeze<T>(v: T): T {
   return v;
 }
 
+/**
+ * How strictly enemy AI purity is enforced (GDD §2.9).
+ *  - `frozen`: chooseMove gets a deep-frozen deep copy, so any write throws. Every vitest run
+ *    (tests/setup-neutral-tuning.ts) and the dev build (src/main.ts, so the e2e harness too) use it.
+ *  - `copied` (default: simulator, production): a copy of the enemy with its own aiState, statuses,
+ *    history, forecast, intent and rng, not frozen. A write still cannot reach the real state, it just
+ *    isn't reported. Deep-freezing a structuredClone on every action cost ~10% of simulator CPU.
+ */
+export const AI_PURITY: { mode: 'frozen' | 'copied' } = { mode: 'copied' };
+
+function aiSnapshot(e: EnemyState): EnemyState {
+  if (AI_PURITY.mode === 'frozen') return deepFreeze(structuredClone(e));
+  return { ...e, aiState: { ...e.aiState }, statuses: { ...e.statuses }, moveHistory: [...e.moveHistory], forecast: [...e.forecast], intent: { ...e.intent }, rng: [...e.rng] };
+}
+
 export function aiCtx(combat: CombatState, e: EnemyState, rng: RngState, history: readonly string[], forTurn: number): EnemyAiCtx {
-  const snapshot = deepFreeze(structuredClone(e));
-  const allies = deepFreeze(livingEnemies(combat).filter((x) => x.uid !== e.uid).map((x) => ({ uid: x.uid, id: x.id })));
-  const hist = deepFreeze([...history]);
+  const snapshot = aiSnapshot(e);
+  const frozen = AI_PURITY.mode === 'frozen';
+  const allyList = livingEnemies(combat).filter((x) => x.uid !== e.uid).map((x) => ({ uid: x.uid, id: x.id }));
+  const allies = frozen ? deepFreeze(allyList) : allyList;
+  const hist = frozen ? deepFreeze([...history]) : [...history];
   return {
     self: snapshot,
     forTurn,
@@ -92,7 +109,7 @@ function enemyFrame(e: EnemyState, moveId: string): EffectFrame {
 }
 
 /** Intent for a move; damage per hit and hits are computed with all current modifiers (preview). */
-export function computeIntent(state: RunState, e: EnemyState, moveId: string): Intent {
+export function computeIntent(state: RunState, e: EnemyState, moveId: string, forecast = false): Intent {
   const move = getEnemyDef(e.id).moves[moveId];
   if (!move) throw new Error(`enemy ${e.id} has no move '${moveId}'`);
   const intent: Intent = { kind: move.intent, moveId };
@@ -100,7 +117,9 @@ export function computeIntent(state: RunState, e: EnemyState, moveId: string): I
   if (dmg && dmg.type === 'damage') {
     const ctx = amountCtx(state, enemyFrame(e, moveId), true);
     const base = resolveAmount(ctx, dmg.amount);
-    intent.damage = computeDamage(state, { source: e.uid, target: 'player', card: null, tags: dmg.tags ?? [] }, base, true);
+    // Forecast entries carry the 'forecast' tag so this-turn-only modifiers (Goad) can leave them out.
+    const tags = forecast ? [...(dmg.tags ?? []), 'forecast'] : (dmg.tags ?? []);
+    intent.damage = computeDamage(state, { source: e.uid, target: 'player', card: null, tags }, base, true);
     intent.hits = dmg.times === undefined ? 1 : resolveAmount(ctx, dmg.times);
   }
   return intent;
@@ -125,7 +144,7 @@ export function computeForecast(state: RunState, e: EnemyState): Intent[] {
     const moveId = choose(c, e, rng, history, e.intentTurn + k);
     const move = def.moves[moveId];
     if (!move) throw new Error(`enemy ${e.id} has no move '${moveId}'`);
-    out.push(move.augury === 'hidden' ? { kind: 'unknown', moveId: '', hidden: true } : computeIntent(state, e, moveId));
+    out.push(move.augury === 'hidden' ? { kind: 'unknown', moveId: '', hidden: true } : computeIntent(state, e, moveId, true));
     history.push(moveId);
   }
   return out;
@@ -163,9 +182,9 @@ export interface SpawnOpts {
   withLeader: 'die' | 'flee' | null;
 }
 
-/** Balance lever: TUNING.enemyHpPct[act] (default 100) scales every rolled enemy HP, minimum 1. */
-function scaledEnemyHp(s: RunState, hp: number): number {
-  return Math.max(1, Math.round((hp * TUNING.enemyHpPct[s.act]) / 100));
+/** Difficulty lever: TUNING.difficulty[tier].enemyHpPct[act] scales every rolled enemy HP, minimum 1. */
+export function scaledEnemyHp(s: Pick<RunState, 'difficulty' | 'act'>, hp: number): number {
+  return Math.max(1, Math.round((hp * TUNING.difficulty[s.difficulty].enemyHpPct[s.act]) / 100));
 }
 
 /** Create an enemy (hp from the 'enemy' stream, own AI stream derived from it) and apply spawnStatuses. */

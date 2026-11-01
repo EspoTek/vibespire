@@ -5,17 +5,18 @@
 // were queued (depth-first, like STS addToTop). Items queued by an action handler (no item
 // executing) go to the back.
 
-import { discardFromHand, exhaustCards, isUpgradable, takeFrom, upgradeCard } from './cards';
-import { combatStep, finishCardItem } from './combat';
+import { cardDef, discardFromHand, exhaustCards, isUpgradable, takeFrom, upgradeCard } from './cards';
+import { combatStep, finishCardItem, triageKeepKey } from './combat';
 import { emit, enqueue, getEnemy, queueHost, requireCombat, type Env } from './core';
 import { resolveBloomPick, resolvePruneScrap } from './bloom';
 import { addToDeck, transformInDeck, upgradeInDeck } from './deck';
-import { execEffect, moveFetched, removeDeckCardChecked } from './effects';
+import { copyHandCard, execEffect, moveFetched, removeDeckCardChecked } from './effects';
 import { gainPotion } from './items';
 import { finishPrime, primeCards } from './riposte';
 import { duplicateCard, losePotionAt, loseRelic, transmutePick } from './runeffects';
 import { effectItems } from './ctx';
 import { runStep } from './run';
+import { scheduleCards } from './timeline';
 import { dispatch } from './statuses';
 import type { Action, PendingChoice, QueueItem, TurnStep } from './types';
 
@@ -136,7 +137,7 @@ function declareWin(env: Env): void {
 // ---------------------------------------------------------------------------
 // Pending choices
 
-export function openChoice(env: Env, choice: PendingChoice): void {
+export function openChoice(env: Env, choice: Omit<PendingChoice, 'picked'>): void {
   if (env.noChoice > 0) throw new Error(`an effect run synchronously (ctx.now) tried to open a choice: "${choice.prompt}"`);
   const s = env.state;
   // Once the fight is decided, choices that would follow are dropped.
@@ -144,32 +145,58 @@ export function openChoice(env: Env, choice: PendingChoice): void {
   if (choice.choices.length === 0) return;
   const host = queueHost(s);
   if (host.pendingChoice) throw new Error('a choice is already pending');
-  host.pendingChoice = choice;
+  host.pendingChoice = { ...choice, picked: [] };
   emit(env, { t: 'choice', prompt: choice.prompt });
 }
 
-const MAX_CHOICE_ACTIONS = 5000;
+/** The choice is answered one pick at a time (see PendingChoice.picked). */
+export function isMultiPick(pc: PendingChoice): boolean { return pc.max > 1; }
 
-/** Every legal resolve_choice action: subsets of `choices` (in choices order) with size min..max. */
+/**
+ * Every legal answer step, linear in the number of choices:
+ *  - single-pick: resolve_choice with each choice (and [] when min is 0);
+ *  - multi-pick: resolve_choice with `picked` once its size is within min..max, then choice_toggle for
+ *    each unpicked choice (while there is room) and each picked one.
+ */
 export function choiceActions(pc: PendingChoice): Action[] {
   const out: Action[] = [];
-  const n = pc.choices.length;
-  const pick = (start: number, size: number, acc: number[]): void => {
-    if (acc.length === size) {
-      out.push({ type: 'resolve_choice', uids: [...acc] });
-      if (out.length > MAX_CHOICE_ACTIONS) throw new Error(`pending choice "${pc.prompt}" has more than ${MAX_CHOICE_ACTIONS} legal answers; constrain min/max`);
-      return;
-    }
-    for (let i = start; i <= n - (size - acc.length); i++) {
-      const id = pc.choices[i];
-      if (id === undefined) throw new Error('choice index out of range');
-      acc.push(id);
-      pick(i + 1, size, acc);
-      acc.pop();
-    }
-  };
-  for (let size = pc.min; size <= Math.min(pc.max, n); size++) pick(0, size, []);
+  if (!isMultiPick(pc)) {
+    if (pc.min === 0) out.push({ type: 'resolve_choice', uids: [] });
+    if (pc.max >= 1) for (const id of pc.choices) out.push({ type: 'resolve_choice', uids: [id] });
+    return out;
+  }
+  // order: confirm (when valid), then select, then deselect, so "take the first legal action" always
+  // makes progress instead of toggling one card on and off
+  if (pc.picked.length >= pc.min && pc.picked.length <= pc.max) out.push({ type: 'resolve_choice', uids: [...pc.picked] });
+  if (pc.picked.length < pc.max) for (const id of pc.choices) if (!pc.picked.includes(id)) out.push({ type: 'choice_toggle', uid: id });
+  for (const id of pc.picked) out.push({ type: 'choice_toggle', uid: id });
   return out;
+}
+
+/** Select / deselect one choice of the pending multi-pick choice (keeps `picked` in choices order). */
+export function toggleChoice(env: Env, uid: number): void {
+  const pc = queueHost(env.state).pendingChoice;
+  if (!pc) throw new Error('choice_toggle without a pending choice');
+  if (!isMultiPick(pc)) throw new Error(`choice_toggle on single-pick choice "${pc.prompt}"`);
+  const on = !pc.picked.includes(uid);
+  const next = on ? [...pc.picked, uid] : pc.picked.filter((x) => x !== uid);
+  pc.picked = pc.choices.filter((c) => next.includes(c));
+}
+
+/**
+ * The next legal step toward answering `pc` with `uids` (a subset of choices): for a multi-pick choice,
+ * deselect what isn't wanted, select what's missing, then resolve; for a single pick, the answer itself.
+ * Policies and the UI answer a choice by applying steps until this returns a resolve_choice.
+ */
+export function choiceStep(pc: PendingChoice, uids: readonly number[]): Action {
+  const want = pc.choices.filter((c) => uids.includes(c));
+  if (want.length !== uids.length) throw new Error(`choiceStep: [${uids.join(', ')}] is not a subset of the choices of "${pc.prompt}"`);
+  if (!isMultiPick(pc)) return { type: 'resolve_choice', uids: want };
+  const extra = pc.picked.find((p) => !want.includes(p));
+  if (extra !== undefined) return { type: 'choice_toggle', uid: extra };
+  const missing = want.find((w) => !pc.picked.includes(w));
+  if (missing !== undefined) return { type: 'choice_toggle', uid: missing };
+  return { type: 'resolve_choice', uids: want };
 }
 
 export function resolveChoice(env: Env, uids: readonly number[]): void {
@@ -283,6 +310,27 @@ function applyResume(env: Env, pc: PendingChoice, uids: readonly number[]): void
       } else emit(env, { t: 'text', text: 'You leave the potion.' });
       return;
     }
+    case 'schedule':
+      scheduleCards(env, uids, r.turns, r.target);
+      return;
+    // --- Shared v2
+    case 'exhaust_then': {
+      const done = exhaustCards(env, r.from, uids);
+      enqueue(env, effectItems(r.then, { ...r.frame, scrapped: done.length }));
+      return;
+    }
+      return;
+    case 'triage': {
+      const combat = requireCombat(env.state, 'triage choice');
+      for (const uid of uids) combat.counters[triageKeepKey(uid)] = 1;
+      const kept = new Set(uids);
+      const rest = combat.hand.filter((c) => !kept.has(c.uid) && !(cardDef(c).keywords ?? []).includes('retain')).map((c) => c.uid);
+      exhaustCards(env, 'hand', rest);
+      return;
+    }
+    case 'copy_card':
+      copyHandCard(env, one(uids), r.costThisTurn);
+      return;
   }
 }
 

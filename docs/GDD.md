@@ -360,7 +360,7 @@ Content rule for the card designers: **no common may gain energy, return a card 
 - **Rare pity** `[rarePityStart = 0, rarePityStep = 1]`: +1% to the rare chance for each normal or elite card reward screen that showed **no** rare. It resets to 0 when a rare is shown. The pity percentage comes out of the common share. Shops and bosses don't move it.
 - **Duplicates**: no duplicate ids within one screen.
 - **Upgraded offers** (per non-rare card offered): Act 1 0%, Act 2 15%, Act 3 30% `[TUNING.upgradedOffer]`. Rares are offered upgraded at half those rates.
-- **Colourless sources**: shops (2 per shop), `ev_assembly_line` (3), `pact_wanderer` (1 of 3). Colourless never appear in combat card rewards. Colourless rarity split: 14 uncommon / 6 rare (of 20).
+- **Colourless sources**: shops (`TUNING.shopColorless` = 3 per shop, RULINGS 61), `ev_assembly_line` (3), `pact_wanderer` (1 of 3). Card rewards: with `TUNING.rewardColorlessChance` (0.12; 0.25 from elites) one class card is replaced by a colourless card of the same rarity roll (a common slot becomes uncommon; RULINGS 69). Once you've started a shared engine (RULINGS 70), `TUNING.colorlessEngineExtra` (0.3) of card rewards also add one of its colourless cards (at most 4 cards; shared-design §14). Colourless rarity split: 23 uncommon / 13 rare (RULINGS 60; + Second Verse, Encore now uncommon).
 - **Skipping**: skipping any card reward screen (normal, elite, boss, event combat) grants **1 Shard**. Proceeding without picking counts as a skip.
 
 ### 4.3 Potions `[TUNING.potion]`
@@ -483,120 +483,144 @@ These are cumulative, and each level changes **exactly one lever** (commandment 
 | 10 | `asc_twin_crown` | Act 3 ends with two bosses in a row (the second at full HP; no rest between). |
 
 ---
-## 5. Relics (72)
+## 5. Relics (100)
 
-Distribution: starter 3 · common 18 · uncommon 18 · rare 12 · boss 12 · shop 5 · event 4. Pure stat sticks (marked **stat**): 4. Relic drop pools exclude relics of other classes and relics marked "not chronist" for the Chronist. Starter relics cannot be lost. Hooks in *italics* are **[ask]** items (§9). Every relic was checked against STS1's 180 relics and STS2's known relics: a relic that only renames an STS trigger and effect pair was cut.
+Generated from `src/content/relics.ts` on 2026-10-31 (Phase D); texts are rendered by the engine, so the numbers are the shipped ones. Distribution: starter 3 · common 21 · uncommon 27 · rare 24 · boss 15 · shop 6 · event 4. Relic drop pools exclude relics of other classes and relics marked "not chronist" for the Chronist. Starter relics cannot be lost. Design rationale, engines and the Phase C/D tuning data: `docs/v2/shared-design.md` §3, §10–§12.
 
 ### 5.1 Starter (3)
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `riven_gauntlet` | Riven Gauntlet | breaker | Whenever one of your Riposte effects triggers, gain 1 Onslaught and 2 Guard. | *onRiposteTriggered* → `status onslaught +1`; `guard 2` | riposte, onslaught, guard | Holding Shoulder Check now also starts your next turn at Onslaught 1, and the Guard soaks the hit it parried. All three Breaker mechanics in one line. |
-| `heartseed` | Heartseed | graft | At the start of each combat, put the Bloom card in your draw pile with the most Bloom into your hand (it counts toward your opening 5; ties: random). | onCombatStart → *fetch_card {from: draw, select: max_bloom, countsAsDraw: true}* | bloom, consistency | Your best-grown copy is always there to receive Prune, so "which copy do I invest in" becomes a run plan. |
-| `chrono_lens` | Chrono Lens | chronist | The first card you play on the beat each turn also draws 1 card. | onCardPlayed: if *on_beat* and `counters.lens == 0` → `draw 1`; set flag | cadence, draw | Makes beat 6 reachable with a starter deck; rewards cheap cards. |
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `riven_gauntlet` | Riven Gauntlet | breaker | Whenever one of your Riposte effects triggers, gain 1 Onslaught and 2 Guard. | riposte, onslaught, guard |
+| `heartseed` | Heartseed | graft | At the start of each combat, put the Bloom card in your draw pile with the most Bloom into your hand (ties: random). It counts toward your opening hand. | bloom, consistency |
+| `chrono_lens` | Chrono Lens | chronist | The first card you play on the beat each turn also draws 1 card. | cadence, draw |
 
-### 5.2 Common (18)
+### 5.2 Common (21)
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `glass_spurs` | Glass Spurs | any | The first time one card play hits the same enemy 3 times, apply 1 Exposed to it. | onDamageDealt: count hits per (card uid, target) in `counters`; at 3 → `status exposed 1` | exposed, multihit | Multi-hit commons beat single big hits on the reward screen. |
-| `dampener_coil` | Dampener Coil | any | Whenever an enemy finishes an attack on you and you lost no HP from it, apply 1 Stagger to it. | *onEnemyMoveEnd {uid, hpLostThisMove}* → `status stagger 1` | stagger, block | Full-block turns are rewarded over chip-tanking. |
-| `cracked_prism` | Cracked Prism | any | Whenever you gain a Shard, gain 15 gold. | *onShardGain* → `gold 15 × amount` | shards, economy | Gives every skip a gold floor, which tips marginal-common skips. |
-| `geode_heart` | Geode Heart | any | At the start of each combat, gain 1 Block per Shard you hold (max 10). | onCombatStart → `block {scale: fn shards}` | shards, block | Holding Shards becomes a small defensive stance against spending them. |
-| `bulwark_rivets` | Bulwark Rivets | any | Whenever you gain Guard, gain 1 more. | *guardFlat* modifier → +1 | guard | **stat** |
-| `stim_patch` | Stim Patch | any | Whenever you use a potion, gain 4 Guard. | *onPotionUsed* → `guard 4` | potion, guard | **stat** |
-| `scrap_magnet` | Scrap Magnet | any | Whenever a Status card is put into your hand, gain 3 Guard. | onCardDrawn and *onCardToHand* (type status) → `guard 3` | status, guard | Act 2 status spam hurts less; Jitter becomes fodder. |
-| `surveyor_ink` | Surveyor's Ink | any | Elite nodes on the map show which elite they hold. Elites drop 15 more gold. | renderer reads `MapNode.encounterId`; onCombatEnd (elite) → `gold 15` | map, economy | Path choice by matchup, not by count. |
-| `field_dressing` | Field Dressing | any | After you win an elite or boss combat, heal 8 HP. | onCombatEnd (won, elite or boss) → `heal 8` | heal | **stat** |
-| `tally_stick` | Tally Stick | any | Whenever you skip a card reward, your next card reward offers 4 cards. | *onRewardSkipped* → run counter `wide_rewards = 1` | shards, rewards | Skipping now also improves the next screen. |
-| `notched_buckler` | Notched Buckler | breaker | At the end of your turn, if you have a primed card, gain 4 Guard. | *onPrimed* (after prime step, if `primed.length > 0`) → `guard 4` | riposte, guard | Holding becomes defensive even when the enemy doesn't attack. |
-| `chain_wraps` | Chain Wraps | breaker | At the end of your turn, gain Guard equal to half your Onslaught (round down). | onTurnEnd (before decay) → `guard {fn: floor(onslaught / 2)}` | onslaught, guard | All-Attack turns are no longer defenceless. |
-| `seed_pouch` | Seed Pouch | graft | Bloom cards you take from card rewards start with 2 Bloom. | *onCardAdded {source: reward}* (bloom keyword) → `vars.bloom = 2` | bloom, rewards | Bloom cards rise in the reward ranking. |
-| `pollen_sac` | Pollen Sac | graft | Whenever a card gains Bloom, apply 1 Rot to a random enemy. | *onBloomGained* → `status random_enemy rot 1` | bloom, rot | Bridges the growth and Rot archetypes. |
-| `compost_heap` | Compost Heap | graft | The first time you Prune each combat, draw 2 cards. | *onPrune* (counter == 1) → `draw 2` | prune, draw | Makes early Prune a tempo play, not just an investment. |
-| `tuning_fork` | Tuning Fork | chronist | At the end of your turn, if you played exactly 3, 6 or 9 cards this turn, gain 5 Block. | onTurnEnd: beat count ∈ beats → `block 5` | cadence, block | Stopping on a beat is worth as much as one more card. |
-| `sandglass_bead` | Sandglass Bead | chronist | The first card you put on the Timeline each combat resolves 1 turn sooner (it still waits at least until your next turn). | *onTimelineAdd* → `dueTurn = max(turn + 1, dueTurn − 1)` | delay | Delay 2 openers become Delay 1. |
-| `star_pip` | Star Pip | chronist | At the start of your turn, gain 3 Block for each enemy whose next two intents are both attacks. | onTurnStart: count enemies with intent and forecast[0] attacking → `block 3 × n` | augury, block | Augury pays a defensive dividend against aggressive packs. |
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `glass_spurs` | Glass Spurs | any | The first time one card play hits the same enemy 3 times, apply 1 Exposed to it. | exposed, multihit |
+| `dampener_coil` | Dampener Coil | any | Whenever an enemy finishes an attack on you and you lost no HP from it, it gets 1 Stagger at the start of your next turn. | stagger, block |
+| `cracked_prism` | Cracked Prism | any | Whenever you gain a Shard, gain 15 gold. | shards, economy |
+| `geode_heart` | Geode Heart | any | At the start of each combat, gain 1 Block per Shard you hold (max 10). | shards, block |
+| `bulwark_rivets` | Bulwark Rivets | any | At the start of your turn, gain Guard equal to 50% of the Block you lose (round down). | guard, block |
+| `scrap_magnet` | Scrap Magnet | any | Whenever a Status card is put into your hand, gain 3 Guard. | status, guard |
+| `surveyor_ink` | Surveyor's Ink | any | Elite nodes on the map show which elite they hold. Elites drop 15 more gold. | map, economy |
+| `field_dressing` | Field Dressing | any | After you win a combat, heal 50% of the HP you Strained in it (round up). | heal, strain |
+| `tally_stick` | Tally Stick | any | Whenever you skip a card reward, your next card reward offers 1 more card. | shards, rewards |
+| `notched_buckler` | Notched Buckler | breaker | At the end of your turn, if you have a primed card, gain 4 Guard. | riposte, guard |
+| `chain_wraps` | Chain Wraps | breaker | At the end of your turn, gain Guard equal to half your Onslaught (round down). | onslaught, guard |
+| `seed_pouch` | Seed Pouch | graft | Bloom cards you take from card rewards start with 2 Bloom. | bloom, rewards |
+| `pollen_sac` | Pollen Sac | graft | Whenever a card gains Bloom, apply 1 Rot to a random enemy. | bloom, rot |
+| `compost_heap` | Compost Heap | graft | The first time you Prune each combat, draw 2 cards. | prune, draw |
+| `tuning_fork` | Tuning Fork | chronist | At the end of your turn, if you stopped on the beat (the number of cards you played is a beat), gain 5 Block. | cadence, block |
+| `sandglass_bead` | Sandglass Bead | chronist | The first card you put on the Timeline each combat resolves 1 turn sooner (it still waits until at least your next turn). | delay |
+| `star_pip` | Star Pip | chronist | At the start of your turn, gain 1 Block for each enemy whose next two intents are both attacks. | augury, block |
+| `spare_fuse` | Spare Fuse | any | At the start of each combat, add a Fuse to your hand. | salvage, scrap, engine:scrapheap |
+| `antenna_wire` | Antenna Wire | any | Whenever you play a Power, draw 1 card. | power, draw |
+| `slag_bucket` | Slag Bucket | breaker | The first time you Shed Guard each turn, draw 1 card. | shed, guard, draw |
+| `storm_lantern` | Storm Lantern | chronist | Whenever you apply Goad to an enemy, gain 3 Block. | goad |
 
-Common pool: any 10 · breaker 2 · graft 3 · chronist 3 = 18.
+### 5.3 Uncommon (27)
 
-### 5.3 Uncommon (18)
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `parry_charm` | Parry Charm | breaker | You can prime 1 additional Riposte card. | riposte |
+| `kept_fury` | Kept Fury | breaker | At the end of your turn, keep up to 1 Onslaught. | onslaught |
+| `crowd_breaker` | Crowd Breaker | breaker | Whenever one of your Attacks hits 2 or more enemies, gain 1 Onslaught. | onslaught, aoe |
+| `concussion_rig` | Concussion Rig | any | Whenever an enemy with Stagger hits you, gain 1 Guard. | stagger, guard |
+| `slow_temper` | Slow-Temper Alloy | any | At the start of your turn, your Guard loses a third (round down) instead of half. | guard |
+| `shard_lens` | Shard Loupe | any | Purge costs only 1 Shard. Your first Transmute at a Rest site each act costs no Shards. | shards, transmute |
+| `hairline_saw` | Hairline Saw | any | When an enemy with Exposed dies, apply its Exposed to the living enemy with the lowest HP. | exposed |
+| `wayfinder_needle` | Wayfinder Needle | any | At the start of each act, a random ? node before the Treasure row becomes a Treasure node. | map, relic |
+| `rot_censer` | Rot Censer | graft | When an enemy with Rot dies, all of its Rot spreads instead of half. | rot |
+| `grafting_knife` | Grafting Knife | graft | When you Prune a Status or Curse, the Bloom card gains 1 more Bloom. | prune, bloom, status |
+| `heartwood_ring` | Heartwood Ring | graft | At the start of each combat, the Bloom card in your deck with the least Bloom gains 1 Bloom (ties: random). | bloom |
+| `mycelial_net` | Mycelial Net | graft | Rot on enemies can reach 20. | rot |
+| `offbeat_drum` | Offbeat Drum | chronist | On-beat effects of 0-cost cards trigger twice. | cadence |
+| `timeline_spool` | Timeline Spool | chronist | Whenever a card on your Timeline resolves, deal 3 damage to the enemy with the lowest HP. | delay, damage |
+| `seers_veil` | Seer's Veil | chronist | The first time you apply Goad each turn, draw 1 card. | goad, draw |
+| `scar_engine` | Scar Engine | any | Whenever you Strain, apply 1 Exposed to ALL enemies. | strain, exposed, engine:redline |
+| `static_choir` | Static Choir | any | Whenever a Status card is Scrapped, deal 3 damage to ALL enemies. | status, aoe, scrap |
+| `whetstone` | Whetstone | any | Whenever you apply Exposed to an enemy, apply 1 more. | exposed |
+| `ash_wick` | Ash Wick | any | The 3rd time a card is Scrapped in a turn, gain 1 energy. | scrap, energy, engine:scrapheap |
+| `overture_engine` | Overture Engine | any | At the start of each combat, put the highest-cost Power in your draw pile into your hand (ties: random). It costs 0 this turn and counts toward your opening hand. | power, consistency |
+| `blood_rivets` | Blood Rivets | breaker | Whenever you Strain, gain Guard equal to 2 times the HP you lost. | strain, guard, engine:redline |
+| `blood_mulch` | Blood Mulch | graft | The first time you Strain each turn, a random Bloom card in your hand, draw pile or discard pile gains 1 Bloom. | strain, bloom, engine:redline |
+| `borrowed_time` | Borrowed Time | chronist | Whenever you Strain, Advance 1. | strain, advance, engine:redline |
+| `coal_scuttle` | Coal Scuttle | breaker | At the start of each combat, gain 1 Ember. | embers, onslaught |
+| `husk_sac` | Husk Sac | graft | The first time you Prune each turn, add a Chaff to your hand. | prune, chaff, status |
+| `reapers_sickle` | Reaper's Sickle | graft | Whenever you Harvest, gain Block equal to 50% of the HP the enemy lost (round down). | harvest, rot, block |
+| `astrolabe` | Astrolabe | chronist | The first time each turn 3 or more cards resolve together from your Timeline, gain 1 energy. | timeline, chorus, energy |
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `parry_charm` | Parry Charm | breaker | You can prime 1 additional Riposte card. | onCombatStart → `status riposte_capacity 1` | riposte | Picking a second Riposte card becomes correct. |
-| `kept_fury` | Kept Fury | breaker | At the end of your turn, keep up to 1 Onslaught. | onCombatStart → `status onslaught_keep 1` | onslaught | Lets you weave a Skill turn without losing the swing. |
-| `crowd_breaker` | Crowd Breaker | breaker | Whenever one of your Attacks hits 2 or more enemies, gain 1 Onslaught. | afterCardPlayed: distinct targets hit ≥ 2 → `status onslaught 1` | onslaught, aoe | AoE Attacks join the Onslaught plan. |
-| `concussion_rig` | Concussion Rig | any | Whenever an enemy with Stagger hits you, gain 1 Guard. | onDamageTaken: source has stagger → `guard 1` | stagger, guard | Stagger against multi-hit becomes defence twice over. |
-| `slow_temper` | Slow-Temper Alloy | any | At the start of your turn, your Guard loses a third (round down) instead of half. | *guardDecay* modifier → `floor(g / 3)` lost | guard | The Guard-bank plan doubles its horizon. |
-| `pocket_star_chart` | Pocket Star Chart | any (not chronist) | In elite and boss combats, you have Augury. | onCombatStart (elite or boss) → `status augury` | augury | Lets non-Chronists plan for big hits. |
-| `overwatch_drone` | Overwatch Drone | any | The first time an enemy attacks you each combat, deal 8 damage to it before its attack. | *onEnemyAttackDeclared* (once) → `damage 8` to attacker | riposte, damage | A Riposte taste for every class; can kill weak openers. |
-| `shard_lens` | Shard Loupe | any | Purge costs 1 Shard instead of 2. | rest option cost modifier | shards | Doubles removal throughput from skips. |
-| `crystal_spine` | Crystal Spine | any | Your first Transmute each act costs no Shards. | rest option cost modifier + act counter | shards, transmute | Starter-swap value without skipping. |
-| `hairline_saw` | Hairline Saw | any | When an enemy with Exposed dies, apply its Exposed to the living enemy with the lowest HP. | *onDeath info carries statuses* → `status exposed n` | exposed | Exposed stacks carry across a pack. |
-| `wayfinder_needle` | Wayfinder Needle | any | At the start of each act, a random `?` node in rows 1–7 becomes a Treasure node. | *onActStart* → mutate the map (`map` stream) | map, relic | An extra early relic on any path that has a `?`. |
-| `rot_censer` | Rot Censer | graft | When an enemy with Rot dies, all of its Rot spreads instead of half. | rot spread reads relic flag | rot | Pack fights become Rot chains. |
-| `grafting_knife` | Grafting Knife | graft | When you Prune a Status or Curse, the Bloom card gains 1 more Bloom. | *modifyPruneBloom* (+1 if scrapped type ∈ {status, curse}) | prune, bloom, status | Statuses and curses become fertiliser. |
-| `heartwood_ring` | Heartwood Ring | graft | At the start of each combat, the Bloom card in your deck with the least Bloom gains 1 Bloom (ties: random). | onCombatStart → *bloom {target: min_in_deck, amount: 1}* | bloom | Feeds the wide deck-count plan rather than one hyper card. |
-| `mycelial_net` | Mycelial Net | graft | Rot on enemies can reach 20. | *modifyStatusCap (rot, 20)* | rot | Raises the late-fight ceiling of the Rot clock. |
-| `offbeat_drum` | Offbeat Drum | chronist | On-beat effects of 0-cost cards trigger twice. | *on_beat* wrapper reads relic → repeat 2 if card cost 0 | cadence | Cheap cards become beat payoffs. |
-| `timeline_spool` | Timeline Spool | chronist | Whenever a card on your Timeline resolves, deal 3 damage to the enemy with the lowest HP. | *onDelayResolved* → `damage 3` (lowest HP) | delay, damage | Many small Delay cards beat one big one. |
-| `seers_veil` | Seer's Veil | chronist | At the start of your turn, if any enemy's intent after next is not an attack, draw 1 card. | onTurnStart: any forecast[0] not attack → `draw 1` | augury, draw | Rewards reading the forecast for safe windows. |
+### 5.4 Rare (24)
 
-### 5.4 Rare (12)
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `duelists_oath` | Duelist's Oath | breaker | You can prime 1 additional Riposte card. Each primed card can trigger its Riposte 2 times (on different enemy attacks) before it is discarded. | riposte |
+| `stormbreak_gem` | Stormbreak Gem | breaker | The first time your Onslaught reaches 6 in a turn, gain 1 energy and draw 2 cards. | onslaught |
+| `bastion_core` | Bastion Core | breaker | At the start of your turn, the Guard you lose to halving is dealt as damage to a random enemy. | guard, damage |
+| `elder_seed` | Elder Seed | graft | Your Bloom cards can grow to 15 Bloom. | bloom |
+| `hollow_bough` | Hollow Bough | graft | Once per combat, when you Prune, you may make it Prune away instead. | prune, removal |
+| `plague_bloom` | Plague Bloom | graft | Whenever you apply Rot to an enemy, every other enemy gains half that much Rot (round down). | rot, aoe |
+| `metronome_heart` | Metronome Heart | chronist | Your first beat each turn comes sooner: the 2nd card you play is on the beat instead of the 3rd. | cadence |
+| `prophet_glass` | Prophet Glass | chronist | You see each enemy's next 3 intents. | augury |
+| `paradox_coil` | Paradox Coil | chronist | Once per turn, when a card on your Timeline resolves, you may put it back on the Timeline with Delay 2. Each card can return only once per combat. | delay |
+| `shard_crucible` | Shard Crucible | any | At Rest sites, Purge no longer uses up your rest action (once per visit; Shards still paid). Each card reward you skip gives 1 more Shard. | shards, rest |
+| `fracture_engine` | Fracture Engine | any | Exposed on enemies adds 2 damage per stack to your hits. | exposed |
+| `void_compass` | Void Compass | any | Elite card rewards offer one common, one uncommon and one rare card. | rewards |
+| `reserve_coil` | Reserve Coil | any | At the end of your turn, your unspent energy goes into Reserve. | reserve, x_cost, engine:overflow |
+| `echo_bell` | Echo Bell | any | The first time each turn you play the last card in your hand, it has Reprise. | reprise, engine:reprise |
+| `undertow_reliquary` | Undertow Reliquary | any | The first time each combat you shuffle your discard pile into your draw pile, shuffle your Scrapheap in too. | scrap, salvage, engine:scrapheap |
+| `kickback_governor` | Kickback Governor | any | Whenever Stagger reduces an enemy's hit on you, deal the damage it prevented to that enemy. | stagger, damage |
+| `orbital_hammer` | Orbital Hammer | any | Whenever you play a card that costs 3 or more (X-cost cards: X of 3 or more), it has Reprise. | reprise, x_cost, high_cost, engine:reprise |
+| `momentum_flywheel` | Momentum Flywheel | breaker | Each X-cost Attack you play gives Onslaught equal to its X. | onslaught, x_cost, engine:overflow |
+| `refrain_pin` | Refrain Pin | chronist | The on-beat effects of the card on your second beat each turn trigger twice. | cadence, on_beat |
+| `twin_scabbard` | Twin Scabbard | breaker | Whenever a primed card fires, add a random Riposte card from your class to your hand. It is gone after combat. | riposte, generation |
+| `recoil_coil` | Recoil Coil | any | Whenever an enemy's attack is cancelled or it skips a move, gain 1 energy next turn. | riposte, halt, energy |
+| `trellis` | Trellis | graft | At the start of your turn, put a Ripe card from your discard pile into your hand. | ripe, bloom |
+| `festering_lens` | Festering Lens | graft | When an enemy's Rot ticks, it loses 1 more HP for each Exposed it has. | rot, exposed |
+| `conductors_baton` | Conductor's Baton | chronist | Your Crescendo effects count 1 more beat. | cadence, crescendo |
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `duelists_oath` | Duelist's Oath | breaker | Each primed card can trigger its Riposte twice (on two different enemy attacks) before it is discarded. | prime-entry `charges = 2` | riposte | Pack fights become a Riposte feast. |
-| `stormbreak_gem` | Stormbreak Gem | breaker | The first time your Onslaught reaches 6 in a turn, gain 1 energy and draw 2 cards. | onStatusApplied (onslaught ≥ 6, once per turn) → `energy 1`, `draw 2` | onslaught | A payoff for 0-cost Attack density; capped by `cap_bonus_energy`. |
-| `bastion_core` | Bastion Core | breaker | At the start of your turn, the Guard you lose to halving is dealt as damage to a random enemy. | *onGuardDecay {lost}* → `damage lost` to random_enemy | guard, damage | The Guard bank becomes a weapon; it counts as a hit, so Exposed applies. |
-| `elder_seed` | Elder Seed | graft | Your Bloom cards can grow to 15 Bloom. | *bloomCap 15* | bloom | Raises the hyper-growth ceiling. |
-| `hollow_bough` | Hollow Bough | graft | Once per combat, when you Prune, you may make it Prune away instead. | *onPrune* choice (options: keep / remove from deck) | prune, removal | In-combat permanent thinning. |
-| `plague_bloom` | Plague Bloom | graft | Whenever you apply Rot to an enemy, every other enemy gains half that much Rot (round down). | onStatusApplied (rot, source player) → others `rot floor(n / 2)` (no recursion) | rot, aoe | Rot answers packs. |
-| `metronome_heart` | Metronome Heart | chronist | The 12th card you play each turn is also on the beat. | *beatPositions* modifier → [3, 6, 9, 12] | cadence | A fourth beat for long chains (cap 4). |
-| `prophet_glass` | Prophet Glass | chronist | You see each enemy's next 3 intents. | forecast depth 3 | augury | Delay 3 cards become aimable. |
-| `paradox_coil` | Paradox Coil | chronist | Once per turn, when a card on your Timeline resolves, you may put it back on the Timeline with Delay 2. Each card can return only once per combat. | *onDelayResolved* choice → re-add (exempt from `cap_relay` only by this rule) | delay | Repeats a big Delay card once; bounded. |
-| `shard_crucible` | Shard Crucible | any | At Rest sites, Purge and Transmute no longer use up your rest action (once each per visit; Shards still paid). | RestState allows Purge and Transmute in addition to the main action | shards, rest | Turns Shard hoarding into big rest-site turns. |
-| `fracture_engine` | Fracture Engine | any | Exposed on enemies adds 2 damage per stack to your hits instead of 1. | pipeline step 4 reads relic | exposed | Makes Exposed a build-around. |
-| `void_compass` | Void Compass | any | Elite card rewards offer one common, one uncommon and one rare card. | reward generation override for elites | rewards | A rare from every elite, at the cost of choice depth. |
+### 5.5 Boss — chosen 1 of 3 after the act 1 and act 2 bosses; each has a real trade-off (15)
 
-### 5.5 Boss (12) — chosen 1 of 3 after the act 1 and act 2 bosses; each has a real drawback
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `binding_contract` | Binding Contract | any | +1 energy each turn. Card rewards offer one card fewer, and you must take a card from every one (no skipping, no Shards from skipping). | energy, shards |
+| `cracked_hourglass` | Cracked Hourglass | any | +1 energy each turn. The first Attack you play each turn gets Delay 1: its effects happen at the start of your next turn. | energy, delay, timeline |
+| `exposed_core` | Exposed Core | any | +1 energy each turn. At the end of your turn, gain 1 Exposed for each card left in your hand after the first (not Keep cards). | energy, exposed |
+| `stasis_engine` | Stasis Engine | any | +1 energy each turn. Draw 1 fewer card each turn. | energy, draw |
+| `ghost_lantern` | Ghost Lantern | any | +1 energy each turn. Enemies start each combat with 10 Guard. | energy, guard |
+| `tender_plating` | Tender Plating | any | +1 energy each turn. Whenever you lose HP from an enemy hit, lose 1 more. | energy |
+| `fixed_star` | Fixed Star | chronist | +1 energy each turn. At the end of your turn, if your beat count isn't on a beat, Strain 2. | energy, cadence |
+| `heavy_heart` | Heavy Heart | breaker | +1 energy each turn. Your Onslaught halves (round down) at the end of your turn instead of resetting. Your Guard is lost at the start of your turn instead of halving. | onslaught, guard |
+| `wild_growth` | Wild Growth | graft | Prune grants 1 additional Bloom. At the start of each combat, shuffle 2 Tangles into your draw pile. | prune, bloom, status |
+| `ascendant_prism` | Ascendant Prism | any | While you hold 5 or more Shards, you have +1 energy each turn. You can't Purge or Transmute at Rest sites. | shards, energy, rest |
+| `gravity_loom` | Gravity Loom | any | On each of the first 2 turns of each combat, draw 1 more card. | draw |
+| `triage_locker` | Triage Locker | any | At the end of your turn, choose up to 2 cards in your hand to keep. Scrap the rest of your hand. | keep, scrap_flood, salvage |
+| `wanderers_compact` | Wanderer's Compact | any | +1 energy each turn. Card rewards offer one card from each class instead of cards from yours. | energy, rewards, cross_class |
+| `furnace_mantle` | Furnace Mantle | breaker | +1 energy each turn. At the start of your turn, Shed all your Guard instead of halving it. | energy, shed, guard |
+| `perpetual_calendar` | Perpetual Calendar | chronist | Cards that resolve from your Timeline go to the bottom of your draw pile instead of your discard pile. | timeline |
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `binding_contract` | Binding Contract | any | +1 energy each turn. Card rewards offer one card fewer, and you must take a card from every one (no skipping, no Shards from skipping). | maxEnergy +1; onPickup `run_flag lean_rewards +999`; reward `skip` not legal | energy, shards | Ends lean-deck play; every reward becomes "least bad card". |
-| `cracked_hourglass` | Cracked Hourglass | any | +1 energy each turn. In every combat, enemies take a full turn before your first turn. | maxEnergy +1; combat start enqueues an enemy phase first | energy | Your opening is always on the back foot; Guard and Riposte from a prior turn don't exist yet. |
-| `exposed_core` | Exposed Core | any | +1 energy each turn. Start each combat with 4 Exposed. | onCombatStart → `status self exposed 4` | energy, exposed | Punishes multi-hit early turns; wants turn-1 defence. |
-| `stasis_engine` | Stasis Engine | any | +1 energy each turn. Draw 1 fewer card each turn. | maxEnergy +1; drawPerTurn −1 | energy, draw | Wants expensive, dense cards. |
-| `ghost_lantern` | Ghost Lantern | any | +1 energy each turn. Enemies start each combat with 10 Guard. | onEnemySpawn → `guard 10` | energy, guard | Taxes burst openers; Rot ignores it. |
-| `tender_plating` | Tender Plating | any | +1 energy each turn. Whenever you lose HP from an enemy hit, lose 1 more. | onHpLost (source enemy hit) → `lose_hp 1` | energy | Multi-hit enemies get much scarier; Stagger and Block value up. |
-| `fixed_star` | Fixed Star | chronist | +1 energy each turn. Only the 3rd card you play each turn is on the beat. | *beatPositions* → [3] | energy, cadence | Rebuilds the deck around one huge beat per turn. |
-| `heavy_heart` | Heavy Heart | breaker | Your Onslaught halves (round down) at the end of your turn instead of resetting. You can't prime Riposte cards. | Onslaught `decayBy: half`; prime capacity → 0 | onslaught, riposte | Pure-swing Breaker; gives up the duellist. |
-| `wild_growth` | Wild Growth | graft | Prune grants 1 additional Bloom. At the start of each combat, shuffle 2 Tangles into your draw pile. | *modifyPruneBloom* +1; onCombatStart → `add_card status_tangle draw ×2` | prune, bloom, status | Faster growth; the Tangles are both clog and Prune fodder. |
-| `ascendant_prism` | Ascendant Prism | any | When you pick this up, gain 4 Shards. You no longer gain Shards from skipping card rewards. | onPickup → `shards 4`; skip yields 0 | shards | Cash now, discipline later. |
-| `gravity_loom` | Gravity Loom | any | Draw 2 more cards each turn. Your hand limit is 7. | drawPerTurn +2; handLimit 7 | draw | Big hands but no room to Keep, hold or generate. |
-| `star_atlas` | Star Atlas | any (not chronist) | You have Augury. Enemies have 10% more Max HP (round up). | onCombatStart → `augury`; *onEnemySpawn* → maxHp ×1.1 | augury | Information for longer fights. |
+### 5.6 Shop (6)
 
-### 5.6 Shop (5)
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `shard_writ` | Shard Writ | any | At shops, removing a card with a Shard costs no gold and doesn't use up the shop's removal service. | shards, removal |
+| `vial_rack` | Vial Rack | any | +1 potion slot. Potions in shops cost 25% less. At the start of each act, gain a random potion. | potion, stat |
+| `practice_dummy` | Practice Dummy | breaker | At the start of each combat, a random Riposte card from your draw pile starts primed. | riposte |
+| `nursery_tray` | Nursery Tray | graft | Whenever you Smith a Bloom card, it also gains 2 Bloom. | bloom, rest |
+| `timeline_clamp` | Timeline Clamp | chronist | Damage and Block from cards resolving on your Timeline are increased by 25% (round down). | delay |
+| `salvagers_licence` | Salvager's Licence | any | After you win an elite combat, the card reward also offers a colourless card. | rewards, colorless |
 
-| id | Name | Class | Text | Hook sketch | Tags | Designer note |
-|---|---|---|---|---|---|---|
-| `shard_writ` | Shard Writ | any | At shops, removing a card with a Shard costs no gold and doesn't use up the shop's removal service. | shop removal rules | shards, removal | Two removals per shop. |
-| `vial_rack` | Vial Rack | any | +1 potion slot. Potions in shops cost 25% less. | `potion_slots 1`; price modifier | potion | **stat** |
-| `practice_dummy` | Practice Dummy | breaker | At the start of each combat, a random Riposte card from your draw pile starts primed. | onCombatStart → move to primed rack | riposte | A free parry on enemy turn 1. |
-| `nursery_tray` | Nursery Tray | graft | Whenever you Smith a Bloom card, it also gains 2 Bloom. | onRest (smith target bloom) → `vars.bloom += 2` | bloom, rest | Smith versus Rest tilts toward Smith. |
-| `timeline_clamp` | Timeline Clamp | chronist | Damage and Block from cards resolving on your Timeline are increased by 25% (round down). | damageDealtMult 125 for tag `delayed`; *blockMult with source info* | delay | Delay becomes the main plan. |
+### 5.7 Event — only from events (4)
 
-### 5.7 Event (4) — only from events
-
-| id | Name | Class | Text | Hook sketch | Tags | Source |
-|---|---|---|---|---|---|---|
-| `oracle_pebble` | Oracle Pebble | any (not chronist) | You have Augury in your next 3 combats. | counter 3; onCombatStart → `augury`, counter −1 | augury | `ev_oracle_terminal` |
-| `engine_tooth` | Engine Tooth | any | Your first Attack each combat applies 2 Stagger to each enemy it hits. | onDamageDealt (first attack card, per target) → `stagger 2` | stagger | `ev_engine_cult` |
-| `shard_debt` | Shard Debt | any | When you pick this up, gain 3 Shards. Your next 3 card rewards offer 2 cards. | onPickup → `shards 3`, `lean_rewards 3` | shards | `ev_singing_geode` |
-| `crown_fragment` | Crown Fragment | any | Whenever you win a combat by the end of your 3rd turn, gain 1 Shard. | onCombatEnd (won, turn ≤ 3) → `shards 1` | shards | `ev_crown_vault` |
-
-Mechanic coverage check: Shards 12 relics; Riposte 7; Bloom 7; Rot 5; Cadence 5; Delay 5; Augury 7; Guard 9; Exposed 4; Stagger 4; Prune 4; Onslaught 5; economy/map 6.
+| id | Name | Class | Text | Tags |
+|---|---|---|---|---|
+| `oracle_pebble` | Oracle Pebble | any (not chronist) | You have Augury in your next 3 combats. | augury |
+| `engine_tooth` | Engine Tooth | any | Your first Attack each combat applies 2 Stagger to each enemy it hits. | stagger |
+| `shard_debt` | Shard Debt | any | When you pick this up, gain 3 Shards. Your next 3 card rewards offer one fewer card. | shards |
+| `crown_fragment` | Crown Fragment | any | Whenever you win a combat within 3 turns, gain 1 Shard. | shards |
 
 ---
 ## 6. Events (22)

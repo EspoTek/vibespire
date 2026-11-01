@@ -100,24 +100,24 @@ const TURNS = 200;
 // --- roster -------------------------------------------------------------------------------------------------
 
 const ROSTER_HP: Record<string, [number, number]> = {
-  void_mote: [34, 40], shardling: [48, 54], prism_seer: [76, 82], echo_cantor: [110, 118], lymph_warden: [66, 72],
-  pyrexia_node: [52, 58], void_geometer: [130, 140], mirror_knight: [190, 200], phage_mother: [180, 190], phage: [15, 17],
-  event_horizon: [220, 230],
+  void_mote: [34, 40], shardling: [44, 50], prism_seer: [76, 82], echo_cantor: [110, 118], lymph_warden: [66, 72],
+  pyrexia_node: [52, 58], void_geometer: [130, 140], mirror_knight: [190, 200], phage_mother: [190, 200], phage: [18, 21],
+  event_horizon: [200, 210],
 };
 const ROSTER_ENCOUNTERS: Record<string, { pool: string; hp: [number, number]; weight: number }> = {
   enc_a3_mote_pair: { pool: 'easy', hp: [68, 80], weight: 1 },
-  enc_a3_shard_mote: { pool: 'easy', hp: [82, 94], weight: 1 },
+  enc_a3_shard_mote: { pool: 'easy', hp: [78, 90], weight: 1 },
   enc_a3_seer: { pool: 'easy', hp: [76, 82], weight: 1 },
   enc_a3_cantor: { pool: 'hard', hp: [110, 118], weight: 15 },
   enc_a3_geometer: { pool: 'hard', hp: [130, 140], weight: 15 },
-  enc_a3_fever_pack: { pool: 'hard', hp: [134, 152], weight: 14 },
+  enc_a3_fever_pack: { pool: 'hard', hp: [130, 148], weight: 14 },
   enc_a3_warden_geometer: { pool: 'hard', hp: [196, 212], weight: 14 },
   enc_a3_warden_cantor: { pool: 'hard', hp: [176, 190], weight: 14 },
   enc_a3_prism_motes: { pool: 'hard', hp: [144, 162], weight: 14 },
-  enc_a3_warden_shard: { pool: 'hard', hp: [114, 126], weight: 14 },
+  enc_a3_warden_shard: { pool: 'hard', hp: [110, 122], weight: 14 },
   enc_a3_mirror_knight: { pool: 'elite', hp: [190, 200], weight: 1 },
-  enc_a3_phage_mother: { pool: 'elite', hp: [180, 190], weight: 1 },
-  enc_a3_event_horizon: { pool: 'elite', hp: [220, 230], weight: 1 },
+  enc_a3_phage_mother: { pool: 'elite', hp: [190, 200], weight: 1 },
+  enc_a3_event_horizon: { pool: 'elite', hp: [200, 210], weight: 1 },
 };
 
 describe('Act 3 roster', () => {
@@ -128,7 +128,7 @@ describe('Act 3 roster', () => {
       expect(e.hp, e.id).toEqual(ROSTER_HP[e.id]);
       expect(e.boss, e.id).toBeUndefined();
     }
-    expect(ACT3_STATUSES.map((s) => s.id).sort()).toEqual(['horizon_drain', 'horizon_pull', 'phage_age', 'reflection', 'replicating', 'resonance']);
+    expect(ACT3_STATUSES.map((s) => s.id).sort()).toEqual(['facets', 'horizon_drain', 'horizon_pull', 'phage_age', 'reflection', 'replicating', 'resonance']);
     for (const s of ACT3_STATUSES) expect(renderStatusText(s.id, 1)).not.toMatch(/[{}]/);
   });
 
@@ -468,7 +468,7 @@ describe('Act 3 mechanics', () => {
     expect(k.intent.damage).toBe(40);
   });
 
-  it('phage_mother: Buds 2 Phages turn 1; Latch grows 4, 7, 10 with Age; Incubate ages; Phages die with her', () => {
+  it('phage_mother: Buds 2 Phages turn 1; Latch grows 5, 8, 11 with Age; Incubate ages; Phages die with her', () => {
     const g = fight('enc_a3_phage_mother', 'phage');
     const mother = enemyOf(g, 'phage_mother');
     expect(mother.intent.moveId).toBe('bud_phages');
@@ -483,7 +483,7 @@ describe('Act 3 mechanics', () => {
       latch.push(phages[0]?.intent.damage ?? -1);
       pass(g);
     }
-    expect(latch).toEqual([4, 7, 10]);
+    expect(latch).toEqual([5, 8, 11]);
     const age = phages[0]?.statuses.phage_age ?? 0;
     mother.intent = computeIntent(g.state, mother, 'incubate');
     pass(g);
@@ -527,6 +527,35 @@ describe('Act 3 mechanics', () => {
     expect(eventsOf(ev, 'block_lost').find((d) => d.target === 'player')?.amount).toBe(5);
     expect(h.block).toBe(15);
     expect(h.aiState.mass).toBe(2);
-    expect(computeIntent(g.state, h, 'tidal_pull').damage).toBe(8);
+    expect(computeIntent(g.state, h, 'tidal_pull').damage).toBe(7);
+  });
+});
+
+describe('v2 encounter pass: Shardling Facets (armour that Shards off)', () => {
+  it('each Facet blunts every hit by 1; a hit that still deals 10+ shatters one and pays 1 Shard', () => {
+    const g = fight('enc_a3_shard_mote', 'facets');
+    const sh = enemyOf(g, 'shardling');
+    expect(sh.statuses.facets).toBe(2);
+    expect(renderStatusText('facets', 2)).toBe('Each hit on it deals 2 less damage. A hit of yours that still deals 10 or more shatters a Facet, and you gain 1 Shard.');
+    sh.block = 0;
+    const shards = g.state.player.counters.shards ?? 0;
+    let hp = sh.hp;
+    hit(g, sh.uid, 6); // 6 - 2 = 4: no shatter
+    expect(hp - sh.hp).toBe(4);
+    expect(sh.statuses.facets).toBe(2);
+    hp = sh.hp;
+    hit(g, sh.uid, 12); // 12 - 2 = 10: shatters
+    expect(hp - sh.hp).toBe(10);
+    expect(sh.statuses.facets).toBe(1);
+    expect(g.state.player.counters.shards).toBe(shards + 1);
+    hp = sh.hp;
+    hit(g, sh.uid, 11); // 11 - 1 = 10: the last Facet goes
+    expect(hp - sh.hp).toBe(10);
+    expect(sh.statuses.facets ?? 0).toBe(0);
+    expect(g.state.player.counters.shards).toBe(shards + 2);
+    hp = sh.hp;
+    hit(g, sh.uid, 12); // bare crystal: full damage, nothing left to shatter
+    expect(hp - sh.hp).toBe(12);
+    expect(g.state.player.counters.shards).toBe(shards + 2);
   });
 });

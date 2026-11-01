@@ -34,7 +34,9 @@
 // MODIFIERS (pure, preview-safe) visit the OWNING entity's listeners only, in the same order:
 // statuses on the entity, then relics (player) or the EnemyDef hooks (enemy); for the player,
 // then the `handModifiers` of cards in hand (left to right). Exceptions: modifyStatusCap visits
-// the target's listeners and then the player's (a relic can raise enemy caps).
+// the target's listeners and then the player's (a relic can raise enemy caps); an enemy's status
+// decay also folds the player's keepEnemyStatus after the enemy's own keepStatus.
+// Breaker v2 hooks: onStatusSpent (the spender, after spend_status), onGuardShed (player).
 //
 // ROUND PHASES (StatusDef.tick / decay):
 //   start_player_turn: global, after onTurnStart hooks (player turn start step 4).
@@ -274,7 +276,9 @@ export function guardDecayLoss(state: RunState, owner: EntityRef, guard: number)
 }
 
 export function keptStatus(state: RunState, owner: EntityRef, id: StatusId, stacks: number): number {
-  const keep = foldMods(state, owner, false, 0, (m, c, a) => (m.keepStatus ? Math.max(a, m.keepStatus(c, id, stacks)) : a));
+  let keep = foldMods(state, owner, false, 0, (m, c, a) => (m.keepStatus ? Math.max(a, m.keepStatus(c, id, stacks)) : a));
+  // Breaker v2 (Crazing): the player's keepEnemyStatus modifiers can keep an enemy's stacks too.
+  if (owner !== 'player') keep = foldMods(state, 'player', false, keep, (m, c, a) => (m.keepEnemyStatus ? Math.max(a, m.keepEnemyStatus(c, owner, id, stacks)) : a));
   return Math.max(0, Math.min(Math.abs(stacks), keep));
 }
 

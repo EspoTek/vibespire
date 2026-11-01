@@ -1,0 +1,3456 @@
+{
+  "new_counts": {
+    "cards": 66,
+    "relics": 33,
+    "potions": 10,
+    "enemies": 0
+  },
+  "results": [
+    {
+      "id": "stoke",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 384,
+      "black_pixels": 118,
+      "sha256": "7f15f389bb90e22bdd8bd0221d9a7ba6e53824d86acda602d5d251012c413e87"
+    },
+    {
+      "id": "hair_trigger",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 191,
+      "black_pixels": 88,
+      "sha256": "44f95190197e91a584798c9aa35ee0ce03d418b26b8051bdd499874cc4efed6b"
+    },
+    {
+      "id": "loosen_straps",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 383,
+      "black_pixels": 150,
+      "sha256": "eac5e81a91e9a3da5cccbd24cd1ef549125bce501110bc83242ef0bb88a35858"
+    },
+    {
+      "id": "kindle",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 252,
+      "black_pixels": 105,
+      "sha256": "2076a91ba55bf22cf834a119ab8805fc3464ce85e790dfb07a89c11f3ddf05e2"
+    },
+    {
+      "id": "spark_gap",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 382,
+      "black_pixels": 130,
+      "sha256": "05ecbc8ef4b4d90fbaf064fe0332bdac436751512beb3ed3d0325bab9ff54241"
+    },
+    {
+      "id": "iron_patience",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 391,
+      "black_pixels": 167,
+      "sha256": "07b72fcfa2c610b2411591b9d3fb50b0206ab496ebca7a373b73b70f3d41fc4f"
+    },
+    {
+      "id": "worldbreaker",
+      "kind": "cards",
+      "colors": 10,
+      "opaque_pixels": 416,
+      "black_pixels": 117,
+      "sha256": "bd09afc5f5b9ead8a7175e4d20e033a8e398119ae2d87c347ee1197676ccc92a"
+    },
+    {
+      "id": "turnabout",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 364,
+      "black_pixels": 112,
+      "sha256": "252caa992e953facdeb987d9872279985b26860cb6b9333b4815515737295893"
+    },
+    {
+      "id": "bellows",
+      "kind": "cards",
+      "colors": 10,
+      "opaque_pixels": 341,
+      "black_pixels": 94,
+      "sha256": "d4ed280e67de84b9408e9c99148ed24a8718597cd46a4ad22111b3eee81961c4"
+    },
+    {
+      "id": "crazing",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 296,
+      "black_pixels": 95,
+      "sha256": "2bb59f5e26d1a716edeb459395fc0f1d0c2f6a9dc6501fc317347f227737dc92"
+    },
+    {
+      "id": "answer_in_kind",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 302,
+      "black_pixels": 119,
+      "sha256": "04299187957c8f90b22f0f0daa7c40ef8474fa0a35f27b7bcd08b79ad3facda3"
+    },
+    {
+      "id": "molten_shell",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 337,
+      "black_pixels": 140,
+      "sha256": "824c775a9c1876ff39316d8b2b2a6f8b1ffdc6656ed1e8c3750a00bf91ee86c5"
+    },
+    {
+      "id": "hold_the_hour",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 336,
+      "black_pixels": 152,
+      "sha256": "30484bb177cf84f0c84749afbb1d798a604a5a9a9fbcebefcbd00aa68c81059a"
+    },
+    {
+      "id": "ripple",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 315,
+      "black_pixels": 121,
+      "sha256": "8e5814a647f639eabbf600ade4af99cc9b0a2fbdfb6ffd3ae9613074636d3a23"
+    },
+    {
+      "id": "whistle_for_wind",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 365,
+      "black_pixels": 194,
+      "sha256": "bfc6073b44df8eb6bce0a6a96c9c271f962bd30d13e4b435ef384b55ef1a1a20"
+    },
+    {
+      "id": "red_sky",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 529,
+      "black_pixels": 191,
+      "sha256": "69449ffbceb60ff0e92191fb2cad53bbdd3f81ba205c32192979c26b2a1a6928"
+    },
+    {
+      "id": "undertow",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 492,
+      "black_pixels": 113,
+      "sha256": "5355d001fd31ae6416244fd4d74990ee4c97dce9101de159e8e0e6ed8558b26f"
+    },
+    {
+      "id": "accelerando",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 299,
+      "black_pixels": 126,
+      "sha256": "d935c9a51909feabc937811c0e5ffe902c26917f2d3b1a22e7a4cd69fd5130a1"
+    },
+    {
+      "id": "bell_choir",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 434,
+      "black_pixels": 182,
+      "sha256": "f3df1921118cf79b7a671374913b478dbf4ff25493c4e3d1ffb9708f5b7bfa4b"
+    },
+    {
+      "id": "set_the_hour",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 473,
+      "black_pixels": 189,
+      "sha256": "c86e5451b883fa8e7086bd0b74a04e0f62be35adc7be6935b258c2c75c591cac"
+    },
+    {
+      "id": "gathering_storm",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 319,
+      "black_pixels": 67,
+      "sha256": "246d76130e1673cccf1929be067dd431853a8008d7029bdae34d783be8ab6b4e"
+    },
+    {
+      "id": "squall_line",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 365,
+      "black_pixels": 100,
+      "sha256": "d6f5641eb290972d51c4d1537a17c90c5f05701bd5c62ebfa3fa3c36887dca8a"
+    },
+    {
+      "id": "total_eclipse",
+      "kind": "cards",
+      "colors": 4,
+      "opaque_pixels": 295,
+      "black_pixels": 167,
+      "sha256": "28d7c84d130509566dfe11d143c9778b2a83fc7ed334304cb332cacd85326ff8"
+    },
+    {
+      "id": "eternal_return",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 356,
+      "black_pixels": 172,
+      "sha256": "7496671f893dda63c3850ed1bfe2469184e4afbf03afffe38fbf551b91dff7ec"
+    },
+    {
+      "id": "reckoning",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 394,
+      "black_pixels": 166,
+      "sha256": "b53ed0b902f8c4e345e6414a5c3f4d6433441231eca02a706b971594099a3b55"
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 470,
+      "black_pixels": 134,
+      "sha256": "f7161644657e77871bb76386e438bb687b3cecd8481595db1fe04c82ecdd3bed"
+    },
+    {
+      "id": "blood_tithe",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 214,
+      "black_pixels": 117,
+      "sha256": "8c361783f827e360f9b152b2222afceed2494a705008fb66291c062b3be4c76a"
+    },
+    {
+      "id": "vent_plasma",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 272,
+      "black_pixels": 77,
+      "sha256": "8d42f093920992a27d1eaa25e56e548decf77f898235ba5d520c9c8b9c96ce3c"
+    },
+    {
+      "id": "scar_tissue",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 363,
+      "black_pixels": 75,
+      "sha256": "7f8ede010a2d87a4aeff503faaf84f8e51d16b35ce582d492a4ea2d9eb300449"
+    },
+    {
+      "id": "last_light",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 165,
+      "black_pixels": 71,
+      "sha256": "9e4b8427b88f53a073923547ba37c9fef4ded367d6e28c54ff0020b3e4220ce9"
+    },
+    {
+      "id": "spare_capacitor",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 243,
+      "black_pixels": 119,
+      "sha256": "258a1aaa928549172e3824986c3d97a2781f7f70ae1ee61e68fc2a0929d1cb3c"
+    },
+    {
+      "id": "shrapnel_charge",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 315,
+      "black_pixels": 88,
+      "sha256": "d60c8418e8099b10165d7784e91ab9874df9016646ebbf83e503d10fab548b39"
+    },
+    {
+      "id": "black_box",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 469,
+      "black_pixels": 113,
+      "sha256": "f4cb173937b18cd63cdcc544daaec53acde13edead090837572e954eed862a55"
+    },
+    {
+      "id": "strip_for_parts",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 411,
+      "black_pixels": 124,
+      "sha256": "8ac98848983cd46273777761fe3918b697ee138dcc6e10d888eb71dc4db633ee"
+    },
+    {
+      "id": "scrapheap_colossus",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 422,
+      "black_pixels": 131,
+      "sha256": "64607491e20f2c7d6d9091d834790a7d93b6b86115963c8d0d37dd52ef2c6289"
+    },
+    {
+      "id": "burn_bright",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 221,
+      "black_pixels": 101,
+      "sha256": "c8e87f14cfb7e6a53ff3c22235cf2ba954e9e7f1e026830e353d2affd4397ce9"
+    },
+    {
+      "id": "arc_discharge",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 298,
+      "black_pixels": 137,
+      "sha256": "c67b6d978c6b14fd0cd041ee790a67eab0b6290ea286d06c5a6f9c0fc63f05cf"
+    },
+    {
+      "id": "capacitor_bank",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 382,
+      "black_pixels": 181,
+      "sha256": "8099547ac0bb1dbe3b894dfe133438fec9658f8aa6b578cecad9addb1a819a25"
+    },
+    {
+      "id": "starfall_lance",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 448,
+      "black_pixels": 191,
+      "sha256": "5c374e440f529c72ca0c0fc47a03d6a50fbd91b3340d1584d422046f1c2b236b"
+    },
+    {
+      "id": "stasis_bolt",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 257,
+      "black_pixels": 91,
+      "sha256": "a54e552af99b2dcd74e4110c15e2699986e7c831c4d7424f74a9927365beb8b3"
+    },
+    {
+      "id": "encore",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 402,
+      "black_pixels": 184,
+      "sha256": "240633ea0a60fa5052a14baf9bc19e48ebe475a2d043500108cb84625a8b67ce"
+    },
+    {
+      "id": "bait_flare",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 396,
+      "black_pixels": 194,
+      "sha256": "9494521f091dae663f97d971d3f08f5ac326c9a6ec45248e595a648a9477b866"
+    },
+    {
+      "id": "fuse",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 303,
+      "black_pixels": 130,
+      "sha256": "e8d5ee408ada651ee45daee4373abc1d10e4470c878dcc239d144bd0489e5b1e"
+    },
+    {
+      "id": "curse_burden",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 302,
+      "black_pixels": 103,
+      "sha256": "330b31626dfcc09e5784d888e4844861351fd852c8df27835cb5618e8f33d269"
+    },
+    {
+      "id": "curse_seized_joint",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 251,
+      "black_pixels": 70,
+      "sha256": "8c5c0858b39f4fd90ac18d32da8d84ce14227ffe41c19aa8f2a1e8006a583d72"
+    },
+    {
+      "id": "curse_static_ghost",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 287,
+      "black_pixels": 98,
+      "sha256": "2202cac8db536677ac56ac37363ea2a2d486113b47ca9d322c96dacdcd12be77"
+    },
+    {
+      "id": "curse_guilt",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 354,
+      "black_pixels": 151,
+      "sha256": "c9856adbaeecdd647edac10456573dd60fc76120467683ffcf1ad59d7d413f3e"
+    },
+    {
+      "id": "curse_vacuum_chill",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 272,
+      "black_pixels": 62,
+      "sha256": "dff3ad91c02b13bc547db53843bfbb481c44cdc21d66060c63a386b4634a05d1"
+    },
+    {
+      "id": "curse_debt_mark",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 334,
+      "black_pixels": 83,
+      "sha256": "74c8386bec5484b7c43c0eecbc7da58f8d2c8fc58ea24fc7168dcfdc8f6357fd"
+    },
+    {
+      "id": "curse_hollow_echo",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 262,
+      "black_pixels": 111,
+      "sha256": "7514f494643521d360cad560c2fbd1b7c071128ec50b9448988bdd779a097113"
+    },
+    {
+      "id": "curse_parasite_vine",
+      "kind": "cards",
+      "colors": 5,
+      "opaque_pixels": 259,
+      "black_pixels": 99,
+      "sha256": "23dbede52bbe32fcc6925e2b8d1e83e0b5e4556e1513bd21c8b9620aad592941"
+    },
+    {
+      "id": "molt",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 362,
+      "black_pixels": 131,
+      "sha256": "a18cc13f1b4511b24406ab6c922f65376551d11191adf028bb39c1033e1c2d58"
+    },
+    {
+      "id": "burst_pod",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 267,
+      "black_pixels": 118,
+      "sha256": "c98b8139c7bfde25052dbc545e199299aab55e508c5b13c6716202a40382dc9a"
+    },
+    {
+      "id": "reap",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 259,
+      "black_pixels": 126,
+      "sha256": "33b3e151a7a0c9d11ad35f4cfc5ba0bf63546e62876d00253b49fd1814866268"
+    },
+    {
+      "id": "second_flush",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 255,
+      "black_pixels": 126,
+      "sha256": "80db5620521812701f75b38f312569b589bc3b0a3bf9b0a1c7c73f32cfa22536"
+    },
+    {
+      "id": "thornstorm",
+      "kind": "cards",
+      "colors": 9,
+      "opaque_pixels": 255,
+      "black_pixels": 104,
+      "sha256": "df89864f3a344845813ccde32df48c0955f8d07366872695475c357c1a90fa2e"
+    },
+    {
+      "id": "grim_harvest",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 323,
+      "black_pixels": 135,
+      "sha256": "3860939a91f164b60e72e24ba7300b1838f9c7aaa4edf77ccbd4c2e9274c99b6"
+    },
+    {
+      "id": "clear_cut",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 274,
+      "black_pixels": 98,
+      "sha256": "06b21f1a2a2f20e6f53dd9d4c8d85d5f8f677aa4b64a17d9cf69326b43bd00ff"
+    },
+    {
+      "id": "deep_rot",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 219,
+      "black_pixels": 141,
+      "sha256": "b3ac81fb0604b086fcde5198cbd0d7dc6151a2d3389145444c5d6cfb055c01ac"
+    },
+    {
+      "id": "rootstock",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 279,
+      "black_pixels": 99,
+      "sha256": "42ef0091d9ad58d2e13536424a4c8a2c67dd1ae61cf24c5aaaf81fec42897f94"
+    },
+    {
+      "id": "perennial",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 292,
+      "black_pixels": 132,
+      "sha256": "e808aec6b42b1690a74a279073fa513f04c4604cf665721498943c00dd6dece6"
+    },
+    {
+      "id": "chaff",
+      "kind": "cards",
+      "colors": 6,
+      "opaque_pixels": 402,
+      "black_pixels": 83,
+      "sha256": "9454cc2f32ee962396f6c652ae27a1a545937ac49644b33b72dd677de727b472"
+    },
+    {
+      "id": "status_jitter",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 319,
+      "black_pixels": 101,
+      "sha256": "3e48b4a7d0ad03bd60277f5cd10d0ec9ff7be56983a933af147bbdb337c91d6c"
+    },
+    {
+      "id": "status_backlash",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 356,
+      "black_pixels": 117,
+      "sha256": "826b4eb703de1b627341081941cfe875f250ee6c12095ec53ac9d42555c9b9ef"
+    },
+    {
+      "id": "status_tangle",
+      "kind": "cards",
+      "colors": 7,
+      "opaque_pixels": 426,
+      "black_pixels": 127,
+      "sha256": "47339e17a953b316b3054061d70edba6bbe7f741537d6ee3304f6f8592fb0f24"
+    },
+    {
+      "id": "status_drift",
+      "kind": "cards",
+      "colors": 8,
+      "opaque_pixels": 256,
+      "black_pixels": 112,
+      "sha256": "acddc9bc892da512ddf7e9e3d28373d4064c4260514bcb95cb3ecd3f05cb6f34"
+    },
+    {
+      "id": "spare_fuse",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 76,
+      "black_pixels": 27,
+      "sha256": "04fad1979ce9b5a0a8978f4289674a182496a14c24c436711207cd8034195a6c"
+    },
+    {
+      "id": "antenna_wire",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 115,
+      "black_pixels": 57,
+      "sha256": "321b025e69b6fbf63a7edd7d4110272a1859780afdf761607281481231c6cd05"
+    },
+    {
+      "id": "slag_bucket",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 149,
+      "black_pixels": 79,
+      "sha256": "6ecc606a84246e737a145d06ef2d13cd87664e09e5f6da30daf887a506242b69"
+    },
+    {
+      "id": "storm_lantern",
+      "kind": "relics",
+      "colors": 7,
+      "opaque_pixels": 103,
+      "black_pixels": 44,
+      "sha256": "8a564cfb00049aa4c46c1da71673d58a086d6bcf18a66f195297925916558deb"
+    },
+    {
+      "id": "scar_engine",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 119,
+      "black_pixels": 49,
+      "sha256": "616f623b9fb424e1bae49f6c33f42e622bf399700341c49a565655396fc98a4d"
+    },
+    {
+      "id": "static_choir",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 99,
+      "black_pixels": 37,
+      "sha256": "60473fa0585387dd7cf65bbd147ed3c36c13c9e12f76bc11c55d4b9786be9263"
+    },
+    {
+      "id": "whetstone",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 105,
+      "black_pixels": 33,
+      "sha256": "b9233356edb8a1a0f443fa3305ceb68e04b73f4796cf3d8f6aed2d2c80f75bbc"
+    },
+    {
+      "id": "ash_wick",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 137,
+      "black_pixels": 59,
+      "sha256": "bb1172f5ba19e35475c950600ef97a2702e1168ed9a4776fa53ae4c3fa7996e6"
+    },
+    {
+      "id": "overture_engine",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 144,
+      "black_pixels": 68,
+      "sha256": "b09c989989ea65e429dc1aae7de4f5791bde4610f208d42a56eba2ce64eb6017"
+    },
+    {
+      "id": "blood_rivets",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 110,
+      "black_pixels": 46,
+      "sha256": "80e5132e1216c387aee4341db18fa08375130b7fd072672316beceee44056348"
+    },
+    {
+      "id": "blood_mulch",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 115,
+      "black_pixels": 54,
+      "sha256": "9c4e825a17c92436a59e7376d85444576d2f36ca1dab155dcd18f98c47f34ef3"
+    },
+    {
+      "id": "borrowed_time",
+      "kind": "relics",
+      "colors": 8,
+      "opaque_pixels": 120,
+      "black_pixels": 62,
+      "sha256": "7d81c2e80825050ddcf094023aefcd4445e16391714a9c8ecdbf722338030a77"
+    },
+    {
+      "id": "coal_scuttle",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 128,
+      "black_pixels": 59,
+      "sha256": "710b6eb53eb0fc6fd00f407aa7415982669f22f8162a1d710e8e88f3409406c3"
+    },
+    {
+      "id": "husk_sac",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 115,
+      "black_pixels": 47,
+      "sha256": "68e235e07d1ef0cbc0a2299073a2503de7fc8d210ca4b1b3444498d7621111db"
+    },
+    {
+      "id": "reapers_sickle",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 71,
+      "black_pixels": 38,
+      "sha256": "5d7373edf31aefe9c0bd42e223214c2f0da93ab90e4534ea37774c4f5c09b84b"
+    },
+    {
+      "id": "astrolabe",
+      "kind": "relics",
+      "colors": 4,
+      "opaque_pixels": 117,
+      "black_pixels": 59,
+      "sha256": "afc87704c489fd479cb68c5dafb7293718e2b90d62f6fdc9c65d921fbc7df95d"
+    },
+    {
+      "id": "reserve_coil",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 126,
+      "black_pixels": 68,
+      "sha256": "8e88420aca68ee79552a2cd8a25eae52e1723bd624693b337b768f538c572f81"
+    },
+    {
+      "id": "echo_bell",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 104,
+      "black_pixels": 50,
+      "sha256": "7fc6cff1485803a6a10257ffe5b2e6dfa78ccab734fa0f47a878e20604732fd0"
+    },
+    {
+      "id": "undertow_reliquary",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 155,
+      "black_pixels": 91,
+      "sha256": "5d3ba15950112af4f3c7d5fcd0f59245389699bd14956aa74ff219cf5d488a2b"
+    },
+    {
+      "id": "kickback_governor",
+      "kind": "relics",
+      "colors": 7,
+      "opaque_pixels": 120,
+      "black_pixels": 57,
+      "sha256": "13cb3b8a29f2973da985cad1e6d6984ee6c1f2ae5e5213ad3839a293bc52a11e"
+    },
+    {
+      "id": "orbital_hammer",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 87,
+      "black_pixels": 41,
+      "sha256": "e045867499afcf82ed502515c7aa62748dcbe48d807136aabe48296dedd50a08"
+    },
+    {
+      "id": "momentum_flywheel",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 141,
+      "black_pixels": 62,
+      "sha256": "031cf6352a7e44f4386f08e77264cbe80a5b77cb6f1117e55a4f6f93347654e1"
+    },
+    {
+      "id": "refrain_pin",
+      "kind": "relics",
+      "colors": 3,
+      "opaque_pixels": 117,
+      "black_pixels": 56,
+      "sha256": "2071861d40a9b75eb15066c31221d0b9cda1ac60a901686670b72602b0b6d547"
+    },
+    {
+      "id": "twin_scabbard",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 96,
+      "black_pixels": 69,
+      "sha256": "254260951a9677532a511796ed8846961fdc3bddb023ab056359692f79685da5"
+    },
+    {
+      "id": "recoil_coil",
+      "kind": "relics",
+      "colors": 4,
+      "opaque_pixels": 79,
+      "black_pixels": 45,
+      "sha256": "077d6e8751f639dadefe78c299ebdfcef87a08b0605e203c7a0903bca49153cf"
+    },
+    {
+      "id": "trellis",
+      "kind": "relics",
+      "colors": 7,
+      "opaque_pixels": 135,
+      "black_pixels": 78,
+      "sha256": "cb0d4561dc575473ed703db1cd13d896a2b267ff65e4a1fe45d72520138e29ae"
+    },
+    {
+      "id": "festering_lens",
+      "kind": "relics",
+      "colors": 7,
+      "opaque_pixels": 99,
+      "black_pixels": 40,
+      "sha256": "511c700ceb00075b35571c494a87c6529f93b01a08edf0ed1b7389a3422c62d8"
+    },
+    {
+      "id": "conductors_baton",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 109,
+      "black_pixels": 55,
+      "sha256": "0b3c89706d6e69fe418039d6409fdb0a9a17b0d1c73401daa48da9edb30e0c41"
+    },
+    {
+      "id": "triage_locker",
+      "kind": "relics",
+      "colors": 4,
+      "opaque_pixels": 153,
+      "black_pixels": 58,
+      "sha256": "aae86030bd419e902bc7c4056d3db19588d05958d949944f6e1b15cd56c38653"
+    },
+    {
+      "id": "wanderers_compact",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 132,
+      "black_pixels": 53,
+      "sha256": "4b942f4253e7822b53abfe8067d1a0c0536c68fc79c856aeed09219801d430a6"
+    },
+    {
+      "id": "furnace_mantle",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 124,
+      "black_pixels": 57,
+      "sha256": "7e96a7c245035b3f3406dbf03479322e40cc71005cf57944ee2f801ed31ad75e"
+    },
+    {
+      "id": "perpetual_calendar",
+      "kind": "relics",
+      "colors": 5,
+      "opaque_pixels": 144,
+      "black_pixels": 71,
+      "sha256": "76b5a62fda9808d9c4cb71756111f5d46e51341540ebfd4a01caa601adbe7c56"
+    },
+    {
+      "id": "salvagers_licence",
+      "kind": "relics",
+      "colors": 6,
+      "opaque_pixels": 124,
+      "black_pixels": 40,
+      "sha256": "863ea881544141358177926428f8b80ee6d55b79b629ce4d6c8d7c131e35cb02"
+    },
+    {
+      "id": "pot_blood_ampoule",
+      "kind": "potions",
+      "colors": 6,
+      "opaque_pixels": 72,
+      "black_pixels": 36,
+      "sha256": "46963389962d5e7596134c1131b707e0bf29bdf2e86c17d5f05dd38f9780abaf"
+    },
+    {
+      "id": "pot_surge_flask",
+      "kind": "potions",
+      "colors": 6,
+      "opaque_pixels": 117,
+      "black_pixels": 35,
+      "sha256": "f231675c77f38925553332227be5dcb7b7cc336a6101ae4c4ba9f89ba03dfc00"
+    },
+    {
+      "id": "pot_kiln_salts",
+      "kind": "potions",
+      "colors": 5,
+      "opaque_pixels": 69,
+      "black_pixels": 35,
+      "sha256": "244c38832668aa5ad952b9a27cf20a65d93ce23d6078f1e59622dd5d19c3db51"
+    },
+    {
+      "id": "pot_fracture_serum",
+      "kind": "potions",
+      "colors": 5,
+      "opaque_pixels": 111,
+      "black_pixels": 37,
+      "sha256": "60a8b894127c400da9ece93cf9cda5a039947c584f86f2f87e623fe9dc8f6ce1"
+    },
+    {
+      "id": "pot_riposte_salts",
+      "kind": "potions",
+      "colors": 5,
+      "opaque_pixels": 172,
+      "black_pixels": 64,
+      "sha256": "dab9bd94cd404ef4f3cc881d02d2559062d5189ad76c0c0aed7b7f43e0d9cdaf"
+    },
+    {
+      "id": "pot_ember_tonic",
+      "kind": "potions",
+      "colors": 6,
+      "opaque_pixels": 98,
+      "black_pixels": 61,
+      "sha256": "211f33c2f921414c61faa2e2f18f8edabb65dfaeb108fed432d015867ed8c217"
+    },
+    {
+      "id": "pot_fester_draught",
+      "kind": "potions",
+      "colors": 5,
+      "opaque_pixels": 109,
+      "black_pixels": 52,
+      "sha256": "120e14f96a20f1642c4e2551f46e42db32a96a19ea6081e5d71cdeb5243659bc"
+    },
+    {
+      "id": "pot_hourglass_tonic",
+      "kind": "potions",
+      "colors": 6,
+      "opaque_pixels": 85,
+      "black_pixels": 38,
+      "sha256": "104bf628e04ba8dc0c1834614ad4cf006c91c27395cb0bb04f52f587d2afd686"
+    },
+    {
+      "id": "pot_echo_draught",
+      "kind": "potions",
+      "colors": 4,
+      "opaque_pixels": 82,
+      "black_pixels": 36,
+      "sha256": "a4c1c60620a2ea9845a99e6748c061816fcb9808e87465b2ebed8be6a5842f24"
+    },
+    {
+      "id": "pot_mimic_gel",
+      "kind": "potions",
+      "colors": 7,
+      "opaque_pixels": 117,
+      "black_pixels": 41,
+      "sha256": "e49f5170fb9a7753a2cb48c47c7cb502ec39767cb260473a08e2034f6f046e44"
+    }
+  ],
+  "cut_art_left_untouched": {
+    "cards": [
+      "batten_down",
+      "chitin_cocoon",
+      "chitin_ram",
+      "detent",
+      "excise",
+      "find_the_seam",
+      "fungal_aegis",
+      "glance_ahead",
+      "logbook",
+      "mark_the_lull",
+      "medbay_voucher",
+      "overhand_drive",
+      "parallax",
+      "planted_feet",
+      "portents",
+      "prism_edge",
+      "prism_thorn",
+      "quickening_sap",
+      "reef_the_sails",
+      "slack_water",
+      "star_tithe",
+      "storm_warning",
+      "sweep_hand",
+      "thicket_crash",
+      "transplant",
+      "windblown_seed"
+    ],
+    "relics": [
+      "crystal_spine",
+      "overwatch_drone",
+      "pocket_star_chart",
+      "star_atlas",
+      "stim_patch"
+    ],
+    "potions": [],
+    "enemies": []
+  },
+  "uncovered": {
+    "cards": [],
+    "relics": [],
+    "potions": [],
+    "enemies": []
+  },
+  "art_needed_end_sha256": "13ea7cc9f273053aafe9acbaa3f52c55493ebc10a7c399de0e258c75d344385d",
+  "art_needed_lines_added": [
+    "- `seething`, `facets`, `frenzy`, `scour_rite` (enemy passives from the v2 encounter pass, status icons; placeholder 12x12 art is in `src/render/ui/statusIconArt.ts`): a red scowling face venting steam; a cracked ice-blue crystal shedding one shard; three red claw slashes with a growing pip; an amber oil drop washing a green blob clean. No new enemy sprites: the pass reworked behaviour only."
+  ],
+  "requested_ids_checked": {
+    "cards": [
+      "stoke",
+      "hair_trigger",
+      "loosen_straps",
+      "kindle",
+      "spark_gap",
+      "iron_patience",
+      "worldbreaker",
+      "turnabout",
+      "bellows",
+      "crazing",
+      "answer_in_kind",
+      "molten_shell",
+      "molt",
+      "burst_pod",
+      "reap",
+      "second_flush",
+      "thornstorm",
+      "grim_harvest",
+      "clear_cut",
+      "deep_rot",
+      "rootstock",
+      "perennial",
+      "chaff",
+      "hold_the_hour",
+      "ripple",
+      "whistle_for_wind",
+      "red_sky",
+      "undertow",
+      "accelerando",
+      "bell_choir",
+      "set_the_hour",
+      "gathering_storm",
+      "squall_line",
+      "total_eclipse",
+      "eternal_return",
+      "reckoning",
+      "eye_of_the_storm",
+      "blood_tithe",
+      "vent_plasma",
+      "scar_tissue",
+      "last_light",
+      "spare_capacitor",
+      "shrapnel_charge",
+      "black_box",
+      "strip_for_parts",
+      "scrapheap_colossus",
+      "burn_bright",
+      "arc_discharge",
+      "capacitor_bank",
+      "starfall_lance",
+      "stasis_bolt",
+      "encore",
+      "bait_flare",
+      "fuse"
+    ],
+    "relics": [
+      "spare_fuse",
+      "antenna_wire",
+      "slag_bucket",
+      "storm_lantern",
+      "scar_engine",
+      "static_choir",
+      "whetstone",
+      "ash_wick",
+      "overture_engine",
+      "blood_rivets",
+      "blood_mulch",
+      "borrowed_time",
+      "coal_scuttle",
+      "husk_sac",
+      "reapers_sickle",
+      "astrolabe",
+      "reserve_coil",
+      "echo_bell",
+      "undertow_reliquary",
+      "kickback_governor",
+      "orbital_hammer",
+      "momentum_flywheel",
+      "refrain_pin",
+      "twin_scabbard",
+      "recoil_coil",
+      "trellis",
+      "festering_lens",
+      "conductors_baton",
+      "triage_locker",
+      "wanderers_compact",
+      "furnace_mantle",
+      "perpetual_calendar",
+      "salvagers_licence"
+    ],
+    "potions": [
+      "pot_echo_draught",
+      "pot_surge_flask",
+      "pot_blood_ampoule",
+      "pot_kiln_salts",
+      "pot_fracture_serum",
+      "pot_mimic_gel",
+      "pot_riposte_salts",
+      "pot_ember_tonic",
+      "pot_fester_draught",
+      "pot_hourglass_tonic"
+    ],
+    "enemies": []
+  },
+  "checks": [
+    "current code coverage",
+    "SMS channels",
+    "palette caps",
+    "binary alpha",
+    "zero transparent RGB",
+    "safety margin",
+    "black presence",
+    "all existing files SHA256",
+    "all old frame rectangles",
+    "every packed pixel",
+    "1x/4x sheet pixels",
+    "8 accepted references per coherence group",
+    "every new icon opaque bbox long side >= 11px",
+    "every new asset isolated pixels <= both same-kind and overall accepted medians",
+    "fresh before/after noise/fill ledger and editorial noise metric",
+    "maximum three ramp steps per material",
+    "direct accepted/new/accepted neighbours at 1x on black/navy and 4x, exact pixels"
+  ],
+  "pixel_quality_r2": [
+    {
+      "id": "stoke",
+      "kind": "cards",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 24,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 384,
+      "cell_fill_ratio": 0.5,
+      "bbox_fill_ratio": 0.6018808777429467,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "hair_trigger",
+      "kind": "cards",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        3,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        24,
+        20
+      ],
+      "opaque_bbox_long_side": 24,
+      "opaque_pixels": 191,
+      "cell_fill_ratio": 0.24869791666666666,
+      "bbox_fill_ratio": 0.39791666666666664,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "loosen_straps",
+      "kind": "cards",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        27,
+        22
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 383,
+      "cell_fill_ratio": 0.4986979166666667,
+      "bbox_fill_ratio": 0.6447811447811448,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "kindle",
+      "kind": "cards",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        3,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        20
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 252,
+      "cell_fill_ratio": 0.328125,
+      "bbox_fill_ratio": 0.5727272727272728,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "spark_gap",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        31,
+        22
+      ],
+      "opaque_bbox_size": [
+        30,
+        21
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 382,
+      "cell_fill_ratio": 0.4973958333333333,
+      "bbox_fill_ratio": 0.6063492063492063,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "iron_patience",
+      "kind": "cards",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        23,
+        22
+      ],
+      "opaque_bbox_long_side": 23,
+      "opaque_pixels": 391,
+      "cell_fill_ratio": 0.5091145833333334,
+      "bbox_fill_ratio": 0.7727272727272727,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "worldbreaker",
+      "kind": "cards",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 24,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 416,
+      "cell_fill_ratio": 0.5416666666666666,
+      "bbox_fill_ratio": 0.6520376175548589,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "turnabout",
+      "kind": "cards",
+      "isolated_pixels": 12,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        2,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        27,
+        21
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 364,
+      "cell_fill_ratio": 0.4739583333333333,
+      "bbox_fill_ratio": 0.6419753086419753,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "bellows",
+      "kind": "cards",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 22,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        2,
+        31,
+        21
+      ],
+      "opaque_bbox_size": [
+        30,
+        19
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 341,
+      "cell_fill_ratio": 0.4440104166666667,
+      "bbox_fill_ratio": 0.5982456140350877,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "crazing",
+      "kind": "cards",
+      "isolated_pixels": 22,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        2,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        21,
+        21
+      ],
+      "opaque_bbox_long_side": 21,
+      "opaque_pixels": 296,
+      "cell_fill_ratio": 0.3854166666666667,
+      "bbox_fill_ratio": 0.671201814058957,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "answer_in_kind",
+      "kind": "cards",
+      "isolated_pixels": 12,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        22
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 302,
+      "cell_fill_ratio": 0.3932291666666667,
+      "bbox_fill_ratio": 0.527972027972028,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "molten_shell",
+      "kind": "cards",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 22,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 337,
+      "cell_fill_ratio": 0.4388020833333333,
+      "bbox_fill_ratio": 0.6962809917355371,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "hold_the_hour",
+      "kind": "cards",
+      "isolated_pixels": 18,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        2,
+        31,
+        22
+      ],
+      "opaque_bbox_size": [
+        30,
+        20
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 336,
+      "cell_fill_ratio": 0.4375,
+      "bbox_fill_ratio": 0.56,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "ripple",
+      "kind": "cards",
+      "isolated_pixels": 12,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 315,
+      "cell_fill_ratio": 0.41015625,
+      "bbox_fill_ratio": 0.493730407523511,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "whistle_for_wind",
+      "kind": "cards",
+      "isolated_pixels": 18,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        2,
+        31,
+        21
+      ],
+      "opaque_bbox_size": [
+        30,
+        19
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 365,
+      "cell_fill_ratio": 0.4752604166666667,
+      "bbox_fill_ratio": 0.6403508771929824,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "red_sky",
+      "kind": "cards",
+      "isolated_pixels": 20,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        28,
+        22
+      ],
+      "opaque_bbox_long_side": 28,
+      "opaque_pixels": 529,
+      "cell_fill_ratio": 0.6888020833333334,
+      "bbox_fill_ratio": 0.8587662337662337,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "undertow",
+      "kind": "cards",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        22
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 492,
+      "cell_fill_ratio": 0.640625,
+      "bbox_fill_ratio": 0.8601398601398601,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "accelerando",
+      "kind": "cards",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 299,
+      "cell_fill_ratio": 0.3893229166666667,
+      "bbox_fill_ratio": 0.5436363636363636,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "bell_choir",
+      "kind": "cards",
+      "isolated_pixels": 21,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 434,
+      "cell_fill_ratio": 0.5651041666666666,
+      "bbox_fill_ratio": 0.6802507836990596,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "set_the_hour",
+      "kind": "cards",
+      "isolated_pixels": 22,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        31,
+        23
+      ],
+      "opaque_bbox_size": [
+        30,
+        22
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 473,
+      "cell_fill_ratio": 0.6158854166666666,
+      "bbox_fill_ratio": 0.7166666666666667,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "gathering_storm",
+      "kind": "cards",
+      "isolated_pixels": 13,
+      "two_pixel_cluster_pixels": 18,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        22
+      ],
+      "opaque_bbox_size": [
+        29,
+        21
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 319,
+      "cell_fill_ratio": 0.4153645833333333,
+      "bbox_fill_ratio": 0.5238095238095238,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "squall_line",
+      "kind": "cards",
+      "isolated_pixels": 26,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        27,
+        22
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 365,
+      "cell_fill_ratio": 0.4752604166666667,
+      "bbox_fill_ratio": 0.6144781144781145,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "total_eclipse",
+      "kind": "cards",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        2,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        21,
+        21
+      ],
+      "opaque_bbox_long_side": 21,
+      "opaque_pixels": 295,
+      "cell_fill_ratio": 0.3841145833333333,
+      "bbox_fill_ratio": 0.6689342403628118,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "eternal_return",
+      "kind": "cards",
+      "isolated_pixels": 21,
+      "two_pixel_cluster_pixels": 18,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 356,
+      "cell_fill_ratio": 0.4635416666666667,
+      "bbox_fill_ratio": 0.6472727272727272,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "reckoning",
+      "kind": "cards",
+      "isolated_pixels": 13,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 394,
+      "cell_fill_ratio": 0.5130208333333334,
+      "bbox_fill_ratio": 0.7163636363636363,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "eye_of_the_storm",
+      "kind": "cards",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        24,
+        22
+      ],
+      "opaque_bbox_long_side": 24,
+      "opaque_pixels": 470,
+      "cell_fill_ratio": 0.6119791666666666,
+      "bbox_fill_ratio": 0.8901515151515151,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "blood_tithe",
+      "kind": "cards",
+      "isolated_pixels": 17,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        8,
+        1,
+        23,
+        23
+      ],
+      "opaque_bbox_size": [
+        15,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 214,
+      "cell_fill_ratio": 0.2786458333333333,
+      "bbox_fill_ratio": 0.6484848484848484,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "vent_plasma",
+      "kind": "cards",
+      "isolated_pixels": 22,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        6,
+        1,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        20,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 272,
+      "cell_fill_ratio": 0.3541666666666667,
+      "bbox_fill_ratio": 0.6181818181818182,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "scar_tissue",
+      "kind": "cards",
+      "isolated_pixels": 27,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        22
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 363,
+      "cell_fill_ratio": 0.47265625,
+      "bbox_fill_ratio": 0.6346153846153846,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "last_light",
+      "kind": "cards",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        9,
+        1,
+        22,
+        23
+      ],
+      "opaque_bbox_size": [
+        13,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 165,
+      "cell_fill_ratio": 0.21484375,
+      "bbox_fill_ratio": 0.5769230769230769,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "spare_capacitor",
+      "kind": "cards",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        7,
+        1,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        19,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 243,
+      "cell_fill_ratio": 0.31640625,
+      "bbox_fill_ratio": 0.5813397129186603,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "shrapnel_charge",
+      "kind": "cards",
+      "isolated_pixels": 18,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        22
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 315,
+      "cell_fill_ratio": 0.41015625,
+      "bbox_fill_ratio": 0.5506993006993007,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "black_box",
+      "kind": "cards",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 469,
+      "cell_fill_ratio": 0.6106770833333334,
+      "bbox_fill_ratio": 0.7351097178683386,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "strip_for_parts",
+      "kind": "cards",
+      "isolated_pixels": 28,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        30,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 411,
+      "cell_fill_ratio": 0.53515625,
+      "bbox_fill_ratio": 0.6442006269592476,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "scrapheap_colossus",
+      "kind": "cards",
+      "isolated_pixels": 28,
+      "two_pixel_cluster_pixels": 24,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        31,
+        23
+      ],
+      "opaque_bbox_size": [
+        30,
+        22
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 422,
+      "cell_fill_ratio": 0.5494791666666666,
+      "bbox_fill_ratio": 0.6393939393939394,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "burn_bright",
+      "kind": "cards",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        9,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        18,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 221,
+      "cell_fill_ratio": 0.2877604166666667,
+      "bbox_fill_ratio": 0.5580808080808081,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "arc_discharge",
+      "kind": "cards",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 298,
+      "cell_fill_ratio": 0.3880208333333333,
+      "bbox_fill_ratio": 0.6157024793388429,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "capacitor_bank",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 382,
+      "cell_fill_ratio": 0.4973958333333333,
+      "bbox_fill_ratio": 0.6945454545454546,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "starfall_lance",
+      "kind": "cards",
+      "isolated_pixels": 5,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 448,
+      "cell_fill_ratio": 0.5833333333333334,
+      "bbox_fill_ratio": 0.9256198347107438,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "stasis_bolt",
+      "kind": "cards",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        26,
+        23
+      ],
+      "opaque_bbox_size": [
+        23,
+        22
+      ],
+      "opaque_bbox_long_side": 23,
+      "opaque_pixels": 257,
+      "cell_fill_ratio": 0.3346354166666667,
+      "bbox_fill_ratio": 0.5079051383399209,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "encore",
+      "kind": "cards",
+      "isolated_pixels": 5,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 402,
+      "cell_fill_ratio": 0.5234375,
+      "bbox_fill_ratio": 0.8305785123966942,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "bait_flare",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        24,
+        22
+      ],
+      "opaque_bbox_long_side": 24,
+      "opaque_pixels": 396,
+      "cell_fill_ratio": 0.515625,
+      "bbox_fill_ratio": 0.75,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "fuse",
+      "kind": "cards",
+      "isolated_pixels": 11,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        31,
+        23
+      ],
+      "opaque_bbox_size": [
+        29,
+        22
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 303,
+      "cell_fill_ratio": 0.39453125,
+      "bbox_fill_ratio": 0.47492163009404387,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_burden",
+      "kind": "cards",
+      "isolated_pixels": 15,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 302,
+      "cell_fill_ratio": 0.3932291666666667,
+      "bbox_fill_ratio": 0.6239669421487604,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_seized_joint",
+      "kind": "cards",
+      "isolated_pixels": 11,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        24,
+        22
+      ],
+      "opaque_bbox_long_side": 24,
+      "opaque_pixels": 251,
+      "cell_fill_ratio": 0.3268229166666667,
+      "bbox_fill_ratio": 0.4753787878787879,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_static_ghost",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        28,
+        22
+      ],
+      "opaque_bbox_size": [
+        27,
+        21
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 287,
+      "cell_fill_ratio": 0.3736979166666667,
+      "bbox_fill_ratio": 0.5061728395061729,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_guilt",
+      "kind": "cards",
+      "isolated_pixels": 30,
+      "two_pixel_cluster_pixels": 22,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        22
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 354,
+      "cell_fill_ratio": 0.4609375,
+      "bbox_fill_ratio": 0.6188811188811189,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_vacuum_chill",
+      "kind": "cards",
+      "isolated_pixels": 29,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        6,
+        1,
+        25,
+        23
+      ],
+      "opaque_bbox_size": [
+        19,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 272,
+      "cell_fill_ratio": 0.3541666666666667,
+      "bbox_fill_ratio": 0.6507177033492823,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_debt_mark",
+      "kind": "cards",
+      "isolated_pixels": 29,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        23,
+        22
+      ],
+      "opaque_bbox_long_side": 23,
+      "opaque_pixels": 334,
+      "cell_fill_ratio": 0.4348958333333333,
+      "bbox_fill_ratio": 0.6600790513833992,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_hollow_echo",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        3,
+        31,
+        21
+      ],
+      "opaque_bbox_size": [
+        30,
+        18
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 262,
+      "cell_fill_ratio": 0.3411458333333333,
+      "bbox_fill_ratio": 0.48518518518518516,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "curse_parasite_vine",
+      "kind": "cards",
+      "isolated_pixels": 15,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        22
+      ],
+      "opaque_bbox_size": [
+        22,
+        21
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 259,
+      "cell_fill_ratio": 0.3372395833333333,
+      "bbox_fill_ratio": 0.5606060606060606,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "molt",
+      "kind": "cards",
+      "isolated_pixels": 4,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        27,
+        22
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 362,
+      "cell_fill_ratio": 0.4713541666666667,
+      "bbox_fill_ratio": 0.6094276094276094,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "burst_pod",
+      "kind": "cards",
+      "isolated_pixels": 21,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 267,
+      "cell_fill_ratio": 0.34765625,
+      "bbox_fill_ratio": 0.5516528925619835,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "reap",
+      "kind": "cards",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        23,
+        22
+      ],
+      "opaque_bbox_long_side": 23,
+      "opaque_pixels": 259,
+      "cell_fill_ratio": 0.3372395833333333,
+      "bbox_fill_ratio": 0.5118577075098815,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "second_flush",
+      "kind": "cards",
+      "isolated_pixels": 13,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        6,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        21,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 255,
+      "cell_fill_ratio": 0.33203125,
+      "bbox_fill_ratio": 0.551948051948052,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "thornstorm",
+      "kind": "cards",
+      "isolated_pixels": 21,
+      "two_pixel_cluster_pixels": 32,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        2,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        26,
+        21
+      ],
+      "opaque_bbox_long_side": 26,
+      "opaque_pixels": 255,
+      "cell_fill_ratio": 0.33203125,
+      "bbox_fill_ratio": 0.46703296703296704,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "grim_harvest",
+      "kind": "cards",
+      "isolated_pixels": 19,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        22,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 323,
+      "cell_fill_ratio": 0.4205729166666667,
+      "bbox_fill_ratio": 0.6673553719008265,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "clear_cut",
+      "kind": "cards",
+      "isolated_pixels": 14,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        3,
+        31,
+        20
+      ],
+      "opaque_bbox_size": [
+        29,
+        17
+      ],
+      "opaque_bbox_long_side": 29,
+      "opaque_pixels": 274,
+      "cell_fill_ratio": 0.3567708333333333,
+      "bbox_fill_ratio": 0.5557809330628803,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "deep_rot",
+      "kind": "cards",
+      "isolated_pixels": 18,
+      "two_pixel_cluster_pixels": 12,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        7,
+        1,
+        24,
+        23
+      ],
+      "opaque_bbox_size": [
+        17,
+        22
+      ],
+      "opaque_bbox_long_side": 22,
+      "opaque_pixels": 219,
+      "cell_fill_ratio": 0.28515625,
+      "bbox_fill_ratio": 0.5855614973262032,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "rootstock",
+      "kind": "cards",
+      "isolated_pixels": 15,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 279,
+      "cell_fill_ratio": 0.36328125,
+      "bbox_fill_ratio": 0.5072727272727273,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "perennial",
+      "kind": "cards",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        27,
+        23
+      ],
+      "opaque_bbox_size": [
+        23,
+        22
+      ],
+      "opaque_bbox_long_side": 23,
+      "opaque_pixels": 292,
+      "cell_fill_ratio": 0.3802083333333333,
+      "bbox_fill_ratio": 0.5770750988142292,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "chaff",
+      "kind": "cards",
+      "isolated_pixels": 23,
+      "two_pixel_cluster_pixels": 16,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        30,
+        22
+      ],
+      "opaque_bbox_size": [
+        28,
+        21
+      ],
+      "opaque_bbox_long_side": 28,
+      "opaque_pixels": 402,
+      "cell_fill_ratio": 0.5234375,
+      "bbox_fill_ratio": 0.6836734693877551,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "status_jitter",
+      "kind": "cards",
+      "isolated_pixels": 28,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        25,
+        22
+      ],
+      "opaque_bbox_long_side": 25,
+      "opaque_pixels": 319,
+      "cell_fill_ratio": 0.4153645833333333,
+      "bbox_fill_ratio": 0.58,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "status_backlash",
+      "kind": "cards",
+      "isolated_pixels": 29,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        29,
+        23
+      ],
+      "opaque_bbox_size": [
+        27,
+        22
+      ],
+      "opaque_bbox_long_side": 27,
+      "opaque_pixels": 356,
+      "cell_fill_ratio": 0.4635416666666667,
+      "bbox_fill_ratio": 0.5993265993265994,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "status_tangle",
+      "kind": "cards",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        31,
+        23
+      ],
+      "opaque_bbox_size": [
+        30,
+        22
+      ],
+      "opaque_bbox_long_side": 30,
+      "opaque_pixels": 426,
+      "cell_fill_ratio": 0.5546875,
+      "bbox_fill_ratio": 0.6454545454545455,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "status_drift",
+      "kind": "cards",
+      "isolated_pixels": 20,
+      "two_pixel_cluster_pixels": 14,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        28,
+        23
+      ],
+      "opaque_bbox_size": [
+        24,
+        22
+      ],
+      "opaque_bbox_long_side": 24,
+      "opaque_pixels": 256,
+      "cell_fill_ratio": 0.3333333333333333,
+      "bbox_fill_ratio": 0.48484848484848486,
+      "accepted_isolated_pixels_median": 40.0
+    },
+    {
+      "id": "spare_fuse",
+      "kind": "relics",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 76,
+      "cell_fill_ratio": 0.296875,
+      "bbox_fill_ratio": 0.3877551020408163,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "antenna_wire",
+      "kind": "relics",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 20,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 115,
+      "cell_fill_ratio": 0.44921875,
+      "bbox_fill_ratio": 0.5867346938775511,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "slag_bucket",
+      "kind": "relics",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 149,
+      "cell_fill_ratio": 0.58203125,
+      "bbox_fill_ratio": 0.8186813186813187,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "storm_lantern",
+      "kind": "relics",
+      "isolated_pixels": 4,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        12,
+        15
+      ],
+      "opaque_bbox_size": [
+        9,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 103,
+      "cell_fill_ratio": 0.40234375,
+      "bbox_fill_ratio": 0.8174603174603174,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "scar_engine",
+      "kind": "relics",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        14
+      ],
+      "opaque_bbox_size": [
+        14,
+        13
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 119,
+      "cell_fill_ratio": 0.46484375,
+      "bbox_fill_ratio": 0.6538461538461539,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "static_choir",
+      "kind": "relics",
+      "isolated_pixels": 5,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        2,
+        15,
+        13
+      ],
+      "opaque_bbox_size": [
+        14,
+        11
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 99,
+      "cell_fill_ratio": 0.38671875,
+      "bbox_fill_ratio": 0.6428571428571429,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "whetstone",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        14
+      ],
+      "opaque_bbox_size": [
+        14,
+        13
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 105,
+      "cell_fill_ratio": 0.41015625,
+      "bbox_fill_ratio": 0.5769230769230769,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "ash_wick",
+      "kind": "relics",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 137,
+      "cell_fill_ratio": 0.53515625,
+      "bbox_fill_ratio": 0.7527472527472527,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "overture_engine",
+      "kind": "relics",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 144,
+      "cell_fill_ratio": 0.5625,
+      "bbox_fill_ratio": 0.7346938775510204,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "blood_rivets",
+      "kind": "relics",
+      "isolated_pixels": 8,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        3,
+        15,
+        13
+      ],
+      "opaque_bbox_size": [
+        14,
+        10
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 110,
+      "cell_fill_ratio": 0.4296875,
+      "bbox_fill_ratio": 0.7857142857142857,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "blood_mulch",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        11,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 115,
+      "cell_fill_ratio": 0.44921875,
+      "bbox_fill_ratio": 0.7467532467532467,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "borrowed_time",
+      "kind": "relics",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 120,
+      "cell_fill_ratio": 0.46875,
+      "bbox_fill_ratio": 0.6593406593406593,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "coal_scuttle",
+      "kind": "relics",
+      "isolated_pixels": 11,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 128,
+      "cell_fill_ratio": 0.5,
+      "bbox_fill_ratio": 0.7032967032967034,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "husk_sac",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        11,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 115,
+      "cell_fill_ratio": 0.44921875,
+      "bbox_fill_ratio": 0.7467532467532467,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "reapers_sickle",
+      "kind": "relics",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 71,
+      "cell_fill_ratio": 0.27734375,
+      "bbox_fill_ratio": 0.3622448979591837,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "astrolabe",
+      "kind": "relics",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 117,
+      "cell_fill_ratio": 0.45703125,
+      "bbox_fill_ratio": 0.6428571428571429,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "reserve_coil",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        11,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 126,
+      "cell_fill_ratio": 0.4921875,
+      "bbox_fill_ratio": 0.8181818181818182,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "echo_bell",
+      "kind": "relics",
+      "isolated_pixels": 8,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 104,
+      "cell_fill_ratio": 0.40625,
+      "bbox_fill_ratio": 0.5714285714285714,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "undertow_reliquary",
+      "kind": "relics",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 155,
+      "cell_fill_ratio": 0.60546875,
+      "bbox_fill_ratio": 0.7908163265306123,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "kickback_governor",
+      "kind": "relics",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 120,
+      "cell_fill_ratio": 0.46875,
+      "bbox_fill_ratio": 0.6122448979591837,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "orbital_hammer",
+      "kind": "relics",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 87,
+      "cell_fill_ratio": 0.33984375,
+      "bbox_fill_ratio": 0.47802197802197804,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "momentum_flywheel",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 6,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 141,
+      "cell_fill_ratio": 0.55078125,
+      "bbox_fill_ratio": 0.7747252747252747,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "refrain_pin",
+      "kind": "relics",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        2,
+        15,
+        14
+      ],
+      "opaque_bbox_size": [
+        14,
+        12
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 117,
+      "cell_fill_ratio": 0.45703125,
+      "bbox_fill_ratio": 0.6964285714285714,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "twin_scabbard",
+      "kind": "relics",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        12,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 96,
+      "cell_fill_ratio": 0.375,
+      "bbox_fill_ratio": 0.5714285714285714,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "recoil_coil",
+      "kind": "relics",
+      "isolated_pixels": 7,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        2,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        12,
+        13
+      ],
+      "opaque_bbox_long_side": 13,
+      "opaque_pixels": 79,
+      "cell_fill_ratio": 0.30859375,
+      "bbox_fill_ratio": 0.5064102564102564,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "trellis",
+      "kind": "relics",
+      "isolated_pixels": 9,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 135,
+      "cell_fill_ratio": 0.52734375,
+      "bbox_fill_ratio": 0.7417582417582418,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "festering_lens",
+      "kind": "relics",
+      "isolated_pixels": 10,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 99,
+      "cell_fill_ratio": 0.38671875,
+      "bbox_fill_ratio": 0.5439560439560439,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "conductors_baton",
+      "kind": "relics",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 109,
+      "cell_fill_ratio": 0.42578125,
+      "bbox_fill_ratio": 0.5561224489795918,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "triage_locker",
+      "kind": "relics",
+      "isolated_pixels": 1,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 153,
+      "cell_fill_ratio": 0.59765625,
+      "bbox_fill_ratio": 0.7806122448979592,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "wanderers_compact",
+      "kind": "relics",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 132,
+      "cell_fill_ratio": 0.515625,
+      "bbox_fill_ratio": 0.7252747252747253,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "furnace_mantle",
+      "kind": "relics",
+      "isolated_pixels": 6,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        12,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 124,
+      "cell_fill_ratio": 0.484375,
+      "bbox_fill_ratio": 0.7380952380952381,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "perpetual_calendar",
+      "kind": "relics",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        14,
+        15
+      ],
+      "opaque_bbox_size": [
+        13,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 144,
+      "cell_fill_ratio": 0.5625,
+      "bbox_fill_ratio": 0.7912087912087912,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "salvagers_licence",
+      "kind": "relics",
+      "isolated_pixels": 1,
+      "two_pixel_cluster_pixels": 10,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        14
+      ],
+      "opaque_bbox_size": [
+        14,
+        13
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 124,
+      "cell_fill_ratio": 0.484375,
+      "bbox_fill_ratio": 0.6813186813186813,
+      "accepted_isolated_pixels_median": 14.0
+    },
+    {
+      "id": "pot_blood_ampoule",
+      "kind": "potions",
+      "isolated_pixels": 1,
+      "two_pixel_cluster_pixels": 2,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        5,
+        1,
+        11,
+        15
+      ],
+      "opaque_bbox_size": [
+        6,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 72,
+      "cell_fill_ratio": 0.28125,
+      "bbox_fill_ratio": 0.8571428571428571,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_surge_flask",
+      "kind": "potions",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        11,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 117,
+      "cell_fill_ratio": 0.45703125,
+      "bbox_fill_ratio": 0.7597402597402597,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_kiln_salts",
+      "kind": "potions",
+      "isolated_pixels": 5,
+      "two_pixel_cluster_pixels": 8,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        3,
+        12,
+        15
+      ],
+      "opaque_bbox_size": [
+        8,
+        12
+      ],
+      "opaque_bbox_long_side": 12,
+      "opaque_pixels": 69,
+      "cell_fill_ratio": 0.26953125,
+      "bbox_fill_ratio": 0.71875,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_fracture_serum",
+      "kind": "potions",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        2,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        11,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 111,
+      "cell_fill_ratio": 0.43359375,
+      "bbox_fill_ratio": 0.7207792207792207,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_riposte_salts",
+      "kind": "potions",
+      "isolated_pixels": 4,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "opaque_bbox_size": [
+        14,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 172,
+      "cell_fill_ratio": 0.671875,
+      "bbox_fill_ratio": 0.8775510204081632,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_ember_tonic",
+      "kind": "potions",
+      "isolated_pixels": 2,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        12,
+        15
+      ],
+      "opaque_bbox_size": [
+        9,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 98,
+      "cell_fill_ratio": 0.3828125,
+      "bbox_fill_ratio": 0.7777777777777778,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_fester_draught",
+      "kind": "potions",
+      "isolated_pixels": 4,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        10,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 109,
+      "cell_fill_ratio": 0.42578125,
+      "bbox_fill_ratio": 0.7785714285714286,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_hourglass_tonic",
+      "kind": "potions",
+      "isolated_pixels": 3,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        11,
+        15
+      ],
+      "opaque_bbox_size": [
+        7,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 85,
+      "cell_fill_ratio": 0.33203125,
+      "bbox_fill_ratio": 0.8673469387755102,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_echo_draught",
+      "kind": "potions",
+      "isolated_pixels": 0,
+      "two_pixel_cluster_pixels": 0,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        4,
+        1,
+        11,
+        15
+      ],
+      "opaque_bbox_size": [
+        7,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 82,
+      "cell_fill_ratio": 0.3203125,
+      "bbox_fill_ratio": 0.8367346938775511,
+      "accepted_isolated_pixels_median": 6.5
+    },
+    {
+      "id": "pot_mimic_gel",
+      "kind": "potions",
+      "isolated_pixels": 5,
+      "two_pixel_cluster_pixels": 4,
+      "detached_crumb_pixels": 0,
+      "opaque_bbox": [
+        3,
+        1,
+        13,
+        15
+      ],
+      "opaque_bbox_size": [
+        10,
+        14
+      ],
+      "opaque_bbox_long_side": 14,
+      "opaque_pixels": 117,
+      "cell_fill_ratio": 0.45703125,
+      "bbox_fill_ratio": 0.8357142857142857,
+      "accepted_isolated_pixels_median": 6.5
+    }
+  ]
+}

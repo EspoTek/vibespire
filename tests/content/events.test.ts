@@ -13,6 +13,7 @@ import { effectTextValues, getEventOptions, renderEventOptionLabel, renderEventT
 import { validateEffects } from '../../src/engine/validate';
 import { ENGINE_VERSION } from '../../src/engine/version';
 import type { ClassDef, Effect, EventDef, GameEvent, RunState } from '../../src/engine/types';
+import { answerChoice } from '../answer-choice';
 
 // The real class definitions are already authored, but index.ts gates registration
 // while the starter packs land. Read those exact definitions without registering
@@ -44,14 +45,21 @@ const EVENT_IDS = [
 const ENCOUNTER_IDS = ['enc_event_spore_choir', 'enc_event_engine_cult', 'enc_event_echo', 'enc_event_antibodies'];
 const STATUS_IDS = ['event_choir_setup', 'event_choir_vigor', 'event_echo_setup', 'event_echo_strength'];
 
+function bossOf(act: RunState['act']): string {
+  const boss = content.encountersFor(act, 'boss')[0];
+  if (!boss) throw new Error(`no boss encounter for act ${act}`);
+  return boss.id;
+}
+
 function eventRoom(id: string, cls = 'graft', page: string | null = null, seed = `events-${id}`): Game {
   const def = content.getEventDef(id);
   const act = def.acts[0];
   if (!act) throw new Error(`event ${id} has no acts`);
   const s: RunState = {
-    version: ENGINE_VERSION, seed, classId: cls, rng: createStreams(seed), act, ascent: 0, floor: 1, phase: 'event',
+    version: ENGINE_VERSION, seed, classId: cls, rng: createStreams(seed), act, ascent: 0, difficulty: 'standard', floor: 1, phase: 'event',
     player: { hp: 150, maxHp: 200, gold: 1000, deck: [], relics: [], potions: [], potionSlots: 10, counters: { shards: 5 } },
-    map: { act, rows: [], bossEncounter: 'unused_by_event_sandbox' }, mapPos: null, mapPath: [], room: 'event',
+    // a real boss id: saves round-trip through the id check (src/engine/savecheck.ts)
+    map: { act, rows: [], bossEncounter: bossOf(act) }, mapPos: null, mapPath: [], room: 'event',
     combat: null, reward: null, shop: null, event: { id, page, chosen: null, done: false }, rest: null, treasure: null,
     startChoices: null, bossRelicChoices: null, queue: [], pendingChoice: null, history: { floors: [] },
     counters: { encounters: [], monstersThisAct: 0, eventsSeen: [], rarePity: 0, potionChance: 40, shopRemovals: 0 }, nextUid: 1,
@@ -69,10 +77,11 @@ function prepare(g: Game, id: string, index: number): void {
 
 function settleChoices(g: Game): GameEvent[] {
   const events: GameEvent[] = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 200; i++) {
     const pc = g.state.phase === 'combat' ? g.state.combat?.pendingChoice : g.state.pendingChoice;
     if (!pc) return events;
-    const action = g.legalActions().find((a) => a.type === 'resolve_choice');
+    // the first answer step: confirm when legal, else select a card (multi-pick choices build up)
+    const action = g.legalActions().find((a) => a.type === 'resolve_choice' || a.type === 'choice_toggle');
     if (!action) throw new Error(`no answer for ${pc.prompt}`);
     events.push(...g.apply(action));
   }
@@ -266,7 +275,7 @@ describe('availability and option conditions', () => {
     expect(pc?.choices).toEqual(gold < 140 ? [0] : [0, 1]);
     expect(pc?.labels.join(' ')).not.toMatch(/[{}]/);
     const index = gold < 140 ? 0 : 1;
-    g.apply({ type: 'resolve_choice', uids: [index] });
+    answerChoice(g, [index]);
     expect(g.state.player.gold).toBe(gold - 70 * (index + 1));
     expect(g.state.player.counters.shards).toBe(5 + index + 1);
   });
@@ -278,7 +287,7 @@ describe('availability and option conditions', () => {
       g.apply({ type: 'event_choice', index: 0 });
       expect(g.state.pendingChoice?.choices).toHaveLength(shards);
       expect(g.state.pendingChoice?.labels.join(' ')).not.toMatch(/[{}]/);
-      g.apply({ type: 'resolve_choice', uids: [n - 1] });
+      answerChoice(g, [n - 1]);
       expect(g.state.player.counters.shards).toBe(shards - n);
       expect(g.state.player.gold).toBe(1000 + 45 * n);
     }
@@ -364,7 +373,7 @@ describe('custom functions and permanent outcomes', () => {
     expect(new Set(offers.map((o) => o.id)).size).toBe(3);
     expect(offers.every((o) => content.getCardDef(o.id).cls === 'colorless')).toBe(true);
     const original = one.state.player.deck.length;
-    one.apply({ type: 'resolve_choice', uids: [2] });
+    answerChoice(one, [2]);
     expect(one.state.player.deck).toHaveLength(original + 1);
     expect(one.state.player.deck.at(-1)?.id).toBe(offers[2]?.id);
     choose(all, 1);
@@ -405,7 +414,7 @@ describe('custom functions and permanent outcomes', () => {
     expect(g.state.pendingChoice?.choices).toEqual(expected);
     const selected = expected.at(-1);
     if (selected === undefined) throw new Error('no timing cards');
-    g.apply({ type: 'resolve_choice', uids: [selected] });
+    answerChoice(g, [selected]);
     expect(g.state.player.deck.find((card) => card.uid === selected)?.upgraded).toBe(true);
     expect(g.state.player.hp).toBe(145);
     const empty = eventRoom('ev_oracle_terminal', 'chronist');
@@ -445,7 +454,7 @@ describe('custom functions and permanent outcomes', () => {
     expect(g.state.pendingChoice).toMatchObject({ min: 1, max: 3 });
     const uids = g.state.pendingChoice?.choices.slice(0, 3);
     if (!uids) throw new Error('missing Transmute choice');
-    g.apply({ type: 'resolve_choice', uids });
+    answerChoice(g, uids);
     const before = new Set(g.state.player.deck.map((c) => c.uid));
     const events = settleChoices(g);
     expect(g.state.player.hp).toBe(138);

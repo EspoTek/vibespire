@@ -1,0 +1,161 @@
+{
+  "frames": {
+    "pot_bastion_tonic": {
+      "x": 0,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_blight_vial": {
+      "x": 16,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_blood_ampoule": {
+      "x": 32,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_charge_cell": {
+      "x": 48,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_concussion_gas": {
+      "x": 64,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_echo_draught": {
+      "x": 80,
+      "y": 0,
+      "w": 16,
+      "h": 16
+    },
+    "pot_ember_tonic": {
+      "x": 0,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_fault_dust": {
+      "x": 16,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_fester_draught": {
+      "x": 32,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_flare_cell": {
+      "x": 48,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_fracture_serum": {
+      "x": 64,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_fury_draught": {
+      "x": 80,
+      "y": 16,
+      "w": 16,
+      "h": 16
+    },
+    "pot_growth_sap": {
+      "x": 0,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_halt_ampoule": {
+      "x": 16,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_hourglass_tonic": {
+      "x": 32,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_kiln_salts": {
+      "x": 48,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_mending_ampoule": {
+      "x": 64,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_mimic_gel": {
+      "x": 80,
+      "y": 32,
+      "w": 16,
+      "h": 16
+    },
+    "pot_quicksilver": {
+      "x": 0,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_rewind_phial": {
+      "x": 16,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_riposte_salts": {
+      "x": 32,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_seers_draught": {
+      "x": 48,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_shard_tincture": {
+      "x": 64,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_shield_gel": {
+      "x": 80,
+      "y": 48,
+      "w": 16,
+      "h": 16
+    },
+    "pot_surge_flask": {
+      "x": 0,
+      "y": 64,
+      "w": 16,
+      "h": 16
+    },
+    "pot_tempo_draught": {
+      "x": 16,
+      "y": 64,
+      "w": 16,
+      "h": 16
+    }
+  },
+  "cell": 16
+}
